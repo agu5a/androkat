@@ -14,6 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{EF1FF47D-4DA
 		..\..\readme.md = ..\..\readme.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F1496188-CC8F-48A7-8BEC-36E80F62C0AA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "androkat.datalayer.Tests", "Tests\androkat.datalayer.Tests\androkat.datalayer.Tests.csproj", "{7AB55180-7B74-40BD-9099-41C64B556ED9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,9 +36,16 @@ Global
 		{4F8A2581-ACBD-47B8-AC28-D75176852E30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F8A2581-ACBD-47B8-AC28-D75176852E30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F8A2581-ACBD-47B8-AC28-D75176852E30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AB55180-7B74-40BD-9099-41C64B556ED9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AB55180-7B74-40BD-9099-41C64B556ED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AB55180-7B74-40BD-9099-41C64B556ED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AB55180-7B74-40BD-9099-41C64B556ED9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7AB55180-7B74-40BD-9099-41C64B556ED9} = {F1496188-CC8F-48A7-8BEC-36E80F62C0AA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9B96FD2-0630-4522-AAAE-E8CFE20269C4}

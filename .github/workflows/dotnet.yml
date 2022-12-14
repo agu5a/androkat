@@ -1,0 +1,27 @@
+name: build and test
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    paths-ignore:
+    - 'readme.md'
+env:
+  DOTNET_VERSION: '6.0.x'
+  SOLUTION_FILE: './src/androkat.web/androkat.core.sln'
+jobs:
+  build-and-test:
+    name: build-and-test-ubuntu
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.SOLUTION_FILE }}
+    - name: Build
+      run: dotnet build ${{ env.SOLUTION_FILE }} --configuration Release --no-restore
+    - name: Test
+      run: dotnet test ${{ env.SOLUTION_FILE }} --no-restore --verbosity normal
