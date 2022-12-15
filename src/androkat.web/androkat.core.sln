@@ -12,11 +12,16 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{EF1FF47D-4DA8-4989-A5D2-38E71EBA8971}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\readme.md = ..\..\readme.md
+		sonar.bat = sonar.bat
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F1496188-CC8F-48A7-8BEC-36E80F62C0AA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "androkat.datalayer.Tests", "Tests\androkat.datalayer.Tests\androkat.datalayer.Tests.csproj", "{7AB55180-7B74-40BD-9099-41C64B556ED9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "androkat.core.Tests", "Tests\androkat.core.Tests\androkat.core.Tests.csproj", "{8B342DE8-38CB-4307-B8D9-F6293471778F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "androkat.businesslayer.Tests", "Tests\androkat.businesslayer.Tests\androkat.businesslayer.Tests.csproj", "{BCDF3354-0AEE-461F-AECE-850AB57DA33E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,12 +45,22 @@ Global
 		{7AB55180-7B74-40BD-9099-41C64B556ED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AB55180-7B74-40BD-9099-41C64B556ED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AB55180-7B74-40BD-9099-41C64B556ED9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B342DE8-38CB-4307-B8D9-F6293471778F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B342DE8-38CB-4307-B8D9-F6293471778F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B342DE8-38CB-4307-B8D9-F6293471778F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B342DE8-38CB-4307-B8D9-F6293471778F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCDF3354-0AEE-461F-AECE-850AB57DA33E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCDF3354-0AEE-461F-AECE-850AB57DA33E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCDF3354-0AEE-461F-AECE-850AB57DA33E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCDF3354-0AEE-461F-AECE-850AB57DA33E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7AB55180-7B74-40BD-9099-41C64B556ED9} = {F1496188-CC8F-48A7-8BEC-36E80F62C0AA}
+		{8B342DE8-38CB-4307-B8D9-F6293471778F} = {F1496188-CC8F-48A7-8BEC-36E80F62C0AA}
+		{BCDF3354-0AEE-461F-AECE-850AB57DA33E} = {F1496188-CC8F-48A7-8BEC-36E80F62C0AA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9B96FD2-0630-4522-AAAE-E8CFE20269C4}

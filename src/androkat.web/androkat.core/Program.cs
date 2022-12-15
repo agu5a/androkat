@@ -1,3 +1,4 @@
+using androkat.core.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -23,6 +24,9 @@ try
         .WriteTo.Console();
     });
 
+    builder.Services.SetAutoMapper();
+    builder.Services.SetSession();
+
     builder.Services.AddControllers()
         .AddRazorRuntimeCompilation().AddJsonOptions(options =>
         {
@@ -30,13 +34,15 @@ try
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         });
 
+    builder.Services.SetServices();
     builder.Services.AddRazorPages();
 
     var app = builder.Build();
 
     if (app.Environment.IsDevelopment())
     {
-        app.UseDeveloperExceptionPage();
+        // The following call is ok because it is disabled in production
+        app.UseDeveloperExceptionPage(); // Compliant
     }
     else
     {

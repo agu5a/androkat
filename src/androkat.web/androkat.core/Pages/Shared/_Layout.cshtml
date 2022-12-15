@@ -1,0 +1,93 @@
+﻿@using System.Reflection
+<!doctype html>
+<html lang="hu">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="~/favicon.ico">
+    <title>Android és Katolikus: AndroKat a weben</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css?v=1" rel="stylesheet" />
+    <link href="~/css/customv4.css" rel="stylesheet">
+    @RenderSection("meta_extra", false)
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+            <div class="container-fluid">
+                <img src="~/images/androkat.png" alt="Android és Katolikus: AndroKat a weben" title="Android és Katolikus: AndroKat a weben" />
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarmain" aria-controls="navbarmain"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarmain">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Napi olvasó</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ajanlat">AJÁNDÉKOZZ KÖNYVET</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/szentek">Szentek idézetei</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ima">Imádság</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/hanganyag">Hanganyagok</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/video">Videók</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/radio">Rádiók</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/szent">Mai szent</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/hirek">Katolikus hírek</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog">Magazin, blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/humor">Humor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/gyonas/">Gyónás</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/hasznos">Hasznos oldalak</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/kapcsolat">Kapcsolat</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <main role="main">
+        @RenderBody()
+    </main>
+    <footer class="container">
+        <p>
+            <img alt="" src="~/images/playstore.png" style="width: 21px;"> <a href="https://play.google.com/store/apps/details?id=hu.AndroKat" rel="noopener" target="_blank">android</a>
+            <img alt="" src="~/images/facebook.png" style="width: 21px;"> <a href="https://www.facebook.com/androkat" rel="noopener" target="_blank">facebook</a>
+            <img alt="" src="~/images/twitter.png" style="width: 21px;"> <a href="https://twitter.com/AndroKat" rel="noopener" target="_blank">twitter</a>
+            <img alt="" src="~/images/youtube.png" style="width: 21px;"> <a href="https://www.youtube.com/channel/UCF3mEbdkhZwjQE8reJHm4sg" rel="noopener" target="_blank">youtube</a>
+            <img alt="" src="~/images/instagram.png" style="width: 21px;"> <a href="https://www.instagram.com/androkat_app/" rel="noopener" target="_blank">instagram</a>
+            <a class="" href="/adatvedelem">Adatvédelem</a>
+        </p>
+        <p>® 2012-@(DateTime.Now.ToString("yyyy")) :: Androkat :: Android app weben :: @("verzió: " + Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion)</p>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js?v=1"></script>
+    <script src="~/js/dynamic-menu.js?v=1"></script>
+    <script>
+        $('#navbarmain').dynamicMenu({ homePage: '/' });
+    </script>
+    @RenderSection("scripts", false)
+</body>
+</html>
