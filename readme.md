@@ -1,4 +1,6 @@
-﻿# AndroKat
+[![build and test](https://github.com/agu5a/androkat/actions/workflows/dotnet.yml/badge.svg)](https://github.com/agu5a/androkat/actions/workflows/dotnet.yml)
+
+# AndroKat
 
 Az AndroKat 2012.10.09-én indult el, mint magyar katolikus alkalmazás android operációs rendszerrel működő telefonra.
 
