@@ -1,5 +1,5 @@
-﻿using androkat.businesslayer.Mapper;
-using androkat.businesslayer.Service;
+﻿using androkat.businesslayer.Service;
+using androkat.datalayer.Mapper;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics.CodeAnalysis;

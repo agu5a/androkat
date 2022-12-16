@@ -22,7 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\androkat.businesslayer\androkat.businesslayer.csproj" />
+	  <ProjectReference Include="..\..\androkat.datalayer\androkat.datalayer.csproj" />
 	</ItemGroup>
 
 </Project>

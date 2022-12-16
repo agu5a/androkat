@@ -1,6 +1,6 @@
-﻿using androkat.datalayer.Enum;
+﻿using androkat.domain.Enum;
 
-namespace androkat.businesslayer.Model;
+namespace androkat.domain.Model;
 
 public class IdezetDataViewModel
 {

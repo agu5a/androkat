@@ -1,5 +1,5 @@
-﻿using androkat.businesslayer.Mapper;
-using androkat.businesslayer.Service;
+﻿using androkat.businesslayer.Service;
+using androkat.datalayer.Mapper;
 using AutoMapper;
 using FluentAssertions;
 using NUnit.Framework;

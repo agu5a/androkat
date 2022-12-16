@@ -1,6 +1,5 @@
-﻿using androkat.businesslayer.Model;
-using androkat.datalayer.Model;
-using androkat.datalayer.Model.SQLite;
+﻿using androkat.domain.Enum;
+using androkat.domain.Model;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -22,16 +21,16 @@ public class MainPageService : IMainPageService
         {
             IdezetData = _mapper.Map<IdezetDataViewModel>(new IdezetData
             {
-                TipusId = datalayer.Enum.Forras.papaitwitter,
+                TipusId = Forras.papaitwitter,
                 TipusNev = "Pápa Twitter",
                 Image = "Image"
             }),
-            Napiolvaso = _mapper.Map<NapiOlvasoViewModel>(new Napiolvaso
+            Napiolvaso = new NapiOlvasoViewModel
             {
                 Cim = "Twitter cím",
-                Datum = DateTime.Now.ToString("yyyy-MM-dd"),
+                Fulldatum = DateTime.Now,
                 Nid = Guid.NewGuid()
-            })
+            }
         }};
     }
 }

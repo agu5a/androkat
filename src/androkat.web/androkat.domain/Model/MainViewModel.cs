@@ -1,4 +1,4 @@
-﻿namespace androkat.businesslayer.Model;
+﻿namespace androkat.domain.Model;
 
 public class MainViewModel
 {

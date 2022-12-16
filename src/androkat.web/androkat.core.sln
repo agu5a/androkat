@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "androkat.core.Tests", "Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "androkat.businesslayer.Tests", "Tests\androkat.businesslayer.Tests\androkat.businesslayer.Tests.csproj", "{BCDF3354-0AEE-461F-AECE-850AB57DA33E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "androkat.domain", "androkat.domain\androkat.domain.csproj", "{67782132-7EA7-4B5D-9F0A-BCFD936BAC59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{BCDF3354-0AEE-461F-AECE-850AB57DA33E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCDF3354-0AEE-461F-AECE-850AB57DA33E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCDF3354-0AEE-461F-AECE-850AB57DA33E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67782132-7EA7-4B5D-9F0A-BCFD936BAC59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67782132-7EA7-4B5D-9F0A-BCFD936BAC59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67782132-7EA7-4B5D-9F0A-BCFD936BAC59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67782132-7EA7-4B5D-9F0A-BCFD936BAC59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

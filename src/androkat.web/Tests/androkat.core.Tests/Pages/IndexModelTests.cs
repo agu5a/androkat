@@ -1,6 +1,5 @@
-﻿using androkat.businesslayer.Model;
-using androkat.businesslayer.Service;
-using androkat.datalayer.Model;
+﻿using androkat.businesslayer.Service;
+using androkat.domain.Model;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Moq;
@@ -20,8 +19,8 @@ public class IndexModelTests : BaseTest
         var mainPageService = new Mock<IMainPageService>();
         mainPageService.Setup(s => s.GetHome()).Returns(new List<MainViewModel>
     {
-        new MainViewModel 
-        { 
+        new MainViewModel
+        {
             Napiolvaso = new NapiOlvasoViewModel{ Cim = "Cim" },
             IdezetData = new IdezetDataViewModel{ Image = "Image" }
         }

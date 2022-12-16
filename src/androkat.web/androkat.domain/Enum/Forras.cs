@@ -1,4 +1,4 @@
-﻿namespace androkat.datalayer.Enum;
+﻿namespace androkat.domain.Enum;
 
 public enum Forras
 {

@@ -9,9 +9,11 @@ using Serilog;
 using System;
 using System.Text.Json.Serialization;
 
+#pragma warning disable S4792
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateBootstrapLogger();
+#pragma warning restore S4792
 
 try
 {
@@ -38,11 +40,12 @@ try
     builder.Services.AddRazorPages();
 
     var app = builder.Build();
-
+    
     if (app.Environment.IsDevelopment())
     {
-        // The following call is ok because it is disabled in production
-        app.UseDeveloperExceptionPage(); // Compliant
+#pragma warning disable S4507
+        app.UseDeveloperExceptionPage();
+#pragma warning restore S4507
     }
     else
     {

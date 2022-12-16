@@ -14,8 +14,8 @@ public class Napiolvaso
     public Guid Nid { get; set; }
 
     [StringLength(100)]
-    [DataMember(Name = "datum")]
-    public string Datum { get; set; }
+    [DataMember(Name = "fulldatum")]
+    public string Fulldatum { get; set; }
 
     [DataMember(Name = "cim")]
     public string Cim { get; set; }
