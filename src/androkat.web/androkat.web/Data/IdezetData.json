@@ -1,0 +1,371 @@
+﻿[
+  {
+    "TipusId": 1,
+    "TipusNev": "Mello",
+    "Forras": null,
+    "Link": "about:blank",
+    "EnumString": "mello",
+    "Segedlink": null,
+    "Image": null
+  },
+  {
+    "TipusId": 2,
+    "TipusNev": "Pio atya breviáriuma",
+    "Forras": "Szent Gellért Kiadó",
+    "Link": "https://www.szentgellertkiado.hu",
+    "EnumString": "pio",
+    "Segedlink": null,
+    "Image": "images/pio.png"
+  },
+  {
+    "TipusId": 3,
+    "TipusNev": "II. János Pál pápa breviáriuma",
+    "Forras": "Szent Gellért Kiadó",
+    "Link": "https://www.szentgellertkiado.hu",
+    "EnumString": "janospal",
+    "Segedlink": null,
+    "Image": "images/janospal.png"
+  },
+  {
+    "TipusId": 4,
+    "TipusNev": "Keresztes Szent János aranymondásai",
+    "Forras": "Magyar Kármelita Rendtartomány",
+    "Link": "http://www.karmelitarend.hu",
+    "EnumString": "sztjanos",
+    "Segedlink": null,
+    "Image": "images/szentjanos.png"
+  },
+  {
+    "TipusId": 5,
+    "TipusNev": "Kis Szent Teréz breviáriuma",
+    "Forras": "Sarutlan Kármelita Nővérek",
+    "Link": "http://karmelita.hu",
+    "EnumString": "kisterez",
+    "Segedlink": null,
+    "Image": "images/kisterez.png"
+  },
+  {
+    "TipusId": 6,
+    "TipusNev": "Horváth István Sándor (evangélium365.hu)",
+    "Forras": "Horváth István Sándor",
+    "Link": "https://www.evangelium365.hu",
+    "EnumString": "audiohorvath",
+    "Segedlink": null,
+    "Image": "images/evangelium.png"
+  },
+  {
+    "TipusId": 7,
+    "TipusNev": "Fokoláre: életige",
+    "Forras": "Fokoláre Mozgalom",
+    "Link": "http://www.fokolare.hu",
+    "EnumString": "fokolare",
+    "Segedlink": null,
+    "Image": "images/focolare.png"
+  },
+  {
+    "TipusId": 8,
+    "TipusNev": "Teréz Anya breviáriuma",
+    "Forras": "Szent Gellért Kiadó",
+    "Link": "https://www.szentgellertkiado.hu",
+    "EnumString": "terezanya",
+    "Segedlink": null,
+    "Image": "images/terezanya.png"
+  },
+  {
+    "TipusId": 9,
+    "TipusNev": "Ferenc pápa twitter üzenete",
+    "Forras": "Magyar Kurír",
+    "Link": "https://www.magyarkurir.hu/ferenc-papa/ferenc-papa-twitter",
+    "EnumString": "papaitwitter",
+    "Segedlink": null,
+    "Image": "images/ferencpapa.png"
+  },
+  {
+    "TipusId": 10,
+    "TipusNev": "Advent",
+    "Forras": "Országúti Ferences Plébánia",
+    "Link": "http://orszagutiferencesek.hu",
+    "EnumString": "advent",
+    "Segedlink": "http://orszagutiferencesek.hu/wp-content/uploads/2021/11/ADVENTpr22_Buda.pdf",
+    "Image": "images/advent.png"
+  },
+  {
+    "TipusId": 11,
+    "TipusNev": "Napi Ige és olvasmányok",
+    "Forras": "katolikus.hu",
+    "Link": "https://igenaptar.katolikus.hu",
+    "EnumString": "maievangelium",
+    "Segedlink": null,
+    "Image": "images/napibible.png"
+  },
+  {
+    "TipusId": 12,
+    "TipusNev": "Loyolai Szent Ignác válogatott gondolatai",
+    "Forras": "Korda Kiadó",
+    "Link": "http://szikrak.jezsuita.hu",
+    "EnumString": "ignac",
+    "Segedlink": null,
+    "Image": "images/ignac.png"
+  },
+  {
+    "TipusId": 13,
+    "TipusNev": "Barsi - Telek - Magasság és mélység",
+    "Forras": "Barsi Balázs - Telek Péter-Pál",
+    "Link": "http://barsitelekmm.blogspot.hu",
+    "EnumString": "barsi",
+    "Segedlink": null,
+    "Image": "images/barsi.png"
+  },
+  {
+    "TipusId": 14,
+    "TipusNev": "Horváth István Sándor (evangélium365.hu)",
+    "Forras": "Horváth István Sándor",
+    "Link": "https://www.evangelium365.hu",
+    "EnumString": "horvath",
+    "Segedlink": null,
+    "Image": "images/evangelium.png"
+  },
+  {
+    "TipusId": 15,
+    "TipusNev": "Jezsuita napi-útra-való",
+    "Forras": "jezsuita.hu",
+    "Link": "https://www.mixcloud.com/napiutravalo",
+    "EnumString": "prayasyougo",
+    "Segedlink": "https://node2.feed43.com/napi-utra-valo.xml",
+    "Image": "images/pray-as-you-go.png"
+  },
+  {
+    "TipusId": 16,
+    "TipusNev": "Nagyböjti elmélkedések",
+    "Forras": "orszagutiferencesek.hu",
+    "Link": "http://orszagutiferencesek.hu",
+    "EnumString": "nagybojt",
+    "Segedlink": null,
+    "Image": "images/nagybojt.png"
+  },
+  {
+    "TipusId": 17,
+    "TipusNev": "Böjte Csaba testvér gondolatai",
+    "Forras": "Szent Gellért Kiadó",
+    "Link": "https://www.szentgellertkiado.hu",
+    "EnumString": "bojte",
+    "Segedlink": null,
+    "Image": "images/bojte.png"
+  },
+  {
+    "TipusId": 18,
+    "TipusNev": "magyarkurir.hu",
+    "Forras": "Magyar Kurír",
+    "Link": "https://www.magyarkurir.hu",
+    "EnumString": "kurir",
+    "Segedlink": null,
+    "Image": "images/kurir.jpg"
+  },
+  {
+    "TipusId": 19,
+    "TipusNev": "Kempis Tamás: Krisztus követése (válogatás)",
+    "Forras": "Szent Gellért Kiadó",
+    "Link": "https://www.szentgellertkiado.hu",
+    "EnumString": "kempis",
+    "Segedlink": null,
+    "Image": "images/kempis.png"
+  },
+  {
+    "TipusId": 20,
+    "TipusNev": "bonumtv.hu",
+    "Forras": "bonumtv.hu",
+    "Link": "https://bonumtv.hu",
+    "EnumString": "bonumtv",
+    "Segedlink": null,
+    "Image": "images/bonumtv.jpg"
+  },
+  {
+    "TipusId": 21,
+    "TipusNev": "Mai Szent",
+    "Forras": "katolikus.hu",
+    "Link": "https://archiv.katolikus.hu/szentek/d.html",
+    "EnumString": "maiszent",
+    "Segedlink": null,
+    "Image": "images/katolikus_hu.jpg"
+  },
+  {
+    "TipusId": 24,
+    "TipusNev": "Szeretet-újság",
+    "Forras": "Szent Gellért Kiadó",
+    "Link": "https://www.szentgellertkiado.hu",
+    "EnumString": "szeretetujsag",
+    "Segedlink": null,
+    "Image": "images/szentgellertkiado.png"
+  },
+  {
+    "TipusId": 25,
+    "TipusNev": "Humor",
+    "Forras": "Szent Gellért Kiadó",
+    "Link": "https://www.szentgellertkiado.hu",
+    "EnumString": "humor",
+    "Segedlink": null,
+    "Image": "images/smile.jpg"
+  },
+  {
+    "TipusId": 28,
+    "TipusNev": "Napi evangélium",
+    "Forras": "Magyar Katolikus Rádió",
+    "Link": "https://www.katolikusradio.hu",
+    "EnumString": "audionapievangelium",
+    "Segedlink": "https://www.katolikusradio.hu/podcast/rss/?musorid=146",
+    "Image": "images/katolikusradio.png"
+  },
+  {
+    "TipusId": 29,
+    "TipusNev": "Keresztény élet",
+    "Forras": "Keresztény élet",
+    "Link": "http://www.keresztenyelet.hu",
+    "EnumString": "keresztenyelet",
+    "Segedlink": null,
+    "Image": "images/keresztenyelet.jpg"
+  },
+  {
+    "TipusId": 38,
+    "TipusNev": "Barsi Balázs atya prédikációi",
+    "Forras": "Barsi Balázs youtube csatorna",
+    "Link": "https://www.youtube.com/channel/UC_aC_9qFjPI5U0JrznoyYRA",
+    "EnumString": "audiobarsi",
+    "Segedlink": "https://www.youtube.com/channel/UC_aC_9qFjPI5U0JrznoyYRA",
+    "Image": "images/barsi.png"
+  },
+  {
+    "TipusId": 39,
+    "TipusNev": "Pál Feri atya prédikációi",
+    "Forras": "palferi.hu",
+    "Link": "https://www.palferi.hu/hanganyagok",
+    "EnumString": "audiopalferi",
+    "Segedlink": "https://mail.palferi.hu/hang/2022-2023/",
+    "Image": "images/palferi.png"
+  },
+  {
+    "TipusId": 41,
+    "TipusNev": "Pál Feri atya kedd esti-beszédek",
+    "Forras": "palferi.hu",
+    "Link": "https://www.palferi.hu/hanganyagok",
+    "EnumString": "audiopalferikedd",
+    "Segedlink": null,
+    "Image": "images/palferi.png"
+  },
+  {
+    "TipusId": 42,
+    "TipusNev": "Vianney Szent János breviáriuma",
+    "Forras": "Szent Gellért Kiadó",
+    "Link": "https://www.szentgellertkiado.hu",
+    "EnumString": "vianney",
+    "Segedlink": null,
+    "Image": "images/vianney.png"
+  },
+  {
+    "TipusId": 43,
+    "TipusNev": "777blog.hu",
+    "Forras": "777blog.hu",
+    "Link": "https://777blog.hu",
+    "EnumString": "b777",
+    "Segedlink": null,
+    "Image": "images/b777.png"
+  },
+  {
+    "TipusId": 45,
+    "TipusNev": "Regnum Christi Mozgalom napi elmélkedése",
+    "Forras": "Regnum Christi Mozgalom",
+    "Link": "https://regnumchristi.hu",
+    "EnumString": "regnum",
+    "Segedlink": "http://regnumchristi.hu/wg_rss/",
+    "Image": "images/regnum.png"
+  },
+  {
+    "TipusId": 46,
+    "TipusNev": "EPub könyvek",
+    "Forras": "vegyes",
+    "Link": "",
+    "EnumString": "book",
+    "Segedlink": null,
+    "Image": ""
+  },
+  {
+    "TipusId": 47,
+    "TipusNev": "Taizé",
+    "Forras": "Taizé",
+    "Link": "https://www.taize.fr",
+    "EnumString": "taize",
+    "Segedlink": "https://www.taize.fr/tz_readings.php?lang=hu",
+    "Image": "images/taize.png"
+  },
+  {
+    "TipusId": 48,
+    "TipusNev": "Prohászka Ottokár breviáriuma",
+    "Forras": "Székesfehérvári Egyházmegye",
+    "Link": "http://www.szfvar.katolikus.hu/proima/prohaszka_breviarium",
+    "EnumString": "prohaszka",
+    "Segedlink": null,
+    "Image": "images/prohaszka.png"
+  },
+  {
+    "TipusId": 49,
+    "TipusNev": "Katolikus Ma",
+    "Forras": "Katolikus Ma",
+    "Link": "https://katolikus.ma",
+    "EnumString": "bkatolikusma",
+    "Segedlink": null,
+    "Image": "images/katolikusma.png"
+  },
+  {
+    "TipusId": 50,
+    "TipusNev": "Szent Bernát idézetek minden napra",
+    "Forras": "Zirci Ciszterci Apátság",
+    "Link": "https://ciszterna.ocist.hu",
+    "EnumString": "szentbernat",
+    "Segedlink": "https://ciszterna.ocist.hu/rss.php",
+    "Image": "images/szentbernat.jpg"
+  },
+  {
+    "TipusId": 51,
+    "TipusNev": "Jezsuita bloggerek",
+    "Forras": "jezsuita.blog.hu",
+    "Link": "https://jezsuita.blog.hu",
+    "EnumString": "jezsuitablog",
+    "Segedlink": null,
+    "Image": "images/jezsuitablog.png"
+  },
+  {
+    "TipusId": 52,
+    "TipusNev": "Szalézi Szent Ferenc: Gondolatok minden napra",
+    "Forras": "kairosz.hu",
+    "Link": "http://kairosz.hu",
+    "EnumString": "szentszalezi",
+    "Segedlink": null,
+    "Image": "images/szentszalezi.png"
+  },
+  {
+    "TipusId": 58,
+    "TipusNev": "AJÁNDéKOZZ KÖNYVET",
+    "Forras": "Szent Gellért Kiadó",
+    "Link": "https://www.szentgellertkiado.hu",
+    "EnumString": "ajanlatweb",
+    "Segedlink": null,
+    "Image": "images/gift.png"
+  },
+  {
+    "TipusId": 60,
+    "TipusNev": "Taizé napi imák",
+    "Forras": "Taizé",
+    "Link": "https://www.taize.fr",
+    "EnumString": "audiotaize",
+    "Segedlink": "https://www.taize.fr/hu_article29660.html",
+    "Image": "images/taize.png"
+  },
+  {
+    "TipusId": 61,
+    "TipusNev": "Sienai Szent Katalin breviáriuma",
+    "Forras": "Szent Gellért Kiadó",
+    "Link": "https://www.szentgellertkiado.hu",
+    "EnumString": "sienaikatalin",
+    "Segedlink": null,
+    "Image": "images/sienaikatalin.png"
+  }
+]

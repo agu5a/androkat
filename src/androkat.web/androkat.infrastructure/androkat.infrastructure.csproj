@@ -18,5 +18,5 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\androkat.application\androkat.application.csproj" />
 	</ItemGroup>
-
+	
 </Project>

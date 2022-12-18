@@ -5,5 +5,5 @@ namespace androkat.application.Interfaces;
 
 public interface IMainPageService
 {
-    List<ContentModel> GetHome();
+    IEnumerable<ContentModel> GetHome();
 }

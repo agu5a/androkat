@@ -18,13 +18,13 @@ public class IndexModelTests : BaseTest
 
         var mainPageService = new Mock<IMainPageService>();
         mainPageService.Setup(s => s.GetHome()).Returns(new List<ContentModel>
-    {
-        new ContentModel
         {
-            ContentDetails = new ContentDetailsModel{ Cim = "Cim" },
-            MetaData = new ContentMetaDataModel{ Image = "Image" }
-        }
-    });
+            new ContentModel
+            {
+                ContentDetails = new ContentDetailsModel{ Cim = "Cim", Tipus = 9 },
+                MetaData = new ContentMetaDataModel{ Image = "Image" }
+            }
+        });
 
         var model = new web.Pages.IndexModel(mainPageService.Object)
         {
@@ -35,6 +35,7 @@ public class IndexModelTests : BaseTest
 
         model.OnGet();
         model.MainViewModels.First().ContentDetails.Cim.Should().Be("Cim");
+        model.MainViewModels.First().ContentDetails.Tipus.Should().Be(9);
         model.MainViewModels.First().MetaData.Image.Should().Be("Image");
     }
 }

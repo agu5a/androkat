@@ -1,7 +1,6 @@
 ﻿using androkat.domain.Model;
 using androkat.infrastructure.Mapper;
 using androkat.infrastructure.Model.SQLite;
-using AutoFixture;
 using AutoMapper;
 using FluentAssertions;
 using NUnit.Framework;

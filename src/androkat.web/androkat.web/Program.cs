@@ -1,13 +1,16 @@
 using androkat.application.DI;
+using androkat.application.Interfaces;
+using androkat.application.Service;
+using androkat.infrastructure.Configuration;
 using androkat.web.Infrastructure;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Serilog;
 using System;
 using System.Text.Json.Serialization;
@@ -33,6 +36,9 @@ try
 
     builder.Services.SetAutoMapper();
     builder.Services.SetSession();
+
+    builder.Services.AddSingleton<IConfigureOptions<AndrokatConfiguration>, AndrokatConfigurationOptions>();
+    builder.Services.AddSingleton<IContentMetaDataService, ContentMetaDataService>();
 
     builder.Services.AddControllers()
         .AddRazorRuntimeCompilation().AddJsonOptions(options =>
@@ -63,12 +69,7 @@ try
         app.UseStatusCodePagesWithReExecute("/Error/{0}");
     }
 
-    var forwardedHeadersOptions = new ForwardedHeadersOptions
-    {
-        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
-    };
-    app.UseForwardedHeaders(forwardedHeadersOptions);
-
+    app.UseProxy();
     app.UseHttpsRedirection();
 
     var provider = new FileExtensionContentTypeProvider();

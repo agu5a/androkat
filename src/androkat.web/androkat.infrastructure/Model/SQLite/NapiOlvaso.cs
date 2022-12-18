@@ -19,4 +19,7 @@ public class Napiolvaso
 
     [DataMember(Name = "cim")]
     public string Cim { get; set; }
+
+    [DataMember(Name = "tipus")]
+    public int Tipus { get; set; }
 }

@@ -14,7 +14,7 @@ public class IndexModel : PageModel
         _mainPageService = mainPageService;
     }
 
-    public List<ContentModel> MainViewModels { get; set; }
+    public IEnumerable<ContentModel> MainViewModels { get; set; }
 
     public void OnGet()
     {

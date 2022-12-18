@@ -1,4 +1,8 @@
-﻿using androkat.infrastructure.Mapper;
+﻿using androkat.domain;
+using androkat.infrastructure.DataManager.SQLite;
+using androkat.infrastructure.Mapper;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -10,6 +14,7 @@ public static class InfrastructureExtensions
 {
     public static IServiceCollection SetServices(this IServiceCollection services)
     {
+        services.AddScoped<ISQLiteRepository, SQLiteRepository>();
         return services;
     }
 
@@ -31,5 +36,16 @@ public static class InfrastructureExtensions
         });
 
         return services;
+    }
+
+    public static WebApplication UseProxy(this WebApplication app)
+    {
+        var forwardedHeadersOptions = new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
+        };
+        app.UseForwardedHeaders(forwardedHeadersOptions);
+
+        return app;
     }
 }
