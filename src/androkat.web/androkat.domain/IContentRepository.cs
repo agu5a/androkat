@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace androkat.domain;
 
-public interface ISQLiteRepository
+public interface IContentRepository
 {
     IEnumerable<ContentModel> GetContentDetailsModel(List<int> tipusok);
 }

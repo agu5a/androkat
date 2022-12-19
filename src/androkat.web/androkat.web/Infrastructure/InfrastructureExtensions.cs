@@ -14,7 +14,7 @@ public static class InfrastructureExtensions
 {
     public static IServiceCollection SetServices(this IServiceCollection services)
     {
-        services.AddScoped<ISQLiteRepository, SQLiteRepository>();
+        services.AddScoped<IContentRepository, ContentRepository>();
         return services;
     }
 

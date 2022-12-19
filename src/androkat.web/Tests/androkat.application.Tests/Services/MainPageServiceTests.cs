@@ -13,7 +13,7 @@ namespace androkat.application.Tests.Services;
 
 public class MainPageServiceTests
 {
-    private readonly Mock<ISQLiteRepository> _sqliteRepository = new();
+    private readonly Mock<IContentRepository> _sqliteRepository = new();
 
     [Test]
     public void GetHome_Happy()
@@ -28,7 +28,8 @@ public class MainPageServiceTests
                     {
                         Cim = "Twitter cím",
                         Fulldatum = DateTime.Now,
-                        Nid = Guid.NewGuid()
+                        Nid = Guid.NewGuid(),
+                        Tipus = (int)Forras.papaitwitter
                     },
                     MetaData = new ContentMetaDataModel
                     {
@@ -43,7 +44,8 @@ public class MainPageServiceTests
                     {
                         Cim = "Advent cím",
                         Fulldatum = DateTime.Now,
-                        Nid = Guid.NewGuid()
+                        Nid = Guid.NewGuid(),
+                        Tipus = (int)Forras.advent
                     },
                     MetaData = new ContentMetaDataModel
                     {
@@ -62,6 +64,7 @@ public class MainPageServiceTests
         result[0].MetaData.TipusNev.Should().Be("Ferenc pápa twitter üzenete");
         result[0].MetaData.TipusId.Should().Be(Forras.papaitwitter);
         result[0].ContentDetails.Cim.Should().Be("Twitter cím");
+        result[0].ContentDetails.Tipus.Should().Be((int)Forras.papaitwitter);
         result.Count.Should().Be(2);
     }
 }

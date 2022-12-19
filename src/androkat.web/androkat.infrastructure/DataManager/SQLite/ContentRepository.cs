@@ -1,4 +1,5 @@
 ﻿using androkat.domain;
+using androkat.domain.Enum;
 using androkat.domain.Model;
 using androkat.infrastructure.Configuration;
 using androkat.infrastructure.Model.SQLite;
@@ -10,13 +11,13 @@ using System.Collections.Generic;
 
 namespace androkat.infrastructure.DataManager.SQLite;
 
-public class SQLiteRepository : BaseRepository, ISQLiteRepository
+public class ContentRepository : BaseRepository, IContentRepository
 {
-    private readonly ILogger<SQLiteRepository> _logger;
+    private readonly ILogger<ContentRepository> _logger;
     private readonly IOptions<AndrokatConfiguration> _androkatConfiguration;
 
-    public SQLiteRepository(
-        ILogger<SQLiteRepository> logger,
+    public ContentRepository(
+        ILogger<ContentRepository> logger,
         IMapper mapper,
         IOptions<AndrokatConfiguration> androkatConfiguration
         ) : base(mapper)
@@ -34,14 +35,21 @@ public class SQLiteRepository : BaseRepository, ISQLiteRepository
                     Cim = "Twitter cím",
                     Fulldatum = DateTime.Now.ToString(),
                     Nid = Guid.NewGuid(),
-                    Tipus = 9
+                    Tipus = (int)Forras.papaitwitter
             },
             new Napiolvaso
             {
                     Cim = "Advent cím",
                     Fulldatum = DateTime.Now.ToString(),
                     Nid = Guid.NewGuid(),
-                    Tipus= 10
+                    Tipus= (int)Forras.advent
+            },
+            new Napiolvaso
+            {
+                    Cim = "Advent cím",
+                    Fulldatum = DateTime.Now.ToString(),
+                    Nid = Guid.NewGuid(),
+                    Tipus= (int)Forras.bojte
             }
         };
 
@@ -53,6 +61,8 @@ public class SQLiteRepository : BaseRepository, ISQLiteRepository
                 ContentDetails = _mapper.Map<ContentDetailsModel>(item),
                 MetaData = _mapper.Map<ContentMetaDataModel>(_androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus))
             });
+
+        _logger.LogInformation("{Name} has been finished, count: {count}", nameof(GetContentDetailsModel), list.Count);
 
         return list;
     }

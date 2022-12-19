@@ -7,15 +7,15 @@ namespace androkat.application.Service;
 
 public class MainPageService : IMainPageService
 {
-    private readonly ISQLiteRepository _sqliteRepository;
+    private readonly IContentRepository _repository;
 
-    public MainPageService(ISQLiteRepository sqliteRepository)
+    public MainPageService(IContentRepository repository)
     {
-        _sqliteRepository = sqliteRepository;
+        _repository = repository;
     }
 
     public IEnumerable<ContentModel> GetHome()
     {
-        return _sqliteRepository.GetContentDetailsModel(new List<int>());
+        return _repository.GetContentDetailsModel(new List<int>());
     }
 }
