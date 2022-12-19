@@ -18,7 +18,7 @@ public class MainPageServiceTests
     [Test]
     public void GetHome_Happy()
     {
-        _sqliteRepository.Setup(s => s.GetContentDetailsModel(new List<int>())).Returns
+        _sqliteRepository.Setup(s => s.GetContentDetailsModel(It.IsAny<int[]>())).Returns
             (
             new List<ContentModel>
             {

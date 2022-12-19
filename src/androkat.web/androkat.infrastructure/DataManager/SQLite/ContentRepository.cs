@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace androkat.infrastructure.DataManager.SQLite;
 
@@ -26,7 +27,7 @@ public class ContentRepository : BaseRepository, IContentRepository
         _androkatConfiguration = androkatConfiguration;
     }
 
-    public IEnumerable<ContentModel> GetContentDetailsModel(List<int> tipusok)
+    public IEnumerable<ContentModel> GetContentDetailsModel(int[] tipusok)
     {
         var result = new List<Napiolvaso>
         {

@@ -1,5 +1,6 @@
 ﻿using androkat.application.Interfaces;
 using androkat.domain;
+using androkat.domain.Enum;
 using androkat.domain.Model;
 using System.Collections.Generic;
 
@@ -16,6 +17,7 @@ public class MainPageService : IMainPageService
 
     public IEnumerable<ContentModel> GetHome()
     {
-        return _repository.GetContentDetailsModel(new List<int>());
+        var result = _repository.GetContentDetailsModel(new int[] { (int)Forras.advent, 11, 14, (int)Forras.nagybojt, 17, 13, 9, 45, 7, 48, 19, 47, 24 });
+        return result;
     }
 }

@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace androkat.infrastructure.Tests;
@@ -35,12 +34,11 @@ public class ContentRepositoryTests
 
         var repo = new ContentRepository(loggerRepo.Object, mapper, idezetData);
 
-        var result = repo.GetContentDetailsModel(new List<int>()).ToList();
+        var result = repo.GetContentDetailsModel(new int[] { (int)Forras.papaitwitter }).ToList();
 
         result[0].MetaData.Image.Should().Be("images/ferencpapa.png");
         result[0].MetaData.TipusNev.Should().Be("Ferenc pápa twitter üzenete");
         result[0].MetaData.TipusId.Should().Be(Forras.papaitwitter);
-        result[0].ContentDetails.Cim.Should().Be("Twitter cím");
         result[0].ContentDetails.Tipus.Should().Be((int)Forras.papaitwitter);
         result.Count.Should().Be(3);
     }

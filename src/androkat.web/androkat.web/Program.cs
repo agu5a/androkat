@@ -31,7 +31,8 @@ try
         lc
         .ReadFrom.Configuration(ctx.Configuration)
         .Enrich.FromLogContext()
-        .WriteTo.Console();
+        .WriteTo.Console()
+        .Enrich.WithProperty("MyApp", "AndroKatWeb");
     });
 
     builder.Services.SetAutoMapper();

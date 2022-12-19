@@ -5,5 +5,5 @@ namespace androkat.domain;
 
 public interface IContentRepository
 {
-    IEnumerable<ContentModel> GetContentDetailsModel(List<int> tipusok);
+    IEnumerable<ContentModel> GetContentDetailsModel(int[] tipusok);
 }
