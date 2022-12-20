@@ -8,4 +8,5 @@ public class ContentDetailsModel
     public DateTime Fulldatum { get; set; }
     public string Cim { get; set; }
     public int Tipus { get; set; }
+    public string Img { get; set; }
 }

@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace androkat.infrastructure.Tests;
 
-public class ContentRepositoryTests
+public class ContentRepositoryTests : BaseTest
 {
     [Test]
     public void GetContentDetailsModel_Happy()
@@ -34,7 +34,7 @@ public class ContentRepositoryTests
 
         var repo = new ContentRepository(loggerRepo.Object, mapper, idezetData);
 
-        var result = repo.GetContentDetailsModel(new int[] { (int)Forras.papaitwitter }).ToList();
+        var result = repo.GetContentDetailsModel(new int[] { (int)Forras.papaitwitter, (int)Forras.advent, (int)Forras.bojte }).ToList();
 
         result[0].MetaData.Image.Should().Be("images/ferencpapa.png");
         result[0].MetaData.TipusNev.Should().Be("Ferenc pápa twitter üzenete");

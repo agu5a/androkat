@@ -22,4 +22,8 @@ public class Napiolvaso
 
     [DataMember(Name = "tipus")]
     public int Tipus { get; set; }
+
+    [StringLength(200)]
+    [DataMember(Name = "img")]
+    public string Img { get; set; }
 }

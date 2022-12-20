@@ -7,12 +7,15 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Microsoft.AspNetCore.Routing;
+using androkat.application.Interfaces;
+using androkat.domain.Model;
+using System.Collections.Generic;
 
 namespace androkat.web.Tests;
 
 public class BaseTest
 {
-    public (PageContext pageContext, TempDataDictionary tempData, ActionContext actionContext) GetPreStuff()
+    public static (PageContext pageContext, TempDataDictionary tempData, ActionContext actionContext) GetPreStuff()
     {
         var httpContext = new DefaultHttpContext();
         var modelState = new ModelStateDictionary();
@@ -26,6 +29,29 @@ public class BaseTest
         };
 
         return (pageContext, tempData, actionContext);
+    }
+
+    public static Mock<IMainPageService> GetMainPageService(int? tipus = null)
+    {
+        var mainPageService = new Mock<IMainPageService>();
+        mainPageService.Setup(s => s.GetHome()).Returns(new List<ContentModel>
+        {
+            new ContentModel
+            {
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? 9, Img = "Image" },
+                MetaData = new ContentMetaDataModel { Image = "Image" }
+            }
+        });
+        mainPageService.Setup(s => s.GetAjanlat()).Returns(new List<ContentModel>
+        {
+            new ContentModel
+            {
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? 9, Img = "Image" },
+                MetaData = new ContentMetaDataModel { Image = "Image" }
+            }
+        });
+
+        return mainPageService;
     }
 
     public static IMemoryCache GetIMemoryCache()

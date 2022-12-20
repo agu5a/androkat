@@ -43,20 +43,28 @@ public class ContentRepository : BaseRepository, IContentRepository
                     Cim = "Advent cím",
                     Fulldatum = DateTime.Now.ToString(),
                     Nid = Guid.NewGuid(),
-                    Tipus= (int)Forras.advent
+                    Tipus = (int)Forras.advent
             },
             new Napiolvaso
             {
                     Cim = "Advent cím",
                     Fulldatum = DateTime.Now.ToString(),
                     Nid = Guid.NewGuid(),
-                    Tipus= (int)Forras.bojte
+                    Tipus = (int)Forras.bojte
+            },
+            new Napiolvaso
+            {
+                    Cim = "Ajánlat cím",
+                    Fulldatum = DateTime.Now.ToString(),
+                    Nid = Guid.NewGuid(),
+                    Tipus = (int)Forras.ajanlatweb,
+                    Img = "image"
             }
         };
 
         var list = new List<ContentModel>();
 
-        foreach (var item in result)
+        foreach (var item in result.Where(w => tipusok.Contains(w.Tipus)))
             list.Add(new ContentModel
             {
                 ContentDetails = _mapper.Map<ContentDetailsModel>(item),

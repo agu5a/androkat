@@ -17,7 +17,28 @@ public class MainPageService : IMainPageService
 
     public IEnumerable<ContentModel> GetHome()
     {
-        var result = _repository.GetContentDetailsModel(new int[] { (int)Forras.advent, 11, 14, (int)Forras.nagybojt, 17, 13, 9, 45, 7, 48, 19, 47, 24 });
+        var result = _repository.GetContentDetailsModel(new int[] 
+        { 
+            (int)Forras.advent, 
+            (int)Forras.maievangelium,
+            (int)Forras.horvath, 
+            (int)Forras.nagybojt, 
+            (int)Forras.bojte, 
+            (int)Forras.barsi, 
+            (int)Forras.papaitwitter,
+            (int)Forras.regnum, 
+            (int)Forras.fokolare,
+            (int)Forras.prohaszka, 
+            (int)Forras.kempis,
+            (int)Forras.taize,
+            (int)Forras.szeretetujsag
+        });
+        return result;
+    }
+
+    public IEnumerable<ContentModel> GetAjanlat()
+    {
+        var result = _repository.GetContentDetailsModel(new int[] { (int)Forras.ajanlatweb });
         return result;
     }
 }

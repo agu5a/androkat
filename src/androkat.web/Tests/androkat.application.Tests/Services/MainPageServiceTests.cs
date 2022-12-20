@@ -11,15 +11,12 @@ using System.Linq;
 
 namespace androkat.application.Tests.Services;
 
-public class MainPageServiceTests
+public class MainPageServiceTests : BaseTest
 {
-    private readonly Mock<IContentRepository> _sqliteRepository = new();
-
     [Test]
     public void GetHome_Happy()
     {
-        _sqliteRepository.Setup(s => s.GetContentDetailsModel(It.IsAny<int[]>())).Returns
-            (
+        Mock<IContentRepository> repository = GetContentRepository(
             new List<ContentModel>
             {
                 new ContentModel
@@ -53,10 +50,10 @@ public class MainPageServiceTests
                         TipusNev = "Advent",
                         Image = "images/advent.png"
                     }
-                }
+                } 
             });
 
-        var service = new MainPageService(_sqliteRepository.Object);
+        var service = new MainPageService(repository.Object);
 
         var result = service.GetHome().ToList();
 
@@ -66,5 +63,41 @@ public class MainPageServiceTests
         result[0].ContentDetails.Cim.Should().Be("Twitter cím");
         result[0].ContentDetails.Tipus.Should().Be((int)Forras.papaitwitter);
         result.Count.Should().Be(2);
+    }
+
+    [Test]
+    public void GetAjanlat_Happy()
+    {
+        Mock<IContentRepository> repository = GetContentRepository(
+            new List<ContentModel>
+            {
+                new ContentModel
+                {
+                    ContentDetails = new ContentDetailsModel
+                    {
+                        Cim = "Ajánlat cím",
+                        Fulldatum = DateTime.Now,
+                        Nid = Guid.NewGuid(),
+                        Tipus = (int)Forras.ajanlatweb
+                    },
+                    MetaData = new ContentMetaDataModel
+                    {
+                        TipusId = Forras.ajanlatweb,
+                        TipusNev = "Ajánlat",
+                        Image = "images/Ajánlat.png"
+                    }
+                }
+            });
+
+        var service = new MainPageService(repository.Object);
+
+        var result = service.GetAjanlat().ToList();
+
+        result[0].MetaData.Image.Should().Be("images/Ajánlat.png");
+        result[0].MetaData.TipusNev.Should().Be("Ajánlat");
+        result[0].MetaData.TipusId.Should().Be(Forras.ajanlatweb);
+        result[0].ContentDetails.Cim.Should().Be("Ajánlat cím");
+        result[0].ContentDetails.Tipus.Should().Be((int)Forras.ajanlatweb);
+        result.Count.Should().Be(1);
     }
 }

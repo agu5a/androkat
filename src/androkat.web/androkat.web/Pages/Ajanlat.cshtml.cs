@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace androkat.web.Pages;
 
-public class IndexModel : PageModel
+public class AjanlatModel : PageModel
 {
     private readonly IMainPageService _mainPageService;
 
-    public IndexModel(IMainPageService mainPageService)
+    public AjanlatModel(IMainPageService mainPageService)
     {
         _mainPageService = mainPageService;
     }
@@ -18,6 +18,6 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-        ContentModels = _mainPageService.GetHome();
+        ContentModels = _mainPageService.GetAjanlat();
     }
 }
