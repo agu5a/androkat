@@ -10,6 +10,6 @@ public class DefaultCoreModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
-        builder.RegisterType<MainPageService>().As<IMainPageService>().InstancePerLifetimeScope();
+        builder.RegisterType<ContentService>().As<IContentService>().InstancePerLifetimeScope();
     }
 }

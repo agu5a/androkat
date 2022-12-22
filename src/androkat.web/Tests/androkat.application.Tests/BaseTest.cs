@@ -1,11 +1,9 @@
 ﻿using androkat.domain;
-using androkat.domain.Enum;
 using androkat.domain.Model;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System.Collections.Generic;
-using System;
 
 namespace androkat.application.Tests;
 

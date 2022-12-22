@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace androkat.application.Service;
 
-public class MainPageService : IMainPageService
+public class ContentService : IContentService
 {
     private readonly IContentRepository _repository;
 
-    public MainPageService(IContentRepository repository)
+    public ContentService(IContentRepository repository)
     {
         _repository = repository;
     }
@@ -39,6 +39,24 @@ public class MainPageService : IMainPageService
     public IEnumerable<ContentModel> GetAjanlat()
     {
         var result = _repository.GetContentDetailsModel(new int[] { (int)Forras.ajanlatweb });
+        return result;
+    }
+
+    public IEnumerable<ContentModel> GetSzentek()
+    {
+        var result = _repository.GetContentDetailsModel(new int[] 
+        {
+            (int)Forras.vianney,
+            (int)Forras.pio,
+            (int)Forras.janospal,
+            (int)Forras.szentbernat,
+            (int)Forras.sztjanos,
+            (int)Forras.kisterez,
+            (int)Forras.terezanya,
+            (int)Forras.ignac,
+            (int)Forras.szentszalezi,
+            (int)Forras.sienaikatalin 
+        });
         return result;
     }
 }

@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace androkat.web.Tests.Pages;
 
-public class IndexModelTests : BaseTest
+public class SzentekModelTests : BaseTest
 {
     [Test]
-    public void IndexModelTest()
+    public void SzentekModelTest()
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();
 
-        var model = new web.Pages.IndexModel(GetContentService().Object)
+        var model = new web.Pages.SzentekModel(GetContentService(2).Object)
         {
             PageContext = pageContext,
             TempData = tempData,
@@ -22,7 +22,7 @@ public class IndexModelTests : BaseTest
         model.OnGet();
         model.ContentModels.First().ContentDetails.Cim.Should().Be("Cim");
         model.ContentModels.First().ContentDetails.Img.Should().Be("Image");
-        model.ContentModels.First().ContentDetails.Tipus.Should().Be(9);
+        model.ContentModels.First().ContentDetails.Tipus.Should().Be(2);
         model.ContentModels.First().MetaData.Image.Should().Be("Image");
     }
 }

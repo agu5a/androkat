@@ -7,17 +7,17 @@ namespace androkat.web.Pages;
 
 public class AjanlatModel : PageModel
 {
-    private readonly IMainPageService _mainPageService;
+    private readonly IContentService _contentService;
 
-    public AjanlatModel(IMainPageService mainPageService)
+    public AjanlatModel(IContentService contentService)
     {
-        _mainPageService = mainPageService;
+        _contentService = contentService;
     }
 
     public IEnumerable<ContentModel> ContentModels { get; set; }
 
     public void OnGet()
     {
-        ContentModels = _mainPageService.GetAjanlat();
+        ContentModels = _contentService.GetAjanlat();
     }
 }

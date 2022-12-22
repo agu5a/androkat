@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace androkat.application.Tests.Services;
 
-public class MainPageServiceTests : BaseTest
+public class ContentServiceTests : BaseTest
 {
     [Test]
     public void GetHome_Happy()
@@ -53,7 +53,7 @@ public class MainPageServiceTests : BaseTest
                 } 
             });
 
-        var service = new MainPageService(repository.Object);
+        var service = new ContentService(repository.Object);
 
         var result = service.GetHome().ToList();
 
@@ -89,7 +89,7 @@ public class MainPageServiceTests : BaseTest
                 }
             });
 
-        var service = new MainPageService(repository.Object);
+        var service = new ContentService(repository.Object);
 
         var result = service.GetAjanlat().ToList();
 
@@ -98,6 +98,42 @@ public class MainPageServiceTests : BaseTest
         result[0].MetaData.TipusId.Should().Be(Forras.ajanlatweb);
         result[0].ContentDetails.Cim.Should().Be("Ajánlat cím");
         result[0].ContentDetails.Tipus.Should().Be((int)Forras.ajanlatweb);
+        result.Count.Should().Be(1);
+    }
+
+    [Test]
+    public void GetSzentek_Happy()
+    {
+        Mock<IContentRepository> repository = GetContentRepository(
+            new List<ContentModel>
+            {
+                new ContentModel
+                {
+                    ContentDetails = new ContentDetailsModel
+                    {
+                        Cim = "Pio cím",
+                        Fulldatum = DateTime.Now,
+                        Nid = Guid.NewGuid(),
+                        Tipus = (int)Forras.pio
+                    },
+                    MetaData = new ContentMetaDataModel
+                    {
+                        TipusId = Forras.pio,
+                        TipusNev = "Szentek",
+                        Image = "images/pio.png"
+                    }
+                }
+            });
+
+        var service = new ContentService(repository.Object);
+
+        var result = service.GetSzentek().ToList();
+
+        result[0].MetaData.Image.Should().Be("images/pio.png");
+        result[0].MetaData.TipusNev.Should().Be("Szentek");
+        result[0].MetaData.TipusId.Should().Be(Forras.pio);
+        result[0].ContentDetails.Cim.Should().Be("Pio cím");
+        result[0].ContentDetails.Tipus.Should().Be((int)Forras.pio);
         result.Count.Should().Be(1);
     }
 }

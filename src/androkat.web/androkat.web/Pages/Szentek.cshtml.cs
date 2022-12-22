@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace androkat.web.Pages;
 
-public class IndexModel : PageModel
+public class SzentekModel : PageModel
 {
     private readonly IContentService _contentService;
 
-    public IndexModel(IContentService contentService)
+    public SzentekModel(IContentService contentService)
     {
         _contentService = contentService;
     }
@@ -18,6 +18,6 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-        ContentModels = _contentService.GetHome();
+        ContentModels = _contentService.GetSzentek();
     }
 }

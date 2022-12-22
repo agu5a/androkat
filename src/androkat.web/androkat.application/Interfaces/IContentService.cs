@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace androkat.application.Interfaces;
 
-public interface IMainPageService
+public interface IContentService
 {
     IEnumerable<ContentModel> GetAjanlat();
     IEnumerable<ContentModel> GetHome();
+    IEnumerable<ContentModel> GetSzentek();
 }

@@ -31,10 +31,10 @@ public class BaseTest
         return (pageContext, tempData, actionContext);
     }
 
-    public static Mock<IMainPageService> GetMainPageService(int? tipus = null)
+    public static Mock<IContentService> GetContentService(int? tipus = null)
     {
-        var mainPageService = new Mock<IMainPageService>();
-        mainPageService.Setup(s => s.GetHome()).Returns(new List<ContentModel>
+        var contentService = new Mock<IContentService>();
+        contentService.Setup(s => s.GetHome()).Returns(new List<ContentModel>
         {
             new ContentModel
             {
@@ -42,16 +42,24 @@ public class BaseTest
                 MetaData = new ContentMetaDataModel { Image = "Image" }
             }
         });
-        mainPageService.Setup(s => s.GetAjanlat()).Returns(new List<ContentModel>
+        contentService.Setup(s => s.GetAjanlat()).Returns(new List<ContentModel>
         {
             new ContentModel
             {
                 ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? 9, Img = "Image" },
+                MetaData = new ContentMetaDataModel { Image = "Image" }
+            }
+        });
+        contentService.Setup(s => s.GetSzentek()).Returns(new List<ContentModel>
+        {
+            new ContentModel
+            {
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? 2, Img = "Image" },
                 MetaData = new ContentMetaDataModel { Image = "Image" }
             }
         });
 
-        return mainPageService;
+        return contentService;
     }
 
     public static IMemoryCache GetIMemoryCache()

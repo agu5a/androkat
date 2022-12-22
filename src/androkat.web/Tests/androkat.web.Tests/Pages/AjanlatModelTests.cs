@@ -12,7 +12,7 @@ public class AjanlatModelTests : BaseTest
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();
 
-        var model = new web.Pages.AjanlatModel(GetMainPageService(58).Object)
+        var model = new web.Pages.AjanlatModel(GetContentService(58).Object)
         {
             PageContext = pageContext,
             TempData = tempData,
