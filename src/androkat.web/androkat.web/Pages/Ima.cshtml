@@ -1,0 +1,60 @@
+@page "{csoport?}"
+@using androkat.infrastructure.Model;
+@using androkat.domain.Enum;
+@using androkat.web.Pages;
+@model ImaModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="container bg-white" style="padding: 15px;">
+
+    <div class="mb-4" style="border-radius: 0.25rem;padding: 15px;background-color: #ffffff;">
+        <strong>Imák szűrése forrás szerint</strong>:<br /> <a href="/ima">Összes</a> ||
+        @{            
+            var age = new Dictionary<string, string> {{ "Alapimák", "11" }, {"Napi imák","9" }, {"Kérő és felajánló imák","12" },
+            {"Hála és dicsőítő imák","7"}, {"Litániák","4"}, {"Szentmise","3"},
+            {"Szűz Mária","10"}, {"Rózsafüzér","2"}, {"Szentek imái","1"},
+            {"Zsoltár","0" }}; //5->saját ima az android appban
+        }
+        @foreach(var item in age) 
+        {
+            var css = "";
+            css = (!string.IsNullOrWhiteSpace(ViewData["csoport"]?.ToString()) && ViewData["csoport"].ToString() == item.Value) ? "class=\"bg-success text-white p-1\"" : "";
+            <a href="/ima/@(item.Value)" @Html.Raw(css)>@(item.Key)</a> @("||")
+        }
+    </div>
+
+    @{
+        var index = 0;
+        var vege = false;
+    }
+    @foreach (var p in Model.ContentModels)
+    {
+        vege = false;
+        @if(index == 0)
+        {
+          @:<div class="row mb-1">
+        }
+        
+        <div class="col-sm-4">
+        <div class="card h-100"><div class="card-body">
+            <a href="/idetails/@(p.ContentDetails.Nid)" class="navlink">
+            @Html.Raw("<h5>" + p.ContentDetails.Cim + "</h5>")          
+            </a>
+        </div></div></div>
+
+        @if(index == 2)
+       {
+            @:</div>
+
+            index = 0;
+            vege = true;         
+        }
+        else { index++; }            
+    } 
+
+    @if(!vege) 
+    { 
+        @:</div>
+    }       
+
+</div>

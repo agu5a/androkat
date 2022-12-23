@@ -1,9 +1,9 @@
-using androkat.domain.Enum;
+﻿using androkat.domain.Enum;
 using androkat.domain.Model;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace androkat.infrastructure.Configuration;
+namespace androkat.domain.Configuration;
 
 public class AndrokatConfiguration
 {

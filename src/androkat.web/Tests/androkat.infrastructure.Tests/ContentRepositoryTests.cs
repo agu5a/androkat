@@ -1,4 +1,5 @@
 ﻿using androkat.application.Service;
+using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.infrastructure.Configuration;
 using androkat.infrastructure.DataManager.SQLite;
@@ -18,8 +19,7 @@ public class ContentRepositoryTests : BaseTest
     [Test]
     public void GetContentDetailsModel_Happy()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-        var mapper = config.CreateMapper();
+        var mapper = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>()).CreateMapper();
 
         var loggerRepo = new Mock<ILogger<ContentRepository>>();
 
@@ -27,12 +27,12 @@ public class ContentRepositoryTests : BaseTest
         var service = new ContentMetaDataService(logger.Object);
         var metaDataList = service.GetContentMetaDataList("../../../../../androkat.web/Data/IdezetData.json");
 
-        var idezetData = Options.Create(new AndrokatConfiguration
+        var config = Options.Create(new AndrokatConfiguration
         {
             ContentMetaDataList = metaDataList
         });
 
-        var repo = new ContentRepository(loggerRepo.Object, mapper, idezetData);
+        var repo = new ContentRepository(loggerRepo.Object, mapper, config);
 
         var result = repo.GetContentDetailsModel(new int[] { (int)Forras.papaitwitter, (int)Forras.advent, (int)Forras.bojte }).ToList();
 

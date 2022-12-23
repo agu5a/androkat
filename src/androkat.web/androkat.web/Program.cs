@@ -1,6 +1,7 @@
 using androkat.application.DI;
 using androkat.application.Interfaces;
 using androkat.application.Service;
+using androkat.domain.Configuration;
 using androkat.infrastructure.Configuration;
 using androkat.web.Infrastructure;
 using Autofac;

@@ -8,7 +8,7 @@ on:
     paths-ignore:
     - 'readme.md'
 env:
-  DOTNET_VERSION: '6.0.x'
+  DOTNET_VERSION: '7.0.x'
   SOLUTION_FILE: './src/androkat.web/androkat.web.sln'
 jobs:
   build-and-test:
@@ -25,4 +25,4 @@ jobs:
     - name: Build
       run: dotnet build ${{ env.SOLUTION_FILE }} --configuration Release --no-restore
     - name: Test
-      run: dotnet test ${{ env.SOLUTION_FILE }} --no-restore --verbosity normal
+      run: dotnet test ${{ env.SOLUTION_FILE }} --no-build --configuration Release

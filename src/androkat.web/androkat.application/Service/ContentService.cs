@@ -1,7 +1,10 @@
 ﻿using androkat.application.Interfaces;
 using androkat.domain;
+using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.domain.Model;
+using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 
 namespace androkat.application.Service;
@@ -9,8 +12,9 @@ namespace androkat.application.Service;
 public class ContentService : IContentService
 {
     private readonly IContentRepository _repository;
+    private readonly IOptions<AndrokatConfiguration> _androkatConfiguration;
 
-    public ContentService(IContentRepository repository)
+    public ContentService(IContentRepository repository, IOptions<AndrokatConfiguration> androkatConfiguration)
     {
         _repository = repository;
     }
@@ -57,6 +61,37 @@ public class ContentService : IContentService
             (int)Forras.szentszalezi,
             (int)Forras.sienaikatalin 
         });
+        return result;
+    }
+
+    public IEnumerable<ContentModel> GetImaPage(string csoport)
+    {
+        var list = new List<ContentModel>();
+        var result = GetIma(csoport);
+        foreach (var item in result)
+            list.Add(new ContentModel
+            {
+                ContentDetails = new ContentDetailsModel
+                {
+                    Nid = item.Nid,
+                    Cim = item.Cim
+                }
+            });
+
+        return list;
+    }
+
+    private IEnumerable<ImaViewModel> GetIma(string csoport)
+    {
+        var result = new List<ImaViewModel>()
+        {
+            new ImaViewModel
+            {
+                Cim = "Ima Cím",
+                Nid = Guid.NewGuid()
+            }
+        };
+
         return result;
     }
 }

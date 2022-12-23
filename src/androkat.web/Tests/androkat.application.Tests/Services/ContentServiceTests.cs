@@ -1,8 +1,10 @@
 ﻿using androkat.application.Service;
 using androkat.domain;
+using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.domain.Model;
 using FluentAssertions;
+using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -50,10 +52,12 @@ public class ContentServiceTests : BaseTest
                         TipusNev = "Advent",
                         Image = "images/advent.png"
                     }
-                } 
+                }
             });
 
-        var service = new ContentService(repository.Object);
+        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+
+        var service = new ContentService(repository.Object, contentMetaDataModels);
 
         var result = service.GetHome().ToList();
 
@@ -89,7 +93,9 @@ public class ContentServiceTests : BaseTest
                 }
             });
 
-        var service = new ContentService(repository.Object);
+        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+
+        var service = new ContentService(repository.Object, contentMetaDataModels);
 
         var result = service.GetAjanlat().ToList();
 
@@ -125,7 +131,9 @@ public class ContentServiceTests : BaseTest
                 }
             });
 
-        var service = new ContentService(repository.Object);
+        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+
+        var service = new ContentService(repository.Object, contentMetaDataModels);
 
         var result = service.GetSzentek().ToList();
 
@@ -134,6 +142,18 @@ public class ContentServiceTests : BaseTest
         result[0].MetaData.TipusId.Should().Be(Forras.pio);
         result[0].ContentDetails.Cim.Should().Be("Pio cím");
         result[0].ContentDetails.Tipus.Should().Be((int)Forras.pio);
+        result.Count.Should().Be(1);
+    }
+
+    [Test]
+    public void GetImaPage_Happy()
+    {
+        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+        var service = new ContentService(new Mock<IContentRepository>().Object, contentMetaDataModels);
+
+        var result = service.GetImaPage(string.Empty).ToList();
+
+        result[0].ContentDetails.Cim.Should().Be("Ima Cím");
         result.Count.Should().Be(1);
     }
 }

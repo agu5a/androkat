@@ -1,7 +1,7 @@
 ﻿using androkat.domain;
+using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.domain.Model;
-using androkat.infrastructure.Configuration;
 using androkat.infrastructure.Model.SQLite;
 using AutoMapper;
 using Microsoft.Extensions.Logging;

@@ -8,4 +8,5 @@ public interface IContentService
     IEnumerable<ContentModel> GetAjanlat();
     IEnumerable<ContentModel> GetHome();
     IEnumerable<ContentModel> GetSzentek();
+    IEnumerable<ContentModel> GetImaPage(string csoport);
 }

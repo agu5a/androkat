@@ -1,4 +1,5 @@
 ﻿using androkat.application.Interfaces;
+using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.domain.Model;
 using androkat.infrastructure.Configuration;
