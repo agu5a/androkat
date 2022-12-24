@@ -2,22 +2,23 @@ using androkat.application.Interfaces;
 using androkat.domain.Model;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace androkat.web.Pages;
 
-public class IndexModel : PageModel
+public class HanganyagModel : PageModel
 {
     private readonly IContentService _contentService;
 
-    public IndexModel(IContentService contentService)
+    public HanganyagModel(IContentService contentService)
     {
         _contentService = contentService;
     }
 
-    public IReadOnlyCollection<ContentModel> ContentModels { get; set; }
+    public IReadOnlyCollection<AudioViewModel> AudioViewModels { get; set; }
 
     public void OnGet()
     {
-        ContentModels = _contentService.GetHome();
+        AudioViewModels = _contentService.GetAudio().OrderBy(o => o.Tipus).ToList();
     }
 }

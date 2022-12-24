@@ -14,7 +14,7 @@ public class SzentekModel : PageModel
         _contentService = contentService;
     }
 
-    public IEnumerable<ContentModel> ContentModels { get; set; }
+    public IReadOnlyCollection<ContentModel> ContentModels { get; set; }
 
     public void OnGet()
     {

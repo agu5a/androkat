@@ -3,6 +3,7 @@ using androkat.domain.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace androkat.web.Pages;
 
@@ -18,7 +19,7 @@ public class ImaModel : PageModel
     [BindProperty(SupportsGet = true)]
     public string Csoport { get; set; }
 
-    public IEnumerable<ContentModel> ContentModels { get; set; }
+    public IReadOnlyCollection<ContentModel> ContentModels { get; set; }
 
     public void OnGet()
     {

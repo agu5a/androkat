@@ -3,7 +3,10 @@ using androkat.domain;
 using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.domain.Model;
+using androkat.infrastructure.Mapper;
+using AutoMapper;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
@@ -55,18 +58,28 @@ public class ContentServiceTests : BaseTest
                 }
             });
 
-        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
 
-        var service = new ContentService(repository.Object, contentMetaDataModels);
+        var logger = new Mock<ILogger<ContentMetaDataService>>();
+        var service = new ContentMetaDataService(logger.Object);
+        var metaDataList = service.GetContentMetaDataList("../../../../../androkat.web/Data/IdezetData.json");
 
-        var result = service.GetHome().ToList();
+        var contentMetaDataModels = Options.Create(new AndrokatConfiguration
+        {
+            ContentMetaDataList = metaDataList
+        });
+
+        var contentService = new ContentService(mapper, repository.Object, contentMetaDataModels);
+
+        var result = contentService.GetHome().ToList();
 
         result[0].MetaData.Image.Should().Be("images/ferencpapa.png");
         result[0].MetaData.TipusNev.Should().Be("Ferenc pápa twitter üzenete");
         result[0].MetaData.TipusId.Should().Be(Forras.papaitwitter);
         result[0].ContentDetails.Cim.Should().Be("Twitter cím");
         result[0].ContentDetails.Tipus.Should().Be((int)Forras.papaitwitter);
-        result.Count.Should().Be(2);
+        result.Count.Should().Be(3);
     }
 
     [Test]
@@ -93,14 +106,24 @@ public class ContentServiceTests : BaseTest
                 }
             });
 
-        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
 
-        var service = new ContentService(repository.Object, contentMetaDataModels);
+        var logger = new Mock<ILogger<ContentMetaDataService>>();
+        var service = new ContentMetaDataService(logger.Object);
+        var metaDataList = service.GetContentMetaDataList("../../../../../androkat.web/Data/IdezetData.json");
 
-        var result = service.GetAjanlat().ToList();
+        var contentMetaDataModels = Options.Create(new AndrokatConfiguration
+        {
+            ContentMetaDataList = metaDataList
+        });
 
-        result[0].MetaData.Image.Should().Be("images/Ajánlat.png");
-        result[0].MetaData.TipusNev.Should().Be("Ajánlat");
+        var contentService = new ContentService(mapper, repository.Object, contentMetaDataModels);
+
+        var result = contentService.GetAjanlat().ToList();
+
+        result[0].MetaData.Image.Should().Be("images/gift.png");
+        result[0].MetaData.TipusNev.Should().Be("AJÁNDéKOZZ KÖNYVET");
         result[0].MetaData.TipusId.Should().Be(Forras.ajanlatweb);
         result[0].ContentDetails.Cim.Should().Be("Ajánlat cím");
         result[0].ContentDetails.Tipus.Should().Be((int)Forras.ajanlatweb);
@@ -131,14 +154,24 @@ public class ContentServiceTests : BaseTest
                 }
             });
 
-        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
 
-        var service = new ContentService(repository.Object, contentMetaDataModels);
+        var logger = new Mock<ILogger<ContentMetaDataService>>();
+        var service = new ContentMetaDataService(logger.Object);
+        var metaDataList = service.GetContentMetaDataList("../../../../../androkat.web/Data/IdezetData.json");
 
-        var result = service.GetSzentek().ToList();
+        var contentMetaDataModels = Options.Create(new AndrokatConfiguration
+        {
+            ContentMetaDataList = metaDataList
+        });
+
+        var contentService = new ContentService(mapper, repository.Object, contentMetaDataModels);
+
+        var result = contentService.GetSzentek().ToList();
 
         result[0].MetaData.Image.Should().Be("images/pio.png");
-        result[0].MetaData.TipusNev.Should().Be("Szentek");
+        result[0].MetaData.TipusNev.Should().Be("Pio atya breviáriuma");
         result[0].MetaData.TipusId.Should().Be(Forras.pio);
         result[0].ContentDetails.Cim.Should().Be("Pio cím");
         result[0].ContentDetails.Tipus.Should().Be((int)Forras.pio);
@@ -148,12 +181,32 @@ public class ContentServiceTests : BaseTest
     [Test]
     public void GetImaPage_Happy()
     {
-        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
-        var service = new ContentService(new Mock<IContentRepository>().Object, contentMetaDataModels);
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
 
-        var result = service.GetImaPage(string.Empty).ToList();
+        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+
+        var contentService = new ContentService(mapper, new Mock<IContentRepository>().Object, contentMetaDataModels);
+
+        var result = contentService.GetImaPage(string.Empty).ToList();
 
         result[0].ContentDetails.Cim.Should().Be("Ima Cím");
+        result.Count.Should().Be(1);
+    }
+
+    [Test]
+    public void GetAudio_Happy()
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+
+        var contentService = new ContentService(mapper, new Mock<IContentRepository>().Object, contentMetaDataModels);
+
+        var result = contentService.GetAudio().ToList();
+
+        result[0].Cim.Should().Be("Audio cím");
         result.Count.Should().Be(1);
     }
 }

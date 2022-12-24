@@ -5,8 +5,9 @@ namespace androkat.application.Interfaces;
 
 public interface IContentService
 {
-    IEnumerable<ContentModel> GetAjanlat();
-    IEnumerable<ContentModel> GetHome();
-    IEnumerable<ContentModel> GetSzentek();
-    IEnumerable<ContentModel> GetImaPage(string csoport);
+    IReadOnlyCollection<ContentModel> GetAjanlat();
+    IReadOnlyCollection<AudioViewModel> GetAudio();
+    IReadOnlyCollection<ContentModel> GetHome();    
+    IReadOnlyCollection<ContentModel> GetImaPage(string csoport);
+    IReadOnlyCollection<ContentModel> GetSzentek();
 }
