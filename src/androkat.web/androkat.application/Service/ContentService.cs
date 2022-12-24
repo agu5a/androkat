@@ -91,6 +91,11 @@ public class ContentService : IContentService
         var list = new List<AudioViewModel>();
 
         list.AddRange(GetAudioViewModel((int)Forras.audionapievangelium));
+        list.AddRange(GetAudioViewModel(15).OrderByDescending(o => o.Inserted).Take(2)); //Jezsuita napi-útra-való
+        list.AddRange(GetAudioViewModel(38)); //barsi
+        list.AddRange(GetAudioViewModel(39)); //pál feri
+        list.AddRange(GetAudioViewModel(6).OrderByDescending(o => o.Inserted).Take(2)); //Horváth István Sándor
+        list.AddRange(GetAudioViewModel(60)); //Taizé napi imák
 
         return list;
     }

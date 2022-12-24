@@ -37,6 +37,7 @@ try
     });
 
     builder.Services.SetAutoMapper();
+    builder.Services.SetCaching();
     builder.Services.SetSession();
 
     builder.Services.AddSingleton<IConfigureOptions<AndrokatConfiguration>, AndrokatConfigurationOptions>();

@@ -48,4 +48,11 @@ public static class InfrastructureExtensions
 
         return app;
     }
+
+    public static IServiceCollection SetCaching(this IServiceCollection services)
+    {
+        services.AddMemoryCache();
+
+        return services;
+    }
 }
