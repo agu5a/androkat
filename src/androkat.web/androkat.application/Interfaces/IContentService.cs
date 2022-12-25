@@ -10,4 +10,5 @@ public interface IContentService
     IReadOnlyCollection<ContentModel> GetHome();    
     IReadOnlyCollection<ContentModel> GetImaPage(string csoport);
     IReadOnlyCollection<ContentModel> GetSzentek();
+    IReadOnlyCollection<VideoSourceViewModel> GetVideoSourcePage();
 }

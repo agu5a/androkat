@@ -91,11 +91,25 @@ public class ContentService : IContentService
         var list = new List<AudioViewModel>();
 
         list.AddRange(GetAudioViewModel((int)Forras.audionapievangelium));
-        list.AddRange(GetAudioViewModel(15).OrderByDescending(o => o.Inserted).Take(2)); //Jezsuita napi-útra-való
-        list.AddRange(GetAudioViewModel(38)); //barsi
-        list.AddRange(GetAudioViewModel(39)); //pál feri
-        list.AddRange(GetAudioViewModel(6).OrderByDescending(o => o.Inserted).Take(2)); //Horváth István Sándor
-        list.AddRange(GetAudioViewModel(60)); //Taizé napi imák
+        list.AddRange(GetAudioViewModel((int)Forras.prayasyougo).OrderByDescending(o => o.Inserted).Take(2));
+        list.AddRange(GetAudioViewModel((int)Forras.audiobarsi));
+        list.AddRange(GetAudioViewModel((int)Forras.audiopalferi)); 
+        list.AddRange(GetAudioViewModel((int)Forras.audiohorvath).OrderByDescending(o => o.Inserted).Take(2)); 
+        list.AddRange(GetAudioViewModel((int)Forras.audiotaize));
+
+        return list;
+    }
+
+    public IReadOnlyCollection<VideoSourceViewModel> GetVideoSourcePage()
+    {
+        var list = new List<VideoSourceViewModel>();
+        var result = GetVideoSource();
+        foreach (var item in result)
+            list.Add(new VideoSourceViewModel
+            {
+                ChannelId = item.ChannelId,
+                ChannelName = item.ChannelName
+            });
 
         return list;
     }
@@ -111,7 +125,7 @@ public class ContentService : IContentService
         return list;
     }
 
-    private IEnumerable<ContentDetailsModel> Get(int[] tipusok)
+    private static IEnumerable<ContentDetailsModel> Get(int[] tipusok)
     {
         var result = new List<ContentDetailsModel>
         {
@@ -154,10 +168,10 @@ public class ContentService : IContentService
             }
         };
 
-        return result.Where(w=> tipusok.Contains(w.Tipus));
+        return result.Where(w => tipusok.Contains(w.Tipus));
     }
 
-    private List<AudioViewModel> GetAudioViewModel(int tipus)
+    private static List<AudioViewModel> GetAudioViewModel(int tipus)
     {
         var list = new List<AudioViewModel>
         {
@@ -178,9 +192,9 @@ public class ContentService : IContentService
     }
 
 
-    private IEnumerable<ImaViewModel> GetIma(string csoport)
+    private static IEnumerable<ImaViewModel> GetIma(string csoport)
     {
-        var result = new List<ImaViewModel>()
+        var result = new List<ImaViewModel>
         {
             new ImaViewModel
             {
@@ -189,6 +203,19 @@ public class ContentService : IContentService
             }
         };
 
+        return result;
+    }
+
+    private static IEnumerable<VideoSourceViewModel> GetVideoSource()
+    {
+        var result = new List<VideoSourceViewModel>
+        {
+            new VideoSourceViewModel
+            {
+                ChannelId = "UCF3mEbdkhZwjQE8reJHm4sg",
+                ChannelName = "AndroKat"
+            }
+        };
         return result;
     }
 }

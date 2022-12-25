@@ -207,6 +207,22 @@ public class ContentServiceTests : BaseTest
         var result = contentService.GetAudio().ToList();
 
         result[0].Cim.Should().Be("Audio cím");
+        result.Count.Should().Be(6);
+    }
+
+    [Test]
+    public void GetVideoSource_Happy()
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+
+        var contentService = new ContentService(mapper, new Mock<IContentRepository>().Object, contentMetaDataModels);
+
+        var result = contentService.GetVideoSourcePage().ToList();
+
+        result[0].ChannelId.Should().Be("UCF3mEbdkhZwjQE8reJHm4sg");
         result.Count.Should().Be(1);
     }
 }
