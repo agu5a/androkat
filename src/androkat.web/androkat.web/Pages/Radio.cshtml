@@ -1,0 +1,232 @@
+@page
+@using androkat.web.Pages
+@model RadioModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+	var katolikus = "";
+	var szentistvan = "";
+	var vatikan = "";
+	var ezazanap = "";
+	var mariaerdely = "";
+	var mariaszlovakia = "";
+	var solaradio = "";
+	var mariaszerbia = "";
+	var maria = "";
+
+	foreach (var url in Model.RadioViewModels)
+	{
+		switch (url.Name)
+		{
+			case "katolikus":
+				katolikus = url.Url;
+				break;
+			case "szentistvan":
+				szentistvan = url.Url;
+				break;
+			case "vatikan":
+				vatikan = url.Url;
+				break;
+			case "ezazanap":
+				ezazanap = url.Url;
+				break;
+			case "mariaerdely":
+				mariaerdely = url.Url;
+				break;
+			case "mariaszlovakia":
+				mariaszlovakia = url.Url;
+				break;
+			case "solaradio":
+				solaradio = url.Url;
+				break;
+			case "mariaszerbia":
+				mariaszerbia = url.Url;
+				break;
+			case "maria":
+				maria = url.Url;
+				break;
+		}
+	}
+}
+
+<div class="container bg-white" style="padding: 15px;">
+	<div class="row mb-1">
+		<div class="col-sm-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<div class="myclearfix">
+						<img data-src="~/images/katolikusradio.png" class="mr-2 rounded" alt="logo" style="width: 80px; height: 80px;float: left;margin-right:8px;margin-bottom:8px;" src="~/images/katolikusradio.png" data-holder-rendered="true">
+						<h5>Katolikus Rádió</h5>
+						<p>
+							Forrás: <br /><a href="@(katolikus)" style="font-weight: normal;">@(katolikus)</a>
+						</p>
+					</div>
+					<div style="margin: 0 0 15px 0;">
+						<audio controls>
+							<source src="@(katolikus)" type="audio/mpeg">
+						</audio>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<div class="myclearfix">
+						<img data-src="~/images/SzentIstvanRadio.png" class="mr-2 rounded" alt="logo" style="width: 80px; height: 80px;float: left;margin-right:8px;margin-bottom:8px;" src="~/images/SzentIstvanRadio.png" data-holder-rendered="true">
+						<h5>Szent István Rádió</h5>
+						<p>
+							Forrás: <br /><a href="@(szentistvan)" style="font-weight: normal;">@(szentistvan)</a>
+						</p>
+					</div>
+					<div style="margin: 0 0 15px 0;">
+						<video id="audioplayer" controls="" height="50" width="300" name="media" src="@(szentistvan)">
+							<source src="" type="audio/mpeg">							
+						</video>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<div class="myclearfix">
+						<img data-src="~/images/VatikaniRadio.png" class="mr-2 rounded" alt="logo" style="width: 80px; height: 80px;float: left;margin-right:8px;margin-bottom:8px;" src="~/images/VatikaniRadio.png" data-holder-rendered="true">
+						<h5>Vatikáni Rádió</h5>
+						<p>
+							Forrás: <br /><a href="@(vatikan)" style="font-weight: normal;">@if(!string.IsNullOrEmpty(vatikan)) { vatikan.Substring(0, 40); }...</a>
+						</p>
+					</div>
+					<div style="margin: 0 0 15px 0; overflow-wrap: break-word;">
+						<audio controls>
+							<source src="@(vatikan)" type="audio/mpeg">Your browser does not support the audio element.
+						</audio>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row mb-1">
+		<div class="col-sm-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<div class="myclearfix">
+						<img data-src="~/images/ezazanap.png" class="mr-2 rounded" alt="logo" style="width: 80px; height: 80px;float: left;margin-right:8px;margin-bottom:8px;" src="~/images/ezazanap.png" data-holder-rendered="true">
+						<h5>Ez az a nap Rádió</h5>
+						<p>
+							Forrás: <br /><a href="@(ezazanap)" style="font-weight: normal;">@if (!string.IsNullOrEmpty(ezazanap)) { ezazanap.Substring(0, 40); }...</a>
+						</p>
+					</div>
+					<div style="margin: 0 0 15px 0;">
+						<audio controls>
+							<source src="@(ezazanap)" type="audio/mpeg">Your browser does not support the audio element.
+						</audio>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<div class="myclearfix">
+						<img data-src="~/images/mariaradio.png" class="mr-2 rounded" alt="logo" style="width: 80px; height: 80px;float: left;margin-right:8px;margin-bottom:8px;" src="~/images/mariaradio.png" data-holder-rendered="true">
+						<h5>Mária Rádió</h5>
+						<p>
+							Forrás: <br /><a href="@(maria)" style="font-weight: normal;">@(maria)</a>
+						</p>
+					</div>
+					<div style="margin: 0 0 15px 0;">
+						<audio controls>
+							<source src="@(maria)" type="audio/mpeg">Your browser does not support the audio element.
+						</audio>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<div class="myclearfix">
+						<img data-src="~/images/mariaradio.png" class="mr-2 rounded" alt="logo" style="width: 80px; height: 80px;float: left;margin-right:8px;margin-bottom:8px;" src="~/images/mariaradio.png" data-holder-rendered="true">
+						<h5>Mária Rádió Szerbia</h5>
+						<p>
+							Forrás: <br /><a href="@(mariaszerbia)" style="font-weight: normal;">@(mariaszerbia)</a>
+						</p>
+					</div>
+					<div style="margin: 0 0 15px 0;">
+						<video id="audioplayer" controls="" height="50" width="300" name="media" src="@(mariaszerbia)">
+							<source src="" type="audio/mpeg">
+						</video>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row mb-1">
+		<div class="col-sm-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<div class="myclearfix">
+						<img data-src="~/images/mariaradio.png" class="mr-2 rounded" alt="logo" style="width: 80px; height: 80px;float: left;margin-right:8px;margin-bottom:8px;" src="~/images/mariaradio.png" data-holder-rendered="true">
+						<h5>Mária Rádió Erdély</h5>
+						<p>
+							Forrás: <br /><a href="@(mariaerdely)" style="font-weight: normal;">@(mariaerdely)</a>
+						</p>
+					</div>
+					<div style="margin: 0 0 15px 0;">
+						<audio controls>
+							<source src="@(mariaerdely)" type="audio/mpeg">
+							Your browser does not support the audio element.
+						</audio>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<div class="myclearfix">
+						<img data-src="~/images/mariaradio.png" class="mr-2 rounded" alt="logo" style="width: 80px; height: 80px;float: left;margin-right:8px;margin-bottom:8px;" src="~/images/mariaradio.png" data-holder-rendered="true">
+						<h5>Mária Rádió Szlovákia</h5>
+						<p>
+							Forrás: <br /><a href="@(mariaszlovakia)" style="font-weight: normal;">@(mariaszlovakia)</a>
+						</p>
+					</div>
+					<div style="margin: 0 0 15px 0;">
+						<video id="audioplayer" controls="" height="50" width="300" name="media" src="@(mariaszlovakia)">
+							<source src="" type="audio/mpeg">
+						</video>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="card h-100">
+				<div class="card-body">
+					<div class="myclearfix">
+						<img data-src="~/images/solaradio.png" class="mr-2 rounded" alt="logo" style="width: 80px; float: left;margin-right:8px;margin-bottom:8px;" src="~/images/solaradio.png" data-holder-rendered="true">
+						<h5>Sola Rádió - Református Rádió</h5>
+						<p>
+							Forrás: <br /><a href="@(solaradio)" style="font-weight: normal;">@(solaradio)</a>
+						</p>
+					</div>
+					<div style="margin: 0 0 15px 0;">
+						<audio controls>
+							<source src="@(solaradio)" type="audio/mpeg">
+							Your browser does not support the audio element.
+						</audio>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

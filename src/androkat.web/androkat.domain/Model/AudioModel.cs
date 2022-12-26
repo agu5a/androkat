@@ -2,7 +2,7 @@
 
 namespace androkat.domain.Model;
 
-public class AudioViewModel
+public class AudioModel
 {
     public string Idezet { get; set; }
     public DateTime Inserted { get; set; }

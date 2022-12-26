@@ -18,7 +18,7 @@ public class VideoModel : PageModel
     [BindProperty(SupportsGet = true)]
     public string F { get; set; }
 
-    public IReadOnlyCollection<VideoSourceViewModel> VideoSourceViewModels { get; set; }
+    public IReadOnlyCollection<VideoSourceModel> VideoSourceViewModels { get; set; }
 
     public void OnGet()
     {

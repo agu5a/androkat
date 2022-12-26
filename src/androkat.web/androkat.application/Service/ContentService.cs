@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace androkat.application.Service;
 
@@ -86,30 +87,38 @@ public class ContentService : IContentService
         return list;
     }
 
-    public IReadOnlyCollection<AudioViewModel> GetAudio()
+    public IReadOnlyCollection<AudioModel> GetAudio()
     {
-        var list = new List<AudioViewModel>();
+        var list = new List<AudioModel>();
 
         list.AddRange(GetAudioViewModel((int)Forras.audionapievangelium));
         list.AddRange(GetAudioViewModel((int)Forras.prayasyougo).OrderByDescending(o => o.Inserted).Take(2));
         list.AddRange(GetAudioViewModel((int)Forras.audiobarsi));
-        list.AddRange(GetAudioViewModel((int)Forras.audiopalferi)); 
-        list.AddRange(GetAudioViewModel((int)Forras.audiohorvath).OrderByDescending(o => o.Inserted).Take(2)); 
+        list.AddRange(GetAudioViewModel((int)Forras.audiopalferi));
+        list.AddRange(GetAudioViewModel((int)Forras.audiohorvath).OrderByDescending(o => o.Inserted).Take(2));
         list.AddRange(GetAudioViewModel((int)Forras.audiotaize));
 
         return list;
     }
 
-    public IReadOnlyCollection<VideoSourceViewModel> GetVideoSourcePage()
+    public IReadOnlyCollection<VideoSourceModel> GetVideoSourcePage()
     {
-        var list = new List<VideoSourceViewModel>();
+        var list = new List<VideoSourceModel>();
         var result = GetVideoSource();
         foreach (var item in result)
-            list.Add(new VideoSourceViewModel
+            list.Add(new VideoSourceModel
             {
                 ChannelId = item.ChannelId,
                 ChannelName = item.ChannelName
             });
+
+        return list;
+    }
+
+    public IReadOnlyCollection<RadioModel> GetRadioPage()
+    {
+        var list = new List<RadioModel>();
+        list.AddRange(GetRadio().Select(item => new RadioModel { Name = item.Key, Url = item.Value }));
 
         return list;
     }
@@ -171,20 +180,21 @@ public class ContentService : IContentService
         return result.Where(w => tipusok.Contains(w.Tipus));
     }
 
-    private static List<AudioViewModel> GetAudioViewModel(int tipus)
+    private static List<AudioModel> GetAudioViewModel(int tipus)
     {
-        var list = new List<AudioViewModel>
+        var list = new List<AudioModel>
         {
-            new AudioViewModel
+            new AudioModel
             {
                 Cim = "Audio cím",
-                Idezet = "Idézet",
+                Idezet = "Idézet",                
                 MetaDataModel = new ContentMetaDataModel
                 {
                     Link = "link",
-                    TipusId = Forras.audionapievangelium
+                    TipusId = (Forras)Enum.ToObject(typeof(Forras), tipus),
+                    Image = "images/palferi.png",
                 },
-                Tipus = (int)Forras.audionapievangelium
+                Tipus = tipus
             }
         };
 
@@ -192,11 +202,11 @@ public class ContentService : IContentService
     }
 
 
-    private static IEnumerable<ImaViewModel> GetIma(string csoport)
+    private static IEnumerable<ImaModel> GetIma(string csoport)
     {
-        var result = new List<ImaViewModel>
+        var result = new List<ImaModel>
         {
-            new ImaViewModel
+            new ImaModel
             {
                 Cim = "Ima Cím",
                 Nid = Guid.NewGuid()
@@ -206,11 +216,22 @@ public class ContentService : IContentService
         return result;
     }
 
-    private static IEnumerable<VideoSourceViewModel> GetVideoSource()
+    private static Dictionary<string, string> GetRadio()
     {
-        var result = new List<VideoSourceViewModel>
+        var ra = "{\"szentistvan\":\"http://online.szentistvanradio.hu:7000/adas\",\"vatikan\":\"https://media.vaticannews.va/media/audio/program/504/ungherese_181222.mp3\",\"ezazanap\":\"https://www.radioking.com/play/ez-az-a-nap-radio\",\"mariaszerbia\":\"http://dreamsiteradiocp.com:8014/stream\",\"katolikus\":\"http://katolikusradio.hu:9000/live_hi.mp3\",\"maria\":\"http://www.mariaradio.hu:8000/mr\",\"mariaerdely\":\"http://stream.mariaradio.ro:8000/MRE\",\"mariaszlovakia\":\"http://193.87.81.131:8081/MariaRadioFelvidek\",\"solaradio\":\"http://188.165.11.30:7000/live.mp3\"}";
+
+        var dic = JsonSerializer.Deserialize<Dictionary<string, string>>(ra);
+        if (dic == null)
+            return new Dictionary<string, string>();
+
+        return dic;
+    }
+
+    private static IEnumerable<VideoSourceModel> GetVideoSource()
+    {
+        var result = new List<VideoSourceModel>
         {
-            new VideoSourceViewModel
+            new VideoSourceModel
             {
                 ChannelId = "UCF3mEbdkhZwjQE8reJHm4sg",
                 ChannelName = "AndroKat"

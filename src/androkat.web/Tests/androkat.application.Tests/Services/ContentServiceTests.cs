@@ -225,4 +225,20 @@ public class ContentServiceTests : BaseTest
         result[0].ChannelId.Should().Be("UCF3mEbdkhZwjQE8reJHm4sg");
         result.Count.Should().Be(1);
     }
+
+    [Test]
+    public void GetRadio_Happy()
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+
+        var contentService = new ContentService(mapper, new Mock<IContentRepository>().Object, contentMetaDataModels);
+
+        var result = contentService.GetRadioPage().ToList();
+
+        result[0].Name.Should().Be("szentistvan");
+        result.Count.Should().Be(9);
+    }
 }

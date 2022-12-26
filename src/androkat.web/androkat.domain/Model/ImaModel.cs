@@ -2,7 +2,7 @@
 
 namespace androkat.domain.Model;
 
-public class ImaViewModel
+public class ImaModel
 {
     public Guid Nid { get; set; }
     public string Cim { get; set; }

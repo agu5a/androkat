@@ -24,9 +24,9 @@ public class Api : ControllerBase
     {
         StringBuilder sb = new StringBuilder();
 
-        var res = new List<VideoViewModel>
+        var res = new List<VideoModel>
         {
-            new VideoViewModel
+            new VideoModel
             {
                 Cim = "AndroKat új verzió: Olvasottak elrejthetősége a lista oldalon",
                 Date = "2022-07-31",
@@ -43,7 +43,7 @@ public class Api : ControllerBase
         return sb.ToString();
     }
 
-    private static void GetVideoHtml(StringBuilder sb, VideoViewModel item)
+    private static void GetVideoHtml(StringBuilder sb, VideoModel item)
     {
         sb.Append("<div class='col mb-1'>");
         sb.Append("<div class=\"videoBox p-3 border bg-light\" style=\"border-radius: 0.25rem;\"><h5><a href=\"" + item.VideoLink + "\" target =\"_blank\">" + item.Cim + "</a></h5>");

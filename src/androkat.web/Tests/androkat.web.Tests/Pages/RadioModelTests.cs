@@ -9,31 +9,29 @@ using System.Linq;
 
 namespace androkat.web.Tests.Pages;
 
-public class VideoModelTests : BaseTest
+public class RadioModelTests : BaseTest
 {
     [TestCase("ChannelId", "ChannelId")]
     [TestCase("", "")]
     [TestCase(null, "")]
-    public void VideoModelTest(string actual, string expected)
+    public void RadioModelTest(string actual, string expected)
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();
 
         var contentService = new Mock<IContentService>();
-        contentService.Setup(s => s.GetVideoSourcePage()).Returns(new List<VideoSourceModel>
+        contentService.Setup(s => s.GetRadioPage()).Returns(new List<RadioModel>
         {
-            new VideoSourceModel { ChannelName = "ChannelName", ChannelId = "ChannelId" }
+            new RadioModel { Name = "name" }
         });
 
-        var model = new web.Pages.VideoModel(contentService.Object)
+        var model = new web.Pages.RadioModel(contentService.Object)
         {
             PageContext = pageContext,
             TempData = tempData,
-            Url = new UrlHelper(actionContext),
-            F = actual
+            Url = new UrlHelper(actionContext)
         };
 
         model.OnGet();
-        model.VideoSourceViewModels.First().ChannelName.Should().Be("ChannelName");
-        model.ViewData["source"].ToString().Should().Be(expected);
+        model.RadioViewModels.First().Name.Should().Be("name");
     }
 }

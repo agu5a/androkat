@@ -6,9 +6,10 @@ namespace androkat.application.Interfaces;
 public interface IContentService
 {
     IReadOnlyCollection<ContentModel> GetAjanlat();
-    IReadOnlyCollection<AudioViewModel> GetAudio();
+    IReadOnlyCollection<AudioModel> GetAudio();
     IReadOnlyCollection<ContentModel> GetHome();    
     IReadOnlyCollection<ContentModel> GetImaPage(string csoport);
+    IReadOnlyCollection<RadioModel> GetRadioPage();
     IReadOnlyCollection<ContentModel> GetSzentek();
-    IReadOnlyCollection<VideoSourceViewModel> GetVideoSourcePage();
+    IReadOnlyCollection<VideoSourceModel> GetVideoSourcePage();
 }

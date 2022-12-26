@@ -15,7 +15,7 @@ public class HanganyagModel : PageModel
         _contentService = contentService;
     }
 
-    public IReadOnlyCollection<AudioViewModel> AudioViewModels { get; set; }
+    public IReadOnlyCollection<AudioModel> AudioViewModels { get; set; }
 
     public void OnGet()
     {

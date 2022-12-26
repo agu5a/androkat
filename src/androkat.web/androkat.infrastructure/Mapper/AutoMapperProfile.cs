@@ -11,8 +11,8 @@ public class AutoMapperProfile : Profile
     {
         CreateMap<Napiolvaso, ContentDetailsModel>()
             .ForMember(x => x.Fulldatum, y => y.MapFrom(z => DateTime.Parse(z.Fulldatum)));
-        
-        CreateMap<ContentDetailsModel, Napiolvaso> ()
-            .ForMember(x => x.Fulldatum, y => y.MapFrom(z => z.Fulldatum.ToString("yyyy-MM-dd HH:mm:s")));
+
+        CreateMap<ContentDetailsModel, Napiolvaso>()
+            .ForMember(x => x.Fulldatum, y => y.MapFrom(z => z.Fulldatum.ToString("yyyy-MM-dd HH:mm:s")));        
     }
 }

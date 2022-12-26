@@ -19,9 +19,9 @@ public class HanganyagModelTests : BaseTest
         var (pageContext, tempData, actionContext) = GetPreStuff();
 
         var contentService = new Mock<IContentService>();
-        contentService.Setup(s => s.GetAudio()).Returns(new List<AudioViewModel>
+        contentService.Setup(s => s.GetAudio()).Returns(new List<AudioModel>
         {
-            new AudioViewModel 
+            new AudioModel 
             {
                 Cim = "Audio Cim",
                 Idezet = "Idézet",

@@ -1,6 +1,6 @@
 ﻿namespace androkat.domain.Model;
 
-public class VideoViewModel
+public class VideoModel
 {
     public string VideoLink { get; set; }
     public string Cim { get; set; }
