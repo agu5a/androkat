@@ -123,6 +123,12 @@ public class ContentService : IContentService
         return list;
     }
 
+    public IReadOnlyCollection<ContentModel> GetSzent()
+    {
+        var result = GetContentDetailsModel(new int[] { (int)Forras.maiszent });
+        return result;
+    }
+
     private IReadOnlyCollection<ContentModel> GetContentDetailsModel(int[] tipusok)
     {
         var list = new List<ContentModel>();
@@ -172,8 +178,14 @@ public class ContentService : IContentService
                     Cim = "Pio cím",
                     Fulldatum = DateTime.Now,
                     Nid = Guid.NewGuid(),
-                    Tipus = (int)Forras.pio,
-                    Img = "image"
+                    Tipus = (int)Forras.pio                    
+            },
+            new ContentDetailsModel
+            {
+                    Cim = "Mai szent cím",
+                    Fulldatum = DateTime.Now,
+                    Nid = Guid.NewGuid(),
+                    Tipus = (int)Forras.maiszent
             }
         };
 
@@ -187,7 +199,7 @@ public class ContentService : IContentService
             new AudioModel
             {
                 Cim = "Audio cím",
-                Idezet = "Idézet",                
+                Idezet = "Idézet",
                 MetaDataModel = new ContentMetaDataModel
                 {
                     Link = "link",
@@ -201,8 +213,7 @@ public class ContentService : IContentService
         return list;
     }
 
-
-    private static IEnumerable<ImaModel> GetIma(string csoport)
+    private IEnumerable<ImaModel> GetIma(string csoport)
     {
         var result = new List<ImaModel>
         {
@@ -216,7 +227,7 @@ public class ContentService : IContentService
         return result;
     }
 
-    private static Dictionary<string, string> GetRadio()
+    private Dictionary<string, string> GetRadio()
     {
         var ra = "{\"szentistvan\":\"http://online.szentistvanradio.hu:7000/adas\",\"vatikan\":\"https://media.vaticannews.va/media/audio/program/504/ungherese_181222.mp3\",\"ezazanap\":\"https://www.radioking.com/play/ez-az-a-nap-radio\",\"mariaszerbia\":\"http://dreamsiteradiocp.com:8014/stream\",\"katolikus\":\"http://katolikusradio.hu:9000/live_hi.mp3\",\"maria\":\"http://www.mariaradio.hu:8000/mr\",\"mariaerdely\":\"http://stream.mariaradio.ro:8000/MRE\",\"mariaszlovakia\":\"http://193.87.81.131:8081/MariaRadioFelvidek\",\"solaradio\":\"http://188.165.11.30:7000/live.mp3\"}";
 
@@ -227,7 +238,7 @@ public class ContentService : IContentService
         return dic;
     }
 
-    private static IEnumerable<VideoSourceModel> GetVideoSource()
+    private IEnumerable<VideoSourceModel> GetVideoSource()
     {
         var result = new List<VideoSourceModel>
         {

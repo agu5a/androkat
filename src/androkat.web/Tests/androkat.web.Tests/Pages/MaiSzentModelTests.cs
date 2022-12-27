@@ -6,14 +6,14 @@ using System.Linq;
 
 namespace androkat.web.Tests.Pages;
 
-public class AjanlatModelTests : BaseTest
+public class MaiSzentModelTests : BaseTest
 {
     [Test]
-    public void AjanlatModelTest()
+    public void MaiSzentModelTest()
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();
 
-        var model = new web.Pages.AjanlatModel(GetContentService(58).Object)
+        var model = new web.Pages.SzentModel(GetContentService().Object)
         {
             PageContext = pageContext,
             TempData = tempData,
@@ -23,7 +23,7 @@ public class AjanlatModelTests : BaseTest
         model.OnGet();
         model.ContentModels.First().ContentDetails.Cim.Should().Be("Cim");
         model.ContentModels.First().ContentDetails.Img.Should().Be("Image");
-        model.ContentModels.First().ContentDetails.Tipus.Should().Be((int)Forras.ajanlatweb);
+        model.ContentModels.First().ContentDetails.Tipus.Should().Be((int)Forras.maiszent);
         model.ContentModels.First().MetaData.Image.Should().Be("Image");
     }
 }

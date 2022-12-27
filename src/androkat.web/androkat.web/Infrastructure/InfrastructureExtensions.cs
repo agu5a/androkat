@@ -1,6 +1,8 @@
 ﻿using androkat.domain;
 using androkat.infrastructure.DataManager.SQLite;
 using androkat.infrastructure.Mapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
@@ -52,6 +54,22 @@ public static class InfrastructureExtensions
     public static IServiceCollection SetCaching(this IServiceCollection services)
     {
         services.AddMemoryCache();
+
+        return services;
+    }
+
+    public static IServiceCollection SetAuthentication(this IServiceCollection services)
+    {
+        services.AddAuthentication(options =>
+        {
+            options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+        })
+        .AddCookie().AddGoogle(googleOptions =>
+        {
+            googleOptions.ClientId = "n/a";
+            googleOptions.ClientSecret = "";
+        });
 
         return services;
     }

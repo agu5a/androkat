@@ -10,7 +10,7 @@ public class GetVideoForWebPageTests : BaseTest
     [TestCase("UCRn003-qzC5GOQVPyJSkgnA", 51)]
     public void API_GetVideoForWebPage_V1_BadRequest(string f, int offset)
     {
-        data.Controllers.Api apiV1 = new data.Controllers.Api();
+        var apiV1 = new data.Controllers.Api();
         var resV1 = apiV1.GetVideoForWebPage(f, offset);
         dynamic s = resV1.Result;
         string result = s.Value;
@@ -20,7 +20,7 @@ public class GetVideoForWebPageTests : BaseTest
     [Test]
     public void API_GetVideoForWebPage_V1()
     {
-        data.Controllers.Api apiV1 = new data.Controllers.Api();
+        var apiV1 = new data.Controllers.Api();
         ActionResult<string> resV1 = apiV1.GetVideoForWebPage("", 0);
         dynamic sV1 = resV1.Result;
 

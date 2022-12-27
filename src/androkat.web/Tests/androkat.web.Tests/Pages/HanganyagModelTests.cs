@@ -33,7 +33,7 @@ public class HanganyagModelTests : BaseTest
             }
         });
 
-        var model = new web.Pages.HanganyagModel(contentService.Object)
+        var model = new HanganyagModel(contentService.Object)
         {
             PageContext = pageContext,
             TempData = tempData,

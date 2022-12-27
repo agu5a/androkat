@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Routing;
 using androkat.application.Interfaces;
 using androkat.domain.Model;
 using System.Collections.Generic;
+using androkat.domain.Enum;
 
 namespace androkat.web.Tests;
 
@@ -38,7 +39,7 @@ public class BaseTest
         {
             new ContentModel
             {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? 9, Img = "Image" },
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? (int)Forras.papaitwitter, Img = "Image" },
                 MetaData = new ContentMetaDataModel { Image = "Image" }
             }
         });
@@ -46,7 +47,7 @@ public class BaseTest
         {
             new ContentModel
             {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? 9, Img = "Image" },
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? (int)Forras.ajanlatweb, Img = "Image" },
                 MetaData = new ContentMetaDataModel { Image = "Image" }
             }
         });
@@ -54,7 +55,15 @@ public class BaseTest
         {
             new ContentModel
             {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? 2, Img = "Image" },
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? (int)Forras.pio, Img = "Image" },
+                MetaData = new ContentMetaDataModel { Image = "Image" }
+            }
+        });
+        contentService.Setup(s => s.GetSzent()).Returns(new List<ContentModel>
+        {
+            new ContentModel
+            {
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? (int)Forras.maiszent, Img = "Image" },
                 MetaData = new ContentMetaDataModel { Image = "Image" }
             }
         });

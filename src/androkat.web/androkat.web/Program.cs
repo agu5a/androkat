@@ -90,6 +90,11 @@ try
     app.MapControllerRoute(name: "default", pattern: "{controller}/{action=Index}");
     app.MapRazorPages();
 
+    app.Lifetime.ApplicationStopping.Register(() =>
+    {
+        Log.Information(Environment.StackTrace);
+    });
+
     await app.RunAsync();
 }
 catch (Exception ex)

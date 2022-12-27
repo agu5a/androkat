@@ -241,4 +241,21 @@ public class ContentServiceTests : BaseTest
         result[0].Name.Should().Be("szentistvan");
         result.Count.Should().Be(9);
     }
+
+    [Test]
+    public void GetSzent_Happy()
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+
+        var contentService = new ContentService(mapper, new Mock<IContentRepository>().Object, contentMetaDataModels);
+
+        var result = contentService.GetSzent().ToList();
+
+        result[0].ContentDetails.Cim.Should().Be("Mai szent cím");
+        result[0].ContentDetails.Tipus.Should().Be((int)Forras.maiszent);
+        result.Count.Should().Be(1);
+    }
 }

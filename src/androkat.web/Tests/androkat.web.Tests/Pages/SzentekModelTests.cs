@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using androkat.domain.Enum;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Routing;
 using NUnit.Framework;
 using System.Linq;
@@ -22,7 +23,7 @@ public class SzentekModelTests : BaseTest
         model.OnGet();
         model.ContentModels.First().ContentDetails.Cim.Should().Be("Cim");
         model.ContentModels.First().ContentDetails.Img.Should().Be("Image");
-        model.ContentModels.First().ContentDetails.Tipus.Should().Be(2);
+        model.ContentModels.First().ContentDetails.Tipus.Should().Be((int)Forras.pio);
         model.ContentModels.First().MetaData.Image.Should().Be("Image");
     }
 }
