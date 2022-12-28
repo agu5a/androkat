@@ -10,6 +10,7 @@ public class DefaultCoreModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
+        builder.RegisterType<WarmupService>().As<IWarmupService>().InstancePerLifetimeScope();
         builder.RegisterType<ContentService>().As<IContentService>().InstancePerLifetimeScope();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using androkat.domain;
 using androkat.infrastructure.DataManager.SQLite;
 using androkat.infrastructure.Mapper;
+using androkat.web.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Builder;
@@ -15,8 +16,10 @@ namespace androkat.web.Infrastructure;
 public static class InfrastructureExtensions
 {
     public static IServiceCollection SetServices(this IServiceCollection services)
-    {
+    {        
         services.AddScoped<IContentRepository, ContentRepository>();
+        services.AddHostedService<Warmup>();
+
         return services;
     }
 
