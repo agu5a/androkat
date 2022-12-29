@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace androkat.infrastructure.DataManager.SQLite;
+namespace androkat.infrastructure.DataManager;
 
 public class BaseRepository
 {

@@ -39,6 +39,7 @@ try
     builder.Services.SetAutoMapper();
     builder.Services.SetCaching();
     builder.Services.SetSession();
+    builder.Services.SetDatabase();
 
     builder.Services.AddSingleton<IConfigureOptions<AndrokatConfiguration>, AndrokatConfigurationOptions>();
     builder.Services.AddSingleton<IContentMetaDataService, ContentMetaDataService>();

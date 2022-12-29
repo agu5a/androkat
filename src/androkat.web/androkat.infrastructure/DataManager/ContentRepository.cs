@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace androkat.infrastructure.DataManager.SQLite;
+namespace androkat.infrastructure.DataManager;
 
 public class ContentRepository : BaseRepository, IContentRepository
 {

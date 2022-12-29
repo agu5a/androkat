@@ -2,7 +2,7 @@
 using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.infrastructure.Configuration;
-using androkat.infrastructure.DataManager.SQLite;
+using androkat.infrastructure.DataManager;
 using androkat.infrastructure.Mapper;
 using AutoMapper;
 using FluentAssertions;

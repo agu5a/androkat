@@ -26,4 +26,9 @@
 		<ProjectReference Include="..\androkat.infrastructure\androkat.infrastructure.csproj" />
 	</ItemGroup>
 
+<ItemGroup>
+		<None Update="Data\androkat.db">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 </Project>

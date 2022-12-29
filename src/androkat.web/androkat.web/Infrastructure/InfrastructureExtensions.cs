@@ -1,11 +1,12 @@
 ﻿using androkat.domain;
-using androkat.infrastructure.DataManager.SQLite;
+using androkat.infrastructure.DataManager;
 using androkat.infrastructure.Mapper;
 using androkat.web.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -15,6 +16,16 @@ namespace androkat.web.Infrastructure;
 [ExcludeFromCodeCoverage]
 public static class InfrastructureExtensions
 {
+    public static IServiceCollection SetDatabase(this IServiceCollection services)
+    {
+        services.AddDbContext<AndrokatContext>(options =>
+        {
+            options.UseSqlite($"Data Source=./Data/androkat.db");
+        }, ServiceLifetime.Scoped);
+
+        return services;
+    }
+
     public static IServiceCollection SetServices(this IServiceCollection services)
     {        
         services.AddScoped<IContentRepository, ContentRepository>();

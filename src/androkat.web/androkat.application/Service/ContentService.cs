@@ -140,7 +140,7 @@ public class ContentService : IContentService
         return list;
     }
 
-    private static IEnumerable<ContentDetailsModel> Get(int[] tipusok)
+    private IEnumerable<ContentDetailsModel> Get(int[] tipusok)
     {
         var result = new List<ContentDetailsModel>
         {
@@ -192,7 +192,7 @@ public class ContentService : IContentService
         return result.Where(w => tipusok.Contains(w.Tipus));
     }
 
-    private static List<AudioModel> GetAudioViewModel(int tipus)
+    private List<AudioModel> GetAudioViewModel(int tipus)
     {
         var list = new List<AudioModel>
         {
