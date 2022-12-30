@@ -4,6 +4,7 @@ using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.domain.Model;
 using AutoMapper;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,21 @@ namespace androkat.application.Service;
 public class ContentService : IContentService
 {
     private readonly IContentRepository _repository;
+    private readonly IMemoryCache _memoryCache;
     private readonly IMapper _mapper;
+    private readonly ICacheService _cacheService;
     private readonly IOptions<AndrokatConfiguration> _androkatConfiguration;
 
-    public ContentService(IMapper mapper, IContentRepository repository, IOptions<AndrokatConfiguration> androkatConfiguration)
+    public ContentService(
+        IMemoryCache memoryCache, 
+        IMapper mapper, 
+        IContentRepository repository, 
+        ICacheService cacheService, 
+        IOptions<AndrokatConfiguration> androkatConfiguration)
     {
+        _memoryCache = memoryCache;
         _mapper = mapper;
-        _repository = repository;
+        _cacheService = cacheService;
         _androkatConfiguration = androkatConfiguration;
     }
 

@@ -1,16 +1,19 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using androkat.application.Interfaces;
+using androkat.domain.Enum;
+using androkat.domain.Model;
+using androkat.infrastructure.DataManager;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using Microsoft.AspNetCore.Routing;
-using androkat.application.Interfaces;
-using androkat.domain.Model;
+using System;
 using System.Collections.Generic;
-using androkat.domain.Enum;
 
 namespace androkat.web.Tests;
 
@@ -78,5 +81,10 @@ public class BaseTest
         var serviceProvider = services.BuildServiceProvider();
         var memoryCache = serviceProvider.GetService<IMemoryCache>();
         return memoryCache;
+    }
+
+    public DbContextOptions<AndrokatContext> GetDbContextOptions()
+    {
+        return new DbContextOptionsBuilder<AndrokatContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
     }
 }

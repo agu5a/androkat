@@ -1,4 +1,6 @@
-﻿using androkat.domain;
+﻿using androkat.application.Interfaces;
+using androkat.application.Service;
+using androkat.domain;
 using androkat.infrastructure.DataManager;
 using androkat.infrastructure.Mapper;
 using androkat.web.Service;
@@ -27,8 +29,10 @@ public static class InfrastructureExtensions
     }
 
     public static IServiceCollection SetServices(this IServiceCollection services)
-    {        
+    {
+        services.AddScoped<IClock, Clock>();
         services.AddScoped<IContentRepository, ContentRepository>();
+        services.AddScoped<ICacheService, CacheService>();
         services.AddHostedService<Warmup>();
 
         return services;

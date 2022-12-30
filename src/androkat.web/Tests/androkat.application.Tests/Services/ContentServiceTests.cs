@@ -1,4 +1,5 @@
-﻿using androkat.application.Service;
+﻿using androkat.application.Interfaces;
+using androkat.application.Service;
 using androkat.domain;
 using androkat.domain.Configuration;
 using androkat.domain.Enum;
@@ -18,6 +19,27 @@ namespace androkat.application.Tests.Services;
 
 public class ContentServiceTests : BaseTest
 {
+    private Mock<IClock> GetClock()
+    {
+        var clock = new Mock<IClock>();
+        clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"));
+        return clock;
+    }
+
+    private IOptions<AndrokatConfiguration> GetAndrokatConfiguration()
+    {
+        var logger = new Mock<ILogger<ContentMetaDataService>>();
+        var service = new ContentMetaDataService(logger.Object);
+        var metaDataList = service.GetContentMetaDataList("../../../../../androkat.web/Data/IdezetData.json");
+
+        var contentMetaDataModels = Options.Create(new AndrokatConfiguration
+        {
+            ContentMetaDataList = metaDataList
+        });
+
+        return contentMetaDataModels;
+    }
+
     [Test]
     public void GetHome_Happy()
     {
@@ -61,16 +83,8 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var logger = new Mock<ILogger<ContentMetaDataService>>();
-        var service = new ContentMetaDataService(logger.Object);
-        var metaDataList = service.GetContentMetaDataList("../../../../../androkat.web/Data/IdezetData.json");
-
-        var contentMetaDataModels = Options.Create(new AndrokatConfiguration
-        {
-            ContentMetaDataList = metaDataList
-        });
-
-        var contentService = new ContentService(mapper, repository.Object, contentMetaDataModels);
+        var cacheService = new CacheService(repository.Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), mapper, repository.Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetHome().ToList();
 
@@ -109,16 +123,8 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var logger = new Mock<ILogger<ContentMetaDataService>>();
-        var service = new ContentMetaDataService(logger.Object);
-        var metaDataList = service.GetContentMetaDataList("../../../../../androkat.web/Data/IdezetData.json");
-
-        var contentMetaDataModels = Options.Create(new AndrokatConfiguration
-        {
-            ContentMetaDataList = metaDataList
-        });
-
-        var contentService = new ContentService(mapper, repository.Object, contentMetaDataModels);
+        var cacheService = new CacheService(repository.Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), mapper, repository.Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetAjanlat().ToList();
 
@@ -157,16 +163,8 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var logger = new Mock<ILogger<ContentMetaDataService>>();
-        var service = new ContentMetaDataService(logger.Object);
-        var metaDataList = service.GetContentMetaDataList("../../../../../androkat.web/Data/IdezetData.json");
-
-        var contentMetaDataModels = Options.Create(new AndrokatConfiguration
-        {
-            ContentMetaDataList = metaDataList
-        });
-
-        var contentService = new ContentService(mapper, repository.Object, contentMetaDataModels);
+        var cacheService = new CacheService(repository.Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), mapper, repository.Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetSzentek().ToList();
 
@@ -184,9 +182,8 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
-
-        var contentService = new ContentService(mapper, new Mock<IContentRepository>().Object, contentMetaDataModels);
+        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetImaPage(string.Empty).ToList();
 
@@ -200,9 +197,8 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
-
-        var contentService = new ContentService(mapper, new Mock<IContentRepository>().Object, contentMetaDataModels);
+        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetAudio().ToList();
 
@@ -216,9 +212,8 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
-
-        var contentService = new ContentService(mapper, new Mock<IContentRepository>().Object, contentMetaDataModels);
+        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetVideoSourcePage().ToList();
 
@@ -232,13 +227,13 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
-
-        var contentService = new ContentService(mapper, new Mock<IContentRepository>().Object, contentMetaDataModels);
+        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetRadioPage().ToList();
 
         result[0].Name.Should().Be("szentistvan");
+        result[0].Url.Should().Be("http://online.szentistvanradio.hu:7000/adas");
         result.Count.Should().Be(9);
     }
 
@@ -248,12 +243,14 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var contentMetaDataModels = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
-
-        var contentService = new ContentService(mapper, new Mock<IContentRepository>().Object, contentMetaDataModels);
+        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetSzent().ToList();
 
+        result[0].MetaData.Image.Should().Be("images/katolikus_hu.jpg");
+        result[0].MetaData.TipusNev.Should().Be("Mai Szent");
+        result[0].MetaData.TipusId.Should().Be(Forras.maiszent);
         result[0].ContentDetails.Cim.Should().Be("Mai szent cím");
         result[0].ContentDetails.Tipus.Should().Be((int)Forras.maiszent);
         result.Count.Should().Be(1);
