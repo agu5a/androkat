@@ -342,6 +342,15 @@
     "Image": "images/szentszalezi.png"
   },
   {
+    "TipusId": 57,
+    "TipusNev": "Varga László megyéspüspök gondolatai",
+    "Forras": "facebook.com",
+    "Link": "https://www.facebook.com/profile.php?id=100050238980182",
+    "EnumString": "laciatya",
+    "Segedlink": null,
+    "Image": "images/laciatya.png"
+  },
+  {
     "TipusId": 58,
     "TipusNev": "AJÁNDéKOZZ KÖNYVET",
     "Forras": "Szent Gellért Kiadó",

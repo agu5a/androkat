@@ -44,6 +44,7 @@ public class ContentService : IContentService
             (int)Forras.nagybojt,
             (int)Forras.bojte,
             (int)Forras.barsi,
+            (int)Forras.laciatya,
             (int)Forras.papaitwitter,
             (int)Forras.regnum,
             (int)Forras.fokolare,
@@ -151,6 +152,21 @@ public class ContentService : IContentService
             });
         }
 
+        return list;
+    }
+
+    public IReadOnlyCollection<ContentModel> GetBlog(int tipus)
+    {
+        var list = new List<ContentModel>();
+        var result = GetBlogByCategory(tipus);
+        foreach (var item in result)
+        {
+            list.Add(new ContentModel
+            {
+                ContentDetails = item,
+                MetaData = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus)
+            });
+        }
         return list;
     }
 
@@ -323,6 +339,22 @@ public class ContentService : IContentService
                 Fulldatum = DateTime.Now,
                 Nid = Guid.NewGuid(),
                 Tipus = tipus == 0 ? (int)Forras.kurir : tipus,
+            }
+        };
+
+        return result;
+    }
+
+    private IEnumerable<ContentDetailsModel> GetBlogByCategory(int tipus)
+    {
+        var result = new List<ContentDetailsModel>
+        {
+            new ContentDetailsModel
+            {
+                Cim = "Blog cím",
+                Fulldatum = DateTime.Now,
+                Nid = Guid.NewGuid(),
+                Tipus = tipus == 0 ? (int)Forras.b777 : tipus,
             }
         };
 

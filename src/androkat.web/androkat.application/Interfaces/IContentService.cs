@@ -7,6 +7,7 @@ public interface IContentService
 {
     IReadOnlyCollection<ContentModel> GetAjanlat();
     IReadOnlyCollection<AudioModel> GetAudio();
+    IReadOnlyCollection<ContentModel> GetBlog(int tipus);
     IReadOnlyCollection<ContentModel> GetHirek(int tipus);
     IReadOnlyCollection<ContentModel> GetHome();    
     IReadOnlyCollection<ContentModel> GetImaPage(string csoport);

@@ -40,6 +40,7 @@ public enum Forras
     szentbernat = 50,
     jezsuitablog = 51,
     szentszalezi = 52,
+    laciatya = 57,
     ajanlatweb = 58,
     audiotaize = 60,
     sienaikatalin = 61

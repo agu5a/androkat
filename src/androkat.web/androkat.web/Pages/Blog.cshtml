@@ -1,0 +1,97 @@
+@page "{source?}"
+@using androkat.infrastructure.Model;
+@using androkat.web.Pages
+@using androkat.domain.Enum;
+@model BlogModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="container bg-white" style="padding: 15px;">
+
+    <div class="mb-4" style="border-radius: 0.25rem;padding: 15px;background-color: #ffffff;">
+        <strong>Blogok szűrése forrás szerint</strong>:<br /> <a href="/blog">Összes</a> ||
+        @{ 
+            var age = new Dictionary<string, string> {{"777blog.hu", "b777"}, {"Katolikus Ma" , "bkatolikusma"}, {"Jezsuita bloggerek" , "jezsuitablog"}};
+        }
+        @foreach (var item in age) 
+        {
+            var css = "";
+            css = (!string.IsNullOrWhiteSpace(ViewData["source"]?.ToString()) && ViewData["source"].ToString() == item.Value) ? "class=\"bg-success text-white p-1\"" : "";
+            <a href="/blog/@(item.Value)" @Html.Raw(css)>@(item.Key)</a> @("||")
+        }
+    </div>
+
+    @{
+        var index = 0;
+        var vege = false;
+    }
+    @foreach (var p in Model.ContentModels)
+    {
+        vege = false;
+        @if (index == 0)
+        {
+          @:<div class="row mb-1">
+        }
+
+        <div class="col-sm-4">
+            <div class="card h-100"><div class="card-body">
+                    <img data-src="~/@(p.MetaData.Image)" class="mr-2 rounded" style="float: left;margin-right:8px;margin-bottom:8px;" 
+                    src="~/@(p.MetaData.Image)" data-holder-rendered="true" alt="logo">
+                    @Html.Raw("<h5>" + @p.ContentDetails.Cim + "</h5>")
+                    <p>
+
+                        @if (p.MetaData.TipusId != Forras.jezsuitablog && !string.IsNullOrWhiteSpace(@p.ContentDetails.KulsoLink)) {
+                            @if (p.MetaData.TipusId == Forras.b777) {
+                                var pieces = p.ContentDetails.Idezet.Split(' ');
+                                var textIndex = 0;
+                                var b = "";
+                                @foreach(var piece in pieces)
+                                                           {
+                                    @if (textIndex == 55)
+                                    {
+                                        break;
+                                    }
+                                    b += piece + " ";
+                                    textIndex++;
+                                }
+                                b += "[...]<br>";
+                                @(p.MetaData.TipusNev) <br>@("[" + p.ContentDetails.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss") + "]")
+                                <br>
+                                <br> 
+                                @Html.Raw(b)
+                            } 
+                            else
+                            {
+                                @(p.MetaData.TipusNev) <br>@("[" + p.ContentDetails.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss") + "]")
+                                <br>
+                                <br> 
+                                @Html.Raw(p.ContentDetails.Idezet)
+                            }
+                        <br />
+                        <a href="@(p.ContentDetails.KulsoLink)"><strong>Tovább...</strong></a>
+                        } 
+                        else 
+                        {
+                            @(p.MetaData.TipusNev) <br>@("[" + p.ContentDetails.Fulldatum + "]")
+                            <br>
+                            <br>
+                            @Html.Raw(p.ContentDetails.Idezet)
+                        }                       
+                    </p>
+                </div></div></div>
+
+        @if(index == 2)
+       {
+            @:</div>
+
+            index = 0;
+            vege = true;
+        }
+        else { index++; }  
+    }
+
+    @if(!vege) 
+    { 
+        @:</div>
+    }
+
+</div>

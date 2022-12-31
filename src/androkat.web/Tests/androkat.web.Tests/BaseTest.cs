@@ -78,6 +78,14 @@ public class BaseTest
                 MetaData = new ContentMetaDataModel { Image = "Image" }
             }
         });
+        contentService.Setup(s => s.GetBlog((int)Forras.b777)).Returns(new List<ContentModel>
+        {
+            new ContentModel
+            {
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? (int)Forras.b777, Img = "Image" },
+                MetaData = new ContentMetaDataModel { Image = "Image" }
+            }
+        });
 
         return contentService;
     }
