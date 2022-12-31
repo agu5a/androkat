@@ -13,7 +13,7 @@ public class MaiSzentModelTests : BaseTest
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();
 
-        var model = new web.Pages.SzentModel(GetContentService().Object)
+        var model = new web.Pages.SzentModel(GetContentService((int)Forras.maiszent).Object)
         {
             PageContext = pageContext,
             TempData = tempData,

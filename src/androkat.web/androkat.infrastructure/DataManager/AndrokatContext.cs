@@ -14,7 +14,7 @@ public class AndrokatContext : DbContext
         Database.EnsureCreated();
     }
 
-    public DbSet<Napiolvaso> Content { get; set; }
+    public virtual DbSet<Napiolvaso> Content { get; set; }
    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

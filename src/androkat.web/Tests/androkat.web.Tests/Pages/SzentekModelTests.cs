@@ -13,7 +13,7 @@ public class SzentekModelTests : BaseTest
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();
 
-        var model = new web.Pages.SzentekModel(GetContentService(2).Object)
+        var model = new web.Pages.SzentekModel(GetContentService((int)Forras.pio).Object)
         {
             PageContext = pageContext,
             TempData = tempData,

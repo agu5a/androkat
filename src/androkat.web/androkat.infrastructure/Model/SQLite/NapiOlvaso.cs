@@ -15,7 +15,7 @@ public class Napiolvaso
 
     [StringLength(100)]
     [DataMember(Name = "fulldatum")]
-    public string Fulldatum { get; set; } //"yyyy-MM-dd"
+    public string Fulldatum { get; set; } //"yyyy-MM-dd HH:mm:ss"
 
     [DataMember(Name = "cim")]
     public string Cim { get; set; }

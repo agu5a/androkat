@@ -13,7 +13,7 @@ public class IndexModelTests : BaseTest
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();
 
-        var model = new web.Pages.IndexModel(GetContentService().Object)
+        var model = new web.Pages.IndexModel(GetContentService((int)Forras.papaitwitter).Object)
         {
             PageContext = pageContext,
             TempData = tempData,

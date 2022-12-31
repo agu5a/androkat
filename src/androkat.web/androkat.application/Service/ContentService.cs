@@ -22,10 +22,10 @@ public class ContentService : IContentService
     private readonly IOptions<AndrokatConfiguration> _androkatConfiguration;
 
     public ContentService(
-        IMemoryCache memoryCache, 
-        IMapper mapper, 
-        IContentRepository repository, 
-        ICacheService cacheService, 
+        IMemoryCache memoryCache,
+        IMapper mapper,
+        IContentRepository repository,
+        ICacheService cacheService,
         IOptions<AndrokatConfiguration> androkatConfiguration)
     {
         _memoryCache = memoryCache;
@@ -138,6 +138,22 @@ public class ContentService : IContentService
         return result;
     }
 
+    public IReadOnlyCollection<ContentModel> GetHirek(int tipus)
+    {
+        var list = new List<ContentModel>();
+        var result = GetNewsByCategory(tipus);
+        foreach (var item in result)
+        {
+            list.Add(new ContentModel
+            {
+                ContentDetails = item,
+                MetaData = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus)
+            });
+        }
+
+        return list;
+    }
+
     private IReadOnlyCollection<ContentModel> GetContentDetailsModel(int[] tipusok)
     {
         var list = new List<ContentModel>();
@@ -187,7 +203,7 @@ public class ContentService : IContentService
                     Cim = "Pio cím",
                     Fulldatum = DateTime.Now,
                     Nid = Guid.NewGuid(),
-                    Tipus = (int)Forras.pio                    
+                    Tipus = (int)Forras.pio
             },
             new ContentDetailsModel
             {
@@ -199,6 +215,43 @@ public class ContentService : IContentService
         };
 
         return result.Where(w => tipusok.Contains(w.Tipus));
+    }
+
+    private static string GetAudio(string idezet)
+    {
+        var content = "";
+        var mp3 = GetMp3(idezet);
+
+        if (idezet.Contains("[["))
+        {
+            var pieces = idezet.Split(new[] { "[[" }, System.StringSplitOptions.RemoveEmptyEntries);
+            content += "<div>" + pieces[0] + "</div>";
+        }
+        else
+        {
+            content += "<div></div>";
+        }
+
+        content += "<div style=\"margin: 15px 0 0 0;\"><strong>Hangállomány meghallgatása</strong></div>";
+        content += "<div style=\"margin: 0 0 15px 0;\"><audio controls><source src=\"" + mp3 + "\" type=\"audio/mpeg\">Your browser does not support the audio element.</audio></div>";
+        content += "<div style=\"margin: 0 0 15px 0;word-break: break-all;\"><strong>Vagy a letöltése</strong>: <a href=\"" + mp3 + "\">" + mp3 + "</a></div>";
+        return content;
+    }
+
+    private static string GetMp3(string idezet)
+    {
+        string mp3;
+        if (idezet.Contains("[["))
+        {
+            var pieces = idezet.Split(new[] { "[[" }, StringSplitOptions.RemoveEmptyEntries);
+            mp3 = pieces[1].Replace("]]", "");
+        }
+        else
+        {
+            mp3 = idezet;
+        }
+
+        return mp3;
     }
 
     private List<AudioModel> GetAudioViewModel(int tipus)
@@ -257,6 +310,22 @@ public class ContentService : IContentService
                 ChannelName = "AndroKat"
             }
         };
+        return result;
+    }
+
+    private IEnumerable<ContentDetailsModel> GetNewsByCategory(int tipus)
+    {
+        var result = new List<ContentDetailsModel>
+        {
+            new ContentDetailsModel
+            {
+                Cim = "Hír cím",
+                Fulldatum = DateTime.Now,
+                Nid = Guid.NewGuid(),
+                Tipus = tipus == 0 ? (int)Forras.kurir : tipus,
+            }
+        };
+
         return result;
     }
 }

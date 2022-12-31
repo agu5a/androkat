@@ -70,6 +70,14 @@ public class BaseTest
                 MetaData = new ContentMetaDataModel { Image = "Image" }
             }
         });
+        contentService.Setup(s => s.GetHirek((int)Forras.kurir)).Returns(new List<ContentModel>
+        {
+            new ContentModel
+            {
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? (int)Forras.kurir, Img = "Image" },
+                MetaData = new ContentMetaDataModel { Image = "Image" }
+            }
+        });
 
         return contentService;
     }

@@ -221,8 +221,23 @@ public class ContentServiceTests : BaseTest
         result.Count.Should().Be(1);
     }
 
+[Test]
+    public void GetHirek_Happy()
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+
+        var result = contentService.GetHirek((int)Forras.kurir).ToList();
+
+        result[0].ContentDetails.Cim.Should().Be("Hír cím");
+        result.Count.Should().Be(1);
+    }
+
     [Test]
-    public void GetRadio_Happy()
+    public void GetRadioPage_Happy()
     {
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
