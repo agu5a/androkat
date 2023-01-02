@@ -6,6 +6,7 @@ public class ContentMetaDataModel
 {
     public Forras TipusId { get; set; }
     public string TipusNev { get; set; }
+    public string Forras { get; set; }
     public string Link { get; set; }
     public string Image { get; set; }
 }

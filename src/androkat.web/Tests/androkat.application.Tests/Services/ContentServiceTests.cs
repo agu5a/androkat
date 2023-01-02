@@ -84,7 +84,7 @@ public class ContentServiceTests : BaseTest
         var mapper = config.CreateMapper();
 
         var cacheService = new CacheService(repository.Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), mapper, repository.Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), repository.Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetHome().ToList();
 
@@ -124,7 +124,7 @@ public class ContentServiceTests : BaseTest
         var mapper = config.CreateMapper();
 
         var cacheService = new CacheService(repository.Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), mapper, repository.Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), repository.Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetAjanlat().ToList();
 
@@ -164,7 +164,7 @@ public class ContentServiceTests : BaseTest
         var mapper = config.CreateMapper();
 
         var cacheService = new CacheService(repository.Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), mapper, repository.Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), repository.Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetSzentek().ToList();
 
@@ -183,7 +183,7 @@ public class ContentServiceTests : BaseTest
         var mapper = config.CreateMapper();
 
         var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetImaPage(string.Empty).ToList();
 
@@ -198,7 +198,7 @@ public class ContentServiceTests : BaseTest
         var mapper = config.CreateMapper();
 
         var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetAudio().ToList();
 
@@ -213,7 +213,7 @@ public class ContentServiceTests : BaseTest
         var mapper = config.CreateMapper();
 
         var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetVideoSourcePage().ToList();
 
@@ -229,7 +229,7 @@ public class ContentServiceTests : BaseTest
         var mapper = config.CreateMapper();
 
         var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetBlog(tipus).ToList();
 
@@ -245,7 +245,7 @@ public class ContentServiceTests : BaseTest
         var mapper = config.CreateMapper();
 
         var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetHirek(tipus).ToList();
 
@@ -262,7 +262,7 @@ public class ContentServiceTests : BaseTest
         var mapper = config.CreateMapper();
 
         var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetHumor().ToList();
 
@@ -281,7 +281,7 @@ public class ContentServiceTests : BaseTest
         var mapper = config.CreateMapper();
 
         var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetRadioPage().ToList();
 
@@ -297,7 +297,7 @@ public class ContentServiceTests : BaseTest
         var mapper = config.CreateMapper();
 
         var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetSzent().ToList();
 

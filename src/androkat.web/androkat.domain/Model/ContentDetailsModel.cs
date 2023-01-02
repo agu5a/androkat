@@ -13,4 +13,5 @@ public class ContentDetailsModel
     public string KulsoLink { get; set; }
     public string Img { get; set; }
     public string FileUrl { get; set; }    
+    public string Forras { get; set; }
 }

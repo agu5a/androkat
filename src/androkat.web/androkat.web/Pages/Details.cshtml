@@ -1,0 +1,56 @@
+﻿@page "{nid}/{type}"
+@using androkat.infrastructure.Model;
+@using androkat.web.Pages;
+@using androkat.domain.Enum;
+@model DetailsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@section meta_extra {
+    <meta property="og:title" content="@(Model.ContentModel.MetaData.TipusNev.Replace("\"", "'"))" />
+    <meta property="og:image" content="https://androkat.hu/@(Model.ContentModel.MetaData.Image)" />
+    <meta property="og:site_name" content="Android és Katolikus: AndroKat a weben" />
+    <meta property="og:description" content="@(Model.ContentModel.ContentDetails.Cim.Replace("\"", "'"))" />
+    <meta itemprop="name" content="@(Model.ContentModel.MetaData.TipusNev.Replace("\"", "'"))" />
+    <meta itemprop="description" content="@(Model.ContentModel.ContentDetails.Cim.Replace("\"", "'"))" />
+    <meta itemprop="image" content="https://androkat.hu/@(Model.ContentModel.MetaData.Image)" />
+}
+
+<div class="container bg-white" style="padding: 15px;">
+    <div class="p-3 border bg-light" style="border-radius: 0.25rem;">
+        <div style="margin-bottom: 2rem;">
+            <div style="float: left; margin-right: 5px;">
+                <img data-src="~/@(Model.ContentModel.MetaData.Image)" class="mr-2 rounded" style="width: 80px; height: 80px;" src="~/@(Model.ContentModel.MetaData.Image)"
+                     data-holder-rendered="true" alt="@(Model.ContentModel.MetaData.TipusNev.Replace("\"", "'"))">
+            </div>
+            <div>
+                <strong>Forrás</strong>:<br>
+                <a href="@(Model.ForrasLink)" rel="noopener" target="_blank">@(Model.ForrasText)</a>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <h3>@(Model.ContentModel.MetaData.TipusNev)</h3>
+        <div><strong>@(Model.ContentModel.ContentDetails.Cim)</strong></div>
+        <div style="margin: 0 0 15px 0;">[@(Model.ContentModel.ContentDetails.Fulldatum.ToString("MM-dd"))]</div>
+        <div style="margin: 0 0 15px 0;" @(Model.ContentModel.MetaData.TipusId == Forras.ajanlatweb ? " class=\"myclearfix\"" : "")>
+            @if (!string.IsNullOrWhiteSpace(Model.Image))
+            {
+                <img style="float: left;margin-right:8px;margin-bottom:8px;" alt="kép" src="@Model.Image">
+            }
+
+            @Html.Raw(Model.ContentModel.ContentDetails.Idezet)
+        </div>
+        <div id="sharedLink">
+
+            <a rel="nofollow" title="@(Model.ShareUrl)" target="_blank"
+               href="http://www.facebook.com/sharer.php?u=@(Model.EncodedUrl)&amp;t=androkat.hu+-+@(Model.ShareTitle)">
+                <img alt="facebook" src="~/images/facebook.png">
+            </a>
+
+            <a rel="nofollow" title="@(Model.ShareUrl)" target="_blank"
+               href="http://twitter.com/share?url=@(Model.EncodedUrl)&amp;via=androkat&amp;text=@(Model.ShareTitle)">
+                <img alt="twitter" src="~/images/twitter.png">
+            </a>
+
+        </div>
+    </div>
+</div>

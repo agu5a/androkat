@@ -38,7 +38,25 @@ public class BaseTest
     public static Mock<IContentService> GetContentService(int tipus)
     {
         var contentService = new Mock<IContentService>();
-        contentService.Setup(s => s.GetHumor()).Returns(new List<ContentModel>
+		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.maiszent)).Returns(
+            new ContentModel
+            {
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                MetaData = new ContentMetaDataModel { Image = "Image", Link = "MetaLink", Forras = "MetaForras", TipusId = (Forras)Enum.ToObject(typeof(Forras), tipus) }
+            });
+		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.szentbernat)).Returns(
+			new ContentModel
+			{
+				ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "", Forras = "Forras" },
+				MetaData = new ContentMetaDataModel { Image = "Image", Link = "MetaLink", Forras = "MetaForras", TipusId = (Forras)Enum.ToObject(typeof(Forras), tipus) }
+			});
+		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.ajanlatweb)).Returns(
+			new ContentModel
+			{
+				ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+				MetaData = new ContentMetaDataModel { Image = "Image", Link = "MetaLink", Forras = "MetaForras", TipusId = (Forras)Enum.ToObject(typeof(Forras), tipus) }
+			});
+		contentService.Setup(s => s.GetHumor()).Returns(new List<ContentModel>
         {
             new ContentModel
             {

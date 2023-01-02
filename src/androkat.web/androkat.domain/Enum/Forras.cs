@@ -29,7 +29,6 @@ public enum Forras
     keresztenyelet = 29,
     audiobarsi = 38,
     audiopalferi = 39,
-    audiopalferikedd = 41,
     vianney = 42,
     b777 = 43,
     regnum = 45,

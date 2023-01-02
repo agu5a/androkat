@@ -243,15 +243,6 @@
     "Image": "images/palferi.png"
   },
   {
-    "TipusId": 41,
-    "TipusNev": "Pál Feri atya kedd esti-beszédek",
-    "Forras": "palferi.hu",
-    "Link": "https://www.palferi.hu/hanganyagok",
-    "EnumString": "audiopalferikedd",
-    "Segedlink": null,
-    "Image": "images/palferi.png"
-  },
-  {
     "TipusId": 42,
     "TipusNev": "Vianney Szent János breviáriuma",
     "Forras": "Szent Gellért Kiadó",

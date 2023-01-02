@@ -20,7 +20,7 @@
         <div class="card h-100"><div class="card-body">
         <a href="details/@(p.ContentDetails.Nid)/@((int)p.MetaData.TipusId)" class="navlink">
         <img data-src="~/@(p.MetaData.Image)" class="mr-2 rounded" style="width: 80px; height: 80px;float: left;margin-right:8px;margin-bottom:8px;" 
-        src="~/@(p.MetaData.Image)" data-holder-rendered="true" alt="logo">
+        src="~/@(p.MetaData.Image)" data-holder-rendered="true" alt="@(p.MetaData.TipusNev)">
             @Html.Raw("<h5>" + p.ContentDetails.Cim + "</h5>")
             <p>
             @Html.Raw(p.MetaData.TipusNev+ "<br>" + p.ContentDetails.Fulldatum.ToString("MM-dd"))                

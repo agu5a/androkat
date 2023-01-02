@@ -10,9 +10,9 @@
     <div class="mb-4" style="border-radius: 0.25rem;padding: 15px;background-color: #ffffff;">
         <strong>Blogok szűrése forrás szerint</strong>:<br /> <a href="/blog">Összes</a> ||
         @{ 
-            var age = new Dictionary<string, string> {{"777blog.hu", "b777"}, {"Katolikus Ma" , "bkatolikusma"}, {"Jezsuita bloggerek" , "jezsuitablog"}};
+            var forrasok = new Dictionary<string, string> {{"777blog.hu", "b777"}, {"Katolikus Ma" , "bkatolikusma"}, {"Jezsuita bloggerek" , "jezsuitablog"}};
         }
-        @foreach (var item in age) 
+        @foreach (var item in forrasok) 
         {
             var css = "";
             css = (!string.IsNullOrWhiteSpace(ViewData["source"]?.ToString()) && ViewData["source"].ToString() == item.Value) ? "class=\"bg-success text-white p-1\"" : "";
@@ -35,7 +35,7 @@
         <div class="col-sm-4">
             <div class="card h-100"><div class="card-body">
                     <img data-src="~/@(p.MetaData.Image)" class="mr-2 rounded" style="float: left;margin-right:8px;margin-bottom:8px;" 
-                    src="~/@(p.MetaData.Image)" data-holder-rendered="true" alt="logo">
+                    src="~/@(p.MetaData.Image)" data-holder-rendered="true" alt="@(p.MetaData.TipusNev)">
                     @Html.Raw("<h5>" + @p.ContentDetails.Cim + "</h5>")
                     <p>
 
