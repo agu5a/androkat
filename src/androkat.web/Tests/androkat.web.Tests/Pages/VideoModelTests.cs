@@ -33,7 +33,7 @@ public class VideoModelTests : BaseTest
         };
 
         model.OnGet();
-        model.VideoSourceViewModels.First().ChannelName.Should().Be("ChannelName");
+        model.VideoSourceModels.First().ChannelName.Should().Be("ChannelName");
         model.ViewData["source"].ToString().Should().Be(expected);
     }
 }

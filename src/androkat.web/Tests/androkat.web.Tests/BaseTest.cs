@@ -35,14 +35,22 @@ public class BaseTest
         return (pageContext, tempData, actionContext);
     }
 
-    public static Mock<IContentService> GetContentService(int? tipus = null)
+    public static Mock<IContentService> GetContentService(int tipus)
     {
         var contentService = new Mock<IContentService>();
+        contentService.Setup(s => s.GetHumor()).Returns(new List<ContentModel>
+        {
+            new ContentModel
+            {
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                MetaData = new ContentMetaDataModel { Image = "Image" }
+            }
+        });
         contentService.Setup(s => s.GetHome()).Returns(new List<ContentModel>
         {
             new ContentModel
             {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? (int)Forras.papaitwitter, Img = "Image" },
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
                 MetaData = new ContentMetaDataModel { Image = "Image" }
             }
         });
@@ -50,7 +58,7 @@ public class BaseTest
         {
             new ContentModel
             {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? (int)Forras.ajanlatweb, Img = "Image" },
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
                 MetaData = new ContentMetaDataModel { Image = "Image" }
             }
         });
@@ -58,7 +66,7 @@ public class BaseTest
         {
             new ContentModel
             {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? (int)Forras.pio, Img = "Image" },
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
                 MetaData = new ContentMetaDataModel { Image = "Image" }
             }
         });
@@ -66,23 +74,23 @@ public class BaseTest
         {
             new ContentModel
             {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? (int)Forras.maiszent, Img = "Image" },
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
                 MetaData = new ContentMetaDataModel { Image = "Image" }
             }
         });
-        contentService.Setup(s => s.GetHirek((int)Forras.kurir)).Returns(new List<ContentModel>
+        contentService.Setup(s => s.GetHirek(It.IsAny<int>())).Returns(new List<ContentModel>
         {
             new ContentModel
             {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? (int)Forras.kurir, Img = "Image" },
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
                 MetaData = new ContentMetaDataModel { Image = "Image" }
             }
         });
-        contentService.Setup(s => s.GetBlog((int)Forras.b777)).Returns(new List<ContentModel>
+        contentService.Setup(s => s.GetBlog(It.IsAny<int>())).Returns(new List<ContentModel>
         {
             new ContentModel
             {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus ?? (int)Forras.b777, Img = "Image" },
+                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
                 MetaData = new ContentMetaDataModel { Image = "Image" }
             }
         });

@@ -170,6 +170,29 @@ public class ContentService : IContentService
         return list;
     }
 
+    public IReadOnlyCollection<ContentModel> GetHumor()
+    {
+        var list = new List<ContentModel>();
+        var res = new
+        {
+            ContentDetailsModels = new List<ContentDetailsModel>
+        {
+            new ContentDetailsModel
+            {
+                Cim = "Humor cím",
+                Fulldatum = DateTime.Now,
+                Nid = Guid.NewGuid(),
+                Tipus = (int)Forras.humor
+            }
+        }
+        };
+
+        foreach (var item in res.ContentDetailsModels.Where(w => w.Tipus == (int)Forras.humor))
+            list.Add(new ContentModel { ContentDetails = _mapper.Map<ContentDetailsModel>(item), MetaData = _mapper.Map<ContentMetaDataModel>(_androkatConfiguration.Value.GetContentMetaDataModelByTipus((int)Forras.humor)) });
+
+        return list;
+    }
+
     private IReadOnlyCollection<ContentModel> GetContentDetailsModel(int[] tipusok)
     {
         var list = new List<ContentModel>();
@@ -227,6 +250,15 @@ public class ContentService : IContentService
                     Fulldatum = DateTime.Now,
                     Nid = Guid.NewGuid(),
                     Tipus = (int)Forras.maiszent
+            },
+            new ContentDetailsModel
+            {
+                    Cim = "Audio cím",
+                    FileUrl = "FileUrl",
+                    Fulldatum = DateTime.Now,
+                    Nid = Guid.NewGuid(),
+                    Tipus = (int)Forras.audiobarsi,
+                    Inserted = DateTime.Now
             }
         };
 
@@ -272,21 +304,25 @@ public class ContentService : IContentService
 
     private List<AudioModel> GetAudioViewModel(int tipus)
     {
-        var list = new List<AudioModel>
+        var list = new List<AudioModel>();
+        var contents = Get(new int[] { tipus });
+
+        contents.ToList().ForEach(f =>
         {
-            new AudioModel
+            var mp3 = GetMp3(string.IsNullOrEmpty(f.FileUrl) ? f.Idezet : f.FileUrl);
+            var idezet = GetAudio(string.IsNullOrEmpty(f.FileUrl) ? f.Idezet : f.FileUrl);
+            list.Add(new AudioModel
             {
-                Cim = "Audio cím",
-                Idezet = "Idézet",
-                MetaDataModel = new ContentMetaDataModel
-                {
-                    Link = "link",
-                    TipusId = (Forras)Enum.ToObject(typeof(Forras), tipus),
-                    Image = "images/palferi.png",
-                },
-                Tipus = tipus
-            }
-        };
+                Cim = f.Cim,
+                Inserted = f.Inserted,
+                Tipus = tipus,
+                Idezet = idezet,
+                MetaDataModel = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus),
+                //EncodedUrl = HttpUtility.UrlEncode(mp3),
+                //ShareTitle = HttpUtility.UrlEncode(f.Cim),
+                //Url = mp3                
+            });
+        });
 
         return list;
     }
@@ -338,6 +374,8 @@ public class ContentService : IContentService
                 Cim = "Hír cím",
                 Fulldatum = DateTime.Now,
                 Nid = Guid.NewGuid(),
+                Idezet = "Idézet",
+                KulsoLink = "KulsoLink",
                 Tipus = tipus == 0 ? (int)Forras.kurir : tipus,
             }
         };

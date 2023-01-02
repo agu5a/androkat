@@ -18,11 +18,11 @@ public class VideoModel : PageModel
     [BindProperty(SupportsGet = true)]
     public string F { get; set; }
 
-    public IReadOnlyCollection<VideoSourceModel> VideoSourceViewModels { get; set; }
+    public IReadOnlyCollection<VideoSourceModel> VideoSourceModels { get; set; }
 
     public void OnGet()
     {
         ViewData["source"] = F ?? string.Empty;
-        VideoSourceViewModels = _contentService.GetVideoSourcePage();
+        VideoSourceModels = _contentService.GetVideoSourcePage();
     }
 }

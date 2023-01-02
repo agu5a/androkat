@@ -6,6 +6,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Moq;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,6 +19,8 @@ public class HanganyagModelTests : BaseTest
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();
 
+        var now = DateTime.Now;
+
         var contentService = new Mock<IContentService>();
         contentService.Setup(s => s.GetAudio()).Returns(new List<AudioModel>
         {
@@ -26,6 +29,7 @@ public class HanganyagModelTests : BaseTest
                 Cim = "Audio Cim",
                 Idezet = "Idézet",
                 Tipus = (int)Forras.audionapievangelium,
+                Inserted = now,
                 MetaDataModel= new ContentMetaDataModel
                 {
                     Image = "Image"
@@ -41,9 +45,10 @@ public class HanganyagModelTests : BaseTest
         };
 
         model.OnGet();
-        model.AudioViewModels.First().Cim.Should().Be("Audio Cim");
-        model.AudioViewModels.First().Idezet.Should().Be("Idézet");
-        model.AudioViewModels.First().Tipus.Should().Be((int)Forras.audionapievangelium);
-        model.AudioViewModels.First().MetaDataModel.Image.Should().Be("Image");
+        model.AudioModels.First().Cim.Should().Be("Audio Cim");
+        model.AudioModels.First().Idezet.Should().Be("Idézet");
+        model.AudioModels.First().Inserted.Should().Be(now);
+        model.AudioModels.First().Tipus.Should().Be((int)Forras.audionapievangelium);
+        model.AudioModels.First().MetaDataModel.Image.Should().Be("Image");
     }    
 }

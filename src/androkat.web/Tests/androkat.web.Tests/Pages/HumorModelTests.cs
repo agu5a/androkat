@@ -6,28 +6,24 @@ using System.Linq;
 
 namespace androkat.web.Tests.Pages;
 
-public class BlogModelTests : BaseTest
+public class HumorModelTests : BaseTest
 {
-    [TestCase("b777", (int)Forras.b777)]
-    [TestCase("bkatolikusma", (int)Forras.bkatolikusma)]
-    [TestCase("jezsuitablog", (int)Forras.jezsuitablog)]
-    [TestCase("", (int)Forras.b777)]
-    public void BlogModelTest(string source, int tipus)
+    [Test]
+    public void HumorModelTest()
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();
 
-        var model = new web.Pages.BlogModel(GetContentService(tipus).Object)
+        var model = new web.Pages.HumorModel(GetContentService((int)Forras.humor).Object)
         {
             PageContext = pageContext,
             TempData = tempData,
-            Url = new UrlHelper(actionContext),
-            Source = source
+            Url = new UrlHelper(actionContext)
         };
 
         model.OnGet();
         model.ContentModels.First().ContentDetails.Cim.Should().Be("Cim");
         model.ContentModels.First().ContentDetails.Img.Should().Be("Image");
-        model.ContentModels.First().ContentDetails.Tipus.Should().Be(tipus);
+        model.ContentModels.First().ContentDetails.Tipus.Should().Be((int)Forras.humor);
         model.ContentModels.First().MetaData.Image.Should().Be("Image");
     }
 }

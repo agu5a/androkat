@@ -203,7 +203,7 @@ public class ContentServiceTests : BaseTest
         var result = contentService.GetAudio().ToList();
 
         result[0].Cim.Should().Be("Audio cím");
-        result.Count.Should().Be(6);
+        result.Count.Should().Be(1);
     }
 
     [Test]
@@ -221,8 +221,9 @@ public class ContentServiceTests : BaseTest
         result.Count.Should().Be(1);
     }
 
-    [Test]
-    public void GetBlog_Happy()
+    [TestCase((int)Forras.b777)]
+    [TestCase(0)]
+    public void GetBlog_Happy(int tipus)
     {
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
@@ -230,14 +231,15 @@ public class ContentServiceTests : BaseTest
         var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
         var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
 
-        var result = contentService.GetBlog((int)Forras.b777).ToList();
+        var result = contentService.GetBlog(tipus).ToList();
 
         result[0].ContentDetails.Cim.Should().Be("Blog cím");
         result.Count.Should().Be(1);
     }
 
-    [Test]
-    public void GetHirek_Happy()
+    [TestCase((int)Forras.kurir)]
+    [TestCase(0)]
+    public void GetHirek_Happy(int tipus)
     {
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
@@ -245,9 +247,30 @@ public class ContentServiceTests : BaseTest
         var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
         var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
 
-        var result = contentService.GetHirek((int)Forras.kurir).ToList();
+        var result = contentService.GetHirek(tipus).ToList();
 
         result[0].ContentDetails.Cim.Should().Be("Hír cím");
+        result[0].ContentDetails.Idezet.Should().Be("Idézet");
+        result[0].ContentDetails.KulsoLink.Should().Be("KulsoLink");
+        result.Count.Should().Be(1);
+    }
+
+    [Test]
+    public void GetHumor_Happy()
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), mapper, new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+
+        var result = contentService.GetHumor().ToList();
+
+        result[0].MetaData.Image.Should().Be("images/smile.jpg");
+        result[0].MetaData.TipusNev.Should().Be("Humor");
+        result[0].MetaData.TipusId.Should().Be(Forras.humor);
+        result[0].ContentDetails.Cim.Should().Be("Humor cím");
+        result[0].ContentDetails.Tipus.Should().Be((int)Forras.humor);
         result.Count.Should().Be(1);
     }
 

@@ -32,6 +32,6 @@ public class RadioModelTests : BaseTest
         };
 
         model.OnGet();
-        model.RadioViewModels.First().Name.Should().Be("name");
+        model.RadioModels.First().Name.Should().Be("name");
     }
 }

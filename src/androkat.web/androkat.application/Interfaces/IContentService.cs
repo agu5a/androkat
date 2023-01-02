@@ -10,6 +10,7 @@ public interface IContentService
     IReadOnlyCollection<ContentModel> GetBlog(int tipus);
     IReadOnlyCollection<ContentModel> GetHirek(int tipus);
     IReadOnlyCollection<ContentModel> GetHome();    
+    IReadOnlyCollection<ContentModel> GetHumor();
     IReadOnlyCollection<ContentModel> GetImaPage(string csoport);
     IReadOnlyCollection<RadioModel> GetRadioPage();
     IReadOnlyCollection<ContentModel> GetSzent();

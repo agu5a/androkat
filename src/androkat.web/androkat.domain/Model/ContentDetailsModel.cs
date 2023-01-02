@@ -9,6 +9,8 @@ public class ContentDetailsModel
     public string Cim { get; set; }
     public string Idezet { get; set; }
     public int Tipus { get; set; }
+    public DateTime Inserted { get; set; }
     public string KulsoLink { get; set; }
     public string Img { get; set; }
+    public string FileUrl { get; set; }    
 }

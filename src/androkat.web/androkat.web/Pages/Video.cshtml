@@ -8,7 +8,7 @@
     <div class="mb-4" style="border-radius: 0.25rem;padding: 15px;background-color: #ffffff;">
         <strong>Videók szűrése forrás szerint</strong>:<br /> <a href="/video">Összes</a> ||
         
-        @foreach (var p in Model.VideoSourceViewModels)
+        @foreach (var p in Model.VideoSourceModels)
         {
             var css = "";
             css = (!string.IsNullOrWhiteSpace(ViewData["source"].ToString()) && ViewData["source"].ToString() == p.ChannelId) ? "class=\"bg-success text-white p-1\"" : "";

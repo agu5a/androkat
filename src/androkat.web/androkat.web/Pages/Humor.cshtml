@@ -1,0 +1,45 @@
+@page
+@using androkat.web.Pages
+@model HumorModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="container bg-white" style="padding: 15px;">
+ @{
+    var index = 0;
+    var vege = false;
+  } 
+    @foreach (var p in Model.ContentModels)
+    {
+        vege = false;
+        @if(index == 0)
+        {
+             @:<div class="row">
+        }
+
+           <div class="col-sm-4 mb-1">
+           <div class="card h-100"><div class="card-body">                
+                    @Html.Raw("<h5>" + p.ContentDetails.Cim + "</h5>")
+                    <p>
+                        @Html.Raw(p.ContentDetails.Fulldatum.ToString("MM-dd"))               
+                    </p>
+                    <p>
+                        @Html.Raw(p.ContentDetails.Idezet)
+                    </p>                
+            </div></div></div>
+
+    @if(index == 2)
+        {
+            @:</div>
+
+            index = 0;
+            vege = true;
+        }
+        else { index++; }            
+    } 
+    
+@if(!vege)
+{ 
+  @:</div> 
+}
+ 
+</div>

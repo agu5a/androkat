@@ -15,10 +15,10 @@ public class HanganyagModel : PageModel
         _contentService = contentService;
     }
 
-    public IReadOnlyCollection<AudioModel> AudioViewModels { get; set; }
+    public IReadOnlyCollection<AudioModel> AudioModels { get; set; }
 
     public void OnGet()
     {
-        AudioViewModels = _contentService.GetAudio().OrderBy(o => o.Tipus).ToList();
+        AudioModels = _contentService.GetAudio().OrderBy(o => o.Tipus).ToList();
     }
 }

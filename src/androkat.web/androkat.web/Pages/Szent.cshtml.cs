@@ -16,7 +16,6 @@ public class SzentModel : PageModel
 
     public IReadOnlyCollection<ContentModel> ContentModels { get; set; }
 
-
     public void OnGet()
     {
         ContentModels = _contentService.GetSzent();
