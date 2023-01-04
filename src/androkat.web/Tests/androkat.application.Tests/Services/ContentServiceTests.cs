@@ -137,6 +137,48 @@ public class ContentServiceTests : BaseTest
     }
 
     [Test]
+    public void GetAjanlat_Details_Happy()
+    {
+        var nid = Guid.NewGuid();
+        var tipus = (int)Forras.ajanlatweb;
+
+        Mock<IContentRepository> repository = GetContentRepository(
+            new List<ContentModel>
+            {
+                new ContentModel
+                {
+                    ContentDetails = new ContentDetailsModel
+                    {
+                        Cim = "Ajánlat cím",
+                        Fulldatum = DateTime.Now,
+                        Nid = nid,
+                        Tipus = (int)Forras.ajanlatweb
+                    },
+                    MetaData = new ContentMetaDataModel
+                    {
+                        TipusId = Forras.ajanlatweb,
+                        TipusNev = "Ajánlat",
+                        Image = "images/Ajánlat.png"
+                    }
+                }
+            });
+
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var cacheService = new CacheService(repository.Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), repository.Object, cacheService, GetAndrokatConfiguration());
+
+        var result = contentService.GetContentDetailsModelByNid(nid, tipus);
+
+        result.MetaData.Image.Should().Be("images/gift.png");
+        result.MetaData.TipusNev.Should().Be("AJÁNDéKOZZ KÖNYVET");
+        result.MetaData.TipusId.Should().Be(Forras.ajanlatweb);
+        result.ContentDetails.Cim.Should().Be("Ajánlat cím");
+        result.ContentDetails.Tipus.Should().Be((int)Forras.ajanlatweb);        
+    }
+
+    [Test]
     public void GetSzentek_Happy()
     {
         Mock<IContentRepository> repository = GetContentRepository(
@@ -189,6 +231,22 @@ public class ContentServiceTests : BaseTest
 
         result[0].ContentDetails.Cim.Should().Be("Ima Cím");
         result.Count.Should().Be(1);
+    }
+
+    [Test]
+    public void GetImaDetailsPage_Happy()
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+
+        var result = contentService.GetImaById(Guid.Empty);
+
+        result.Cim.Should().Be("Ima Cím");
+        result.Csoport.Should().Be("0");
+        result.Szoveg.Should().Be("Szöveg");
     }
 
     [Test]

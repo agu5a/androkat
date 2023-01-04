@@ -22,7 +22,7 @@ public class ImaModelTests : BaseTest
             new ContentModel { ContentDetails = new ContentDetailsModel{ Cim = "Ima Cim" } }
         });
 
-        var model = new web.Pages.ImaModel(contentService.Object)
+        var model = new web.Pages.Ima.IndexModel(contentService.Object)
         {
             PageContext = pageContext,
             TempData = tempData,

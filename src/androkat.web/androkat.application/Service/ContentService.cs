@@ -199,6 +199,15 @@ public class ContentService : IContentService
 		return new ContentModel { ContentDetails = contentDetailsModel, MetaData = data };
 	}
 
+	public ImaModel GetImaById(Guid nid)
+	{
+		var res = new { Imak = new List<ImaModel> { new ImaModel { Cim = "Ima Cím", Csoport = "0", Datum = DateTime.Now, Szoveg = "Szöveg", Nid = nid } } };
+
+		var result = res.Imak.FirstOrDefault(w => w.Nid == nid);
+
+		return result;
+	}
+
 	private IReadOnlyCollection<ContentModel> GetContentDetailsModel(int[] tipusok)
 	{
 		var list = new List<ContentModel>();
@@ -340,7 +349,10 @@ public class ContentService : IContentService
 			new ImaModel
 			{
 				Cim = "Ima Cím",
-				Nid = Guid.NewGuid()
+				Nid = Guid.NewGuid(),
+				Csoport = csoport,
+				Szoveg = "Szöveg",
+				Datum = DateTime.Now
 			}
 		};
 

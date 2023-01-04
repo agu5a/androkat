@@ -12,6 +12,7 @@ public interface IContentService
 	IReadOnlyCollection<ContentModel> GetHirek(int tipus);
 	IReadOnlyCollection<ContentModel> GetHome();
 	IReadOnlyCollection<ContentModel> GetHumor();
+    ImaModel GetImaById(Guid nid);
 	IReadOnlyCollection<ContentModel> GetImaPage(string csoport);
 	ContentModel GetContentDetailsModelByNid(Guid nid, int tipus);
 	IReadOnlyCollection<RadioModel> GetRadioPage();
