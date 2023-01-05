@@ -168,19 +168,7 @@ public class ContentService : IContentService
     public IReadOnlyCollection<ContentModel> GetHumor()
     {
         var list = new List<ContentModel>();
-        var res = new
-        {
-            ContentDetailsModels = new List<ContentDetailsModel>
-        {
-            new ContentDetailsModel
-            {
-                Cim = "Humor cím",
-                Fulldatum = DateTime.Now,
-                Nid = Guid.NewGuid(),
-                Tipus = (int)Forras.humor
-            }
-        }
-        };
+		var res = GetMainCache();
 
         foreach (var item in res.ContentDetailsModels.Where(w => w.Tipus == (int)Forras.humor))
             list.Add(new ContentModel { ContentDetails = item, MetaData = _androkatConfiguration.Value.GetContentMetaDataModelByTipus((int)Forras.humor) });
@@ -201,10 +189,7 @@ public class ContentService : IContentService
     public ImaModel GetImaById(Guid nid)
     {
         var res = new { Imak = new List<ImaModel> { new ImaModel { Cim = "Ima Cím", Csoport = "0", Datum = DateTime.Now, Szoveg = "Szöveg", Nid = nid } } };
-
-        var result = res.Imak.FirstOrDefault(w => w.Nid == nid);
-
-        return result;
+        return res.Imak.FirstOrDefault(w => w.Nid == nid);
     }
 
     private IReadOnlyCollection<ContentModel> GetContentDetailsModel(int[] tipusok)

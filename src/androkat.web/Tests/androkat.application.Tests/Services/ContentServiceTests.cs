@@ -81,31 +81,27 @@ public class ContentServiceTests : BaseTest
     [Test]
     public void GetAjanlat_Happy()
     {
-        var cacheService = GetCacheService(
-            new List<ContentModel>
-            {
-                new ContentModel
-                {
-                    ContentDetails = new ContentDetailsModel
-                    {
-                        Cim = "Ajánlat cím",
-                        Fulldatum = DateTime.Now,
-                        Nid = Guid.NewGuid(),
-                        Tipus = (int)Forras.ajanlatweb
-                    },
-                    MetaData = new ContentMetaDataModel
-                    {
-                        TipusId = Forras.ajanlatweb,
-                        TipusNev = "Ajánlat",
-                        Image = "images/Ajánlat.png"
-                    }
-                }
-            });
-
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var contentService = new ContentService(GetIMemoryCache(), cacheService.Object, GetAndrokatConfiguration());
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var guid = Guid.NewGuid();
+        var _fixture = new Fixture();
+        var content = _fixture.Create<Napiolvaso>();
+        content.Cim = "Ajánlat cím";
+        content.Nid = guid;
+        content.Tipus = (int)Forras.ajanlatweb;
+        content.Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03";
+
+        context.Content.Add(content);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetAjanlat().ToList();
 
@@ -123,31 +119,26 @@ public class ContentServiceTests : BaseTest
         var nid = Guid.NewGuid();
         var tipus = (int)Forras.ajanlatweb;
 
-        var cacheService = GetCacheService(
-            new List<ContentModel>
-            {
-                new ContentModel
-                {
-                    ContentDetails = new ContentDetailsModel
-                    {
-                        Cim = "Ajánlat cím",
-                        Fulldatum = DateTime.Now,
-                        Nid = nid,
-                        Tipus = (int)Forras.ajanlatweb
-                    },
-                    MetaData = new ContentMetaDataModel
-                    {
-                        TipusId = Forras.ajanlatweb,
-                        TipusNev = "Ajánlat",
-                        Image = "images/Ajánlat.png"
-                    }
-                }
-            });
-
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var contentService = new ContentService(GetIMemoryCache(), cacheService.Object, GetAndrokatConfiguration());
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var _fixture = new Fixture();
+        var content = _fixture.Create<Napiolvaso>();
+        content.Cim = "Ajánlat cím";
+        content.Nid = nid;
+        content.Tipus = tipus;
+        content.Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03";
+
+        context.Content.Add(content);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetContentDetailsModelByNid(nid, tipus);
 
@@ -161,31 +152,27 @@ public class ContentServiceTests : BaseTest
     [Test]
     public void GetSzentek_Happy()
     {
-        var cacheService = GetCacheService(
-            new List<ContentModel>
-            {
-                new ContentModel
-                {
-                    ContentDetails = new ContentDetailsModel
-                    {
-                        Cim = "Pio cím",
-                        Fulldatum = DateTime.Now,
-                        Nid = Guid.NewGuid(),
-                        Tipus = (int)Forras.pio
-                    },
-                    MetaData = new ContentMetaDataModel
-                    {
-                        TipusId = Forras.pio,
-                        TipusNev = "Szentek",
-                        Image = "images/pio.png"
-                    }
-                }
-            });
-
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var contentService = new ContentService(GetIMemoryCache(), cacheService.Object, GetAndrokatConfiguration());
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var guid = Guid.NewGuid();
+        var _fixture = new Fixture();
+        var fixContent = _fixture.Create<FixContent>();
+        fixContent.Cim = "Pio cím";
+        fixContent.Nid = guid;
+        fixContent.Tipus = (int)Forras.pio;
+        fixContent.Datum = "02-03";
+
+        context.FixContent.Add(fixContent);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetSzentek().ToList();
 
@@ -280,7 +267,24 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(new Mock<ICacheRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var guid = Guid.NewGuid();
+        var _fixture = new Fixture();
+        var content = _fixture.Create<Napiolvaso>();
+        content.Cim = "Blog cím";
+        content.Nid = guid;
+        content.Tipus = (int)Forras.b777;
+        content.Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03";
+        content.Inserted = DateTime.Parse(DateTime.Now.ToString("yyyy") + "-02-03");
+
+        context.Content.Add(content);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
         var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetBlog(tipus).ToList();
@@ -296,7 +300,28 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(new Mock<ICacheRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var guid = Guid.NewGuid();
+        var _fixture = new Fixture();
+        var content = new Napiolvaso
+        {
+            Cim = "Hír cím",
+            Nid = guid,
+            Tipus = (int)Forras.kurir,
+            Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03",
+            Inserted = DateTime.Parse(DateTime.Now.ToString("yyyy") + "-02-03"),
+            Idezet = "Idézet",
+            //KulsoLink = "KulsoLink"
+        };
+
+        context.Content.Add(content);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
         var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetHirek(tipus).ToList();
@@ -313,7 +338,23 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(new Mock<ICacheRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var guid = Guid.NewGuid();
+        var _fixture = new Fixture();
+        var fixContent = _fixture.Create<FixContent>();
+        fixContent.Cim = "Humor cím";
+        fixContent.Nid = guid;
+        fixContent.Tipus = (int)Forras.humor;
+        fixContent.Datum = "02-03";
+
+        context.FixContent.Add(fixContent);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
         var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetHumor().ToList();
@@ -345,31 +386,27 @@ public class ContentServiceTests : BaseTest
     [Test]
     public void GetSzent_Happy()
     {
-        var cacheService = GetCacheService(
-            new List<ContentModel>
-            {
-                new ContentModel
-                {
-                    ContentDetails = new ContentDetailsModel
-                    {
-                        Cim = "Mai szent cím",
-                        Fulldatum = DateTime.Now,
-                        Nid = Guid.NewGuid(),
-                        Tipus = (int)Forras.maiszent
-                    },
-                    MetaData = new ContentMetaDataModel
-                    {
-                        TipusId = Forras.maiszent,
-                        TipusNev = "Mai Szent",
-                        Image = "images/katolikus_hu.png"
-                    }
-                }
-            });
-
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var contentService = new ContentService(GetIMemoryCache(), cacheService.Object, GetAndrokatConfiguration());
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var guid = Guid.NewGuid();
+        var _fixture = new Fixture();
+        var maiszent = _fixture.Create<Maiszent>();
+        maiszent.Cim = "Mai szent cím";
+        maiszent.Nid = guid;
+        maiszent.Idezet = "Idézet";
+        maiszent.Datum = "02-03";
+
+        context.MaiSzent.Add(maiszent);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetSzent().ToList();
 

@@ -1,4 +1,5 @@
 ﻿using androkat.application.Interfaces;
+using androkat.domain.Enum;
 using androkat.infrastructure.DataManager;
 using androkat.infrastructure.Mapper;
 using androkat.infrastructure.Model.SQLite;
@@ -16,7 +17,68 @@ namespace androkat.infrastructure.Tests;
 public class CacheRepositoryTests : BaseTest
 {
     [Test]
-    public void GetActualMaiSzent_Ma_Happy()
+    public void GetHumorToCache_Happy()
+    {
+        var logger = new Mock<ILogger<CacheRepository>>();
+
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var clock = GetToday();
+
+        using (var context = new AndrokatContext(GetDbContextOptions()))
+        {
+            var entity = new FixContent
+            {
+                Datum = "02-03",
+                Tipus = (int)Forras.humor
+            };
+            context.FixContent.Add(entity);
+            context.SaveChanges();
+
+            var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
+            var result = repo.GetHumorToCache();
+            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
+        }
+    }
+
+    [TestCase((int)Forras.humor)]
+    [TestCase((int)Forras.pio)]
+    public void GetNapiFixToCache_Happy(int tipus)
+    {
+        var logger = new Mock<ILogger<CacheRepository>>();
+
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var clock = GetToday();
+
+        using (var context = new AndrokatContext(GetDbContextOptions()))
+        {
+            var entity = new FixContent
+            {
+                Datum = "02-03",
+                Tipus = tipus
+            };
+            context.FixContent.Add(entity);
+            context.SaveChanges();
+
+            var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
+            var result = repo.GetNapiFixToCache();
+            if (tipus == (int)Forras.pio)
+            {
+                result.Count().Should().Be(1);  
+                result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
+            }
+            else
+            {
+                result.Count().Should().Be(0);
+            }
+        }
+    }
+
+    [Test]
+    public void GetMaiSzentToCache_Ma_Happy()
     {
         var logger = new Mock<ILogger<CacheRepository>>();
 
@@ -41,7 +103,7 @@ public class CacheRepositoryTests : BaseTest
     }
 
     [Test]
-    public void GetActualMaiSzent_Tegnap_Happy()
+    public void GetMaiSzentToCache_Tegnap_Happy()
     {
         var logger = new Mock<ILogger<CacheRepository>>();
 
@@ -66,7 +128,7 @@ public class CacheRepositoryTests : BaseTest
     }
 
     [Test]
-    public void GetActualMaiSzent_ElozoHonap_Happy()
+    public void GetMaiSzentToCache_ElozoHonap_Happy()
     {
         var logger = new Mock<ILogger<CacheRepository>>();
 
@@ -97,48 +159,29 @@ public class CacheRepositoryTests : BaseTest
         return clock;
     }
 
-    //[Test]
-    //public void GetContentDetailsModel_Happy()
-    //{
-    //    var clock = new Mock<IClock>();
-    //    clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"));
+    [Test]
+    public void GetContentDetailsModelToCache_Happy()
+    {
+        var logger = new Mock<ILogger<CacheRepository>>();
 
-    //    var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-    //    var mapper = config.CreateMapper();
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
 
-    //    var loggerRepo = new Mock<ILogger<CacheRepository>>();
+        var clock = GetToday();
 
-    //    var logger = new Mock<ILogger<ContentMetaDataService>>();
-    //    var service = new ContentMetaDataService(logger.Object);
-    //    var metaDataList = service.GetContentMetaDataList("../../../../../androkat.web/Data/IdezetData.json");
+        using (var context = new AndrokatContext(GetDbContextOptions()))
+        {
+            var entity = new Napiolvaso
+            {
+                Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03",
+                Tipus = (int)Forras.audiohorvath
+            };
+            context.Content.Add(entity);
+            context.SaveChanges();
 
-    //    var contentMetaDataModels = Options.Create(new AndrokatConfiguration
-    //    {
-    //        ContentMetaDataList = metaDataList
-    //    });
-
-    //    using var context = new SQLiteContext(GetDbContextOptions());
-
-    //    var guid = Guid.NewGuid();
-    //    var _fixture = new Fixture();
-    //    var content = _fixture.Create<Napiolvaso>();
-    //    content.Nid = guid;
-    //    content.Tipus = (int)Forras.papaitwitter;
-    //    content.Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03";
-
-    //    context.Content.Add(content);
-    //    context.SaveChanges();
-
-    //    var repository = new CacheRepository(context, loggerRepo.Object, clock.Object, mapper);
-    //    var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, clock.Object);
-    //    var contentService = new ContentService(GetIMemoryCache(), mapper, cacheService, contentMetaDataModels);        
-
-    //    var result = contentService.GetContentDetailsModel(new int[] { (int)Forras.papaitwitter, (int)Forras.advent, (int)Forras.bojte }).ToList();
-
-    //    result[0].MetaData.Image.Should().Be("images/ferencpapa.png");
-    //    result[0].MetaData.TipusNev.Should().Be("Ferenc pápa twitter üzenete");
-    //    result[0].MetaData.TipusId.Should().Be(Forras.papaitwitter);
-    //    result[0].ContentDetails.Tipus.Should().Be((int)Forras.papaitwitter);
-    //    result.Count.Should().Be(1);
-    //}
+            var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
+            var result = repo.GetContentDetailsModelToCache();
+            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-02-03"));
+        }        
+    }
 }

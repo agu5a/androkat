@@ -49,33 +49,35 @@ public class CacheRepository : BaseRepository, ICacheRepository
         var month = _clock.Now.ToString("MM");
 
         var rows = _ctx.MaiSzent.AsNoTracking().Where(w => w.Datum == hoNap);
-        if (!rows.Any())
+        if (rows.Any())
         {
-            var rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
-            .Where(w => w.Datum.StartsWith($"{month}-") && w.FullDate < _clock.Now)
-            .OrderByDescending(o => o.Datum).Take(1);
-
-            if (!rows2.Any())
-            {
-                var prevmonth = _clock.Now.AddMonths(-1).ToString("MM");
-                //nincs az új hónap első napján anyag
-                rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
-                    .Where(w => w.Datum.StartsWith($"{prevmonth}-") && w.FullDate < _clock.Now)
-                    .OrderByDescending(o => o.Datum).Take(1);
-            }
-
-            rows2.ToList().ForEach(row =>
-            {
-                row.Datum = _clock.Now.ToString("yyyy-") + row.Datum;
-                list.Add(_mapper.Map<ContentDetailsModel>(row));
-            });
-        }
-        else
             rows.ToList().ForEach(row =>
             {
                 row.Datum = _clock.Now.ToString("yyyy-") + row.Datum;
                 list.Add(_mapper.Map<ContentDetailsModel>(row));
             });
+
+            return list;
+        }
+
+        var rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
+        .Where(w => w.Datum.StartsWith($"{month}-") && w.FullDate < _clock.Now)
+        .OrderByDescending(o => o.Datum).Take(1);
+
+        if (!rows2.Any())
+        {
+            var prevmonth = _clock.Now.AddMonths(-1).ToString("MM");
+            //nincs az új hónap első napján anyag
+            rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
+                .Where(w => w.Datum.StartsWith($"{prevmonth}-") && w.FullDate < _clock.Now)
+                .OrderByDescending(o => o.Datum).Take(1);
+        }
+
+        rows2.ToList().ForEach(row =>
+        {
+            row.Datum = _clock.Now.ToString("yyyy-") + row.Datum;
+            list.Add(_mapper.Map<ContentDetailsModel>(row));
+        });
 
         return list;
     }
@@ -93,13 +95,13 @@ public class CacheRepository : BaseRepository, ICacheRepository
         var date = _clock.Now.ToString("MM-dd");
 
         var napiFixek = _ctx.FixContent.AsNoTracking().Where(w => tipusok.Contains(w.Tipus) && w.Datum == date);
-        if (napiFixek != null)
+        if (napiFixek == null)
+            return result;
+
+        foreach (var napiFix in napiFixek)
         {
-            foreach (var napiFix in napiFixek)
-            {
-                napiFix.Datum = _clock.Now.ToString("yyyy-") + napiFix.Datum + " 00:00:01";
-                result.Add(_mapper.Map<ContentDetailsModel>(napiFix));
-            }
+            napiFix.Datum = _clock.Now.ToString("yyyy-") + napiFix.Datum + " 00:00:01";
+            result.Add(_mapper.Map<ContentDetailsModel>(napiFix));
         }
 
         return result;
@@ -151,5 +153,5 @@ public class CacheRepository : BaseRepository, ICacheRepository
         if (res == null || !res.Any())
             res = _ctx.Content.AsNoTracking().Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted).Take(1);
         return res;
-    }    
+    }
 }
