@@ -23,6 +23,7 @@ public class Warmup : IHostedService
         using (var scope = _serviceProvider.CreateScope())
         {
             var warmupService = scope.ServiceProvider.GetService<IWarmupService>();
+            warmupService.MainCacheFillUp();
         }
 
         return Task.CompletedTask;

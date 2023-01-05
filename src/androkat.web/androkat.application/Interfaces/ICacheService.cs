@@ -1,6 +1,8 @@
-﻿namespace androkat.application.Interfaces;
+﻿using androkat.domain.Model.ContentCache;
+
+namespace androkat.application.Interfaces;
 
 public interface ICacheService
 {
-
+    MainCache MainCacheFillUp();
 }

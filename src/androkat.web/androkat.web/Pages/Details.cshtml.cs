@@ -21,7 +21,7 @@ public class DetailsModel : PageModel
 	public int Type { get; set; }
 
 	[BindProperty(SupportsGet = true)]
-	public Guid Nid { get; set; }
+    public string Nid { get; set; }
 
 	public ContentModel ContentModel { get; set; }
 	public string Image { get; set; }
@@ -33,8 +33,14 @@ public class DetailsModel : PageModel
 
 	public IActionResult OnGet()
 	{
-		var result = _contentService.GetContentDetailsModelByNid(Nid, Type);
-		if (result.ContentDetails == null || result.MetaData == null)
+        if (string.IsNullOrWhiteSpace(Nid))
+            return Redirect("/Error");
+
+        if (!Guid.TryParse(Nid, out var guid))
+            return Redirect("/Error");
+
+        var result = _contentService.GetContentDetailsModelByNid(guid, Type);
+        if (result?.ContentDetails == null || result?.MetaData == null)
 			return Redirect("/Error");
 
 		ShareUrl = $"https://androkat.hu/details/{Nid}/{Type}";

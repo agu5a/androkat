@@ -18,7 +18,7 @@ public class DetailsModel : PageModel
     }
 
     [BindProperty(SupportsGet = true)]
-    public Guid Nid { get; set; }
+    public string Nid { get; set; }
 
     public ImaModel ImaModel { get; set; }
     public string ShareUrl { get; set; }
@@ -28,7 +28,13 @@ public class DetailsModel : PageModel
 
     public IActionResult OnGet()
     {
-        var result = _contentService.GetImaById(Nid);
+        if(string.IsNullOrWhiteSpace(Nid))
+            return Redirect("/Error");
+
+        if(!Guid.TryParse(Nid, out var guid))
+            return Redirect("/Error");
+
+        var result = _contentService.GetImaById(guid);
         if (result == null)
             return Redirect("/Error");
 

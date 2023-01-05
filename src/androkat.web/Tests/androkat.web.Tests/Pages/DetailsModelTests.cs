@@ -1,5 +1,6 @@
 ﻿using androkat.domain.Enum;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using NUnit.Framework;
 using System;
@@ -21,7 +22,7 @@ public class DetailsModelTests : BaseTest
 			PageContext = pageContext,
 			TempData = tempData,
 			Url = new UrlHelper(actionContext),
-			Nid = nid,
+			Nid = nid.ToString(),
 			Type = tipus
 		};
 
@@ -53,7 +54,7 @@ public class DetailsModelTests : BaseTest
 			PageContext = pageContext,
 			TempData = tempData,
 			Url = new UrlHelper(actionContext),
-			Nid = nid,
+			Nid = nid.ToString(),
 			Type = tipus
 		};
 
@@ -70,4 +71,26 @@ public class DetailsModelTests : BaseTest
 		model.ForrasLink.Should().Be("Forras");
 		model.ForrasText.Should().Be("Forras");
 	}
+
+    [TestCase(null)]
+    [TestCase("")]
+    [TestCase("blabla")]
+    public void DetailsModelTest_No_Valid_Guid(string nid)
+    {
+		var tipus = (int)Forras.szentbernat;
+
+        var (pageContext, tempData, actionContext) = GetPreStuff();
+
+        var model = new web.Pages.DetailsModel(GetContentService(tipus).Object)
+        {
+            PageContext = pageContext,
+            TempData = tempData,
+            Url = new UrlHelper(actionContext),
+            Nid = nid,
+            Type = tipus
+        };
+
+        var result = model.OnGet();
+		Assert.That(result, Is.TypeOf(typeof(RedirectResult)));        
+    }
 }

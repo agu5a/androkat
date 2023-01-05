@@ -4,7 +4,10 @@ using androkat.domain;
 using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.domain.Model;
+using androkat.infrastructure.DataManager;
 using androkat.infrastructure.Mapper;
+using androkat.infrastructure.Model.SQLite;
+using AutoFixture;
 using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -43,48 +46,27 @@ public class ContentServiceTests : BaseTest
     [Test]
     public void GetHome_Happy()
     {
-        Mock<IContentRepository> repository = GetContentRepository(
-            new List<ContentModel>
-            {
-                new ContentModel
-                {
-                    ContentDetails = new ContentDetailsModel
-                    {
-                        Cim = "Twitter cím",
-                        Fulldatum = DateTime.Now,
-                        Nid = Guid.NewGuid(),
-                        Tipus = (int)Forras.papaitwitter
-                    },
-                    MetaData = new ContentMetaDataModel
-                    {
-                        TipusId = Forras.papaitwitter,
-                        TipusNev = "Ferenc pápa twitter üzenete",
-                        Image = "images/ferencpapa.png"
-                    }
-                },
-                new ContentModel
-                {
-                    ContentDetails = new ContentDetailsModel
-                    {
-                        Cim = "Advent cím",
-                        Fulldatum = DateTime.Now,
-                        Nid = Guid.NewGuid(),
-                        Tipus = (int)Forras.advent
-                    },
-                    MetaData = new ContentMetaDataModel
-                    {
-                        TipusId = Forras.advent,
-                        TipusNev = "Advent",
-                        Image = "images/advent.png"
-                    }
-                }
-            });
-
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(repository.Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), repository.Object, cacheService, GetAndrokatConfiguration());
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var guid = Guid.NewGuid();
+        var _fixture = new Fixture();
+        var content = _fixture.Create<Napiolvaso>();
+        content.Cim = "Twitter cím";
+        content.Nid = guid;
+        content.Tipus = (int)Forras.papaitwitter;
+        content.Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03";
+
+        context.Content.Add(content);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetHome().ToList();
 
@@ -93,13 +75,13 @@ public class ContentServiceTests : BaseTest
         result[0].MetaData.TipusId.Should().Be(Forras.papaitwitter);
         result[0].ContentDetails.Cim.Should().Be("Twitter cím");
         result[0].ContentDetails.Tipus.Should().Be((int)Forras.papaitwitter);
-        result.Count.Should().Be(3);
+        result.Count.Should().Be(1);
     }
 
     [Test]
     public void GetAjanlat_Happy()
     {
-        Mock<IContentRepository> repository = GetContentRepository(
+        var cacheService = GetCacheService(
             new List<ContentModel>
             {
                 new ContentModel
@@ -123,8 +105,7 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(repository.Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), repository.Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), cacheService.Object, GetAndrokatConfiguration());
 
         var result = contentService.GetAjanlat().ToList();
 
@@ -142,7 +123,7 @@ public class ContentServiceTests : BaseTest
         var nid = Guid.NewGuid();
         var tipus = (int)Forras.ajanlatweb;
 
-        Mock<IContentRepository> repository = GetContentRepository(
+        var cacheService = GetCacheService(
             new List<ContentModel>
             {
                 new ContentModel
@@ -166,8 +147,7 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(repository.Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), repository.Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), cacheService.Object, GetAndrokatConfiguration());
 
         var result = contentService.GetContentDetailsModelByNid(nid, tipus);
 
@@ -175,13 +155,13 @@ public class ContentServiceTests : BaseTest
         result.MetaData.TipusNev.Should().Be("AJÁNDéKOZZ KÖNYVET");
         result.MetaData.TipusId.Should().Be(Forras.ajanlatweb);
         result.ContentDetails.Cim.Should().Be("Ajánlat cím");
-        result.ContentDetails.Tipus.Should().Be((int)Forras.ajanlatweb);        
+        result.ContentDetails.Tipus.Should().Be((int)Forras.ajanlatweb);
     }
 
     [Test]
     public void GetSzentek_Happy()
     {
-        Mock<IContentRepository> repository = GetContentRepository(
+        var cacheService = GetCacheService(
             new List<ContentModel>
             {
                 new ContentModel
@@ -205,8 +185,7 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(repository.Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), repository.Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), cacheService.Object, GetAndrokatConfiguration());
 
         var result = contentService.GetSzentek().ToList();
 
@@ -224,8 +203,8 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var cacheService = new CacheService(new Mock<ICacheRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetImaPage(string.Empty).ToList();
 
@@ -239,8 +218,8 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var cacheService = new CacheService(new Mock<ICacheRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetImaById(Guid.Empty);
 
@@ -252,11 +231,26 @@ public class ContentServiceTests : BaseTest
     [Test]
     public void GetAudio_Happy()
     {
+        var now = DateTimeOffset.Parse("2012-02-03T04:05:06");
+
+        var cacheService = GetCacheService(
+            new List<ContentModel>
+            {
+                new ContentModel
+                {
+                    ContentDetails = new ContentDetailsModel
+                    {
+                        Cim = "Audio cím", Tipus = 60, Fulldatum = now.DateTime, Nid = Guid.Parse("281cd115-1289-11ea-8aa1-cbeb38570c35"),
+                        Idezet = "audiofile",
+                        FileUrl = ""
+                    }
+                }
+            });
+
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), cacheService.Object, GetAndrokatConfiguration());
 
         var result = contentService.GetAudio().ToList();
 
@@ -270,8 +264,8 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var cacheService = new CacheService(new Mock<ICacheRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetVideoSourcePage().ToList();
 
@@ -286,8 +280,8 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var cacheService = new CacheService(new Mock<ICacheRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetBlog(tipus).ToList();
 
@@ -302,8 +296,8 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var cacheService = new CacheService(new Mock<ICacheRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetHirek(tipus).ToList();
 
@@ -319,8 +313,8 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var cacheService = new CacheService(new Mock<ICacheRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetHumor().ToList();
 
@@ -338,8 +332,8 @@ public class ContentServiceTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var cacheService = new CacheService(new Mock<ICacheRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
         var result = contentService.GetRadioPage().ToList();
 
@@ -351,11 +345,31 @@ public class ContentServiceTests : BaseTest
     [Test]
     public void GetSzent_Happy()
     {
+        var cacheService = GetCacheService(
+            new List<ContentModel>
+            {
+                new ContentModel
+                {
+                    ContentDetails = new ContentDetailsModel
+                    {
+                        Cim = "Mai szent cím",
+                        Fulldatum = DateTime.Now,
+                        Nid = Guid.NewGuid(),
+                        Tipus = (int)Forras.maiszent
+                    },
+                    MetaData = new ContentMetaDataModel
+                    {
+                        TipusId = Forras.maiszent,
+                        TipusNev = "Mai Szent",
+                        Image = "images/katolikus_hu.png"
+                    }
+                }
+            });
+
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-        var cacheService = new CacheService(new Mock<IContentRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-        var contentService = new ContentService(GetIMemoryCache(), new Mock<IContentRepository>().Object, cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), cacheService.Object, GetAndrokatConfiguration());
 
         var result = contentService.GetSzent().ToList();
 

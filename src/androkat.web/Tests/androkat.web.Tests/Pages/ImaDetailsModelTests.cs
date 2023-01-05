@@ -2,6 +2,7 @@
 using androkat.domain.Enum;
 using androkat.domain.Model;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Moq;
 using NUnit.Framework;
@@ -36,7 +37,7 @@ public class ImaDetailsModelTests : BaseTest
 			PageContext = pageContext,
 			TempData = tempData,
 			Url = new UrlHelper(actionContext),
-			Nid = nid
+			Nid = nid.ToString()
 		};
 
 		model.OnGet();
@@ -48,5 +49,24 @@ public class ImaDetailsModelTests : BaseTest
         model.ShareUrl.Should().Be($"https://androkat.hu/ima/details/{nid}");
 		model.EncodedUrl.Should().Be(HttpUtility.UrlEncode($"https://androkat.hu/ima/details/{nid}"));
 		model.ShareTitle.Should().Be(HttpUtility.UrlEncode("Ima Cim"));
-	}	
+	}
+
+    [TestCase(null)]
+    [TestCase("")]
+    [TestCase("blabla")]
+    public void ImaDetailsModelTest_No_Valid_Guid(string nid)
+    {
+        var (pageContext, tempData, actionContext) = GetPreStuff();
+
+        var model = new web.Pages.Ima.DetailsModel(new Mock<IContentService>().Object)
+        {
+            PageContext = pageContext,
+            TempData = tempData,
+            Url = new UrlHelper(actionContext),
+            Nid = nid
+        };
+
+        var result = model.OnGet();
+        Assert.That(result, Is.TypeOf(typeof(RedirectResult)));
+    }
 }

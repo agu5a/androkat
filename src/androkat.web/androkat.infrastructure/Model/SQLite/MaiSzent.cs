@@ -5,17 +5,27 @@ using System.Runtime.Serialization;
 
 namespace androkat.infrastructure.Model.SQLite;
 
-[Table("napiolvaso")]
-public class Napiolvaso
+[Table("maiszent")]
+public class Maiszent
 {
     [Key]
     [Required]
     [DataMember(Name = "nid")]
-    public Guid Nid { get; set; }
+    public Guid Nid { get; set; } 
 
     [StringLength(100)]
-    [DataMember(Name = "fulldatum")]
-    public string Fulldatum { get; set; } //"yyyy-MM-dd HH:mm:ss"
+    [DataMember(Name = "datum")]
+    public string Datum { get; set; } //"MM-dd"
+
+    [NotMapped]
+    public DateTime FullDate
+    {
+        get
+        {
+            _ = DateTime.TryParse(DateTime.Now.ToString("yyyy") + "-" + Datum, out DateTime date);
+            return date;
+        }
+    }
 
     [DataMember(Name = "cim")]
     public string Cim { get; set; }
@@ -23,13 +33,10 @@ public class Napiolvaso
     [DataMember(Name = "idezet")]
     public string Idezet { get; set; }
 
-    [DataMember(Name = "tipus")]
-    public int Tipus { get; set; }
-
     [DataMember(Name = "inserted")]
-    public DateTime Inserted { get; set; } 
+    public DateTime Inserted { get; set; } //"yyyy-MM-dd HH:mm:ss"
 
     [StringLength(200)]
     [DataMember(Name = "img")]
-    public string Img { get; set; }
+    public string Img { get; set; }  
 }

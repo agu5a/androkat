@@ -1,5 +1,8 @@
-﻿using androkat.domain;
+﻿using androkat.application.Interfaces;
+using androkat.application.Service;
+using androkat.domain;
 using androkat.domain.Model;
+using androkat.domain.Model.ContentCache;
 using androkat.infrastructure.DataManager;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -26,10 +29,16 @@ public class BaseTest
         return memoryCache;
     }
 
-    public static Mock<IContentRepository> GetContentRepository(List<ContentModel> list)
+    public static Mock<ICacheService> GetCacheService(List<ContentModel> list)
     {
-        Mock<IContentRepository> repository = new();
-        repository.Setup(s => s.GetContentDetailsModel(It.IsAny<int[]>())).Returns(list);
+        Mock<ICacheService> repository = new();
+        repository.Setup(s => s.MainCacheFillUp()).Returns(new MainCache
+        {
+            ContentDetailsModels = new List<ContentDetailsModel>
+            {
+                list[0].ContentDetails
+            }
+        });
 
         return repository;
     }

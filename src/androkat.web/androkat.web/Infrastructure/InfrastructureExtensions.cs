@@ -31,7 +31,7 @@ public static class InfrastructureExtensions
     public static IServiceCollection SetServices(this IServiceCollection services)
     {
         services.AddScoped<IClock, Clock>();
-        services.AddScoped<IContentRepository, ContentRepository>();
+        services.AddScoped<ICacheRepository, CacheRepository>();
         services.AddScoped<ICacheService, CacheService>();
         services.AddHostedService<Warmup>();
 
