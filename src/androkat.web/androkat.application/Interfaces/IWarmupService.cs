@@ -2,5 +2,6 @@
 
 public interface IWarmupService
 {
-    void MainCacheFillUp();
+	void ImaCacheFillUp();
+	void MainCacheFillUp();
 }

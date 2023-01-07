@@ -15,35 +15,64 @@ namespace androkat.application.Tests.Services;
 
 public class WarmupServiceTests : BaseTest
 {
-    private Mock<ICacheService> _cacheService = new Mock<ICacheService>();
-    private Mock<ILogger<WarmupService>> logger = new Mock<ILogger<WarmupService>>();
+	private Mock<ICacheService> _cacheService = new Mock<ICacheService>();
+	private Mock<ILogger<WarmupService>> logger = new Mock<ILogger<WarmupService>>();
 
-    [Test]
-    public void MainCacheFillUp_Happy()
-    {
-        var cache = GetIMemoryCache();
+	[Test]
+	public void MainCacheFillUp_Happy()
+	{
+		var cache = GetIMemoryCache();
 
-        _cacheService.Setup(s => s.MainCacheFillUp()).Returns(new MainCache
-        {
-            ContentDetailsModels = new List<ContentDetailsModel> { new ContentDetailsModel { Cim = "cim" } },
-            Inserted = DateTime.Now
-        });
-        var service = new WarmupService(cache, _cacheService.Object, logger.Object);
+		_cacheService.Setup(s => s.MainCacheFillUp()).Returns(new MainCache
+		{
+			ContentDetailsModels = new List<ContentDetailsModel> { new ContentDetailsModel { Cim = "cim" } },
+			Inserted = DateTime.Now
+		});
+		var service = new WarmupService(cache, _cacheService.Object, logger.Object);
 
-        service.MainCacheFillUp();
-        var obj = (MainCache)cache.Get(CacheKey.MainCacheKey.ToString());
-        obj.ContentDetailsModels.First().Cim.Should().Be("cim");
-    }
+		service.MainCacheFillUp();
+		var obj = (MainCache)cache.Get(CacheKey.MainCacheKey.ToString());
+		obj.ContentDetailsModels.First().Cim.Should().Be("cim");
+	}
 
-    [Test]
-    public void MainCacheFillUp_Exception()
-    {
-        var cache = GetIMemoryCache();
+	[Test]
+	public void MainCacheFillUp_Exception()
+	{
+		var cache = GetIMemoryCache();
 
-        _cacheService.Setup(s => s.MainCacheFillUp()).Throws<Exception>();
-        var service = new WarmupService(cache, _cacheService.Object, logger.Object);
+		_cacheService.Setup(s => s.MainCacheFillUp()).Throws<Exception>();
+		var service = new WarmupService(cache, _cacheService.Object, logger.Object);
 
-        Action act = () => service.MainCacheFillUp();
-        act.Should().NotThrow<Exception>();
-    }
+		Action act = () => service.MainCacheFillUp();
+		act.Should().NotThrow<Exception>();
+	}
+
+	[Test]
+	public void ImaCacheFillUp_Happy()
+	{
+		var cache = GetIMemoryCache();
+
+		_cacheService.Setup(s => s.ImaCacheFillUp()).Returns(new ImaCache
+		{
+			Imak = new List<ImaModel> { new ImaModel { Cim = "cim" } },
+			Inserted = DateTime.Now
+		});
+		var service = new WarmupService(cache, _cacheService.Object, logger.Object);
+
+		service.ImaCacheFillUp();
+		var obj = (ImaCache)cache.Get(CacheKey.ImaCacheKey.ToString());
+		obj.Imak.First().Cim.Should().Be("cim");
+	}
+
+	[Test]
+	public void ImaCacheFillUp_Exception()
+	{
+		var cache = GetIMemoryCache();
+
+		_cacheService.Setup(s => s.ImaCacheFillUp()).Throws<Exception>();
+		var service = new WarmupService(cache, _cacheService.Object, logger.Object);
+
+		Action act = () => service.ImaCacheFillUp();
+		act.Should().NotThrow<Exception>();
+	}
 }

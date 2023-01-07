@@ -14,144 +14,150 @@ namespace androkat.infrastructure.DataManager;
 
 public class CacheRepository : BaseRepository, ICacheRepository
 {
-    private readonly ILogger<CacheRepository> _logger;
+	private readonly ILogger<CacheRepository> _logger;
 
-    public CacheRepository(AndrokatContext ctx,
-        ILogger<CacheRepository> logger,
-        IClock clock,
-        IMapper mapper) : base(ctx, clock, mapper)
-    {
-        _logger = logger;
-    }
+	public CacheRepository(AndrokatContext ctx,
+		ILogger<CacheRepository> logger,
+		IClock clock,
+		IMapper mapper) : base(ctx, clock, mapper)
+	{
+		_logger = logger;
+	}
 
-    public IEnumerable<ContentDetailsModel> GetHumorToCache()
-    {
-        var list = new List<ContentDetailsModel>();
+	public IEnumerable<ImaModel> GetImaToCache()
+	{
+		var res = _ctx.ImaContent.AsNoTracking().OrderBy(o => o.Datum);
+		return _mapper.Map<List<ImaModel>>(res);
+	}
 
-        var month = _clock.Now.ToString("MM");
-        var rows = _ctx.FixContent.AsNoTracking().AsEnumerable()
-            .Where(w => w.Tipus == (int)Forras.humor && w.Datum.StartsWith($"{month}-") && w.FullDate < _clock.Now)
-            .OrderByDescending(o => o.Datum).ToList();
+	public IEnumerable<ContentDetailsModel> GetHumorToCache()
+	{
+		var list = new List<ContentDetailsModel>();
 
-        rows.ForEach(w =>
-        {
-            w.Datum = _clock.Now.ToString("yyyy-") + w.Datum + " 00:00:01";
-            list.Add(_mapper.Map<ContentDetailsModel>(w));
-        });
+		var month = _clock.Now.ToString("MM");
+		var rows = _ctx.FixContent.AsNoTracking().AsEnumerable()
+			.Where(w => w.Tipus == (int)Forras.humor && w.Datum.StartsWith($"{month}-") && w.FullDate < _clock.Now)
+			.OrderByDescending(o => o.Datum).ToList();
 
-        return _mapper.Map<List<ContentDetailsModel>>(list);
-    }
+		rows.ForEach(w =>
+		{
+			list.Add(_mapper.Map<ContentDetailsModel>(w));
+		});
 
-    public IEnumerable<ContentDetailsModel> GetMaiSzentToCache()
-    {
-        var list = new List<ContentDetailsModel>();
-        var hoNap = _clock.Now.ToString("MM-dd");
-        var month = _clock.Now.ToString("MM");
+		return _mapper.Map<List<ContentDetailsModel>>(list);
+	}
 
-        var rows = _ctx.MaiSzent.AsNoTracking().Where(w => w.Datum == hoNap);
-        if (rows.Any())
-        {
-            rows.ToList().ForEach(row =>
-            {
-                row.Datum = _clock.Now.ToString("yyyy-") + row.Datum;
-                list.Add(_mapper.Map<ContentDetailsModel>(row));
-            });
+	public IEnumerable<ContentDetailsModel> GetMaiSzentToCache()
+	{
+		var list = new List<ContentDetailsModel>();
+		var hoNap = _clock.Now.ToString("MM-dd");
+		var month = _clock.Now.ToString("MM");
 
-            return list;
-        }
+		var rows = _ctx.MaiSzent.AsNoTracking().Where(w => w.Datum == hoNap);
+		if (!rows.Any())
+		{
+			_logger.LogDebug("{name}: nincs mai szent mára", nameof(GetMaiSzentToCache));
 
-        var rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
-        .Where(w => w.Datum.StartsWith($"{month}-") && w.FullDate < _clock.Now)
-        .OrderByDescending(o => o.Datum).Take(1);
+			var rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
+			.Where(w => w.Datum.StartsWith($"{month}-") && w.FullDate < _clock.Now)
+			.OrderByDescending(o => o.Datum).Take(1);
 
-        if (!rows2.Any())
-        {
-            var prevmonth = _clock.Now.AddMonths(-1).ToString("MM");
-            //nincs az új hónap első napján anyag
-            rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
-                .Where(w => w.Datum.StartsWith($"{prevmonth}-") && w.FullDate < _clock.Now)
-                .OrderByDescending(o => o.Datum).Take(1);
-        }
+			if (!rows2.Any())
+			{
+				_logger.LogDebug("{name}: nincs mai szent erre a hónapra", nameof(GetMaiSzentToCache));
 
-        rows2.ToList().ForEach(row =>
-        {
-            row.Datum = _clock.Now.ToString("yyyy-") + row.Datum;
-            list.Add(_mapper.Map<ContentDetailsModel>(row));
-        });
+				var prevmonth = _clock.Now.AddMonths(-1).ToString("MM");
+				rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
+					.Where(w => w.Datum.StartsWith($"{prevmonth}-") && w.FullDate < _clock.Now)
+					.OrderByDescending(o => o.Datum).Take(1);
+			}
 
-        return list;
-    }
+			rows2.ToList().ForEach(row =>
+			{
+				list.Add(_mapper.Map<ContentDetailsModel>(row));
+			});
+		}
+		else
+			rows.ToList().ForEach(row =>
+			{
+				list.Add(_mapper.Map<ContentDetailsModel>(row));
+			});
 
-    public IEnumerable<ContentDetailsModel> GetNapiFixToCache()
-    {
-        var result = new List<ContentDetailsModel>();
+		return list;
+	}
 
-        var tipusok = new List<int>();
-        AndrokatConfiguration.FixContentTypeIds().Where(w => w != (int)Forras.humor).ToList().ForEach(f =>
-        {
-            tipusok.Add(f);
-        });
+	public IEnumerable<ContentDetailsModel> GetNapiFixToCache()
+	{
+		var result = new List<ContentDetailsModel>();
 
-        var date = _clock.Now.ToString("MM-dd");
+		var tipusok = new List<int>();
+		AndrokatConfiguration.FixContentTypeIds().Where(w => w != (int)Forras.humor).ToList().ForEach(f =>
+		{
+			tipusok.Add(f);
+		});
 
-        var napiFixek = _ctx.FixContent.AsNoTracking().Where(w => tipusok.Contains(w.Tipus) && w.Datum == date);
-        if (napiFixek == null)
-            return result;
+		var date = _clock.Now.ToString("MM-dd");
 
-        foreach (var napiFix in napiFixek)
-        {
-            napiFix.Datum = _clock.Now.ToString("yyyy-") + napiFix.Datum + " 00:00:01";
-            result.Add(_mapper.Map<ContentDetailsModel>(napiFix));
-        }
+		var napiFixek = _ctx.FixContent.AsNoTracking().Where(w => tipusok.Contains(w.Tipus) && w.Datum == date);
+		if (napiFixek == null)
+			return result;
 
-        return result;
-    }
+		foreach (var napiFix in napiFixek)
+		{
+			result.Add(_mapper.Map<ContentDetailsModel>(napiFix));
+		}
 
-    public IEnumerable<ContentDetailsModel> GetContentDetailsModelToCache()
-    {
-        var result = new List<ContentDetailsModel>();
+		return result;
+	}
 
-        var tipusok = AndrokatConfiguration.ContentTypeIds();
+	public IEnumerable<ContentDetailsModel> GetContentDetailsModelToCache()
+	{
+		var result = new List<ContentDetailsModel>();
 
-        //ezekből az összes elérhető kell, nem csak az adott napi
-        var osszes = new List<int>
-        {
-            (int)Forras.audiohorvath, (int)Forras.audiotaize,
-            (int)Forras.audiobarsi, (int)Forras.audionapievangelium,
-            (int)Forras.ajanlatweb, (int)Forras.audiopalferi,
-            (int)Forras.prayasyougo
-        };
+		var tipusok = AndrokatConfiguration.ContentTypeIds();
 
-        var tomorrow = _clock.Now.AddDays(1).ToString("yyyy-MM-dd");
+		//ezekből az összes elérhető kell, nem csak az adott napi
+		var osszes = new List<int>
+		{
+			(int)Forras.audiohorvath, (int)Forras.audiotaize,
+			(int)Forras.audiobarsi, (int)Forras.audionapievangelium,
+			(int)Forras.ajanlatweb, (int)Forras.audiopalferi,
+			(int)Forras.prayasyougo
+		};
 
-        foreach (var tipus in tipusok)
-        {
-            var date = _clock.Now.ToString("yyyy-MM-dd");
+		var tomorrow = _clock.Now.AddDays(1).ToString("yyyy-MM-dd");
 
-            if (tipus == (int)Forras.fokolare)
-                date = _clock.Now.ToString("yyyy-MM") + "-01";
+		foreach (var tipus in tipusok)
+		{
+			var date = _clock.Now.ToString("yyyy-MM-dd");
 
-            IQueryable<Napiolvaso> res = GetRes(tipus, date, tomorrow, osszes);
+			if (tipus == (int)Forras.fokolare)
+				date = _clock.Now.ToString("yyyy-MM") + "-01";
 
-            result.AddRange(_mapper.Map<List<ContentDetailsModel>>(res));
-        }
+			IQueryable<Napiolvaso> res = GetContentDetailsModel(tipus, date, tomorrow, osszes);
 
-        return result;
-    }
+			result.AddRange(_mapper.Map<List<ContentDetailsModel>>(res));
+		}
 
-    private IQueryable<Napiolvaso> GetRes(int tipus, string date, string tomorrow, List<int> osszes)
-    {
-        IQueryable<Napiolvaso> res;
-        if (tipus == (int)Forras.maievangelium) //szombaton már megjelenik a vasárnapi is
-            res = _ctx.Content.AsNoTracking().Where(w => w.Tipus == tipus && (w.Fulldatum.StartsWith(date) || w.Fulldatum.StartsWith(tomorrow))).OrderByDescending(o => o.Inserted);
-        else if (osszes.Contains(tipus)) //ajanlo és néhány hanganyagból a weboldalon látszik mindegyik 
-            res = _ctx.Content.AsNoTracking().Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted);
-        else
-            res = _ctx.Content.AsNoTracking().Where(w => w.Tipus == tipus && w.Fulldatum.StartsWith(date)).OrderByDescending(o => o.Inserted);
+		return result;
+	}
 
-        //ha nincs mai, akkor egy a korábbiakból, ha van
-        if (res == null || !res.Any())
-            res = _ctx.Content.AsNoTracking().Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted).Take(1);
-        return res;
-    }
+	private IQueryable<Napiolvaso> GetContentDetailsModel(int tipus, string date, string tomorrow, List<int> osszes)
+	{
+		IQueryable<Napiolvaso> res;
+		if (tipus == (int)Forras.maievangelium) //szombaton már megjelenik a vasárnapi is
+			res = _ctx.Content.AsNoTracking().Where(w => w.Tipus == tipus && (w.Fulldatum.StartsWith(date) || w.Fulldatum.StartsWith(tomorrow))).OrderByDescending(o => o.Inserted);
+		else if (osszes.Contains(tipus)) //ajanlo és néhány hanganyagból a weboldalon látszik mindegyik 
+			res = _ctx.Content.AsNoTracking().Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted);
+		else
+			res = _ctx.Content.AsNoTracking().Where(w => w.Tipus == tipus && w.Fulldatum.StartsWith(date)).OrderByDescending(o => o.Inserted);
+
+		if (res == null || !res.Any())
+		{
+			_logger.LogDebug("{name}: nincs mai, akkor egy a korábbiakból, ha van. tipus {tipus} date {date}", nameof(GetContentDetailsModel), tipus, date);
+			res = _ctx.Content.AsNoTracking().Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted).Take(1);
+		}
+
+		return res;
+	}
 }

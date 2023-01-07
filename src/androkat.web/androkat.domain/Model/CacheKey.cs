@@ -2,5 +2,6 @@
 
 public enum CacheKey
 {
-    MainCacheKey
+	MainCacheKey,
+	ImaCacheKey
 }

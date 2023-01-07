@@ -11,23 +11,24 @@ namespace androkat.web.Service;
 [ExcludeFromCodeCoverage]
 public class Warmup : IHostedService
 {
-    private readonly IServiceProvider _serviceProvider;
+	private readonly IServiceProvider _serviceProvider;
 
-    public Warmup(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
+	public Warmup(IServiceProvider serviceProvider)
+	{
+		_serviceProvider = serviceProvider;
+	}
 
-    public Task StartAsync(CancellationToken cancellationToken)
-    {
-        using (var scope = _serviceProvider.CreateScope())
-        {
-            var warmupService = scope.ServiceProvider.GetService<IWarmupService>();
-            warmupService.MainCacheFillUp();
-        }
+	public Task StartAsync(CancellationToken cancellationToken)
+	{
+		using (var scope = _serviceProvider.CreateScope())
+		{
+			var warmupService = scope.ServiceProvider.GetService<IWarmupService>();
+			warmupService.MainCacheFillUp();
+			warmupService.ImaCacheFillUp();
+		}
 
-        return Task.CompletedTask;
-    }
+		return Task.CompletedTask;
+	}
 
-    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+	public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 }

@@ -4,5 +4,6 @@ namespace androkat.application.Interfaces;
 
 public interface ICacheService
 {
-    MainCache MainCacheFillUp();
+	ImaCache ImaCacheFillUp();
+	MainCache MainCacheFillUp();
 }
