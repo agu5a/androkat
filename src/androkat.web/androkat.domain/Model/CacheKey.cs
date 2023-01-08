@@ -3,5 +3,6 @@
 public enum CacheKey
 {
 	MainCacheKey,
-	ImaCacheKey
+	ImaCacheKey,
+	VideoCacheKey,
 }

@@ -10,4 +10,6 @@ public interface ICacheRepository
 	IEnumerable<ContentDetailsModel> GetMaiSzentToCache();
 	IEnumerable<ContentDetailsModel> GetNapiFixToCache();
 	IEnumerable<ImaModel> GetImaToCache();
+	IEnumerable<VideoModel> GetVideoToCache();
+	IEnumerable<VideoSourceModel> GetVideoSourceToCache();
 }

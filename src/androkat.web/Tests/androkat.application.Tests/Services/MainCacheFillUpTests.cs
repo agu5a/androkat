@@ -63,6 +63,9 @@ public class MainCacheFillUpTests : BaseTest
         }
     }
 
+    /// <summary>
+    /// Content.Where(w => w.tipus == tipus && w.fulldatum.ToString("yyyy-MM-dd") == date)
+    /// </summary>
     [Test]
     public void MainCacheFillUpFirstSelect()
     {

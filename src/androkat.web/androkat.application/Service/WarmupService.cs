@@ -47,4 +47,18 @@ public class WarmupService : IWarmupService
 			_logger.LogError(ex, "Exception: {name}", nameof(ImaCacheFillUp));
 		}
 	}
+
+	public void VideoCacheFillUp()
+	{
+		try
+		{
+			var result = _cacheService.VideoCacheFillUp();
+			_memoryCache.Set(CacheKey.VideoCacheKey.ToString(), result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
+			_logger.LogInformation("{name} was called", nameof(VideoCacheFillUp));
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Exception: {name}", nameof(VideoCacheFillUp));
+		}
+	}
 }

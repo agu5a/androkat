@@ -30,6 +30,19 @@ public class CacheRepository : BaseRepository, ICacheRepository
 		return _mapper.Map<List<ImaModel>>(res);
 	}
 
+	public IEnumerable<VideoSourceModel> GetVideoSourceToCache()
+	{
+		var res = _ctx.video.AsNoTracking().GroupBy(p => new { p.Forras, p.ChannelId })
+				.Select(s => new VideoSource { ChannelName = s.Key.Forras, ChannelId = s.Key.ChannelId });
+		return _mapper.Map<List<VideoSourceModel>>(res);
+	}
+
+	public IEnumerable<VideoModel> GetVideoToCache()
+	{
+		var res = _ctx.video.AsNoTracking().OrderByDescending(o => o.Date).ThenByDescending(t => t.Inserted);
+		return _mapper.Map<List<VideoModel>>(res);
+	}
+
 	public IEnumerable<ContentDetailsModel> GetHumorToCache()
 	{
 		var list = new List<ContentDetailsModel>();

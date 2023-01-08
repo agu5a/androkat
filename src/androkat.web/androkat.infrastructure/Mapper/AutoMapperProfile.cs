@@ -22,6 +22,9 @@ public class AutoMapperProfile : Profile
 
 		CreateMap<Ima, ImaModel>().ReverseMap();
 
+		CreateMap<Video, VideoModel>().ReverseMap();
+		CreateMap<VideoSource, VideoSourceModel>().ReverseMap();
+
 		CreateMap<Maiszent, ContentDetailsModel>()
 			.ForMember(x => x.Fulldatum, y => y.MapFrom(z => DateTime.Parse(DateTime.Now.ToString("yyyy-") + z.Datum + " 00:00:01")))
 			.ForMember(x => x.Tipus, y => y.MapFrom(z => (int)Forras.maiszent))

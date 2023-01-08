@@ -5,10 +5,6 @@ namespace androkat.infrastructure.DataManager;
 
 public class AndrokatContext : DbContext
 {
-	//public AndrokatContext() : base()
-	//{
-	//}
-
 	public AndrokatContext(DbContextOptions<AndrokatContext> options) : base(options)
 	{
 		Database.EnsureCreated();
@@ -18,6 +14,7 @@ public class AndrokatContext : DbContext
 	public DbSet<FixContent> FixContent { get; set; }
 	public DbSet<Maiszent> MaiSzent { get; set; }
 	public DbSet<Ima> ImaContent { get; set; }
+	public DbSet<Video> video { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
@@ -50,6 +47,9 @@ public class AndrokatContext : DbContext
 
 		modelBuilder.Entity<Ima>().ToTable("ima");
 		modelBuilder.Entity<Ima>().HasKey(u => u.Nid);
+
+		modelBuilder.Entity<Video>().ToTable("video");
+		modelBuilder.Entity<Video>().HasKey(u => u.Nid);
 
 		base.OnModelCreating(modelBuilder);
 	}

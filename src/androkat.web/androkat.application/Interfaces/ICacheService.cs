@@ -6,4 +6,5 @@ public interface ICacheService
 {
 	ImaCache ImaCacheFillUp();
 	MainCache MainCacheFillUp();
+	VideoCache VideoCacheFillUp();
 }

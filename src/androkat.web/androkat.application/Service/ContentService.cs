@@ -302,15 +302,8 @@ public class ContentService : IContentService
 
 	private IEnumerable<VideoSourceModel> GetVideoSource()
 	{
-		var result = new List<VideoSourceModel>
-		{
-			new VideoSourceModel
-			{
-				ChannelId = "UCF3mEbdkhZwjQE8reJHm4sg",
-				ChannelName = "AndroKat"
-			}
-		};
-		return result;
+		var res = GetCache<VideoCache>(CacheKey.VideoCacheKey.ToString(), () => { return _cacheService.VideoCacheFillUp(); });
+		return res.VideoSource;
 	}
 
 	private MainCache GetMainCache()

@@ -75,4 +75,44 @@ public class WarmupServiceTests : BaseTest
 		Action act = () => service.ImaCacheFillUp();
 		act.Should().NotThrow<Exception>();
 	}
+
+    [Test]
+    public void VideoCacheFillUp_Happy()
+    {
+        var cache = GetIMemoryCache();
+
+        _cacheService.Setup(s => s.VideoCacheFillUp()).Returns(new VideoCache
+        {
+            Video = new List<VideoModel>
+            {
+                new VideoModel
+                {
+                    Cim = "cim",
+                    Nid = Guid.NewGuid(), Inserted = DateTime.Now,
+                    Img = "img",
+                    VideoLink = "vlink",
+                    Forras = "forras",
+                    ChannelId = "cId"
+                }
+            },
+            Inserted = DateTime.Now
+        });
+        var service = new WarmupService(cache, _cacheService.Object, logger.Object);
+
+        service.VideoCacheFillUp();
+        var obj = (VideoCache)cache.Get(CacheKey.VideoCacheKey.ToString());
+        obj.Video.First().Cim.Should().Be("cim");
+    }
+
+    [Test]
+    public void VideoCacheFillUp_Exception()
+    {
+        var cache = GetIMemoryCache();
+
+        _cacheService.Setup(s => s.VideoCacheFillUp()).Throws<Exception>();
+        var service = new WarmupService(cache, _cacheService.Object, logger.Object);
+
+        Action act = () => service.VideoCacheFillUp();
+        act.Should().NotThrow<Exception>();
+    }
 }

@@ -1,7 +1,6 @@
 ﻿using androkat.application.Interfaces;
 using androkat.application.Service;
 using androkat.domain;
-using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.domain.Model;
 using androkat.domain.Model.ContentCache;
@@ -12,7 +11,6 @@ using AutoFixture;
 using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -23,27 +21,6 @@ namespace androkat.application.Tests.Services;
 
 public class ContentServiceTests : BaseTest
 {
-	private Mock<IClock> GetClock()
-	{
-		var clock = new Mock<IClock>();
-		clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"));
-		return clock;
-	}
-
-	private IOptions<AndrokatConfiguration> GetAndrokatConfiguration()
-	{
-		var logger = new Mock<ILogger<ContentMetaDataService>>();
-		var service = new ContentMetaDataService(logger.Object);
-		var metaDataList = service.GetContentMetaDataList("../../../../../androkat.web/Data/IdezetData.json");
-
-		var contentMetaDataModels = Options.Create(new AndrokatConfiguration
-		{
-			ContentMetaDataList = metaDataList
-		});
-
-		return contentMetaDataModels;
-	}
-
 	[Test]
 	public void GetHome_Happy()
 	{
@@ -156,16 +133,16 @@ public class ContentServiceTests : BaseTest
 		var nid = Guid.NewGuid();
 
 		var cacheService = new Mock<ICacheService>();
-		cacheService.Setup(s => s.MainCacheFillUp()).Returns(new MainCache 
+		cacheService.Setup(s => s.MainCacheFillUp()).Returns(new MainCache
 		{
-			ContentDetailsModels = new List<ContentDetailsModel> 
+			ContentDetailsModels = new List<ContentDetailsModel>
 			{
-				new ContentDetailsModel 
+				new ContentDetailsModel
 				{
 					Nid = Guid.NewGuid(),
 					Tipus = (int)Forras.papaitwitter
-				} 
-			}  
+				}
+			}
 		});
 
 		var contentService = new ContentService(GetIMemoryCache(), cacheService.Object, GetAndrokatConfiguration());
@@ -350,13 +327,31 @@ public class ContentServiceTests : BaseTest
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
 		var mapper = config.CreateMapper();
 
-		var cacheService = new CacheService(new Mock<ICacheRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+		var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+		using var context = new AndrokatContext(GetDbContextOptions());
+
+		var guid = Guid.NewGuid();
+		var _fixture = new Fixture();
+		var video = _fixture.Create<Video>();
+		video.Cim = "Videó cím";
+		video.Nid = guid;
+		video.ChannelId = "UCF3mEbdkhZwjQE8reJHm4sg";
+		video.Forras = "Forras";
+		video.VideoLink = "https://www.youtube.com/embed/OnCW6hg5CdQ";
+
+		context.video.Add(video);
+		context.SaveChanges();
+
+		var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+		var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
 		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
-		var result = contentService.GetVideoSourcePage().ToList();
+		var videoPage = contentService.GetVideoSourcePage().ToList();
 
-		result[0].ChannelId.Should().Be("UCF3mEbdkhZwjQE8reJHm4sg");
-		result.Count.Should().Be(1);
+		videoPage[0].ChannelId.Should().Be("UCF3mEbdkhZwjQE8reJHm4sg");
+		videoPage[0].ChannelName.Should().Be("Forras");
+		videoPage.Count.Should().Be(1);
 	}
 
 	[TestCase((int)Forras.b777)]

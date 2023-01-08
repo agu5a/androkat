@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace androkat.domain.Model.ContentCache;
 
-public class MainCache
+public class VideoCache
 {
-	public List<ContentDetailsModel> ContentDetailsModels { get; set; }
+	public List<VideoSourceModel> VideoSource { get; set; }
+	public List<VideoModel> Video { get; set; }
 	public DateTime Inserted { get; set; }
 }

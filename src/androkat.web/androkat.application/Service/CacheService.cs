@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace androkat.application.Service;
 
@@ -20,6 +21,46 @@ public class CacheService : ICacheService
 		_cacheRepository = cacheRepository;
 		_logger = logger;
 		_clock = clock;
+	}
+
+	public VideoCache VideoCacheFillUp()
+	{
+		_logger.LogInformation("{name} was called", nameof(VideoCacheFillUp));
+		try
+		{
+			var res = _cacheRepository.GetVideoSourceToCache();
+
+			var video = new List<VideoModel>();
+			var videok = _cacheRepository.GetVideoToCache();
+			foreach (var item in videok)
+			{
+				if (item.VideoLink.Contains("embed"))
+				{
+					Match match = Regex.Match(item.VideoLink, @"https:\/\/www.youtube.com\/embed\/([A-Za-z0-9-_]*)", RegexOptions.IgnoreCase);
+					if (match.Success)
+						item.VideoLink = "https://www.youtube.com/watch?v=" + match.Groups[1].Value;
+				}
+				video.Add(item);
+			}
+
+			return new VideoCache
+			{
+				VideoSource = res.ToList(),
+				Video = video,
+				Inserted = _clock.Now.DateTime
+			};
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Exception: {name}", nameof(VideoCacheFillUp));
+		}
+
+		return new VideoCache
+		{
+			VideoSource = new List<VideoSourceModel>(),
+			Video = new List<VideoModel>(),
+			Inserted = _clock.Now.DateTime
+		};
 	}
 
 	public ImaCache ImaCacheFillUp()

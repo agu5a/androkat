@@ -178,17 +178,6 @@ public class CacheRepositoryTests : BaseTest
         }
     }
 
-	/// <summary>
-	/// DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"
-	/// </summary>
-	/// <returns></returns>
-	private static Mock<IClock> GetToday()
-    {
-        var clock = new Mock<IClock>();
-        clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"));
-        return clock;
-    }
-
     [Test]
     public void GetContentDetailsModelToCache_Happy()
     {
@@ -214,4 +203,59 @@ public class CacheRepositoryTests : BaseTest
             result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-02-03"));
         }        
     }
+
+	[Test]
+	public void GetVideoSourceToCache_Happy()
+	{
+		var logger = new Mock<ILogger<CacheRepository>>();
+
+		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		var mapper = config.CreateMapper();
+
+		var clock = GetToday();
+
+		using (var context = new AndrokatContext(GetDbContextOptions()))
+		{
+			var entity = new Video
+			{
+				Forras = "Forras",
+				ChannelId = "ChannelId"
+			};
+			context.video.Add(entity);
+			context.SaveChanges();
+
+			var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
+			var result = repo.GetVideoSourceToCache();
+			result.First().ChannelName.Should().Be("Forras");
+			result.First().ChannelId.Should().Be("ChannelId");
+		}
+	}
+
+	[Test]
+	public void GetVideoToCache_Happy()
+	{
+		var logger = new Mock<ILogger<CacheRepository>>();
+
+		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		var mapper = config.CreateMapper();
+
+		var clock = GetToday();
+
+		using (var context = new AndrokatContext(GetDbContextOptions()))
+		{
+			var entity = new Video
+			{
+				Forras = "Forras",
+				ChannelId = "ChannelId",
+                Inserted = clock.Object.Now.DateTime
+			};
+			context.video.Add(entity);
+			context.SaveChanges();
+
+			var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
+			var result = repo.GetVideoToCache();
+			result.First().Forras.Should().Be("Forras");
+			result.First().Inserted.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-02-03"));
+		}
+	}
 }
