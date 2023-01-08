@@ -56,7 +56,7 @@ public class CacheRepository : BaseRepository, ICacheRepository
 		var rows = _ctx.MaiSzent.AsNoTracking().Where(w => w.Datum == hoNap);
 		if (!rows.Any())
 		{
-			_logger.LogDebug("{name}: nincs mai szent mára", nameof(GetMaiSzentToCache));
+			_logger.LogDebug("{name}: nincs mai szent mai napra", nameof(GetMaiSzentToCache));
 
 			var rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
 			.Where(w => w.Datum.StartsWith($"{month}-") && w.FullDate < _clock.Now)
@@ -64,11 +64,11 @@ public class CacheRepository : BaseRepository, ICacheRepository
 
 			if (!rows2.Any())
 			{
-				_logger.LogDebug("{name}: nincs mai szent erre a hónapra", nameof(GetMaiSzentToCache));
+				_logger.LogDebug("{name}: nincs mai szent az aktuális hónapra", nameof(GetMaiSzentToCache));
 
 				var prevmonth = _clock.Now.AddMonths(-1).ToString("MM");
 				rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
-					.Where(w => w.Datum.StartsWith($"{prevmonth}-") && w.FullDate < _clock.Now)
+					.Where(w => w.Datum.StartsWith($"{prevmonth}-"))
 					.OrderByDescending(o => o.Datum).Take(1);
 			}
 
@@ -99,9 +99,6 @@ public class CacheRepository : BaseRepository, ICacheRepository
 		var date = _clock.Now.ToString("MM-dd");
 
 		var napiFixek = _ctx.FixContent.AsNoTracking().Where(w => tipusok.Contains(w.Tipus) && w.Datum == date);
-		if (napiFixek == null)
-			return result;
-
 		foreach (var napiFix in napiFixek)
 		{
 			result.Add(_mapper.Map<ContentDetailsModel>(napiFix));

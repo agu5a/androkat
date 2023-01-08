@@ -77,7 +77,33 @@ public class CacheRepositoryTests : BaseTest
         }
     }
 
-    [Test]
+	[Test]
+	public void GetNapiFixToCache_No_Result()
+	{
+		var logger = new Mock<ILogger<CacheRepository>>();
+
+		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		var mapper = config.CreateMapper();
+
+		var clock = GetToday();
+
+		using (var context = new AndrokatContext(GetDbContextOptions()))
+		{
+			var entity = new FixContent
+			{
+				Datum = "02-03",
+				Tipus = 1000 //invalid tipus
+			};
+			context.FixContent.Add(entity);
+			context.SaveChanges();
+
+			var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
+			var result = repo.GetNapiFixToCache();
+			result.Should().BeEmpty();			
+		}
+	}
+
+	[Test]
     public void GetMaiSzentToCache_Ma_Happy()
     {
         var logger = new Mock<ILogger<CacheRepository>>();
@@ -152,7 +178,11 @@ public class CacheRepositoryTests : BaseTest
         }
     }
 
-    private static Mock<IClock> GetToday()
+	/// <summary>
+	/// DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"
+	/// </summary>
+	/// <returns></returns>
+	private static Mock<IClock> GetToday()
     {
         var clock = new Mock<IClock>();
         clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"));

@@ -5,9 +5,9 @@ namespace androkat.infrastructure.DataManager;
 
 public class AndrokatContext : DbContext
 {
-	public AndrokatContext() : base()
-	{
-	}
+	//public AndrokatContext() : base()
+	//{
+	//}
 
 	public AndrokatContext(DbContextOptions<AndrokatContext> options) : base(options)
 	{

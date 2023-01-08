@@ -97,7 +97,33 @@ public class DetailsModelTests : BaseTest
         Assert.That(result, Is.TypeOf(typeof(RedirectResult)));
     }
 
-    [TestCase(null)]
+	[TestCase((int)Forras.szentbernat)]
+	public void DetailsModelTest_No_MetaData_Result(int tipus)
+	{
+		var (pageContext, tempData, actionContext) = GetPreStuff();
+		var nid = Guid.NewGuid();
+
+		var contentService = new Mock<IContentService>();
+		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.szentbernat))
+            .Returns(new ContentModel 
+            {
+                ContentDetails = new ContentDetailsModel()
+            });
+
+		var model = new web.Pages.DetailsModel(contentService.Object)
+		{
+			PageContext = pageContext,
+			TempData = tempData,
+			Url = new UrlHelper(actionContext),
+			Nid = nid.ToString(),
+			Type = tipus
+		};
+
+		var result = model.OnGet();
+		Assert.That(result, Is.TypeOf(typeof(RedirectResult)));
+	}
+
+	[TestCase(null)]
     [TestCase("")]
     [TestCase("blabla")]
     public void DetailsModelTest_No_Valid_Guid(string nid)

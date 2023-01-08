@@ -4,6 +4,7 @@ using androkat.domain;
 using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.domain.Model;
+using androkat.domain.Model.ContentCache;
 using androkat.infrastructure.DataManager;
 using androkat.infrastructure.Mapper;
 using androkat.infrastructure.Model.SQLite;
@@ -149,6 +150,30 @@ public class ContentServiceTests : BaseTest
 		result.ContentDetails.Tipus.Should().Be((int)Forras.ajanlatweb);
 	}
 
+	[TestCase((int)Forras.ajanlatweb)]
+	public void GetAjanlat_Details_No_Result(int tipus)
+	{
+		var nid = Guid.NewGuid();
+
+		var cacheService = new Mock<ICacheService>();
+		cacheService.Setup(s => s.MainCacheFillUp()).Returns(new MainCache 
+		{
+			ContentDetailsModels = new List<ContentDetailsModel> 
+			{
+				new ContentDetailsModel 
+				{
+					Nid = Guid.NewGuid(),
+					Tipus = (int)Forras.papaitwitter
+				} 
+			}  
+		});
+
+		var contentService = new ContentService(GetIMemoryCache(), cacheService.Object, GetAndrokatConfiguration());
+		var result = contentService.GetContentDetailsModelByNid(nid, tipus);
+
+		result.Should().BeNull();
+	}
+
 	[Test]
 	public void GetSzentek_Happy()
 	{
@@ -185,7 +210,7 @@ public class ContentServiceTests : BaseTest
 	}
 
 	[Test]
-	public void GetImaPage_Happy()
+	public void GetImaPage_Happy_No_Csoport()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
 		var mapper = config.CreateMapper();
@@ -212,6 +237,45 @@ public class ContentServiceTests : BaseTest
 		var result = contentService.GetImaPage(string.Empty).ToList();
 
 		result[0].ContentDetails.Cim.Should().Be("Ima cím");
+		result.Count.Should().Be(1);
+	}
+
+	[Test]
+	public void GetImaPage_Happy_Has_Csoport()
+	{
+		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		var mapper = config.CreateMapper();
+
+		var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+		using var context = new AndrokatContext(GetDbContextOptions());
+
+		var _fixture = new Fixture();
+		var ima = _fixture.Create<Ima>();
+		ima.Cim = "Ima cím1";
+		ima.Nid = Guid.NewGuid();
+		ima.Csoport = "1";
+		ima.Datum = DateTime.Now;
+
+		context.ImaContent.Add(ima);
+
+		var ima2 = _fixture.Create<Ima>();
+		ima2.Cim = "Ima cím2";
+		ima2.Nid = Guid.NewGuid();
+		ima2.Csoport = "2";
+		ima2.Datum = DateTime.Now;
+
+		context.ImaContent.Add(ima2);
+
+		context.SaveChanges();
+
+		var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+		var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+
+		var result = contentService.GetImaPage("1").ToList();
+
+		result[0].ContentDetails.Cim.Should().Be("Ima cím1");
 		result.Count.Should().Be(1);
 	}
 
