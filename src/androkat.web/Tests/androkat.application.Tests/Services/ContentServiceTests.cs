@@ -340,7 +340,7 @@ public class ContentServiceTests : BaseTest
 		video.Forras = "Forras";
 		video.VideoLink = "https://www.youtube.com/embed/OnCW6hg5CdQ";
 
-		context.video.Add(video);
+		context.VideoContent.Add(video);
 		context.SaveChanges();
 
 		var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);

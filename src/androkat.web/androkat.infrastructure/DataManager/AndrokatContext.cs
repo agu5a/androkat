@@ -14,7 +14,7 @@ public class AndrokatContext : DbContext
 	public DbSet<FixContent> FixContent { get; set; }
 	public DbSet<Maiszent> MaiSzent { get; set; }
 	public DbSet<Ima> ImaContent { get; set; }
-	public DbSet<Video> video { get; set; }
+	public DbSet<Video> VideoContent { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{

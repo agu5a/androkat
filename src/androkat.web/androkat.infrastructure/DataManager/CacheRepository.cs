@@ -24,26 +24,26 @@ public class CacheRepository : BaseRepository, ICacheRepository
 		_logger = logger;
 	}
 
-	public IEnumerable<ImaModel> GetImaToCache()
+	public IReadOnlyCollection<ImaModel> GetImaToCache()
 	{
 		var res = _ctx.ImaContent.AsNoTracking().OrderBy(o => o.Datum);
-		return _mapper.Map<List<ImaModel>>(res);
+		return _mapper.Map<List<ImaModel>>(res).AsReadOnly();
 	}
 
-	public IEnumerable<VideoSourceModel> GetVideoSourceToCache()
+	public IReadOnlyCollection<VideoSourceModel> GetVideoSourceToCache()
 	{
-		var res = _ctx.video.AsNoTracking().GroupBy(p => new { p.Forras, p.ChannelId })
+		var res = _ctx.VideoContent.AsNoTracking().GroupBy(p => new { p.Forras, p.ChannelId })
 				.Select(s => new VideoSource { ChannelName = s.Key.Forras, ChannelId = s.Key.ChannelId });
-		return _mapper.Map<List<VideoSourceModel>>(res);
+		return _mapper.Map<List<VideoSourceModel>>(res).AsReadOnly();
 	}
 
-	public IEnumerable<VideoModel> GetVideoToCache()
+	public IReadOnlyCollection<VideoModel> GetVideoToCache()
 	{
-		var res = _ctx.video.AsNoTracking().OrderByDescending(o => o.Date).ThenByDescending(t => t.Inserted);
-		return _mapper.Map<List<VideoModel>>(res);
+		var res = _ctx.VideoContent.AsNoTracking().OrderByDescending(o => o.Date).ThenByDescending(t => t.Inserted);
+		return _mapper.Map<List<VideoModel>>(res).AsReadOnly();
 	}
 
-	public IEnumerable<ContentDetailsModel> GetHumorToCache()
+	public IReadOnlyCollection<ContentDetailsModel> GetHumorToCache()
 	{
 		var list = new List<ContentDetailsModel>();
 
@@ -57,10 +57,10 @@ public class CacheRepository : BaseRepository, ICacheRepository
 			list.Add(_mapper.Map<ContentDetailsModel>(w));
 		});
 
-		return _mapper.Map<List<ContentDetailsModel>>(list);
+		return _mapper.Map<List<ContentDetailsModel>>(list).AsReadOnly();
 	}
 
-	public IEnumerable<ContentDetailsModel> GetMaiSzentToCache()
+	public IReadOnlyCollection<ContentDetailsModel> GetMaiSzentToCache()
 	{
 		var list = new List<ContentDetailsModel>();
 		var hoNap = _clock.Now.ToString("MM-dd");
@@ -96,10 +96,10 @@ public class CacheRepository : BaseRepository, ICacheRepository
 				list.Add(_mapper.Map<ContentDetailsModel>(row));
 			});
 
-		return list;
+		return list.AsReadOnly();
 	}
 
-	public IEnumerable<ContentDetailsModel> GetNapiFixToCache()
+	public IReadOnlyCollection<ContentDetailsModel> GetNapiFixToCache()
 	{
 		var result = new List<ContentDetailsModel>();
 
@@ -117,10 +117,10 @@ public class CacheRepository : BaseRepository, ICacheRepository
 			result.Add(_mapper.Map<ContentDetailsModel>(napiFix));
 		}
 
-		return result;
+		return result.AsReadOnly();
 	}
 
-	public IEnumerable<ContentDetailsModel> GetContentDetailsModelToCache()
+	public IReadOnlyCollection<ContentDetailsModel> GetContentDetailsModelToCache()
 	{
 		var result = new List<ContentDetailsModel>();
 
@@ -149,7 +149,7 @@ public class CacheRepository : BaseRepository, ICacheRepository
 			result.AddRange(_mapper.Map<List<ContentDetailsModel>>(res));
 		}
 
-		return result;
+		return result.AsReadOnly();
 	}
 
 	private IQueryable<Napiolvaso> GetContentDetailsModel(int tipus, string date, string tomorrow, List<int> osszes)

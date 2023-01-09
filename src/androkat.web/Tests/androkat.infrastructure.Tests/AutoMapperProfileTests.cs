@@ -11,6 +11,27 @@ namespace androkat.infrastructure.Tests;
 public class AutoMapperProfileTests
 {
 	[Test]
+	public void Map_Ima_ImaModel()
+	{
+		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		var mapper = config.CreateMapper();
+
+		var nid = Guid.NewGuid();
+
+		var result = mapper.Map<Ima, ImaModel>(new Ima
+		{
+			Datum = DateTime.Parse("2022-12-15 01:02:03"),
+			Cim = "cím",
+			Csoport = "csoport",
+			Nid = nid,
+			Szoveg = "szöveg"
+		});
+
+		result.Cim.Should().Be("cím");
+		result.Datum.ToString("yyyy-MM-dd HH:mm:ss").Should().Be("2022-12-15 01:02:03");
+	}
+
+	[Test]
 	public void Map_Napiolvaso_ContentDetailsModel()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());

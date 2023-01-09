@@ -5,11 +5,11 @@ namespace androkat.domain;
 
 public interface ICacheRepository
 {
-	IEnumerable<ContentDetailsModel> GetContentDetailsModelToCache();
-	IEnumerable<ContentDetailsModel> GetHumorToCache();
-	IEnumerable<ContentDetailsModel> GetMaiSzentToCache();
-	IEnumerable<ContentDetailsModel> GetNapiFixToCache();
-	IEnumerable<ImaModel> GetImaToCache();
-	IEnumerable<VideoModel> GetVideoToCache();
-	IEnumerable<VideoSourceModel> GetVideoSourceToCache();
+	IReadOnlyCollection<ContentDetailsModel> GetContentDetailsModelToCache();
+	IReadOnlyCollection<ContentDetailsModel> GetHumorToCache();
+	IReadOnlyCollection<ContentDetailsModel> GetMaiSzentToCache();
+	IReadOnlyCollection<ContentDetailsModel> GetNapiFixToCache();
+	IReadOnlyCollection<ImaModel> GetImaToCache();
+	IReadOnlyCollection<VideoModel> GetVideoToCache();
+	IReadOnlyCollection<VideoSourceModel> GetVideoSourceToCache();
 }

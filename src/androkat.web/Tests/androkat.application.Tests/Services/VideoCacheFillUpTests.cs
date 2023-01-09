@@ -26,11 +26,13 @@ public class VideoCacheFillUpTests : BaseTest
 		clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse("2012-01-03T04:05:06"));
 
 		var cacheRepository = new Mock<ICacheRepository>();
-		cacheRepository.Setup(s => s.GetVideoToCache()).Returns(new List<VideoModel> 
+		cacheRepository.Setup(s => s.GetVideoToCache()).Returns(new List<VideoModel>
 		{
 			new VideoModel{ VideoLink = "https://www.youtube.com/embed/OnCW6hg5CdQ" },
 			new VideoModel{ VideoLink = "https://www.youtube.com/watch?v=OnCW6hg5CdQ" }
 		});
+
+		cacheRepository.Setup(s => s.GetVideoSourceToCache()).Returns(new List<VideoSourceModel>());
 
 		var cacheService = new CacheService(cacheRepository.Object, new Mock<ILogger<CacheService>>().Object, clock.Object);
 		var res = cacheService.VideoCacheFillUp();

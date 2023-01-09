@@ -30,7 +30,7 @@ public class CacheService : ICacheService
 		{
 			var res = _cacheRepository.GetVideoSourceToCache();
 
-			var video = new List<VideoModel>();
+			var videoModel = new List<VideoModel>();
 			var videok = _cacheRepository.GetVideoToCache();
 			foreach (var item in videok)
 			{
@@ -40,13 +40,13 @@ public class CacheService : ICacheService
 					if (match.Success)
 						item.VideoLink = "https://www.youtube.com/watch?v=" + match.Groups[1].Value;
 				}
-				video.Add(item);
+				videoModel.Add(item);
 			}
 
 			return new VideoCache
 			{
 				VideoSource = res.ToList(),
-				Video = video,
+				Video = videoModel,
 				Inserted = _clock.Now.DateTime
 			};
 		}
