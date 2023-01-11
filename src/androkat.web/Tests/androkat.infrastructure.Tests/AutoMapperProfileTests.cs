@@ -11,6 +11,48 @@ namespace androkat.infrastructure.Tests;
 public class AutoMapperProfileTests
 {
 	[Test]
+	public void Map_Video_VideoModel()
+	{
+		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		var mapper = config.CreateMapper();
+
+		var nid = Guid.NewGuid();
+
+		var result = mapper.Map<Video, VideoModel>(new Video
+		{
+			Date = "2022-12-15 01:02:03",
+			Cim = "cím",
+			ChannelId = "ChannelId",
+			Nid = nid,
+			VideoLink = "VideoLink"
+		});
+
+		result.Cim.Should().Be("cím");
+		result.Nid.Should().Be(nid);
+		result.ChannelId.Should().Be("ChannelId");
+		result.VideoLink.Should().Be("VideoLink");
+		result.Date.Should().Be("2022-12-15 01:02:03");
+	}
+
+	[Test]
+	public void Map_VideoSource_VideoSourceModel()
+	{
+		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		var mapper = config.CreateMapper();
+
+		var nid = Guid.NewGuid();
+
+		var result = mapper.Map<VideoSource, VideoSourceModel>(new VideoSource
+		{
+			ChannelId = "ChannelId",
+			ChannelName = "ChannelName"
+		});
+
+		result.ChannelId.Should().Be("ChannelId");
+		result.ChannelName.Should().Be("ChannelName");
+	}
+
+	[Test]
 	public void Map_Ima_ImaModel()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());

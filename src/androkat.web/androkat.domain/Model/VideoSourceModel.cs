@@ -2,6 +2,12 @@
 
 public class VideoSourceModel
 {
-    public string ChannelId { get; set; }
-    public string ChannelName { get; set; }
+	public VideoSourceModel(string channelId, string channelName)
+	{
+		ChannelId = channelId;
+		ChannelName = channelName;
+	}
+
+	public string ChannelId { get; private set; }
+	public string ChannelName { get; private set; }
 }

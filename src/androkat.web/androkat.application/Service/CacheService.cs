@@ -34,13 +34,15 @@ public class CacheService : ICacheService
 			var videok = _cacheRepository.GetVideoToCache();
 			foreach (var item in videok)
 			{
-				if (item.VideoLink.Contains("embed"))
+                var link = item.VideoLink ?? string.Empty;
+
+				if (link.Contains("embed"))
 				{
 					Match match = Regex.Match(item.VideoLink, @"https:\/\/www.youtube.com\/embed\/([A-Za-z0-9-_]*)", RegexOptions.IgnoreCase);
 					if (match.Success)
-						item.VideoLink = "https://www.youtube.com/watch?v=" + match.Groups[1].Value;
+						link = "https://www.youtube.com/watch?v=" + match.Groups[1].Value;
 				}
-				videoModel.Add(item);
+                videoModel.Add(new VideoModel(item.Nid, item.Img, link, item.Cim, item.Date, item.Forras, item.ChannelId, item.Inserted));
 			}
 
 			return new VideoCache

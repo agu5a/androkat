@@ -25,10 +25,7 @@ public class ContentServiceWithCacheTests : BaseTest
 
 		var data = new List<VideoSourceModel>
 		{
-			new VideoSourceModel
-			{
-				ChannelId ="UCF3mEbdkhZwjQE8reJHm4sg"
-			}
+			new VideoSourceModel("UCF3mEbdkhZwjQE8reJHm4sg", "")
 		};
 
 		object result = new VideoCache { Video = new List<VideoModel>(), VideoSource = data };

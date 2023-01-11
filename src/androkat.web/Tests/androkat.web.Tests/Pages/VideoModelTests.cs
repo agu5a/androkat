@@ -21,7 +21,7 @@ public class VideoModelTests : BaseTest
         var contentService = new Mock<IContentService>();
         contentService.Setup(s => s.GetVideoSourcePage()).Returns(new List<VideoSourceModel>
         {
-            new VideoSourceModel { ChannelName = "ChannelName", ChannelId = "ChannelId" }
+            new VideoSourceModel ("ChannelId", "ChannelName")
         });
 
         var model = new web.Pages.VideoModel(contentService.Object)

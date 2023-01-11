@@ -83,20 +83,11 @@ public class WarmupServiceTests : BaseTest
 	public void VideoCacheFillUp_Happy()
 	{
 		var cache = GetIMemoryCache();
-
 		_cacheService.Setup(s => s.VideoCacheFillUp()).Returns(new VideoCache
 		{
 			Video = new List<VideoModel>
 			{
-				new VideoModel
-				{
-					Cim = "cim",
-					Nid = Guid.NewGuid(), Inserted = DateTime.Now,
-					Img = "img",
-					VideoLink = "vlink",
-					Forras = "forras",
-					ChannelId = "cId"
-				}
+				new VideoModel(Guid.NewGuid(), "img", "vlink", "cim", DateTime.Now.ToString("yyyy-MM-dd"), "forras", "cId", DateTime.Now)
 			},
 			Inserted = DateTime.Now
 		});

@@ -28,8 +28,8 @@ public class VideoCacheFillUpTests : BaseTest
 		var cacheRepository = new Mock<ICacheRepository>();
 		cacheRepository.Setup(s => s.GetVideoToCache()).Returns(new List<VideoModel>
 		{
-			new VideoModel{ VideoLink = "https://www.youtube.com/embed/OnCW6hg5CdQ" },
-			new VideoModel{ VideoLink = "https://www.youtube.com/watch?v=OnCW6hg5CdQ" }
+			new VideoModel(Guid.Empty, string.Empty, "https://www.youtube.com/embed/OnCW6hg5CdQ", string.Empty, string.Empty, string.Empty, string.Empty, DateTime.MinValue),
+			new VideoModel(Guid.Empty, string.Empty, "https://www.youtube.com/watch?v=OnCW6hg5CdQ", string.Empty, string.Empty, string.Empty, string.Empty, DateTime.MinValue)
 		});
 
 		cacheRepository.Setup(s => s.GetVideoSourceToCache()).Returns(new List<VideoSourceModel>());

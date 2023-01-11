@@ -110,11 +110,7 @@ public class ContentService : IContentService
 		var list = new List<VideoSourceModel>();
 		var result = GetVideoSource();
 		foreach (var item in result)
-			list.Add(new VideoSourceModel
-			{
-				ChannelId = item.ChannelId,
-				ChannelName = item.ChannelName
-			});
+			list.Add(new VideoSourceModel(item.ChannelId, item.ChannelName));
 
 		return list;
 	}
