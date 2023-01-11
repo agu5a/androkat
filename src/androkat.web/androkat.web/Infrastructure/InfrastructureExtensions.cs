@@ -33,6 +33,7 @@ public static class InfrastructureExtensions
         services.AddScoped<IClock, Clock>();
         services.AddScoped<ICacheRepository, CacheRepository>();
         services.AddScoped<ICacheService, CacheService>();
+        services.AddScoped<IApiRepository, ApiRepository>();
         services.AddHostedService<Warmup>();
 
         return services;

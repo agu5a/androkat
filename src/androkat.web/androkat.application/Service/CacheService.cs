@@ -34,7 +34,7 @@ public class CacheService : ICacheService
 			var videok = _cacheRepository.GetVideoToCache();
 			foreach (var item in videok)
 			{
-                var link = item.VideoLink ?? string.Empty;
+                var link = item.VideoLink;
 
 				if (link.Contains("embed"))
 				{

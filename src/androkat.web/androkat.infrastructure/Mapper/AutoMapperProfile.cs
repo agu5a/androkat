@@ -22,6 +22,7 @@ public class AutoMapperProfile : Profile
 
 		CreateMap<Ima, ImaModel>().ReverseMap();
 
+CreateMap<Radio, RadioMusorModel>().ReverseMap();
 CreateMap<Systeminfo, SystemInfoModel>().ReverseMap();
 		CreateMap<Video, VideoModel>().ReverseMap();
 		CreateMap<VideoSource, VideoSourceModel>().ReverseMap();

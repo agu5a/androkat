@@ -6,6 +6,8 @@ using androkat.infrastructure.Configuration;
 using androkat.web.Infrastructure;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using FastEndpoints;
+using FastEndpoints.ApiExplorer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.StaticFiles;
@@ -27,10 +29,10 @@ try
     var builder = WebApplication.CreateBuilder(args);
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
-    builder.Host.UseSerilog((ctx, lc) =>
+    builder.Host.UseSerilog((hostBuilderContext, loggerConfiguration) =>
     {
-        lc
-        .ReadFrom.Configuration(ctx.Configuration)
+        loggerConfiguration
+        .ReadFrom.Configuration(hostBuilderContext.Configuration)
         .Enrich.FromLogContext()
         .WriteTo.Console()
         .Enrich.WithProperty("MyApp", "AndroKatWeb");
@@ -42,6 +44,7 @@ try
     builder.Services.SetDatabase();
 
     builder.Services.AddSingleton<IConfigureOptions<AndrokatConfiguration>, AndrokatConfigurationOptions>();
+	builder.Services.AddOptions<EndPointConfiguration>().BindConfiguration("EndPointConfiguration").ValidateDataAnnotations().ValidateOnStart();
     builder.Services.AddSingleton<IContentMetaDataService, ContentMetaDataService>();
 
     builder.Services.AddControllers()
@@ -58,6 +61,8 @@ try
 
     builder.Services.SetServices();
     builder.Services.AddRazorPages();
+    builder.Services.AddFastEndpoints();
+    builder.Services.AddFastEndpointsApiExplorer();
 
     var app = builder.Build();
 
@@ -90,6 +95,7 @@ try
     app.UseAuthorization();
     app.MapControllerRoute(name: "default", pattern: "{controller}/{action=Index}");
     app.MapRazorPages();
+    app.UseFastEndpoints();
 
     app.Lifetime.ApplicationStopping.Register(() =>
     {
