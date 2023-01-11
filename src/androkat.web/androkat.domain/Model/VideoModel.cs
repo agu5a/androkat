@@ -16,12 +16,12 @@ public class VideoModel
 		Inserted = inserted;
 	}
 
-	public Guid Nid { get; private set; }
-    public string Img { get; private set; }
-    public string VideoLink { get; private set; }
-    public string Cim { get; private set; }
-    public string Date { get; private set; }
-    public string Forras { get; private set; }
-    public string ChannelId { get; private set; }
-    public DateTime Inserted { get; private set; }
+	public Guid Nid { get; }
+    public string Img { get; }
+    public string VideoLink { get; }
+    public string Cim { get; }
+    public string Date { get; }
+    public string Forras { get; }
+    public string ChannelId { get; }
+    public DateTime Inserted { get; }
 }

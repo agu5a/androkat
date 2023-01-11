@@ -10,6 +10,9 @@ public interface ICacheRepository
 	IReadOnlyCollection<ContentDetailsModel> GetMaiSzentToCache();
 	IReadOnlyCollection<ContentDetailsModel> GetNapiFixToCache();
 	IReadOnlyCollection<ImaModel> GetImaToCache();
+	IReadOnlyCollection<ContentDetailsModel> GetBooksToCache();
+	//IReadOnlyCollection<RadioMusorModel> GetRadioToCache();
+	IReadOnlyCollection<SystemInfoModel> GetSystemInfoToCache();
 	IReadOnlyCollection<VideoModel> GetVideoToCache();
 	IReadOnlyCollection<VideoSourceModel> GetVideoSourceToCache();
 }

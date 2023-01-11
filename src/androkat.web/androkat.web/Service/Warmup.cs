@@ -24,6 +24,7 @@ public class Warmup : IHostedService
 		{
 			var warmupService = scope.ServiceProvider.GetService<IWarmupService>();
 			warmupService.MainCacheFillUp();
+            warmupService.BookRadioSysCache();
 			warmupService.ImaCacheFillUp();
 			warmupService.VideoCacheFillUp();
 		}

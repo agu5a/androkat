@@ -3,6 +3,7 @@
 public enum CacheKey
 {
 	MainCacheKey,
+BookRadioSysCacheKey,
 	ImaCacheKey,
 	VideoCacheKey,
 }

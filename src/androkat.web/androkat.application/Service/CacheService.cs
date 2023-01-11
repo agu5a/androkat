@@ -65,6 +65,33 @@ public class CacheService : ICacheService
 		};
 	}
 
+    public BookRadioSysCache BookRadioSysCacheFillUp()
+    {
+        _logger.LogInformation("{name} was called", nameof(BookRadioSysCacheFillUp));
+        try
+        {
+            return new BookRadioSysCache
+            {
+                Books = _cacheRepository.GetBooksToCache().ToList(),
+                //RadioMusor = _cacheRepository.GetRadioToCache().ToList(),
+                SystemData = _cacheRepository.GetSystemInfoToCache().ToList(),
+                Inserted = _clock.Now.DateTime
+            };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: {name}", nameof(BookRadioSysCacheFillUp));
+        }
+
+        return new BookRadioSysCache
+        {
+            Books = new List<ContentDetailsModel>(),
+            //RadioMusor = new List<RadioMusorModel>(),
+            SystemData = new List<SystemInfoModel>(),
+            Inserted = _clock.Now.DateTime
+        };
+    }
+
 	public ImaCache ImaCacheFillUp()
 	{
 		_logger.LogInformation("{name} was called", nameof(ImaCacheFillUp));

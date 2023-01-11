@@ -13,9 +13,9 @@ public class ImaModel
 		Szoveg = szoveg;
 	}
 
-	public Guid Nid { get; private set; }
-	public DateTime Datum { get; private set; }
-	public string Cim { get; private set; }
-	public string Csoport { get; private set; }
-	public string Szoveg { get; private set; }
+	public Guid Nid { get; }
+    public DateTime Datum { get; }
+    public string Cim { get; }
+    public string Csoport { get; }
+    public string Szoveg { get; }
 }

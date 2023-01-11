@@ -8,6 +8,6 @@ public class VideoSourceModel
 		ChannelName = channelName;
 	}
 
-	public string ChannelId { get; private set; }
-	public string ChannelName { get; private set; }
+	public string ChannelId { get; }
+	public string ChannelName { get; }
 }

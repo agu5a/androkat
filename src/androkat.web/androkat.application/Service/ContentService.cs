@@ -118,7 +118,7 @@ public class ContentService : IContentService
 	public IReadOnlyCollection<RadioModel> GetRadioPage()
 	{
 		var list = new List<RadioModel>();
-		list.AddRange(GetRadio().Select(item => new RadioModel { Name = item.Key, Url = item.Value }));
+		list.AddRange(GetRadio().Select(item => new RadioModel(item.Key, item.Value)));
 
 		return list;
 	}
@@ -287,9 +287,13 @@ public class ContentService : IContentService
 
 	private Dictionary<string, string> GetRadio()
 	{
-		var ra = "{\"szentistvan\":\"http://online.szentistvanradio.hu:7000/adas\",\"vatikan\":\"https://media.vaticannews.va/media/audio/program/504/ungherese_181222.mp3\",\"ezazanap\":\"https://www.radioking.com/play/ez-az-a-nap-radio\",\"mariaszerbia\":\"http://dreamsiteradiocp.com:8014/stream\",\"katolikus\":\"http://katolikusradio.hu:9000/live_hi.mp3\",\"maria\":\"http://www.mariaradio.hu:8000/mr\",\"mariaerdely\":\"http://stream.mariaradio.ro:8000/MRE\",\"mariaszlovakia\":\"http://193.87.81.131:8081/MariaRadioFelvidek\",\"solaradio\":\"http://188.165.11.30:7000/live.mp3\"}";
+		var res = GetCache<BookRadioSysCache>(CacheKey.BookRadioSysCacheKey.ToString(), () => { return _cacheService.BookRadioSysCacheFillUp(); });
 
-		var dic = JsonSerializer.Deserialize<Dictionary<string, string>>(ra);
+		var ra = res.SystemData.FirstOrDefault(w => w.Key == "radio");
+		if (ra == null)
+			return new Dictionary<string, string>();
+
+		var dic = JsonSerializer.Deserialize<Dictionary<string, string>>(ra.Value);
 		if (dic == null)
 			return new Dictionary<string, string>();
 

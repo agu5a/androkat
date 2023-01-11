@@ -47,6 +47,35 @@ public class WarmupServiceTests : BaseTest
 		act.Should().NotThrow<Exception>();
 	}
 
+[Test]
+	public void BookRadioSysCache_Happy()
+	{
+		var cache = GetIMemoryCache();
+
+		_cacheService.Setup(s => s.BookRadioSysCacheFillUp()).Returns(new BookRadioSysCache
+		{
+			Books = new List<ContentDetailsModel> { new ContentDetailsModel { Cim = "cim" } },
+			Inserted = DateTime.Now
+		});
+		var service = new WarmupService(cache, _cacheService.Object, logger.Object);
+
+		service.BookRadioSysCache();
+		var obj = (BookRadioSysCache)cache.Get(CacheKey.BookRadioSysCacheKey.ToString());
+		obj.Books.First().Cim.Should().Be("cim");
+	}
+
+	[Test]
+	public void BookRadioSysCacheFillUp_Exception()
+	{
+		var cache = GetIMemoryCache();
+
+		_cacheService.Setup(s => s.BookRadioSysCacheFillUp()).Throws<Exception>();
+		var service = new WarmupService(cache, _cacheService.Object, logger.Object);
+
+		Action act = () => service.BookRadioSysCache();
+		act.Should().NotThrow<Exception>();
+	}
+
 	[Test]
 	public void ImaCacheFillUp_Happy()
 	{

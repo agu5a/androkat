@@ -21,7 +21,7 @@ public class RadioModelTests : BaseTest
         var contentService = new Mock<IContentService>();
         contentService.Setup(s => s.GetRadioPage()).Returns(new List<RadioModel>
         {
-            new RadioModel { Name = "name" }
+			new RadioModel("name", "")
         });
 
         var model = new web.Pages.RadioModel(contentService.Object)

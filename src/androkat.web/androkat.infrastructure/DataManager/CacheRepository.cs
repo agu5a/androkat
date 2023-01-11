@@ -30,6 +30,18 @@ public class CacheRepository : BaseRepository, ICacheRepository
 		return _mapper.Map<List<ImaModel>>(res).AsReadOnly();
 	}
 
+    public IReadOnlyCollection<ContentDetailsModel> GetBooksToCache()
+    {
+        var res = _ctx.Content.AsNoTracking().Where(w => w.Tipus == 46).OrderByDescending(o => o.Inserted);
+        return _mapper.Map<List<ContentDetailsModel>>(res).AsReadOnly();
+    }
+
+    //public IReadOnlyCollection<RadioMusorModel> GetRadioToCache()
+    //{
+    //    var res = _ctx.RadioMusor.AsNoTracking();
+    //    return _mapper.Map<List<RadioMusorModel>>(res).AsReadOnly();
+    //}
+
 	public IReadOnlyCollection<VideoSourceModel> GetVideoSourceToCache()
 	{
 		var res = _ctx.VideoContent.AsNoTracking().GroupBy(p => new { p.Forras, p.ChannelId })
@@ -42,6 +54,12 @@ public class CacheRepository : BaseRepository, ICacheRepository
 		var res = _ctx.VideoContent.AsNoTracking().OrderByDescending(o => o.Date).ThenByDescending(t => t.Inserted);
 		return _mapper.Map<List<VideoModel>>(res).AsReadOnly();
 	}
+
+public IReadOnlyCollection<SystemInfoModel> GetSystemInfoToCache()
+    {
+        var res = _ctx.systeminfo.AsNoTracking().Where(w => w.Key != "version");
+        return _mapper.Map<List<SystemInfoModel>>(res).AsReadOnly();
+    }
 
 	public IReadOnlyCollection<ContentDetailsModel> GetHumorToCache()
 	{

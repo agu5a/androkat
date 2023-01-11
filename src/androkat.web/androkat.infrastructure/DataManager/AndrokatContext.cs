@@ -15,6 +15,7 @@ public class AndrokatContext : DbContext
 	public DbSet<Maiszent> MaiSzent { get; set; }
 	public DbSet<Ima> ImaContent { get; set; }
 	public DbSet<Video> VideoContent { get; set; }
+ public DbSet<Systeminfo> systeminfo { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
@@ -50,6 +51,9 @@ public class AndrokatContext : DbContext
 
 		modelBuilder.Entity<Video>().ToTable("video");
 		modelBuilder.Entity<Video>().HasKey(u => u.Nid);
+
+modelBuilder.Entity<Systeminfo>().ToTable("systeminfo");
+        modelBuilder.Entity<Systeminfo>().HasKey(u => u.Id);
 
 		base.OnModelCreating(modelBuilder);
 	}

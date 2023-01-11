@@ -467,14 +467,28 @@ public class ContentServiceTests : BaseTest
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
 		var mapper = config.CreateMapper();
 
-		var cacheService = new CacheService(new Mock<ICacheRepository>().Object, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var guid = Guid.NewGuid();
+        var _fixture = new Fixture();
+        var systeminfo = _fixture.Create<Systeminfo>();
+        systeminfo.Key = "radio";
+        systeminfo.Value = "{ \"ˇmariaradio\": \"url\"}";
+
+        context.systeminfo.Add(systeminfo);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
 		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
 		var result = contentService.GetRadioPage().ToList();
 
-		result[0].Name.Should().Be("szentistvan");
-		result[0].Url.Should().Be("http://online.szentistvanradio.hu:7000/adas");
-		result.Count.Should().Be(9);
+        result[0].Name.Should().Be("ˇmariaradio");
+        result[0].Url.Should().Be("url");
+        result.Count.Should().Be(1);
 	}
 
 	[Test]

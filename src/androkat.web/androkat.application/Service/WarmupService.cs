@@ -34,6 +34,20 @@ public class WarmupService : IWarmupService
 		}
 	}
 
+    public void BookRadioSysCache()
+    {
+        try
+        {
+            var result = _cacheService.BookRadioSysCacheFillUp();
+            _memoryCache.Set(CacheKey.BookRadioSysCacheKey.ToString(), result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(1)));
+            _logger.LogInformation("Warmup.BookRadioSysCache was called");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: Warmup.BookRadioSysCache");
+        }
+    }
+
 	public void ImaCacheFillUp()
 	{
 		try
