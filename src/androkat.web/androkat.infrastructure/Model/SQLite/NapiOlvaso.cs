@@ -32,4 +32,15 @@ public class Napiolvaso
     [StringLength(200)]
     [DataMember(Name = "img")]
     public string Img { get; set; }
+
+    [StringLength(200)]
+    [DataMember(Name = "fileurl")]
+    public string FileUrl { get; set; }
+
+    [StringLength(200)]
+    [DataMember(Name = "forras")]
+    public string Forras { get; set; }
+
+    [DataMember(Name = "kulsolink")]
+    public string KulsoLink { get; set; }
 }

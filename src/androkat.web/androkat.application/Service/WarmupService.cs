@@ -48,6 +48,20 @@ public class WarmupService : IWarmupService
         }
     }
 
+    public void EgyebCacheFillUp()
+    {
+        try
+        {
+            var result = _cacheService.EgyebCacheFillUp();
+            _memoryCache.Set(CacheKey.EgyebCacheKey.ToString(), result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
+            _logger.LogInformation("Warmup.EgyebCacheFillUp was called");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: Warmup.EgyebCacheFillUp");
+        }
+    }
+
 	public void ImaCacheFillUp()
 	{
 		try

@@ -1,6 +1,6 @@
-﻿using androkat.web.Endpoints.ContentDetailsModelEndpoints;
-using androkat.web.Endpoints.RadioMusorModelEndpoints;
+﻿using androkat.web.Endpoints.RadioMusorModelEndpoints;
 using Ardalis.HttpClientTestExtensions;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -13,6 +13,7 @@ namespace androkat.web.Tests.EndpointsTests;
 public class UpdateRadioMusorModelTests : IClassFixture<CustomWebApplicationFactory<WebMarker>>
 {
 	private readonly HttpClient _client;
+    private const string _url = "/api/updateRadioMusorModel";
 
 	public UpdateRadioMusorModelTests(CustomWebApplicationFactory<WebMarker> factory)
 	{
@@ -29,7 +30,7 @@ public class UpdateRadioMusorModelTests : IClassFixture<CustomWebApplicationFact
 		}),
 		Encoding.UTF8, "application/json");
 
-		var result = await _client.PostAndDeserializeAsync<RadioMusorModelResponse>("/api/updateRadioMusorModel", content);
+        var result = await _client.PostAndDeserializeAsync<RadioMusorModelResponse>(_url, content);
 
 		Assert.True(result.Result);
 	}
@@ -44,8 +45,19 @@ public class UpdateRadioMusorModelTests : IClassFixture<CustomWebApplicationFact
 		}),
 		Encoding.UTF8, "application/json");
 
-		var result = await _client.PostAndEnsureBadRequestAsync("/api/updateRadioMusorModel", content);
+        var result = await PostAndEnsureConflictAsync(_url, content);
 
 		Assert.False(result.IsSuccessStatusCode);
 	}
+
+    private async Task<HttpResponseMessage> PostAndEnsureConflictAsync(string requestUri, HttpContent content)
+    {
+        HttpResponseMessage response = await _client.PostAsync(requestUri, content);
+        if (response.StatusCode != HttpStatusCode.Conflict)
+        {
+            throw new HttpRequestException("");
+        }
+
+        return response;
+    }
 }

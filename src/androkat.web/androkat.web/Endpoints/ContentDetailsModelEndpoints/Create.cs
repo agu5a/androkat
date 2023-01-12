@@ -43,7 +43,7 @@ public class Create : Endpoint<ContentDetailsModelRequest, ContentDetailsModelRe
 		{
 			bool result = _apiRepository.AddContentDetailsModel(request.ContentDetailsModel);
 			response = new ContentDetailsModelResponse(result);
-			await SendAsync(response, result ? StatusCodes.Status200OK : StatusCodes.Status400BadRequest, ct);
+			await SendAsync(response, result ? StatusCodes.Status200OK : StatusCodes.Status409Conflict, ct);
 		}
 		catch (Exception ex)
 		{

@@ -319,36 +319,32 @@ public class ContentService : IContentService
 
 	private IEnumerable<ContentDetailsModel> GetNewsByCategory(int tipus)
 	{
-		var result = new List<ContentDetailsModel>
-		{
-			new ContentDetailsModel
-			{
-				Cim = "Hír cím",
-				Fulldatum = DateTime.Now,
-				Nid = Guid.NewGuid(),
-				Idezet = "Idézet",
-				KulsoLink = "KulsoLink",
-				Tipus = tipus == 0 ? (int)Forras.kurir : tipus,
-			}
-		};
+		var res = GetCache<EgyebCache>(CacheKey.EgyebCacheKey.ToString(), () => { return _cacheService.EgyebCacheFillUp(); });
 
-		return result;
+		List<ContentDetailsModel> list;
+		if (tipus > 0)
+			{
+			list = res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).ToList();
+			}
+		else
+			list = res.Egyeb.Where(w => w.Tipus == (int)Forras.bonumtv || w.Tipus == (int)Forras.kurir || w.Tipus == (int)Forras.keresztenyelet).OrderByDescending(o => o.Fulldatum).ToList();
+
+		return list;
 	}
 
 	private IEnumerable<ContentDetailsModel> GetBlogByCategory(int tipus)
 	{
-		var result = new List<ContentDetailsModel>
-		{
-			new ContentDetailsModel
-			{
-				Cim = "Blog cím",
-				Fulldatum = DateTime.Now,
-				Nid = Guid.NewGuid(),
-				Tipus = tipus == 0 ? (int)Forras.b777 : tipus,
-			}
-		};
+		var res = GetCache<EgyebCache>(CacheKey.EgyebCacheKey.ToString(), () => { return _cacheService.EgyebCacheFillUp(); });
 
-		return result;
+		List<ContentDetailsModel> list;
+		if (tipus > 0)
+			{
+			list = res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).ToList();
+			}
+		else
+			list = res.Egyeb.Where(w => w.Tipus == (int)Forras.b777 || w.Tipus == (int)Forras.bkatolikusma || w.Tipus == (int)Forras.jezsuitablog).OrderByDescending(o => o.Fulldatum).ToList();
+
+		return list;
 	}
 
 	private C GetCache<C>(string key, Func<C> function)

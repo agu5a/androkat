@@ -1,5 +1,6 @@
 ﻿using androkat.web.Endpoints.ContentDetailsModelEndpoints;
 using Ardalis.HttpClientTestExtensions;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -12,6 +13,7 @@ namespace androkat.web.Tests.EndpointsTests;
 public class CreateContentDetailsModelTests : IClassFixture<CustomWebApplicationFactory<WebMarker>>
 {
 	private readonly HttpClient _client;
+    private const string _url = "/api/saveContentDetailsModel";
 
 	public CreateContentDetailsModelTests(CustomWebApplicationFactory<WebMarker> factory)
 	{
@@ -31,7 +33,7 @@ public class CreateContentDetailsModelTests : IClassFixture<CustomWebApplication
 		}),
 		Encoding.UTF8, "application/json");
 
-		var result = await _client.PostAndDeserializeAsync<ContentDetailsModelResponse>("/api/saveContentDetailsModel", content);
+        var result = await _client.PostAndDeserializeAsync<ContentDetailsModelResponse>(_url, content);
 
 		Assert.True(result.Result);
 	}
@@ -49,8 +51,19 @@ public class CreateContentDetailsModelTests : IClassFixture<CustomWebApplication
 		}),
 		Encoding.UTF8, "application/json");
 
-		var result = await _client.PostAndEnsureBadRequestAsync("/api/saveContentDetailsModel", content);
+        var result = await PostAndEnsureConflictAsync(_url, content);
 
 		Assert.False(result.IsSuccessStatusCode);
 	}
+
+    private async Task<HttpResponseMessage> PostAndEnsureConflictAsync(string requestUri, HttpContent content)
+    {
+        HttpResponseMessage response = await _client.PostAsync(requestUri, content);
+        if (response.StatusCode != HttpStatusCode.Conflict)
+        {
+            throw new HttpRequestException("");
+        }
+
+        return response;
+    }
 }

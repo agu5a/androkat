@@ -77,6 +77,35 @@ public class WarmupServiceTests : BaseTest
 	}
 
 	[Test]
+	public void EgyebCacheFillUp_Happy()
+	{
+		var cache = GetIMemoryCache();
+
+		_cacheService.Setup(s => s.EgyebCacheFillUp()).Returns(new EgyebCache
+		{
+			Egyeb = new List<ContentDetailsModel> { new ContentDetailsModel { Cim = "cim" } },
+			Inserted = DateTime.Now
+		});
+		var service = new WarmupService(cache, _cacheService.Object, logger.Object);
+
+		service.EgyebCacheFillUp();
+		var obj = (EgyebCache)cache.Get(CacheKey.EgyebCacheKey.ToString());
+		obj.Egyeb.First().Cim.Should().Be("cim");
+	}
+
+	[Test]
+	public void EgyebCacheFillUp_Exception()
+	{
+		var cache = GetIMemoryCache();
+
+		_cacheService.Setup(s => s.EgyebCacheFillUp()).Throws<Exception>();
+		var service = new WarmupService(cache, _cacheService.Object, logger.Object);
+
+		Action act = () => service.EgyebCacheFillUp();
+		act.Should().NotThrow<Exception>();
+	}
+
+	[Test]
 	public void ImaCacheFillUp_Happy()
 	{
 		var cache = GetIMemoryCache();

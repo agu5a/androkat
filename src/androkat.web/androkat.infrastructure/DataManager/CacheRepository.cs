@@ -61,6 +61,13 @@ public IReadOnlyCollection<SystemInfoModel> GetSystemInfoToCache()
         return _mapper.Map<List<SystemInfoModel>>(res).AsReadOnly();
     }
 
+    public IReadOnlyCollection<ContentDetailsModel> GetHirekBlogokToCache()
+    {
+        var res = _ctx.Content.Where(w => AndrokatConfiguration.BlogNewsContentTypeIds().Contains(w.Tipus)).AsNoTracking()
+            .OrderByDescending(o => o.Fulldatum);
+        return _mapper.Map<List<ContentDetailsModel>>(res).AsReadOnly();
+    }
+
 	public IReadOnlyCollection<ContentDetailsModel> GetHumorToCache()
 	{
 		var list = new List<ContentDetailsModel>();
