@@ -57,7 +57,7 @@ public class CacheRepository : BaseRepository, ICacheRepository
 
 public IReadOnlyCollection<SystemInfoModel> GetSystemInfoToCache()
     {
-        var res = _ctx.systeminfo.AsNoTracking().Where(w => w.Key != "version");
+        var res = _ctx.SystemInfo.AsNoTracking().Where(w => w.Key != "version");
         return _mapper.Map<List<SystemInfoModel>>(res).AsReadOnly();
     }
 
@@ -169,7 +169,7 @@ public IReadOnlyCollection<SystemInfoModel> GetSystemInfoToCache()
 			if (tipus == (int)Forras.fokolare)
 				date = _clock.Now.ToString("yyyy-MM") + "-01";
 
-			IQueryable<Napiolvaso> res = GetContentDetailsModel(tipus, date, tomorrow, osszes);
+			IQueryable<Content> res = GetContentDetailsModel(tipus, date, tomorrow, osszes);
 
 			result.AddRange(_mapper.Map<List<ContentDetailsModel>>(res));
 		}
@@ -177,9 +177,9 @@ public IReadOnlyCollection<SystemInfoModel> GetSystemInfoToCache()
 		return result.AsReadOnly();
 	}
 
-	private IQueryable<Napiolvaso> GetContentDetailsModel(int tipus, string date, string tomorrow, List<int> osszes)
+	private IQueryable<Content> GetContentDetailsModel(int tipus, string date, string tomorrow, List<int> osszes)
 	{
-		IQueryable<Napiolvaso> res;
+        IQueryable<Content> res;
 		if (tipus == (int)Forras.maievangelium) //szombaton már megjelenik a vasárnapi is
 			res = _ctx.Content.AsNoTracking().Where(w => w.Tipus == tipus && (w.Fulldatum.StartsWith(date) || w.Fulldatum.StartsWith(tomorrow))).OrderByDescending(o => o.Inserted);
 		else if (osszes.Contains(tipus)) //ajanlo és néhány hanganyagból a weboldalon látszik mindegyik 

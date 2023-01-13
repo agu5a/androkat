@@ -31,7 +31,7 @@ public class MainCacheFillUpTests : BaseTest
 
         using (var context = new AndrokatContext(GetDbContextOptions()))
         {
-            var entity = new Napiolvaso
+            var entity = new Content
             {
                 Tipus = 15,
                 //FileUrl = string.Empty,
@@ -40,7 +40,7 @@ public class MainCacheFillUpTests : BaseTest
             };
             context.Content.Add(entity);
 
-            var entity2 = new Napiolvaso
+            var entity2 = new Content
             {
                 Tipus = 15,
                 //FileUrl = string.Empty,
@@ -79,7 +79,7 @@ public class MainCacheFillUpTests : BaseTest
 
         using (var context = new AndrokatContext(GetDbContextOptions()))
         {
-            var entity = new Napiolvaso
+            var entity = new Content
             {
                 Tipus = 60,
                 //FileUrl = string.Empty,
@@ -131,7 +131,7 @@ public class MainCacheFillUpTests : BaseTest
 
         using (var context = new AndrokatContext(GetDbContextOptions()))
         {
-            var entity = new Napiolvaso
+            var entity = new Content
             {
                 Tipus = 60,
                 //FileUrl = string.Empty,
@@ -167,7 +167,7 @@ public class MainCacheFillUpTests : BaseTest
 
         using (var context = new AndrokatContext(GetDbContextOptions()))
         {
-            var entity = new Napiolvaso
+            var entity = new Content
             {
                 Nid = Guid.NewGuid(),
                 Tipus = tipus,
@@ -203,8 +203,8 @@ public class MainCacheFillUpTests : BaseTest
 
         using (var context = new AndrokatContext(GetDbContextOptions()))
         {
-            Napiolvaso entity2 = null;
-            var entity = new Napiolvaso
+            Content entity2 = null;
+            var entity = new Content
             {
                 Nid = Guid.NewGuid(),
                 Tipus = 11,
@@ -217,7 +217,7 @@ public class MainCacheFillUpTests : BaseTest
 
             if (twoItems)
             {
-                entity2 = new Napiolvaso
+                entity2 = new Content
                 {
                     Nid = Guid.NewGuid(),
                     Tipus = 11,

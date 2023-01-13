@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace androkat.infrastructure.Model.SQLite;
 
 [Table("ima")]
-public class Ima
+public class ImaContent
 {
     [Key]
     [Required]

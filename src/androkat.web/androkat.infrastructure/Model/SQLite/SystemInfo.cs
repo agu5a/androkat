@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace androkat.infrastructure.Model.SQLite;
 
 [Table("systeminfo")]
-public class Systeminfo
+public class SystemInfo
 {
     [Key]
     [Required]

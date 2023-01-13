@@ -40,7 +40,7 @@ public class ApiRepository : BaseRepository, IApiRepository
 		if (exist != null)
 			return false;
 
-		_ctx.Content.Add(_mapper.Map<Napiolvaso>(contentDetailsModel));
+		_ctx.Content.Add(_mapper.Map<Content>(contentDetailsModel));
 		_ctx.SaveChanges();
 		return true;
 	}

@@ -1,4 +1,6 @@
-﻿namespace androkat.web.Endpoints.ContentDetailsModelEndpoints;
+﻿using System.Text.Json.Serialization;
+
+namespace androkat.web.Endpoints.ContentDetailsModelEndpoints;
 
 public class ContentDetailsModelResponse
 {
@@ -7,5 +9,6 @@ public class ContentDetailsModelResponse
         Result = result;
     }
 
+    [JsonPropertyName("result")]
     public bool Result { get; init; }
 }

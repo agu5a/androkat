@@ -189,7 +189,7 @@ public class CacheRepositoryTests : BaseTest
 
 		using (var context = new AndrokatContext(GetDbContextOptions()))
 		{
-			var entity = new Napiolvaso
+            var entity = new Content
 			{
 				Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03",
 				Tipus = (int)Forras.audiohorvath
@@ -215,7 +215,7 @@ public class CacheRepositoryTests : BaseTest
 
 		using (var context = new AndrokatContext(GetDbContextOptions()))
 		{
-			var entity = new Video
+			var entity = new VideoContent
 			{
 				Forras = "Forras",
 				ChannelId = "ChannelId"
@@ -242,7 +242,7 @@ public class CacheRepositoryTests : BaseTest
 
 		using (var context = new AndrokatContext(GetDbContextOptions()))
 		{
-			var entity = new Video
+			var entity = new VideoContent
 			{
 				Forras = "Forras",
 				ChannelId = "ChannelId",

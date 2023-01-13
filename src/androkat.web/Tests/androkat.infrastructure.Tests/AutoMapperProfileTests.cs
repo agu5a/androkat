@@ -18,7 +18,7 @@ public class AutoMapperProfileTests
 
 		var nid = Guid.NewGuid();
 
-		var result = mapper.Map<Video, VideoModel>(new Video
+		var result = mapper.Map<VideoContent, VideoModel>(new VideoContent
 		{
 			Date = "2022-12-15 01:02:03",
 			Cim = "cím",
@@ -60,7 +60,7 @@ public class AutoMapperProfileTests
 
 		var nid = Guid.NewGuid();
 
-		var result = mapper.Map<Ima, ImaModel>(new Ima
+		var result = mapper.Map<ImaContent, ImaModel>(new ImaContent
 		{
 			Datum = DateTime.Parse("2022-12-15 01:02:03"),
 			Cim = "cím",
@@ -79,7 +79,7 @@ public class AutoMapperProfileTests
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
 		var mapper = config.CreateMapper();
 
-		var result = mapper.Map<Napiolvaso, ContentDetailsModel>(new Napiolvaso
+		var result = mapper.Map<Content, ContentDetailsModel>(new Content
 		{
 			Fulldatum = "2022-12-15 01:02:03"
 		});
@@ -94,7 +94,7 @@ public class AutoMapperProfileTests
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
 		var mapper = config.CreateMapper();
 
-		var result = mapper.Map<ContentDetailsModel, Napiolvaso>(new ContentDetailsModel
+		var result = mapper.Map<ContentDetailsModel, Content>(new ContentDetailsModel
 		{
 			Fulldatum = DateTime.Parse("2022-12-15 01:02:03")
 		});

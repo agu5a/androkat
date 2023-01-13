@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Web;
 
 namespace androkat.application.Service;
 
@@ -262,9 +263,9 @@ public class ContentService : IContentService
 				Tipus = tipus,
 				Idezet = idezet,
 				MetaDataModel = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus),
-				//EncodedUrl = HttpUtility.UrlEncode(mp3),
-				//ShareTitle = HttpUtility.UrlEncode(f.Cim),
-				//Url = mp3                
+				EncodedUrl = HttpUtility.UrlEncode(mp3),
+				ShareTitle = HttpUtility.UrlEncode(f.Cim),
+				Url = mp3                
 			});
 		});
 

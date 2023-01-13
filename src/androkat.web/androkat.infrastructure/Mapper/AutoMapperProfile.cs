@@ -14,17 +14,17 @@ public class AutoMapperProfile : Profile
 			.ForMember(x => x.Fulldatum, y => y.MapFrom(z => DateTime.Parse(DateTime.Now.ToString("yyyy-") + z.Datum + " 00:00:01")))
 			.ForMember(x => x.FileUrl, y => y.MapFrom(z => string.Empty));
 
-		CreateMap<Napiolvaso, ContentDetailsModel>()
+		CreateMap<Content, ContentDetailsModel>()
 			.ForMember(x => x.Fulldatum, y => y.MapFrom(z => DateTime.Parse(z.Fulldatum)));
 
-		CreateMap<ContentDetailsModel, Napiolvaso>()
+		CreateMap<ContentDetailsModel, Content>()
 			.ForMember(x => x.Fulldatum, y => y.MapFrom(z => z.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss")));
 
-		CreateMap<Ima, ImaModel>().ReverseMap();
+		CreateMap<ImaContent, ImaModel>().ReverseMap();
 
-CreateMap<Radio, RadioMusorModel>().ReverseMap();
-CreateMap<Systeminfo, SystemInfoModel>().ReverseMap();
-		CreateMap<Video, VideoModel>().ReverseMap();
+CreateMap<RadioMusor, RadioMusorModel>().ReverseMap();
+CreateMap<SystemInfo, SystemInfoModel>().ReverseMap();
+		CreateMap<VideoContent, VideoModel>().ReverseMap();
 		CreateMap<VideoSource, VideoSourceModel>().ReverseMap();
 
 		CreateMap<Maiszent, ContentDetailsModel>()

@@ -10,55 +10,18 @@ public class AndrokatContext : DbContext
 		Database.EnsureCreated();
 	}
 
-	public virtual DbSet<Napiolvaso> Content { get; set; }
+    public virtual DbSet<Content> Content { get; set; }
 	public DbSet<FixContent> FixContent { get; set; }
 	public DbSet<Maiszent> MaiSzent { get; set; }
-	public DbSet<Ima> ImaContent { get; set; }
-	public DbSet<Video> VideoContent { get; set; }
-	public DbSet<Radio> RadioMusor { get; set; }
-	public DbSet<Systeminfo> systeminfo { get; set; }
+    public DbSet<ImaContent> ImaContent { get; set; }
+    public DbSet<VideoContent> VideoContent { get; set; }
+    public DbSet<RadioMusor> RadioMusor { get; set; }
+    public DbSet<SystemInfo> SystemInfo { get; set; }
+    public DbSet<TempContent> TempContent { get; set; }
+    public DbSet<Admin> Admin { get; set; }
 
-	protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder builder)
 	{
-		// Map table names
-		modelBuilder.Entity<Napiolvaso>().ToTable("napiolvaso");
-		modelBuilder.Entity<Napiolvaso>(entity =>
-		{
-			entity.HasKey(e => e.Nid);
-			entity.Property(u => u.Cim).HasColumnType("text");
-			entity.Property(u => u.Idezet).HasColumnType("longtext");
-			entity.Property(u => u.Inserted).HasColumnType("timestamp");
-		});
-
-		modelBuilder.Entity<FixContent>().ToTable("napifixolvaso");
-		modelBuilder.Entity<FixContent>(entity =>
-		{
-			entity.HasKey(e => e.Nid);
-			entity.Property(u => u.Cim).HasColumnType("text");
-			entity.Property(u => u.Idezet).HasColumnType("longtext");
-		});
-
-		modelBuilder.Entity<Maiszent>().ToTable("maiszent");
-		modelBuilder.Entity<Maiszent>(entity =>
-		{
-			entity.HasKey(e => e.Nid);
-			entity.Property(u => u.Cim).HasColumnType("text");
-			entity.Property(u => u.Idezet).HasColumnType("longtext");
-			entity.Property(u => u.Inserted).HasColumnType("timestamp");
-		});
-
-		modelBuilder.Entity<Ima>().ToTable("ima");
-		modelBuilder.Entity<Ima>().HasKey(u => u.Nid);
-
-		modelBuilder.Entity<Video>().ToTable("video");
-		modelBuilder.Entity<Video>().HasKey(u => u.Nid);
-
-		modelBuilder.Entity<Radio>().ToTable("radio");
-		modelBuilder.Entity<Radio>().HasKey(u => u.Nid);
-
-		modelBuilder.Entity<Systeminfo>().ToTable("systeminfo");
-		modelBuilder.Entity<Systeminfo>().HasKey(u => u.Id);
-
-		base.OnModelCreating(modelBuilder);
+        builder.ApplyConfigurationsFromAssembly(typeof(AndrokatContext).Assembly);
 	}
 }

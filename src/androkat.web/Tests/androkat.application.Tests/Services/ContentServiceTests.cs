@@ -1,6 +1,5 @@
 ﻿using androkat.application.Interfaces;
 using androkat.application.Service;
-using androkat.domain;
 using androkat.domain.Enum;
 using androkat.domain.Model;
 using androkat.domain.Model.ContentCache;
@@ -33,7 +32,7 @@ public class ContentServiceTests : BaseTest
 
 		var guid = Guid.NewGuid();
 		var _fixture = new Fixture();
-		var content = _fixture.Create<Napiolvaso>();
+        var content = _fixture.Create<Content>();
 		content.Cim = "Twitter cím";
 		content.Nid = guid;
 		content.Tipus = (int)Forras.papaitwitter;
@@ -68,7 +67,7 @@ public class ContentServiceTests : BaseTest
 
 		var guid = Guid.NewGuid();
 		var _fixture = new Fixture();
-		var content = _fixture.Create<Napiolvaso>();
+        var content = _fixture.Create<Content>();
 		content.Cim = "Ajánlat cím";
 		content.Nid = guid;
 		content.Tipus = (int)Forras.ajanlatweb;
@@ -105,7 +104,7 @@ public class ContentServiceTests : BaseTest
 		using var context = new AndrokatContext(GetDbContextOptions());
 
 		var _fixture = new Fixture();
-		var content = _fixture.Create<Napiolvaso>();
+        var content = _fixture.Create<Content>();
 		content.Cim = "Ajánlat cím";
 		content.Nid = nid;
 		content.Tipus = tipus;
@@ -198,7 +197,7 @@ public class ContentServiceTests : BaseTest
 
 		var guid = Guid.NewGuid();
 		var _fixture = new Fixture();
-		var ima = _fixture.Create<Ima>();
+        var ima = _fixture.Create<ImaContent>();
 		ima.Cim = "Ima cím";
 		ima.Nid = guid;
 		ima.Csoport = "1";
@@ -228,7 +227,7 @@ public class ContentServiceTests : BaseTest
 		using var context = new AndrokatContext(GetDbContextOptions());
 
 		var _fixture = new Fixture();
-		var ima = _fixture.Create<Ima>();
+		var ima = _fixture.Create<ImaContent>();
 		ima.Cim = "Ima cím1";
 		ima.Nid = Guid.NewGuid();
 		ima.Csoport = "1";
@@ -236,7 +235,7 @@ public class ContentServiceTests : BaseTest
 
 		context.ImaContent.Add(ima);
 
-		var ima2 = _fixture.Create<Ima>();
+		var ima2 = _fixture.Create<ImaContent>();
 		ima2.Cim = "Ima cím2";
 		ima2.Nid = Guid.NewGuid();
 		ima2.Csoport = "2";
@@ -268,7 +267,7 @@ public class ContentServiceTests : BaseTest
 
 		var guid = Guid.NewGuid();
 		var _fixture = new Fixture();
-		var ima = new Ima
+        var ima = new ImaContent
 		{
 			Cim = "Ima cím",
 			Nid = guid,
@@ -305,7 +304,7 @@ public class ContentServiceTests : BaseTest
 
         var guid = Guid.NewGuid();
         var _fixture = new Fixture();
-        var content = _fixture.Create<Napiolvaso>();
+        var content = _fixture.Create<Content>();
         content.Cim = "cim1";
         content.Nid = Guid.Parse("281cd115-1289-11ea-8aa1-cbeb38570c35");
         content.Tipus = (int)Forras.audiotaize;
@@ -315,7 +314,7 @@ public class ContentServiceTests : BaseTest
 
         context.Content.Add(content);
 
-        var content2 = _fixture.Create<Napiolvaso>();
+        var content2 = _fixture.Create<Content>();
         content2.Cim = "cim2";
         content2.Nid = Guid.Parse("181cd115-1289-11ea-8aa1-cbeb38570c35");
         content2.Tipus = (int)Forras.audiotaize;
@@ -350,7 +349,7 @@ public class ContentServiceTests : BaseTest
 
 		var guid = Guid.NewGuid();
 		var _fixture = new Fixture();
-		var video = _fixture.Create<Video>();
+		var video = _fixture.Create<VideoContent>();
 		video.Cim = "Videó cím";
 		video.Nid = guid;
 		video.ChannelId = "UCF3mEbdkhZwjQE8reJHm4sg";
@@ -384,7 +383,7 @@ public class ContentServiceTests : BaseTest
 
 		var guid = Guid.NewGuid();
 		var _fixture = new Fixture();
-		var content = _fixture.Create<Napiolvaso>();
+        var content = _fixture.Create<Content>();
 		content.Cim = "Blog cím";
 		content.Nid = guid;
 		content.Tipus = (int)Forras.b777;
@@ -417,7 +416,7 @@ public class ContentServiceTests : BaseTest
 
 		var guid = Guid.NewGuid();
 		var _fixture = new Fixture();
-		var content = new Napiolvaso
+        var content = new Content
 		{
 			Cim = "Hír cím",
 			Nid = guid,
@@ -490,11 +489,11 @@ public class ContentServiceTests : BaseTest
 
         var guid = Guid.NewGuid();
         var _fixture = new Fixture();
-        var systeminfo = _fixture.Create<Systeminfo>();
+        var systeminfo = _fixture.Create<SystemInfo>();
         systeminfo.Key = "radio";
         systeminfo.Value = "{ \"ˇmariaradio\": \"url\"}";
 
-        context.systeminfo.Add(systeminfo);
+        context.SystemInfo.Add(systeminfo);
         context.SaveChanges();
 
         var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);

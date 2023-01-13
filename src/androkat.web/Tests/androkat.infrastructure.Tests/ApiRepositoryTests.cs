@@ -51,7 +51,7 @@ public class ApiRepositoryTests : BaseTest
 
 		using (var context = new AndrokatContext(GetDbContextOptions()))
 		{
-			var entity = new Radio
+			var entity = new RadioMusor
 			{
 				Source = "Source",
 				Inserted = "2023-01-10",
@@ -90,7 +90,7 @@ public class ApiRepositoryTests : BaseTest
 		var nid = Guid.Parse(guid);
 		using (var context = new AndrokatContext(GetDbContextOptions()))
 		{
-			var entity = new Napiolvaso
+			var entity = new Content
 			{
 				Tipus = tipusDb,
 				Cim = cimDb,
@@ -125,7 +125,7 @@ public class ApiRepositoryTests : BaseTest
 		var nid = Guid.Parse(guid);
 		using (var context = new AndrokatContext(GetDbContextOptions()))
 		{
-			var entity = new Napiolvaso
+			var entity = new Content
 			{
 				Tipus = tipusDb,
 				Cim = cimDb,

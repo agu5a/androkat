@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace androkat.infrastructure.Model.SQLite;
 
 [Table("radio")]
-public class Radio
+public class RadioMusor
 {
     [Key]
     [Required]

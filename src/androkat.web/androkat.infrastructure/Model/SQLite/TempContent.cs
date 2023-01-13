@@ -5,8 +5,8 @@ using System.Runtime.Serialization;
 
 namespace androkat.infrastructure.Model.SQLite;
 
-[Table("napiolvaso")]
-public class Napiolvaso
+[Table("napiolvaso2")]
+public class TempContent
 {
     [Key]
     [Required]
@@ -15,7 +15,7 @@ public class Napiolvaso
 
     [StringLength(100)]
     [DataMember(Name = "fulldatum")]
-    public string Fulldatum { get; set; } //"yyyy-MM-dd HH:mm:ss"
+    public string Fulldatum { get; set; }
 
     [DataMember(Name = "cim")]
     public string Cim { get; set; }
@@ -27,7 +27,7 @@ public class Napiolvaso
     public int Tipus { get; set; }
 
     [DataMember(Name = "inserted")]
-    public DateTime Inserted { get; set; } 
+    public DateTime Inserted { get; set; }
 
     [StringLength(200)]
     [DataMember(Name = "img")]
@@ -39,8 +39,5 @@ public class Napiolvaso
 
     [StringLength(200)]
     [DataMember(Name = "forras")]
-    public string Forras { get; set; }
-
-    [DataMember(Name = "kulsolink")]
-    public string KulsoLink { get; set; }
+    public string Forras { get; set; }    
 }

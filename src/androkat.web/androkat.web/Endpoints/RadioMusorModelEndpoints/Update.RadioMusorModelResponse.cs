@@ -1,4 +1,6 @@
-﻿namespace androkat.web.Endpoints.RadioMusorModelEndpoints;
+﻿using System.Text.Json.Serialization;
+
+namespace androkat.web.Endpoints.RadioMusorModelEndpoints;
 
 public class RadioMusorModelResponse
 {
@@ -7,5 +9,6 @@ public class RadioMusorModelResponse
 		Result = result;
 	}
 
+    [JsonPropertyName("result")]
 	public bool Result { get; init; }
 }
