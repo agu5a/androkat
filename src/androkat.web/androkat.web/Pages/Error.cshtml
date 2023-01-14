@@ -1,0 +1,22 @@
+@page "{statusCode:int?}"
+@using androkat.infrastructure.Model;
+@using androkat.web.Pages;
+@model ErrorModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="container bg-white" style="padding: 15px;">
+    <div class="p-3 border bg-light">        
+        <h2>Hiba történt</h2>
+        <p>
+            Ellnézését kérjük, a kért oldal megszűnt vagy az elérhetősége megváltozott! Próbálja megkeresni a <a href="https://androkat.hu" 
+            class="navlink" style="text-decoration: underline">főoldalról</a> indulva.
+        </p>
+        <p>
+            Írjon nekünk: <a href="mailto:uzenet@androkat.hu" style="text-decoration: underline">uzenet@androkat.hu</a> vagy üzenjen 
+            <a href="https://www.facebook.com/androkat" style="text-decoration: underline" rel="noopener" target="_blank">facebook-on</a>.
+        </p>
+        <p>
+            <a href="https://androkat.hu" class="navlink" style="text-decoration: underline">Vissza a főoldalra</a>
+        </p>
+    </div>
+</div>
