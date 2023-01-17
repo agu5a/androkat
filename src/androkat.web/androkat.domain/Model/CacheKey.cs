@@ -7,4 +7,5 @@ BookRadioSysCacheKey,
     EgyebCacheKey,
 	ImaCacheKey,
 	VideoCacheKey,
+VideoResponseCacheKey
 }

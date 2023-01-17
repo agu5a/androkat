@@ -47,6 +47,7 @@ try
 
 	builder.Services.AddSingleton<IConfigureOptions<AndrokatConfiguration>, AndrokatConfigurationOptions>();
 	builder.Services.AddOptions<EndPointConfiguration>().BindConfiguration("EndPointConfiguration").ValidateDataAnnotations().ValidateOnStart();
+    builder.Services.AddOptions<CredentialConfiguration>().BindConfiguration("CredentialConfiguration").ValidateDataAnnotations().ValidateOnStart();
 	builder.Services.AddSingleton<IContentMetaDataService, ContentMetaDataService>();
 
 	builder.Services.AddControllers()
