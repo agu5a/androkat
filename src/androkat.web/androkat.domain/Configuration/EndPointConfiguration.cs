@@ -9,4 +9,6 @@ public class EndPointConfiguration
 
 	[Required]
 	public string UpdateRadioMusorModelApiUrl { get; set; }
+    [Required]
+    public string HealthCheckApiUrl { get; set; }
 }

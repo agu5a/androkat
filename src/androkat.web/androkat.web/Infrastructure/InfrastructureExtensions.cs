@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
@@ -84,7 +85,7 @@ public static class InfrastructureExtensions
         return services;
     }
 
-    public static IServiceCollection SetAuthentication(this IServiceCollection services, IOptions<CredentialConfiguration> cred)
+    public static IServiceCollection SetAuthentication(this IServiceCollection services, ConfigurationManager configurationManager)
     {
         services.AddAuthentication(options =>
         {
@@ -93,8 +94,8 @@ public static class InfrastructureExtensions
         })
         .AddCookie().AddGoogle(googleOptions =>
         {
-            googleOptions.ClientId = cred.Value.GoogleClientId;
-            googleOptions.ClientSecret = cred.Value.GoogleClientSecret;
+            googleOptions.ClientId = configurationManager["GoogleClientId"]; ;
+            googleOptions.ClientSecret = configurationManager["GoogleClientSecret"]; ;
         });
 
         return services;
@@ -102,7 +103,8 @@ public static class InfrastructureExtensions
 
     public static void SetHealthCheckEndpoint(this WebApplication app)
     {
-        app.UseHealthChecks("/fake_health", new HealthCheckOptions
+        var endPoints = app.Services.GetRequiredService<IOptions<EndPointConfiguration>>();
+        app.UseHealthChecks(endPoints.Value.HealthCheckApiUrl, new HealthCheckOptions
         {
             ResponseWriter = async (context, report) =>
             {
