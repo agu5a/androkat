@@ -1,6 +1,7 @@
 ﻿using androkat.application.Interfaces;
 using androkat.application.Service;
 using androkat.domain;
+using androkat.domain.Configuration;
 using androkat.infrastructure.DataManager;
 using androkat.infrastructure.Mapper;
 using androkat.web.Core;
@@ -8,115 +9,118 @@ using androkat.web.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text.Json;
 
 namespace androkat.web.Infrastructure;
 
 [ExcludeFromCodeCoverage]
 public static class InfrastructureExtensions
 {
-	public static IServiceCollection SetDatabase(this IServiceCollection services)
-	{
-		services.AddDbContext<AndrokatContext>(options =>
-		{
-			options.UseSqlite($"Data Source=./Data/androkat.db");
-		}, ServiceLifetime.Scoped);
+    public static IServiceCollection SetDatabase(this IServiceCollection services)
+    {
+        services.AddDbContext<AndrokatContext>(options =>
+        {
+            options.UseSqlite($"Data Source=./Data/androkat.db");
+        }, ServiceLifetime.Scoped);
 
-		return services;
-	}
+        return services;
+    }
 
-	public static IServiceCollection SetServices(this IServiceCollection services)
-	{
-		services.AddScoped<IClock, Clock>();
-		services.AddScoped<ICacheRepository, CacheRepository>();
-		services.AddScoped<ICacheService, CacheService>();
-		services.AddScoped<IApiRepository, ApiRepository>();
-		services.AddHostedService<Warmup>();
+    public static IServiceCollection SetServices(this IServiceCollection services)
+    {
+        services.AddScoped<IClock, Clock>();
+        services.AddScoped<ICacheRepository, CacheRepository>();
+        services.AddScoped<ICacheService, CacheService>();
+        services.AddScoped<IApiRepository, ApiRepository>();
+        services.AddHostedService<Warmup>();
 
-		return services;
-	}
+        return services;
+    }
 
-	public static IServiceCollection SetAutoMapper(this IServiceCollection services)
-	{
-		services.AddAutoMapper(typeof(AutoMapperProfile));
+    public static IServiceCollection SetAutoMapper(this IServiceCollection services)
+    {
+        services.AddAutoMapper(typeof(AutoMapperProfile));
 
-		return services;
-	}
+        return services;
+    }
 
-	public static IServiceCollection SetSession(this IServiceCollection services)
-	{
-		services.AddSession(options =>
-		{
-			options.IdleTimeout = TimeSpan.FromMinutes(60);
-			options.Cookie.Name = "androkat.session";
-			options.Cookie.HttpOnly = true;
-			options.Cookie.IsEssential = true;
-		});
+    public static IServiceCollection SetSession(this IServiceCollection services)
+    {
+        services.AddSession(options =>
+        {
+            options.IdleTimeout = TimeSpan.FromMinutes(60);
+            options.Cookie.Name = "androkat.session";
+            options.Cookie.HttpOnly = true;
+            options.Cookie.IsEssential = true;
+        });
 
-		return services;
-	}
+        return services;
+    }
 
-	public static WebApplication UseProxy(this WebApplication app)
-	{
-		var forwardedHeadersOptions = new ForwardedHeadersOptions
-		{
-			ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
-		};
-		app.UseForwardedHeaders(forwardedHeadersOptions);
+    public static WebApplication UseProxy(this WebApplication app)
+    {
+        var forwardedHeadersOptions = new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
+        };
+        app.UseForwardedHeaders(forwardedHeadersOptions);
 
-		return app;
-	}
+        return app;
+    }
 
-	public static IServiceCollection SetCaching(this IServiceCollection services)
-	{
-		services.AddMemoryCache();
+    public static IServiceCollection SetCaching(this IServiceCollection services)
+    {
+        services.AddMemoryCache();
 
-		return services;
-	}
+        return services;
+    }
 
-	public static IServiceCollection SetAuthentication(this IServiceCollection services)
-	{
-		services.AddAuthentication(options =>
-		{
-			options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-			options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-		})
-		.AddCookie().AddGoogle(googleOptions =>
-		{
-			googleOptions.ClientId = "n/a";
-			googleOptions.ClientSecret = "";
-		});
+    public static IServiceCollection SetAuthentication(this IServiceCollection services, IOptions<CredentialConfiguration> cred)
+    {
+        services.AddAuthentication(options =>
+        {
+            options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+        })
+        .AddCookie().AddGoogle(googleOptions =>
+        {
+            googleOptions.ClientId = cred.Value.GoogleClientId;
+            googleOptions.ClientSecret = cred.Value.GoogleClientSecret;
+        });
 
-		return services;
-	}
+        return services;
+    }
 
-	public static void SetHealthCheckEndpoint(this WebApplication app)
-	{
-		app.UseHealthChecks("/fake_health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
-		{
-			ResponseWriter = async (context, report) =>
-			{
-				context.Response.ContentType = "application/json";
-				var response = new HealthCheckResponse
-				{
-					Status = report.Status.ToString(),
-					Checks = report.Entries.Select(s => new HealthCheck
-					{
-						Component = s.Key,
-						Description = s.Value.Description?.ToString(),
-						Status = s.Value.Status.ToString()
-					}),
-					Duration = report.TotalDuration
-				};
+    public static void SetHealthCheckEndpoint(this WebApplication app)
+    {
+        app.UseHealthChecks("/fake_health", new HealthCheckOptions
+        {
+            ResponseWriter = async (context, report) =>
+            {
+                context.Response.ContentType = "application/json";
+                var response = new HealthCheckResponse
+                {
+                    Status = report.Status.ToString(),
+                    Checks = report.Entries.Select(s => new HealthCheck
+                    {
+                        Component = s.Key,
+                        Description = s.Value.Description?.ToString(),
+                        Status = s.Value.Status.ToString()
+                    }),
+                    Duration = report.TotalDuration
+                };
 
-				await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(response));
-			}
-		});
-	}
+                await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+            }
+        });
+    }
 }

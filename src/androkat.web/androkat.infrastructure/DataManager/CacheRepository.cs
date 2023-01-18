@@ -36,11 +36,11 @@ public class CacheRepository : BaseRepository, ICacheRepository
         return _mapper.Map<List<ContentDetailsModel>>(res).AsReadOnly();
     }
 
-    //public IReadOnlyCollection<RadioMusorModel> GetRadioToCache()
-    //{
-    //    var res = _ctx.RadioMusor.AsNoTracking();
-    //    return _mapper.Map<List<RadioMusorModel>>(res).AsReadOnly();
-    //}
+    public IReadOnlyCollection<RadioMusorModel> GetRadioToCache()
+    {
+        var res = _ctx.RadioMusor.AsNoTracking();
+        return _mapper.Map<List<RadioMusorModel>>(res).AsReadOnly();
+    }
 
 	public IReadOnlyCollection<VideoSourceModel> GetVideoSourceToCache()
 	{

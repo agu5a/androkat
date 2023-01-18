@@ -20,8 +20,8 @@ public class AndrokatContext : DbContext
     public DbSet<TempContent> TempContent { get; set; }
     public DbSet<Admin> Admin { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-        builder.ApplyConfigurationsFromAssembly(typeof(AndrokatContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AndrokatContext).Assembly);
 	}
 }

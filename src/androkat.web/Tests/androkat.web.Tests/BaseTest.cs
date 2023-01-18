@@ -19,9 +19,9 @@ namespace androkat.web.Tests;
 
 public class BaseTest
 {
-    public static (PageContext pageContext, TempDataDictionary tempData, ActionContext actionContext) GetPreStuff()
+    public static (PageContext pageContext, TempDataDictionary tempData, ActionContext actionContext) GetPreStuff(HttpContext context = null)
     {
-        var httpContext = new DefaultHttpContext();
+        var httpContext = context ?? new DefaultHttpContext();
         var modelState = new ModelStateDictionary();
         var actionContext = new ActionContext(httpContext, new RouteData(), new PageActionDescriptor(), modelState);
         var modelMetadataProvider = new EmptyModelMetadataProvider();

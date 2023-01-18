@@ -8,5 +8,6 @@ public class ContentMetaDataModel
     public string TipusNev { get; set; }
     public string Forras { get; set; }
     public string Link { get; set; }
+    public string Segedlink { get; set; }
     public string Image { get; set; }
 }

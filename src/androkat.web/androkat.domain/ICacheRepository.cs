@@ -12,7 +12,7 @@ public interface ICacheRepository
 	IReadOnlyCollection<ContentDetailsModel> GetHirekBlogokToCache();
 	IReadOnlyCollection<ImaModel> GetImaToCache();
 	IReadOnlyCollection<ContentDetailsModel> GetBooksToCache();
-	//IReadOnlyCollection<RadioMusorModel> GetRadioToCache();
+	IReadOnlyCollection<RadioMusorModel> GetRadioToCache();
 	IReadOnlyCollection<SystemInfoModel> GetSystemInfoToCache();
 	IReadOnlyCollection<VideoModel> GetVideoToCache();
 	IReadOnlyCollection<VideoSourceModel> GetVideoSourceToCache();

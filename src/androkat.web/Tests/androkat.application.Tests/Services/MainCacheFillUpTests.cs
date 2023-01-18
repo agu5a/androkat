@@ -34,7 +34,7 @@ public class MainCacheFillUpTests : BaseTest
             var entity = new Content
             {
                 Tipus = 15,
-                //FileUrl = string.Empty,
+                FileUrl = string.Empty,
                 Fulldatum = DateTimeOffset.Parse("2011-12-03T03:05:06").DateTime.ToString("yyyy-MM-dd"),
                 Inserted = DateTimeOffset.Parse("2011-12-03T03:05:06").DateTime
             };
@@ -43,7 +43,7 @@ public class MainCacheFillUpTests : BaseTest
             var entity2 = new Content
             {
                 Tipus = 15,
-                //FileUrl = string.Empty,
+                FileUrl = string.Empty,
                 Fulldatum = DateTimeOffset.Parse("2011-12-04T03:05:06").DateTime.ToString("yyyy-MM-dd"),
                 Inserted = DateTimeOffset.Parse("2011-12-04T03:05:06").DateTime
             };
@@ -82,7 +82,7 @@ public class MainCacheFillUpTests : BaseTest
             var entity = new Content
             {
                 Tipus = 60,
-                //FileUrl = string.Empty,
+                FileUrl = string.Empty,
                 Fulldatum = DateTimeOffset.Parse("2012-02-03T03:05:06").DateTime.ToString("yyyy-MM-dd")
             };
             context.Content.Add(entity);
@@ -134,7 +134,7 @@ public class MainCacheFillUpTests : BaseTest
             var entity = new Content
             {
                 Tipus = 60,
-                //FileUrl = string.Empty,
+                FileUrl = string.Empty,
                 Fulldatum = DateTimeOffset.Parse("2012-02-01T03:05:06").DateTime.ToString("yyyy-MM-dd")
             };
             context.Content.Add(entity);
@@ -172,7 +172,7 @@ public class MainCacheFillUpTests : BaseTest
                 Nid = Guid.NewGuid(),
                 Tipus = tipus,
                 Fulldatum = datumInDb,
-                //FileUrl = string.Empty,
+                FileUrl = string.Empty,
                 Inserted = DateTimeOffset.Parse(insertedInDb).DateTime
             };
             context.Content.Add(entity);
@@ -209,7 +209,7 @@ public class MainCacheFillUpTests : BaseTest
                 Nid = Guid.NewGuid(),
                 Tipus = 11,
                 Fulldatum = "2012-02-01",
-                //FileUrl = string.Empty,
+                FileUrl = string.Empty,
                 Inserted = DateTimeOffset.Parse("2012-01-03T03:05:06").DateTime
             };
             context.Content.Add(entity);
@@ -222,7 +222,7 @@ public class MainCacheFillUpTests : BaseTest
                     Nid = Guid.NewGuid(),
                     Tipus = 11,
                     Fulldatum = "2012-02-02",
-                    //FileUrl = string.Empty,
+                    FileUrl = string.Empty,
                     Inserted = DateTimeOffset.Parse("2012-01-03T03:05:06").DateTime
                 };
                 context.Content.Add(entity2);

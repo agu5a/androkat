@@ -73,7 +73,7 @@ public class CacheService : ICacheService
             return new BookRadioSysCache
             {
                 Books = _cacheRepository.GetBooksToCache().ToList(),
-                //RadioMusor = _cacheRepository.GetRadioToCache().ToList(),
+                RadioMusor = _cacheRepository.GetRadioToCache().ToList(),
                 SystemData = _cacheRepository.GetSystemInfoToCache().ToList(),
                 Inserted = _clock.Now.DateTime
             };
@@ -86,7 +86,7 @@ public class CacheService : ICacheService
         return new BookRadioSysCache
         {
             Books = new List<ContentDetailsModel>(),
-            //RadioMusor = new List<RadioMusorModel>(),
+            RadioMusor = new List<RadioMusorModel>(),
             SystemData = new List<SystemInfoModel>(),
             Inserted = _clock.Now.DateTime
         };

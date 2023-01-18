@@ -424,7 +424,7 @@ public class ContentServiceTests : BaseTest
 			Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03",
 			Inserted = DateTime.Parse(DateTime.Now.ToString("yyyy") + "-02-03"),
 			Idezet = "Idézet",
-			//KulsoLink = "KulsoLink"
+			KulsoLink = "KulsoLink"
 		};
 
 		context.Content.Add(content);
@@ -438,7 +438,7 @@ public class ContentServiceTests : BaseTest
 
 		result[0].ContentDetails.Cim.Should().Be("Hír cím");
 		result[0].ContentDetails.Idezet.Should().Be("Idézet");
-		//result[0].ContentDetails.KulsoLink.Should().Be("KulsoLink");
+		result[0].ContentDetails.KulsoLink.Should().Be("KulsoLink");
 		result.Count.Should().Be(1);
 	}
 

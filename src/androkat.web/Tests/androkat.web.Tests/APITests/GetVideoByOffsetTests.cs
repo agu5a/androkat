@@ -1,5 +1,6 @@
 ﻿using androkat.application.Interfaces;
 using androkat.application.Service;
+using androkat.domain.Enum;
 using androkat.domain.Model;
 using androkat.domain.Model.ContentCache;
 using androkat.domain.Model.WebResponse;
@@ -25,6 +26,37 @@ public class GetVideoByOffsetTests : BaseTest
         dynamic s = resV1.Result;
         string result = s.Value;
         result.Should().Be("Hiba");
+    }
+
+    [Test]
+    public void API_GetVideoByOffset_NoCache_V1()
+    {
+        var clock = new Mock<IClock>();
+        clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse("2012-02-03T04:05:06"));
+
+        var cacheService = new Mock<ICacheService>();
+        cacheService.Setup(s => s.VideoCacheFillUp()).Returns((new VideoCache
+        {
+            Video = new List<VideoModel>
+            {
+                new VideoModel(Guid.NewGuid(), "img", "vlink", "cim", DateTime.Now.ToString("yyyy-MM-dd"), "forras", "cId", DateTime.Now)
+            },
+            Inserted = DateTime.Now
+        }));
+
+        var service = new ApiService(cacheService.Object, GetIMemoryCache(), clock.Object);
+
+        var apiV1 = new data.Controllers.Api(service);
+        ActionResult<List<VideoResponse>> resV1 = apiV1.GetVideoByOffset(0);
+        dynamic sV1 = resV1.Result;
+
+        var videoResponse = ((IReadOnlyCollection<VideoResponse>)sV1.Value).First();
+        Assert.That(videoResponse.Cim, Is.EqualTo("cim"));
+        Assert.That(videoResponse.VideoLink, Is.EqualTo("vlink"));
+        Assert.That(videoResponse.Img, Is.EqualTo("img"));
+        Assert.That(videoResponse.Forras, Is.EqualTo("forras"));
+        Assert.That(videoResponse.ChannelId, Is.EqualTo("cId"));
+        Assert.That(videoResponse.ChannelId, Is.EqualTo("cId"));
     }
 
     [Test]

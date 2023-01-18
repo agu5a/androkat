@@ -36,13 +36,13 @@ public class ErrorModel : PageModel
             var exceptionHandlerPathFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
 
             if (exceptionHandlerPathFeature?.Error is FileNotFoundException)
-                exceptionMessage = "The file was not found.";
+                exceptionMessage = $"The file was not found.";
 
             if (!string.IsNullOrWhiteSpace(exceptionHandlerPathFeature?.Path))
                 exceptionMessage += $" {exceptionHandlerPathFeature?.Path}";
 
             if (!string.IsNullOrWhiteSpace(exceptionMessage))
-                _logger.LogError("Error: {exceptionMessage}", exceptionMessage);
+                _logger.LogError("Error: {exceptionMessage} RequestId: {requestId}", exceptionMessage, requestId ?? string.Empty);
         }
         catch (Exception ex)
         {
@@ -54,13 +54,13 @@ public class ErrorModel : PageModel
     {
         try
         {
-            var iStatusCodeReExecuteFeature = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
+            var statusCodeReExecuteFeature = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
 
-            if (statusCode != 404 && !string.IsNullOrWhiteSpace(iStatusCodeReExecuteFeature?.OriginalPath) && !iStatusCodeReExecuteFeature.OriginalPath.Contains("/sys/"))
+            if (statusCode != 404 && !string.IsNullOrWhiteSpace(statusCodeReExecuteFeature?.OriginalPath) && !statusCodeReExecuteFeature.OriginalPath.Contains("/sys/"))
             {
                 var httpRequestFeature = HttpContext.Features.Get<IHttpRequestFeature>();
                 _logger.LogError("Error - Path: {OriginalPath}, Query: {OriginalQueryString}, Code: {statusCode}, Method: {Method}, Scheme: {Scheme}, Protocol: {Protocol}",
-                    iStatusCodeReExecuteFeature.OriginalPath, iStatusCodeReExecuteFeature.OriginalQueryString, statusCode, httpRequestFeature.Method,
+                    statusCodeReExecuteFeature.OriginalPath, statusCodeReExecuteFeature.OriginalQueryString, statusCode, httpRequestFeature.Method,
                     httpRequestFeature.Scheme, httpRequestFeature.Protocol);
             }
         }
