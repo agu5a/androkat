@@ -2,7 +2,7 @@
 
 namespace androkat.domain.Model.WebResponse;
 
-public class RadioMusor
+public class RadioMusorResponse
 {
     [JsonPropertyName("musor")]
     public string Musor { get; set; }

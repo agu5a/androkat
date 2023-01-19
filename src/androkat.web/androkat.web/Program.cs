@@ -51,6 +51,13 @@ try
     builder.Services.AddSingleton<IContentMetaDataService, ContentMetaDataService>();
     //builder.Services.SetAuthentication(builder.Configuration);
 
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("CorsPolicy", builder =>
+        {
+            builder.WithOrigins("https://androkat.hu").AllowAnyHeader().AllowAnyMethod();
+        });
+    });
     builder.Services.AddControllers()
         .AddRazorRuntimeCompilation().AddJsonOptions(options =>
         {
@@ -103,6 +110,7 @@ try
 
     app.UseAuthentication();
     app.UseAuthorization();
+    app.UseCors("CorsPolicy");
     app.MapControllerRoute(name: "default", pattern: "{controller}/{action=Index}");
     app.MapRazorPages();
     app.UseFastEndpoints();

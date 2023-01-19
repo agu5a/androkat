@@ -45,7 +45,7 @@ public class GetVideoByOffsetTests : BaseTest
             Inserted = DateTime.Now
         }));
 
-        var service = new ApiService(cacheService.Object, GetIMemoryCache(), clock.Object);
+        var service = new ApiService(cacheService.Object, GetIMemoryCache(), clock.Object, null);
 
         var apiV1 = new data.Controllers.Api(service);
         ActionResult<List<VideoResponse>> resV1 = apiV1.GetVideoByOffset(0);
@@ -70,7 +70,7 @@ public class GetVideoByOffsetTests : BaseTest
         var cache = GetIMemoryCache();
         _ = cache.Set("VideoResponseCacheKey_0", result);
 
-        var service = new ApiService(null, cache, clock.Object);
+        var service = new ApiService(null, cache, clock.Object, null);
 
         var apiV1 = new data.Controllers.Api(service);
         ActionResult<List<VideoResponse>> resV1 = apiV1.GetVideoByOffset(0);
@@ -89,7 +89,7 @@ public class GetVideoByOffsetTests : BaseTest
         var cache = GetIMemoryCache();
         _ = cache.Set(CacheKey.VideoCacheKey.ToString(), result);
 
-        var service = new ApiService(null, cache, clock.Object);
+        var service = new ApiService(null, cache, clock.Object, null);
 
         var apiV1 = new data.Controllers.Api(service);
         ActionResult<List<VideoResponse>> resV1 = apiV1.GetVideoByOffset(0);

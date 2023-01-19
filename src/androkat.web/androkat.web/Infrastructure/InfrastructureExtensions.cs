@@ -94,8 +94,8 @@ public static class InfrastructureExtensions
         })
         .AddCookie().AddGoogle(googleOptions =>
         {
-            googleOptions.ClientId = configurationManager["GoogleClientId"]; ;
-            googleOptions.ClientSecret = configurationManager["GoogleClientSecret"]; ;
+            googleOptions.ClientId = configurationManager["GoogleClientId"];
+            googleOptions.ClientSecret = configurationManager["GoogleClientSecret"];
         });
 
         return services;

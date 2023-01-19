@@ -1,8 +1,10 @@
 ﻿using androkat.application.Interfaces;
+using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.domain.Model;
 using androkat.domain.Model.ContentCache;
 using androkat.domain.Model.WebResponse;
+using AutoMapper;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
@@ -16,12 +18,14 @@ public class ApiService : IApiService
     private readonly IMemoryCache _memoryCache;
     private readonly IClock _iClock;
     private readonly ICacheService _cacheService;
+    private readonly IMapper _mapper;
 
-    public ApiService(ICacheService cacheService, IMemoryCache memoryCache, IClock iClock)
+    public ApiService(ICacheService cacheService, IMemoryCache memoryCache, IClock iClock, IMapper mapper)
     {
         _memoryCache = memoryCache;
         _iClock = iClock;
         _cacheService = cacheService;
+        _mapper = mapper;
     }
 
     public IReadOnlyCollection<VideoResponse> GetVideoByOffset(int offset)

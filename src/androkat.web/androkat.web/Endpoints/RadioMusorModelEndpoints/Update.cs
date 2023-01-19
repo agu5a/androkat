@@ -31,7 +31,6 @@ public class Update : Endpoint<RadioMusorModelRequest, RadioMusorModelResponse>
 
 	public override async Task HandleAsync(RadioMusorModelRequest request, CancellationToken ct)
 	{
-		ArgumentNullException.ThrowIfNull(request);
 		await UpdateRadioMusor(request, ct);
 	}
 

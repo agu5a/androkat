@@ -26,7 +26,8 @@ public class UpdateRadioMusorModelTests : IClassFixture<CustomWebApplicationFact
 		var content = new StringContent(JsonSerializer.Serialize(new RadioMusorModelRequest
 		{
 			Source = "Source1",
-			Musor = "Műsor2"
+            Musor = "Műsor2",
+            Inserted = "2022-12-12"
 		}),
 		Encoding.UTF8, "application/json");
 
@@ -41,7 +42,8 @@ public class UpdateRadioMusorModelTests : IClassFixture<CustomWebApplicationFact
 		var content = new StringContent(JsonSerializer.Serialize(new RadioMusorModelRequest
 		{
 			Source = "Source2",
-			Musor = "Műsor2"
+            Musor = "Műsor2",
+            Inserted = "2022-12-12"
 		}),
 		Encoding.UTF8, "application/json");
 
