@@ -38,8 +38,8 @@ public class VideoCacheFillUpTests : BaseTest
 		var res = cacheService.VideoCacheFillUp();
 
 		Assert.That(res.Video.Count(), Is.EqualTo(2));
-		res.Video[0].VideoLink.Should().NotContain("embed");
-		res.Video[1].VideoLink.Should().NotContain("embed");
+		res.Video.ElementAt(0).VideoLink.Should().NotContain("embed");
+		res.Video.ElementAt(1).VideoLink.Should().NotContain("embed");
 		Assert.That(res.Inserted.ToString("yyyy-MM-dd"), Is.EqualTo("2012-01-03"));
 	}
 

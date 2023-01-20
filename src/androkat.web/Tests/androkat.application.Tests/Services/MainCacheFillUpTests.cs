@@ -1,11 +1,13 @@
 using androkat.application.Interfaces;
 using androkat.application.Service;
+using androkat.domain;
 using androkat.domain.Configuration;
 using androkat.domain.Model;
 using androkat.infrastructure.DataManager;
 using androkat.infrastructure.Mapper;
 using androkat.infrastructure.Model.SQLite;
 using AutoMapper;
+using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -18,6 +20,62 @@ namespace androkat.application.Tests.Services;
 
 public class MainCacheFillUpTests : BaseTest
 {
+    [Test]
+    public void MainCacheFillUp_GetHirekBlogokToCache_Happy_test()
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var clock = new Mock<IClock>();
+        clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse("2012-01-03T04:05:06"));
+
+        var cacheRepository = new Mock<ICacheRepository>();
+        cacheRepository.Setup(s => s.GetHirekBlogokToCache()).Returns(new List<ContentDetailsModel>
+        {
+            new ContentDetailsModel()
+        });
+        cacheRepository.Setup(s => s.GetHumorToCache()).Returns(new List<ContentDetailsModel>
+        {
+            new ContentDetailsModel()
+        });
+        cacheRepository.Setup(s => s.GetMaiSzentToCache()).Returns(new List<ContentDetailsModel>
+        {
+            new ContentDetailsModel()
+        });
+        cacheRepository.Setup(s => s.GetNapiFixToCache()).Returns(new List<ContentDetailsModel>
+        {
+            new ContentDetailsModel()
+        });
+        cacheRepository.Setup(s => s.GetContentDetailsModelToCache()).Returns(new List<ContentDetailsModel>
+        {
+            new ContentDetailsModel()
+        });
+
+        var cacheService = new CacheService(cacheRepository.Object, new Mock<ILogger<CacheService>>().Object, clock.Object);
+        var res = cacheService.MainCacheFillUp();
+
+        Assert.That(res.Egyeb.Count(), Is.EqualTo(1));
+        Assert.That(res.Inserted.ToString("yyyy-MM-dd"), Is.EqualTo("2012-01-03"));
+    }
+
+    [Test]
+    public void MainCacheFillUp_GetHirekBlogokToCache_Throws_Exception()
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var clock = new Mock<IClock>();
+        clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse("2012-01-03T04:05:06"));
+
+        var cacheRepository = new Mock<ICacheRepository>();
+        cacheRepository.Setup(s => s.GetHirekBlogokToCache()).Throws<Exception>();
+
+        var cacheService = new CacheService(cacheRepository.Object, new Mock<ILogger<CacheService>>().Object, clock.Object);
+
+        Action act = () => cacheService.MainCacheFillUp();
+        act.Should().NotThrow<Exception>();
+    }
+
     [Test]
     public void MainCacheFillUpNapiutravaloWeboldalTest()
     {

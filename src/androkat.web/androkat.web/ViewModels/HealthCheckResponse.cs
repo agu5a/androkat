@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace androkat.web.Core;
+namespace androkat.web.ViewModels;
 
 public class HealthCheckResponse
 {

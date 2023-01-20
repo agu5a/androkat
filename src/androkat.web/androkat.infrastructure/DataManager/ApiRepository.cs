@@ -22,7 +22,7 @@ public class ApiRepository : BaseRepository, IApiRepository
 	public bool UpdateRadioMusor(RadioMusorModel radioMusorModel)
 	{
 		var old = _ctx.RadioMusor.FirstOrDefault(w => w.Source == radioMusorModel.Source);
-		if (old != null)
+        if (old is not null)
 		{
 			old.Inserted = radioMusorModel.Inserted;
 			old.Musor = radioMusorModel.Musor;
@@ -37,7 +37,7 @@ public class ApiRepository : BaseRepository, IApiRepository
 	{
 		var exist = _ctx.Content.FirstOrDefault(w => w.Tipus == contentDetailsModel.Tipus
 		&& (w.Cim.Contains(contentDetailsModel.Cim) || w.Nid == contentDetailsModel.Nid));
-		if (exist != null)
+        if (exist is not null)
 			return false;
 
 		_ctx.Content.Add(_mapper.Map<Content>(contentDetailsModel));

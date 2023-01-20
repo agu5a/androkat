@@ -5,6 +5,6 @@ namespace androkat.domain.Model.ContentCache;
 
 public class ImaCache
 {
-	public List<ImaModel> Imak { get; set; }
-	public DateTime Inserted { get; set; }
+    public IReadOnlyCollection<ImaModel> Imak { get; set; }
+    public DateTime Inserted { get; set; }
 }

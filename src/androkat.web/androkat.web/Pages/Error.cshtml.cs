@@ -17,7 +17,7 @@ public class ErrorModel : PageModel
 
     public void OnGet(int? statusCode)
     {
-        if (statusCode != null && statusCode != 0)
+        if (statusCode is not null && statusCode != 0)
         {
             HandleStatusCodeCase(statusCode);
             return;

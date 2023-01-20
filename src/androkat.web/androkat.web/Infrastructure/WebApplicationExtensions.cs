@@ -34,7 +34,11 @@ public static class WebApplicationExtensions
         app.UseProxy();
         app.SetHealthCheckEndpoint();
 
-        app.UseHttpsRedirection();
+        //rádió oldalon keveredik az http és https rádió url-ek.
+        //a webböngészők egy https oldalon, mint a https://androkat.hu letiltják a külsős http tartalmakat, mint pl egy rádió stream url-je
+        app.UseWhen(
+            context => !context.Request.Path.StartsWithSegments("/radio"), 
+            builder => builder.UseHttpsRedirection());        
 
         var provider = new FileExtensionContentTypeProvider();
         provider.Mappings[".epub"] = "application/epub+zip";

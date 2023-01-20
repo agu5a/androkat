@@ -8,31 +8,31 @@ namespace androkat.application.Service;
 
 public class WarmupService : IWarmupService
 {
-	private readonly IMemoryCache _memoryCache;
-	private readonly ILogger<WarmupService> _logger;
-	private readonly ICacheService _cacheService;
+    private readonly IMemoryCache _memoryCache;
+    private readonly ILogger<WarmupService> _logger;
+    private readonly ICacheService _cacheService;
 
-	public WarmupService(IMemoryCache memoryCache, ICacheService cacheService, ILogger<WarmupService> logger)
-	{
-		_memoryCache = memoryCache;
-		_logger = logger;
-		_cacheService = cacheService;
-	}
+    public WarmupService(IMemoryCache memoryCache, ICacheService cacheService, ILogger<WarmupService> logger)
+    {
+        _memoryCache = memoryCache;
+        _logger = logger;
+        _cacheService = cacheService;
+    }
 
-	public void MainCacheFillUp()
-	{
-		try
-		{
+    public void MainCacheFillUp()
+    {
+        try
+        {
 			_memoryCache.Set(CacheKey.MainCacheKey.ToString(), _cacheService.MainCacheFillUp(),
 				new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
 			_logger.LogInformation("{name} was called", nameof(MainCacheFillUp));
 
-		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Exception: {name}", nameof(MainCacheFillUp));
-		}
-	}
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: {name}", nameof(MainCacheFillUp));
+        }
+    }
 
     public void BookRadioSysCache()
     {
@@ -48,45 +48,31 @@ public class WarmupService : IWarmupService
         }
     }
 
-    public void EgyebCacheFillUp()
+    public void ImaCacheFillUp()
     {
         try
         {
-            var result = _cacheService.EgyebCacheFillUp();
-            _memoryCache.Set(CacheKey.EgyebCacheKey.ToString(), result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
-            _logger.LogInformation("Warmup.EgyebCacheFillUp was called");
+            _memoryCache.Set(CacheKey.ImaCacheKey.ToString(), _cacheService.ImaCacheFillUp(),
+				new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(1)));
+			_logger.LogInformation("{name} was called", nameof(ImaCacheFillUp));
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception: Warmup.EgyebCacheFillUp");
+           _logger.LogError(ex, "Exception: {name}", nameof(ImaCacheFillUp));
         }
     }
 
-	public void ImaCacheFillUp()
-	{
-		try
-		{
-			_memoryCache.Set(CacheKey.ImaCacheKey.ToString(), _cacheService.ImaCacheFillUp(),
-				new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(1)));
-			_logger.LogInformation("{name} was called", nameof(ImaCacheFillUp));
-		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Exception: {name}", nameof(ImaCacheFillUp));
-		}
-	}
-
-	public void VideoCacheFillUp()
-	{
-		try
-		{
-			var result = _cacheService.VideoCacheFillUp();
-			_memoryCache.Set(CacheKey.VideoCacheKey.ToString(), result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
+    public void VideoCacheFillUp()
+    {
+        try
+        {
+            var result = _cacheService.VideoCacheFillUp();
+            _memoryCache.Set(CacheKey.VideoCacheKey.ToString(), result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
 			_logger.LogInformation("{name} was called", nameof(VideoCacheFillUp));
-		}
-		catch (Exception ex)
-		{
+        }
+        catch (Exception ex)
+        {
 			_logger.LogError(ex, "Exception: {name}", nameof(VideoCacheFillUp));
-		}
-	}
+        }
+    }
 }

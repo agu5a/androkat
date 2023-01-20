@@ -3,8 +3,7 @@
 public interface IWarmupService
 {
     void BookRadioSysCache();
-    void EgyebCacheFillUp();
-	void ImaCacheFillUp();
-	void MainCacheFillUp();
-	void VideoCacheFillUp();
+    void ImaCacheFillUp();
+    void MainCacheFillUp();
+    void VideoCacheFillUp();
 }

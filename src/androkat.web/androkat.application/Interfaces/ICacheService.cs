@@ -5,7 +5,6 @@ namespace androkat.application.Interfaces;
 public interface ICacheService
 {
     BookRadioSysCache BookRadioSysCacheFillUp();
-    EgyebCache EgyebCacheFillUp();
     ImaCache ImaCacheFillUp();
     MainCache MainCacheFillUp();
     VideoCache VideoCacheFillUp();

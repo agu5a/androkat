@@ -5,7 +5,7 @@ namespace androkat.domain.Model.ContentCache;
 
 public class VideoCache
 {
-	public List<VideoSourceModel> VideoSource { get; set; }
-	public List<VideoModel> Video { get; set; }
-	public DateTime Inserted { get; set; }
+    public IReadOnlyCollection<VideoSourceModel> VideoSource { get; set; }
+    public IReadOnlyCollection<VideoModel> Video { get; set; }
+    public DateTime Inserted { get; set; }
 }

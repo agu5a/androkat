@@ -60,7 +60,7 @@ public class ApiService : IApiService
             return cached;
 
         var res = function();
-        if (res != null)
+        if (res is not null)
             _memoryCache.Set(key, res, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
 
         return res;

@@ -1,4 +1,4 @@
-﻿namespace androkat.web.Core;
+﻿namespace androkat.web.ViewModels;
 
 public class HealthCheck
 {

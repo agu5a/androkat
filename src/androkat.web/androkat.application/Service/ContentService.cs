@@ -89,7 +89,7 @@ public class ContentService : IContentService
 				}
 			});
 
-		return list;
+		return list.AsReadOnly();
 	}
 
 	public IReadOnlyCollection<AudioModel> GetAudio()
@@ -103,7 +103,7 @@ public class ContentService : IContentService
 		list.AddRange(GetAudioViewModel((int)Forras.audiohorvath).OrderByDescending(o => o.Inserted).Take(2));
 		list.AddRange(GetAudioViewModel((int)Forras.audiotaize));
 
-		return list;
+		return list.AsReadOnly();
 	}
 
 	public IReadOnlyCollection<VideoSourceModel> GetVideoSourcePage()
@@ -113,7 +113,7 @@ public class ContentService : IContentService
 		foreach (var item in result)
 			list.Add(new VideoSourceModel(item.ChannelId, item.ChannelName));
 
-		return list;
+		return list.AsReadOnly();
 	}
 
 	public IReadOnlyCollection<RadioModel> GetRadioPage()
@@ -121,13 +121,12 @@ public class ContentService : IContentService
 		var list = new List<RadioModel>();
 		list.AddRange(GetRadio().Select(item => new RadioModel(item.Key, item.Value)));
 
-		return list;
+		return list.AsReadOnly();
 	}
 
 	public IReadOnlyCollection<ContentModel> GetSzent()
 	{
-		var result = GetContentDetailsModel(new int[] { (int)Forras.maiszent });
-		return result;
+		return GetContentDetailsModel(new int[] { (int)Forras.maiszent });
 	}
 
 	public IReadOnlyCollection<ContentModel> GetHirek(int tipus)
@@ -143,7 +142,7 @@ public class ContentService : IContentService
 			});
 		}
 
-		return list;
+		return list.AsReadOnly();
 	}
 
 	public IReadOnlyCollection<ContentModel> GetBlog(int tipus)
@@ -158,7 +157,7 @@ public class ContentService : IContentService
 				MetaData = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus)
 			});
 		}
-		return list;
+		return list.AsReadOnly();
 	}
 
 	public IReadOnlyCollection<ContentModel> GetHumor()
@@ -169,13 +168,13 @@ public class ContentService : IContentService
 		foreach (var item in res.ContentDetailsModels.Where(w => w.Tipus == (int)Forras.humor))
 			list.Add(new ContentModel { ContentDetails = item, MetaData = _androkatConfiguration.Value.GetContentMetaDataModelByTipus((int)Forras.humor) });
 
-		return list;
+		return list.AsReadOnly();
 	}
 
 	public ContentModel GetContentDetailsModelByNid(Guid nid, int tipus)
 	{
 		var contentDetailsModel = GetMainCache().ContentDetailsModels.FirstOrDefault(w => w.Tipus == tipus && w.Nid == nid);
-		if (contentDetailsModel == null)
+		if (contentDetailsModel is null)
 			return default;
 
 		var data = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus);
@@ -196,7 +195,7 @@ public class ContentService : IContentService
 		foreach (var item in result)
 			list.Add(new ContentModel { ContentDetails = item, MetaData = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus) });
 
-		return list;
+		return list.AsReadOnly();
 	}
 
 	private IEnumerable<ContentDetailsModel> Get(int[] tipusok)
@@ -265,7 +264,7 @@ public class ContentService : IContentService
 				MetaDataModel = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus),
 				EncodedUrl = HttpUtility.UrlEncode(mp3),
 				ShareTitle = HttpUtility.UrlEncode(f.Cim),
-				Url = mp3                
+				Url = mp3
 			});
 		});
 
@@ -291,11 +290,11 @@ public class ContentService : IContentService
 		var res = GetCache<BookRadioSysCache>(CacheKey.BookRadioSysCacheKey.ToString(), () => { return _cacheService.BookRadioSysCacheFillUp(); });
 
 		var ra = res.SystemData.FirstOrDefault(w => w.Key == "radio");
-		if (ra == null)
+		if (ra is null)
 			return new Dictionary<string, string>();
 
 		var dic = JsonSerializer.Deserialize<Dictionary<string, string>>(ra.Value);
-		if (dic == null)
+		if (dic is null)
 			return new Dictionary<string, string>();
 
 		return dic;
@@ -320,13 +319,13 @@ public class ContentService : IContentService
 
 	private IEnumerable<ContentDetailsModel> GetNewsByCategory(int tipus)
 	{
-		var res = GetCache<EgyebCache>(CacheKey.EgyebCacheKey.ToString(), () => { return _cacheService.EgyebCacheFillUp(); });
+		var res = GetCache<MainCache>(CacheKey.MainCacheKey.ToString(), () => { return _cacheService.MainCacheFillUp(); });
 
 		List<ContentDetailsModel> list;
 		if (tipus > 0)
-			{
+		{
 			list = res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).ToList();
-			}
+		}
 		else
 			list = res.Egyeb.Where(w => w.Tipus == (int)Forras.bonumtv || w.Tipus == (int)Forras.kurir || w.Tipus == (int)Forras.keresztenyelet).OrderByDescending(o => o.Fulldatum).ToList();
 
@@ -335,13 +334,13 @@ public class ContentService : IContentService
 
 	private IEnumerable<ContentDetailsModel> GetBlogByCategory(int tipus)
 	{
-		var res = GetCache<EgyebCache>(CacheKey.EgyebCacheKey.ToString(), () => { return _cacheService.EgyebCacheFillUp(); });
+		var res = GetCache<MainCache>(CacheKey.MainCacheKey.ToString(), () => { return _cacheService.MainCacheFillUp(); });
 
 		List<ContentDetailsModel> list;
 		if (tipus > 0)
-			{
+		{
 			list = res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).ToList();
-			}
+		}
 		else
 			list = res.Egyeb.Where(w => w.Tipus == (int)Forras.b777 || w.Tipus == (int)Forras.bkatolikusma || w.Tipus == (int)Forras.jezsuitablog).OrderByDescending(o => o.Fulldatum).ToList();
 
@@ -354,7 +353,7 @@ public class ContentService : IContentService
 			return cached;
 
 		var res = function();
-		if (res != null)
+		if (res is not null)
 			_memoryCache.Set(key, res, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
 
 		return res;

@@ -5,8 +5,8 @@ namespace androkat.domain.Model.ContentCache;
 
 public class BookRadioSysCache
 {
-    public List<ContentDetailsModel> Books { get; set; }
-    public List<SystemInfoModel> SystemData { get; set; }
-    public List<RadioMusorModel> RadioMusor { get; set; }
+    public IReadOnlyCollection<ContentDetailsModel> Books { get; set; }
+    public IReadOnlyCollection<SystemInfoModel> SystemData { get; set; }
+    public IReadOnlyCollection<RadioMusorModel> RadioMusor { get; set; }
     public DateTime Inserted { get; set; }
 }

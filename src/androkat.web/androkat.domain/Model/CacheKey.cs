@@ -4,7 +4,6 @@ public enum CacheKey
 {
 	MainCacheKey,
 BookRadioSysCacheKey,
-    EgyebCacheKey,
 	ImaCacheKey,
 	VideoCacheKey,
 VideoResponseCacheKey

@@ -5,16 +5,18 @@ using androkat.domain.Model.ContentCache;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace androkat.application.Service;
 
-public class CacheService : ICacheService
+public partial class CacheService : ICacheService
 {
     private readonly ICacheRepository _cacheRepository;
     private readonly ILogger<CacheService> _logger;
     protected readonly IClock _clock;
+
+    [GeneratedRegex("https:\\/\\/www.youtube.com\\/embed\\/([A-Za-z0-9-_]*)", RegexOptions.IgnoreCase, "en-US")]
+    private static partial Regex YoutubeRegex();
 
     public CacheService(ICacheRepository cacheRepository, ILogger<CacheService> logger, IClock clock)
     {
@@ -26,6 +28,7 @@ public class CacheService : ICacheService
     public VideoCache VideoCacheFillUp()
     {
         _logger.LogInformation("{name} was called", nameof(VideoCacheFillUp));
+
         try
         {
             var res = _cacheRepository.GetVideoSourceToCache();
@@ -38,7 +41,7 @@ public class CacheService : ICacheService
 
                 if (link.Contains("embed"))
                 {
-                    Match match = Regex.Match(item.VideoLink, @"https:\/\/www.youtube.com\/embed\/([A-Za-z0-9-_]*)", RegexOptions.IgnoreCase);
+                    var match = YoutubeRegex().Match(item.VideoLink);
                     if (match.Success)
                         link = "https://www.youtube.com/watch?v=" + match.Groups[1].Value;
                 }
@@ -47,8 +50,8 @@ public class CacheService : ICacheService
 
             return new VideoCache
             {
-                VideoSource = res.ToList(),
-                Video = videoModel,
+                VideoSource = res,
+                Video = videoModel.AsReadOnly(),
                 Inserted = _clock.Now.DateTime
             };
         }
@@ -68,13 +71,14 @@ public class CacheService : ICacheService
     public BookRadioSysCache BookRadioSysCacheFillUp()
     {
         _logger.LogInformation("{name} was called", nameof(BookRadioSysCacheFillUp));
+
         try
         {
             return new BookRadioSysCache
             {
-                Books = _cacheRepository.GetBooksToCache().ToList(),
-                RadioMusor = _cacheRepository.GetRadioToCache().ToList(),
-                SystemData = _cacheRepository.GetSystemInfoToCache().ToList(),
+                Books = _cacheRepository.GetBooksToCache(),
+                RadioMusor = _cacheRepository.GetRadioToCache(),
+                SystemData = _cacheRepository.GetSystemInfoToCache(),
                 Inserted = _clock.Now.DateTime
             };
         }
@@ -95,11 +99,12 @@ public class CacheService : ICacheService
     public ImaCache ImaCacheFillUp()
     {
         _logger.LogInformation("{name} was called", nameof(ImaCacheFillUp));
+
         try
         {
             return new ImaCache
             {
-                Imak = _cacheRepository.GetImaToCache().ToList(),
+                Imak = _cacheRepository.GetImaToCache(),
                 Inserted = _clock.Now.DateTime
             };
         }
@@ -115,43 +120,22 @@ public class CacheService : ICacheService
         };
     }
 
-    public EgyebCache EgyebCacheFillUp()
-    {
-        _logger.LogInformation("{name} was called", nameof(EgyebCacheFillUp));
-        try
-        {
-            return new EgyebCache
-            {
-                Egyeb = _cacheRepository.GetHirekBlogokToCache().ToList(),
-                Inserted = _clock.Now.DateTime
-            };
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Exception: {name}", nameof(EgyebCacheFillUp));
-        }
-
-        return new EgyebCache
-        {
-            Egyeb = new List<ContentDetailsModel>(),
-            Inserted = _clock.Now.DateTime
-        };
-    }
-
     public MainCache MainCacheFillUp()
     {
         _logger.LogInformation("{name} was called", nameof(MainCacheFillUp));
+
         try
         {
             var result = new List<ContentDetailsModel>();
-            AddHumorToCache(result);
-            AddMaiSzentToCache(result);
-            AddNapiFixToCache(result);
+            result.AddRange(_cacheRepository.GetHumorToCache());
+            result.AddRange(_cacheRepository.GetMaiSzentToCache());
+            result.AddRange(_cacheRepository.GetNapiFixToCache());
             result.AddRange(_cacheRepository.GetContentDetailsModelToCache());
 
             return new MainCache
             {
                 ContentDetailsModels = result,
+                Egyeb = _cacheRepository.GetHirekBlogokToCache(),
                 Inserted = _clock.Now.DateTime
             };
         }
@@ -163,30 +147,8 @@ public class CacheService : ICacheService
         return new MainCache
         {
             ContentDetailsModels = new List<ContentDetailsModel>(),
+            Egyeb = new List<ContentDetailsModel>(),
             Inserted = _clock.Now.DateTime
         };
-    }
-
-    private void AddNapiFixToCache(List<ContentDetailsModel> result)
-    {
-        result.AddRange(_cacheRepository.GetNapiFixToCache());
-    }
-
-    private void AddHumorToCache(List<ContentDetailsModel> result)
-    {
-        var humor = _cacheRepository.GetHumorToCache();
-        foreach (var item in humor)
-        {
-            result.Add(item);
-        }
-    }
-
-    private void AddMaiSzentToCache(List<ContentDetailsModel> result)
-    {
-        var szent = _cacheRepository.GetMaiSzentToCache();
-        foreach (var item in szent)
-        {
-            result.Add(item);
-        }
     }
 }

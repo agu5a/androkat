@@ -41,7 +41,7 @@ public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStar
         builder.ConfigureServices(services =>
         {
             var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<AndrokatContext>));
-            if (descriptor != null)
+            if (descriptor is not null)
             {
                 services.Remove(descriptor);
             }

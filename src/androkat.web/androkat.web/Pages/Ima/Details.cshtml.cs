@@ -35,7 +35,7 @@ public class DetailsModel : PageModel
             return Redirect("/Error");
 
         var result = _contentService.GetImaById(guid);
-        if (result == null)
+        if (result is null)
             return Redirect("/Error");
 
         ImaCsoportok = new Dictionary<string, string> {{ "Alapimák", "11" }, {"Napi imák","9" }, {"Kérő és felajánló imák","12" },

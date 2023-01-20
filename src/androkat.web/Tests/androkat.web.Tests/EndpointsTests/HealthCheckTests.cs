@@ -1,11 +1,11 @@
-﻿using androkat.web.Core;
-using Ardalis.HttpClientTestExtensions;
+﻿using Ardalis.HttpClientTestExtensions;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
 using System.Linq;
+using androkat.web.ViewModels;
 
 namespace androkat.web.Tests.EndpointsTests;
 
