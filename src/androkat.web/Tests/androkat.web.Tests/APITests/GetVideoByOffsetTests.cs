@@ -45,9 +45,10 @@ public class GetVideoByOffsetTests : BaseTest
             Inserted = DateTime.Now
         }));
 
-        var service = new ApiService(cacheService.Object, GetIMemoryCache(), clock.Object, null);
+        var service = new ApiService(clock.Object, null);
+        var dec = new ApiServiceCacheDecorate(service, GetIMemoryCache(), cacheService.Object, null);
 
-        var apiV1 = new data.Controllers.Api(service);
+        var apiV1 = new data.Controllers.Api(dec);
         ActionResult<List<VideoResponse>> resV1 = apiV1.GetVideoByOffset(0);
         dynamic sV1 = resV1.Result;
 
@@ -70,9 +71,10 @@ public class GetVideoByOffsetTests : BaseTest
         var cache = GetIMemoryCache();
         _ = cache.Set("VideoResponseCacheKey_0", result);
 
-        var service = new ApiService(null, cache, clock.Object, null);
+        var service = new ApiService(clock.Object, null);
+        var dec = new ApiServiceCacheDecorate(service, cache, null, null);
 
-        var apiV1 = new data.Controllers.Api(service);
+        var apiV1 = new data.Controllers.Api(dec);
         ActionResult<List<VideoResponse>> resV1 = apiV1.GetVideoByOffset(0);
         dynamic sV1 = resV1.Result;
 
@@ -89,9 +91,10 @@ public class GetVideoByOffsetTests : BaseTest
         var cache = GetIMemoryCache();
         _ = cache.Set(CacheKey.VideoCacheKey.ToString(), result);
 
-        var service = new ApiService(null, cache, clock.Object, null);
+        var service = new ApiService(clock.Object, null);
+        var dec = new ApiServiceCacheDecorate(service, cache, null, null);
 
-        var apiV1 = new data.Controllers.Api(service);
+        var apiV1 = new data.Controllers.Api(dec);
         ActionResult<List<VideoResponse>> resV1 = apiV1.GetVideoByOffset(0);
         dynamic sV1 = resV1.Result;
 

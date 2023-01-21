@@ -26,7 +26,7 @@ public class Api : ControllerBase
         if (offset < 0 || offset > 50)
             return BadRequest("Hiba");
 
-        var result = _apiService.GetVideoByOffset(offset);
+        var result = _apiService.GetVideoByOffset(offset, default);
         return Ok(result);
     }
 }

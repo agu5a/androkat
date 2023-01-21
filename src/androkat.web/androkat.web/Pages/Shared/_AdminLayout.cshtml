@@ -1,0 +1,81 @@
+﻿<!doctype html>
+<html lang="hu">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="~/favicon.ico">
+    <title>Androkat Admin</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css?v=1" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
+    <link href="~/css/admin.css" rel="stylesheet">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
+    @RenderSection("meta_extra", false)
+</head>
+<body>
+    <div class="container">
+        <nav id="navbarAdmin" class="navbar navbar-expand-xl navbar-light bg-white">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarmain" aria-controls="navbarmain"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarmain">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/ad/index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/ad/puffer">Puffer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/ad/update">Update Content</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/ad/updatemaiszent">Update Mai Szent</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/ad/video">Videó</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/ad/ima">Ima</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/ad/updateima">Update Ima</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/ad/updateradio">Update Rádióműsor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/ad/cache">Cache</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/ad/upload">Upload</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/ad/users">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/ad/files">Files</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/ad/logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <main role="main">
+        @RenderBody()
+    </main>
+    <footer class="container">
+    </footer>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js?v=1"></script>
+    <script src="~/js/dynamic-menu.js?v=3"></script>
+    <script>
+        $('#navbarmain').dynamicMenu({ homePage: '/ad/index' });
+    </script>
+    @RenderSection("scripts", false)
+</body>
+</html>

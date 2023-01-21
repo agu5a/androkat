@@ -1,0 +1,45 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Routing;
+using Moq;
+using NUnit.Framework;
+
+namespace UnitTest.Pages;
+
+public class GyonasPageModelsTests
+{
+    [Test]
+    public void ImaModelTest()
+    {
+        var (pageContext, tempData, actionContext) = GetPreStuff();
+
+        var model = new androkat.web.Pages.Gyonas.ImaModel()
+        {
+            PageContext = pageContext,
+            TempData = tempData,
+            Url = new UrlHelper(actionContext)
+        };
+
+        //model.OnGet();       
+    }
+
+    private (PageContext pageContext, TempDataDictionary tempData, ActionContext actionContext) GetPreStuff()
+    {
+        var httpContext = new DefaultHttpContext();
+        var modelState = new ModelStateDictionary();
+        var actionContext = new ActionContext(httpContext, new RouteData(), new PageActionDescriptor(), modelState);
+        var modelMetadataProvider = new EmptyModelMetadataProvider();
+        var viewData = new ViewDataDictionary(modelMetadataProvider, modelState);
+        var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
+        var pageContext = new PageContext(actionContext)
+        {
+            ViewData = viewData
+        };
+
+        return (pageContext, tempData, actionContext);
+    }
+}
