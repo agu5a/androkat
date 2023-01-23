@@ -200,50 +200,16 @@ public class ContentService : IContentService
 
 	private IEnumerable<ContentDetailsModel> Get(int[] tipusok)
 	{
-		var result = new List<ContentDetailsModel>();
-		foreach (var item in GetMainCache().ContentDetailsModels.Where(w => tipusok.Contains(w.Tipus)))
-		{
-			result.Add(item);
-		}
-
-		return result;
+		return GetMainCache().ContentDetailsModels.Where(w => tipusok.Contains(w.Tipus));
 	}
 
 	private static string GetAudio(string idezet)
 	{
-		var content = "";
-		var mp3 = GetMp3(idezet);
-
-		if (idezet.Contains("[["))
-		{
-			var pieces = idezet.Split(new[] { "[[" }, System.StringSplitOptions.RemoveEmptyEntries);
-			content += "<div>" + pieces[0] + "</div>";
-		}
-		else
-		{
-			content += "<div></div>";
-		}
-
+		var content = "<div></div>";
 		content += "<div style=\"margin: 15px 0 0 0;\"><strong>Hangállomány meghallgatása</strong></div>";
-		content += "<div style=\"margin: 0 0 15px 0;\"><audio controls><source src=\"" + mp3 + "\" type=\"audio/mpeg\">Your browser does not support the audio element.</audio></div>";
-		content += "<div style=\"margin: 0 0 15px 0;word-break: break-all;\"><strong>Vagy a letöltése</strong>: <a href=\"" + mp3 + "\">" + mp3 + "</a></div>";
+		content += "<div style=\"margin: 0 0 15px 0;\"><audio controls><source src=\"" + idezet + "\" type=\"audio/mpeg\">Your browser does not support the audio element.</audio></div>";
+		content += "<div style=\"margin: 0 0 15px 0;word-break: break-all;\"><strong>Vagy a letöltése</strong>: <a href=\"" + idezet + "\">" + idezet + "</a></div>";
 		return content;
-	}
-
-	private static string GetMp3(string idezet)
-	{
-		string mp3;
-		if (idezet.Contains("[["))
-		{
-			var pieces = idezet.Split(new[] { "[[" }, StringSplitOptions.RemoveEmptyEntries);
-			mp3 = pieces[1].Replace("]]", "");
-		}
-		else
-		{
-			mp3 = idezet;
-		}
-
-		return mp3;
 	}
 
 	private List<AudioModel> GetAudioViewModel(int tipus)
@@ -253,7 +219,7 @@ public class ContentService : IContentService
 
 		contents.ToList().ForEach(f =>
 		{
-			var mp3 = GetMp3(string.IsNullOrEmpty(f.FileUrl) ? f.Idezet : f.FileUrl);
+			var url = string.IsNullOrEmpty(f.FileUrl) ? f.Idezet : f.FileUrl;
 			var idezet = GetAudio(string.IsNullOrEmpty(f.FileUrl) ? f.Idezet : f.FileUrl);
 			list.Add(new AudioModel
 			{
@@ -262,9 +228,9 @@ public class ContentService : IContentService
 				Tipus = tipus,
 				Idezet = idezet,
 				MetaDataModel = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus),
-				EncodedUrl = HttpUtility.UrlEncode(mp3),
+				EncodedUrl = HttpUtility.UrlEncode(url),
 				ShareTitle = HttpUtility.UrlEncode(f.Cim),
-				Url = mp3
+				Url = url
 			});
 		});
 
@@ -275,14 +241,10 @@ public class ContentService : IContentService
 	{
 		var res = GetCache<ImaCache>(CacheKey.ImaCacheKey.ToString(), () => { return _cacheService.ImaCacheFillUp(); });
 
-		List<ImaModel> result;
-
 		if (!string.IsNullOrWhiteSpace(csoport))
-			result = res.Imak.Where(w => w.Csoport == csoport).OrderBy(o => o.Cim).ToList();
+			return res.Imak.Where(w => w.Csoport == csoport).OrderBy(o => o.Cim).ToList();
 		else
-			result = res.Imak.OrderBy(o => o.Cim).ToList();
-
-		return result;
+			return res.Imak.OrderBy(o => o.Cim).ToList();
 	}
 
 	private Dictionary<string, string> GetRadio()
@@ -302,49 +264,32 @@ public class ContentService : IContentService
 
 	private IEnumerable<VideoSourceModel> GetVideoSource()
 	{
-		var res = GetCache<VideoCache>(CacheKey.VideoCacheKey.ToString(), () => { return _cacheService.VideoCacheFillUp(); });
-		return res.VideoSource;
+		return GetCache<VideoCache>(CacheKey.VideoCacheKey.ToString(), () => { return _cacheService.VideoCacheFillUp(); }).VideoSource;
 	}
 
 	private MainCache GetMainCache()
 	{
-		var res = GetCache<MainCache>(CacheKey.MainCacheKey.ToString(), () => { return _cacheService.MainCacheFillUp(); });
-		var mainCache = new MainCache
-		{
-			ContentDetailsModels = res.ContentDetailsModels
-		};
-
-		return mainCache;
+		return GetCache<MainCache>(CacheKey.MainCacheKey.ToString(), () => { return _cacheService.MainCacheFillUp(); });
 	}
 
 	private IEnumerable<ContentDetailsModel> GetNewsByCategory(int tipus)
 	{
 		var res = GetCache<MainCache>(CacheKey.MainCacheKey.ToString(), () => { return _cacheService.MainCacheFillUp(); });
 
-		List<ContentDetailsModel> list;
 		if (tipus > 0)
-		{
-			list = res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).ToList();
-		}
-		else
-			list = res.Egyeb.Where(w => w.Tipus == (int)Forras.bonumtv || w.Tipus == (int)Forras.kurir || w.Tipus == (int)Forras.keresztenyelet).OrderByDescending(o => o.Fulldatum).ToList();
+            return res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).ToList();
 
-		return list;
+		return res.Egyeb.Where(w => w.Tipus == (int)Forras.bonumtv || w.Tipus == (int)Forras.kurir || w.Tipus == (int)Forras.keresztenyelet).OrderByDescending(o => o.Fulldatum).ToList();
 	}
 
 	private IEnumerable<ContentDetailsModel> GetBlogByCategory(int tipus)
 	{
 		var res = GetCache<MainCache>(CacheKey.MainCacheKey.ToString(), () => { return _cacheService.MainCacheFillUp(); });
 
-		List<ContentDetailsModel> list;
 		if (tipus > 0)
-		{
-			list = res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).ToList();
-		}
-		else
-			list = res.Egyeb.Where(w => w.Tipus == (int)Forras.b777 || w.Tipus == (int)Forras.bkatolikusma || w.Tipus == (int)Forras.jezsuitablog).OrderByDescending(o => o.Fulldatum).ToList();
+            return res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).ToList();
 
-		return list;
+        return res.Egyeb.Where(w => w.Tipus == (int)Forras.b777 || w.Tipus == (int)Forras.bkatolikusma || w.Tipus == (int)Forras.jezsuitablog).OrderByDescending(o => o.Fulldatum).ToList();
 	}
 
 	private C GetCache<C>(string key, Func<C> function)

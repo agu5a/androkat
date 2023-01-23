@@ -1,326 +1,252 @@
-﻿using androkat.application.Interfaces;
-using androkat.application.Service;
+﻿using androkat.application.Service;
+using androkat.application.Tests.Attributes;
 using androkat.domain.Enum;
-using androkat.domain.Model;
-using androkat.domain.Model.ContentCache;
 using androkat.infrastructure.DataManager;
 using androkat.infrastructure.Mapper;
 using androkat.infrastructure.Model.SQLite;
 using AutoFixture;
+using AutoFixture.Xunit2;
 using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
-using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using Xunit;
 
 namespace androkat.application.Tests.Services;
 
 public class ContentServiceTests : BaseTest
 {
-	[Test]
-	public void GetHome_Happy()
-	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
-
-		var loggerRepo = new Mock<ILogger<CacheRepository>>();
-
-		using var context = new AndrokatContext(GetDbContextOptions());
-
-		var guid = Guid.NewGuid();
-		var _fixture = new Fixture();
-        var content = _fixture.Create<Content>();
-		content.Cim = "Twitter cím";
-		content.Nid = guid;
-		content.Tipus = (int)Forras.papaitwitter;
-		content.Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03";
-
-		context.Content.Add(content);
-		context.SaveChanges();
-
-		var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
-		var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
-
-		var result = contentService.GetHome().ToList();
-
-		result[0].MetaData.Image.Should().Be("images/ferencpapa.png");
-		result[0].MetaData.TipusNev.Should().Be("Ferenc pápa twitter üzenete");
-		result[0].MetaData.TipusId.Should().Be(Forras.papaitwitter);
-		result[0].ContentDetails.Cim.Should().Be("Twitter cím");
-		result[0].ContentDetails.Tipus.Should().Be((int)Forras.papaitwitter);
-		result.Count.Should().Be(1);
-	}
-
-	[Test]
-	public void GetAjanlat_Happy()
-	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
-
-		var loggerRepo = new Mock<ILogger<CacheRepository>>();
-
-		using var context = new AndrokatContext(GetDbContextOptions());
-
-		var guid = Guid.NewGuid();
-		var _fixture = new Fixture();
-        var content = _fixture.Create<Content>();
-		content.Cim = "Ajánlat cím";
-		content.Nid = guid;
-		content.Tipus = (int)Forras.ajanlatweb;
-		content.Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03";
-
-		context.Content.Add(content);
-		context.SaveChanges();
-
-		var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
-		var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
-
-		var result = contentService.GetAjanlat().ToList();
-
-		result[0].MetaData.Image.Should().Be("images/gift.png");
-		result[0].MetaData.TipusNev.Should().Be("AJÁNDéKOZZ KÖNYVET");
-		result[0].MetaData.TipusId.Should().Be(Forras.ajanlatweb);
-		result[0].ContentDetails.Cim.Should().Be("Ajánlat cím");
-		result[0].ContentDetails.Tipus.Should().Be((int)Forras.ajanlatweb);
-		result.Count.Should().Be(1);
-	}
-
-	[Test]
-	public void GetAjanlat_Details_Happy()
-	{
-		var nid = Guid.NewGuid();
-		var tipus = (int)Forras.ajanlatweb;
-
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
-
-		var loggerRepo = new Mock<ILogger<CacheRepository>>();
-
-		using var context = new AndrokatContext(GetDbContextOptions());
-
-		var _fixture = new Fixture();
-        var content = _fixture.Create<Content>();
-		content.Cim = "Ajánlat cím";
-		content.Nid = nid;
-		content.Tipus = tipus;
-		content.Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03";
-
-		context.Content.Add(content);
-		context.SaveChanges();
-
-		var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
-		var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
-
-		var result = contentService.GetContentDetailsModelByNid(nid, tipus);
-
-		result.MetaData.Image.Should().Be("images/gift.png");
-		result.MetaData.TipusNev.Should().Be("AJÁNDéKOZZ KÖNYVET");
-		result.MetaData.TipusId.Should().Be(Forras.ajanlatweb);
-		result.ContentDetails.Cim.Should().Be("Ajánlat cím");
-		result.ContentDetails.Tipus.Should().Be((int)Forras.ajanlatweb);
-	}
-
-	[TestCase((int)Forras.ajanlatweb)]
-	public void GetAjanlat_Details_No_Result(int tipus)
-	{
-		var nid = Guid.NewGuid();
-
-		var cacheService = new Mock<ICacheService>();
-		cacheService.Setup(s => s.MainCacheFillUp()).Returns(new MainCache
-		{
-			ContentDetailsModels = new List<ContentDetailsModel>
-			{
-				new ContentDetailsModel
-				{
-					Nid = Guid.NewGuid(),
-					Tipus = (int)Forras.papaitwitter
-				}
-			}
-		});
-
-		var contentService = new ContentService(GetIMemoryCache(), cacheService.Object, GetAndrokatConfiguration());
-		var result = contentService.GetContentDetailsModelByNid(nid, tipus);
-
-		result.Should().BeNull();
-	}
-
-	[Test]
-	public void GetSzentek_Happy()
-	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
-
-		var loggerRepo = new Mock<ILogger<CacheRepository>>();
-
-		using var context = new AndrokatContext(GetDbContextOptions());
-
-		var guid = Guid.NewGuid();
-		var _fixture = new Fixture();
-		var fixContent = _fixture.Create<FixContent>();
-		fixContent.Cim = "Pio cím";
-		fixContent.Nid = guid;
-		fixContent.Tipus = (int)Forras.pio;
-		fixContent.Datum = "02-03";
-
-		context.FixContent.Add(fixContent);
-		context.SaveChanges();
-
-		var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
-		var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
-
-		var result = contentService.GetSzentek().ToList();
-
-		result[0].MetaData.Image.Should().Be("images/pio.png");
-		result[0].MetaData.TipusNev.Should().Be("Pio atya breviáriuma");
-		result[0].MetaData.TipusId.Should().Be(Forras.pio);
-		result[0].ContentDetails.Cim.Should().Be("Pio cím");
-		result[0].ContentDetails.Tipus.Should().Be((int)Forras.pio);
-		result.Count.Should().Be(1);
-	}
-
-	[Test]
-	public void GetImaPage_Happy_No_Csoport()
-	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
-
-		var loggerRepo = new Mock<ILogger<CacheRepository>>();
-
-		using var context = new AndrokatContext(GetDbContextOptions());
-
-		var guid = Guid.NewGuid();
-		var _fixture = new Fixture();
-        var ima = _fixture.Create<ImaContent>();
-		ima.Cim = "Ima cím";
-		ima.Nid = guid;
-		ima.Csoport = "1";
-		ima.Datum = DateTime.Now;
-
-		context.ImaContent.Add(ima);
-		context.SaveChanges();
-
-		var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
-		var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
-
-		var result = contentService.GetImaPage(string.Empty).ToList();
-
-		result[0].ContentDetails.Cim.Should().Be("Ima cím");
-		result.Count.Should().Be(1);
-	}
-
-	[Test]
-	public void GetImaPage_Happy_Has_Csoport()
-	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
-
-		var loggerRepo = new Mock<ILogger<CacheRepository>>();
-
-		using var context = new AndrokatContext(GetDbContextOptions());
-
-		var _fixture = new Fixture();
-		var ima = _fixture.Create<ImaContent>();
-		ima.Cim = "Ima cím1";
-		ima.Nid = Guid.NewGuid();
-		ima.Csoport = "1";
-		ima.Datum = DateTime.Now;
-
-		context.ImaContent.Add(ima);
-
-		var ima2 = _fixture.Create<ImaContent>();
-		ima2.Cim = "Ima cím2";
-		ima2.Nid = Guid.NewGuid();
-		ima2.Csoport = "2";
-		ima2.Datum = DateTime.Now;
-
-		context.ImaContent.Add(ima2);
-
-		context.SaveChanges();
-
-		var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
-		var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
-
-		var result = contentService.GetImaPage("1").ToList();
-
-		result[0].ContentDetails.Cim.Should().Be("Ima cím1");
-		result.Count.Should().Be(1);
-	}
-
-	[Test]
-	public void GetImaDetailsPage_Happy()
-	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
-
-		var loggerRepo = new Mock<ILogger<CacheRepository>>();
-
-		using var context = new AndrokatContext(GetDbContextOptions());
-
-		var guid = Guid.NewGuid();
-		var _fixture = new Fixture();
-        var ima = new ImaContent
-		{
-			Cim = "Ima cím",
-			Nid = guid,
-			Csoport = "1",
-			Datum = DateTime.Now,
-			Szoveg = "Szöveg"
-		};
-
-		context.ImaContent.Add(ima);
-		context.SaveChanges();
-
-		var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
-		var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
-
-		var result = contentService.GetImaById(guid);
-
-		result.Cim.Should().Be("Ima cím");
-		result.Csoport.Should().Be("1");
-		result.Szoveg.Should().Be("Szöveg");
-	}
-
-	[Test]
-	public void GetAudio_Happy()
-	{
+    [Theory, AutoDataWithCustomData]
+    public void GetHome_Happy(Content content)
+    {
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
 
-		var now = DateTimeOffset.Parse("2012-02-03T04:05:06");
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        content.Tipus = (int)Forras.papaitwitter;
+        context.Content.Add(content);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+
+        var result = contentService.GetHome().ToList();
+
+        result[0].MetaData.Image.Should().Be("images/ferencpapa.png");
+        result[0].MetaData.TipusNev.Should().Be("Ferenc pápa twitter üzenete");
+        result[0].MetaData.TipusId.Should().Be(Forras.papaitwitter);
+        result[0].ContentDetails.Cim.Should().Be("Cím");
+        result[0].ContentDetails.Tipus.Should().Be((int)Forras.papaitwitter);
+        result.Count.Should().Be(1);
+    }
+
+    [Theory, AutoDataWithCustomData]
+    public void GetAjanlat_Happy(Content content)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        content.Tipus = (int)Forras.ajanlatweb;
+        context.Content.Add(content);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+
+        var result = contentService.GetAjanlat().ToList();
+
+        result[0].MetaData.Image.Should().Be("images/gift.png");
+        result[0].MetaData.TipusNev.Should().Be("AJÁNDéKOZZ KÖNYVET");
+        result[0].MetaData.TipusId.Should().Be(Forras.ajanlatweb);
+        result[0].ContentDetails.Cim.Should().Be("Cím");
+        result[0].ContentDetails.Tipus.Should().Be((int)Forras.ajanlatweb);
+        result.Count.Should().Be(1);
+    }
+
+    [Theory, AutoDataWithCustomData]
+    public void GetAjanlat_Details_Happy(Content content)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        content.Tipus = (int)Forras.ajanlatweb;
+        context.Content.Add(content);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+
+        var result = contentService.GetContentDetailsModelByNid(content.Nid, content.Tipus);
+
+        result.MetaData.Image.Should().Be("images/gift.png");
+        result.MetaData.TipusNev.Should().Be("AJÁNDéKOZZ KÖNYVET");
+        result.MetaData.TipusId.Should().Be(Forras.ajanlatweb);
+        result.ContentDetails.Cim.Should().Be("Cím");
+        result.ContentDetails.Tipus.Should().Be((int)Forras.ajanlatweb);
+    }
+
+    [Theory, AutoDataWithCustomData]
+    public void GetAjanlat_Details_No_Result(Content content)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        content.Tipus = (int)Forras.papaitwitter;
+        context.Content.Add(content);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+        var result = contentService.GetContentDetailsModelByNid(Guid.NewGuid(), (int)Forras.ajanlatweb);
+
+        result.Should().BeNull();
+    }
+
+    [Theory, AutoDataWithCustomData]
+    public void GetSzentek_Happy(FixContent fixContent)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        fixContent.Tipus = (int)Forras.pio;
+        context.FixContent.Add(fixContent);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+
+        var result = contentService.GetSzentek().ToList();
+
+        result[0].MetaData.Image.Should().Be("images/pio.png");
+        result[0].MetaData.TipusNev.Should().Be("Pio atya breviáriuma");
+        result[0].MetaData.TipusId.Should().Be(Forras.pio);
+        result[0].ContentDetails.Cim.Should().Be("Cím");
+        result[0].ContentDetails.Tipus.Should().Be((int)Forras.pio);
+        result.Count.Should().Be(1);
+    }
+
+    [Theory, AutoDataWithCustomData]
+    public void GetImaPage_Happy_No_Csoport(ImaContent ima)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        context.ImaContent.Add(ima);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+
+        var result = contentService.GetImaPage(string.Empty).ToList();
+
+        result[0].ContentDetails.Cim.Should().Be("Cím");
+        result.Count.Should().Be(1);
+    }
+
+    [Theory, AutoDataWithCustomData]
+    public void GetImaPage_Happy_Has_Csoport(ImaContent ima, ImaContent ima2)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        ima.Cim = "Ima cím1";
+        context.ImaContent.Add(ima);
+        ima2.Nid = Guid.NewGuid();
+        ima2.Cim = "Ima cím2";
+        ima2.Csoport = "2";
+        context.ImaContent.Add(ima2);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+
+        var result = contentService.GetImaPage("1").ToList();
+
+        result[0].ContentDetails.Cim.Should().Be("Ima cím1");
+        result.Count.Should().Be(1);
+    }
+
+    [Theory, AutoDataWithCustomData]
+    public void GetImaDetailsPage_Happy(ImaContent ima)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        ima.Szoveg = "Szöveg";
+        context.ImaContent.Add(ima);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+
+        var result = contentService.GetImaById(ima.Nid);
+
+        result.Cim.Should().Be("Cím");
+        result.Csoport.Should().Be("1");
+        result.Szoveg.Should().Be("Szöveg");
+    }
+
+    [Theory, AutoData]
+    public void GetAudio_Happy(Content content, Content content2)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var now = DateTimeOffset.Parse("2012-02-03T04:05:06");
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
 
         using var context = new AndrokatContext(GetDbContextOptions());
 
         var guid = Guid.NewGuid();
-        var _fixture = new Fixture();
-        var content = _fixture.Create<Content>();
         content.Cim = "cim1";
         content.Nid = Guid.Parse("281cd115-1289-11ea-8aa1-cbeb38570c35");
         content.Tipus = (int)Forras.audiotaize;
         content.Fulldatum = now.DateTime.ToString("yyyy") + "-02-03";
-		content.Idezet = "audiofile";
-		content.FileUrl = "";
+        content.Idezet = "audiofile";
+        content.FileUrl = "";
 
         context.Content.Add(content);
 
-        var content2 = _fixture.Create<Content>();
         content2.Cim = "cim2";
         content2.Nid = Guid.Parse("181cd115-1289-11ea-8aa1-cbeb38570c35");
         content2.Tipus = (int)Forras.audiotaize;
         content2.Fulldatum = now.AddDays(-1).DateTime.ToString("yyyy") + "-02-03";
         content2.Idezet = "idezet"; //ezt felül kell írja a FileUrl audio típusnál
-		content2.FileUrl = "audiofile";
+        content2.FileUrl = "audiofile";
 
         context.Content.Add(content2);
         context.SaveChanges();
@@ -335,153 +261,46 @@ public class ContentServiceTests : BaseTest
 
         audioRecords[0].Idezet.Should().Be(expected);
         audioRecords[1].Idezet.Should().Be(expected);
-	}
+    }
 
-	[Test]
-	public void GetVideoSource_Happy()
-	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
+    [Theory, AutoData]
+    public void GetVideoSource_Happy(VideoContent video)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
 
-		var loggerRepo = new Mock<ILogger<CacheRepository>>();
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
 
-		using var context = new AndrokatContext(GetDbContextOptions());
+        using var context = new AndrokatContext(GetDbContextOptions());
 
-		var guid = Guid.NewGuid();
-		var _fixture = new Fixture();
-		var video = _fixture.Create<VideoContent>();
-		video.Cim = "Videó cím";
-		video.Nid = guid;
-		video.ChannelId = "UCF3mEbdkhZwjQE8reJHm4sg";
-		video.Forras = "Forras";
-		video.VideoLink = "https://www.youtube.com/embed/OnCW6hg5CdQ";
+        var guid = Guid.NewGuid();
+        video.Cim = "Videó cím";
+        video.Nid = guid;
+        video.ChannelId = "UCF3mEbdkhZwjQE8reJHm4sg";
+        video.Forras = "Forras";
+        video.VideoLink = "https://www.youtube.com/embed/OnCW6hg5CdQ";
 
-		context.VideoContent.Add(video);
-		context.SaveChanges();
+        context.VideoContent.Add(video);
+        context.SaveChanges();
 
-		var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
-		var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
-		var videoPage = contentService.GetVideoSourcePage().ToList();
+        var videoPage = contentService.GetVideoSourcePage().ToList();
 
-		videoPage[0].ChannelId.Should().Be("UCF3mEbdkhZwjQE8reJHm4sg");
-		videoPage[0].ChannelName.Should().Be("Forras");
-		videoPage.Count.Should().Be(1);
-	}
+        videoPage[0].ChannelId.Should().Be("UCF3mEbdkhZwjQE8reJHm4sg");
+        videoPage[0].ChannelName.Should().Be("Forras");
+        videoPage.Count.Should().Be(1);
+    }
 
-	[TestCase((int)Forras.b777)]
-	[TestCase(0)]
-	public void GetBlog_Happy(int tipus)
-	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
-
-		var loggerRepo = new Mock<ILogger<CacheRepository>>();
-
-		using var context = new AndrokatContext(GetDbContextOptions());
-
-		var guid = Guid.NewGuid();
-		var _fixture = new Fixture();
-        var content = _fixture.Create<Content>();
-		content.Cim = "Blog cím";
-		content.Nid = guid;
-		content.Tipus = (int)Forras.b777;
-		content.Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03";
-		content.Inserted = DateTime.Parse(DateTime.Now.ToString("yyyy") + "-02-03");
-
-		context.Content.Add(content);
-		context.SaveChanges();
-
-		var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
-		var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
-
-		var result = contentService.GetBlog(tipus).ToList();
-
-		result[0].ContentDetails.Cim.Should().Be("Blog cím");
-		result.Count.Should().Be(1);
-	}
-
-	[TestCase((int)Forras.kurir)]
-	[TestCase(0)]
-	public void GetHirek_Happy(int tipus)
-	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
-
-		var loggerRepo = new Mock<ILogger<CacheRepository>>();
-
-		using var context = new AndrokatContext(GetDbContextOptions());
-
-		var guid = Guid.NewGuid();
-		var _fixture = new Fixture();
-        var content = new Content
-		{
-			Cim = "Hír cím",
-			Nid = guid,
-			Tipus = (int)Forras.kurir,
-			Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03",
-			Inserted = DateTime.Parse(DateTime.Now.ToString("yyyy") + "-02-03"),
-			Idezet = "Idézet",
-			KulsoLink = "KulsoLink"
-		};
-
-		context.Content.Add(content);
-		context.SaveChanges();
-
-		var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
-		var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
-
-		var result = contentService.GetHirek(tipus).ToList();
-
-		result[0].ContentDetails.Cim.Should().Be("Hír cím");
-		result[0].ContentDetails.Idezet.Should().Be("Idézet");
-		result[0].ContentDetails.KulsoLink.Should().Be("KulsoLink");
-		result.Count.Should().Be(1);
-	}
-
-	[Test]
-	public void GetHumor_Happy()
-	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
-
-		var loggerRepo = new Mock<ILogger<CacheRepository>>();
-
-		using var context = new AndrokatContext(GetDbContextOptions());
-
-		var guid = Guid.NewGuid();
-		var _fixture = new Fixture();
-		var fixContent = _fixture.Create<FixContent>();
-		fixContent.Cim = "Humor cím";
-		fixContent.Nid = guid;
-		fixContent.Tipus = (int)Forras.humor;
-		fixContent.Datum = "02-03";
-
-		context.FixContent.Add(fixContent);
-		context.SaveChanges();
-
-		var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
-		var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
-
-		var result = contentService.GetHumor().ToList();
-
-		result[0].MetaData.Image.Should().Be("images/smile.jpg");
-		result[0].MetaData.TipusNev.Should().Be("Humor");
-		result[0].MetaData.TipusId.Should().Be(Forras.humor);
-		result[0].ContentDetails.Cim.Should().Be("Humor cím");
-		result[0].ContentDetails.Tipus.Should().Be((int)Forras.humor);
-		result.Count.Should().Be(1);
-	}
-
-	[Test]
-	public void GetRadioPage_Happy()
-	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
+    [Theory]
+    [InlineData((int)Forras.b777)]
+    [InlineData(0)]
+    public void GetBlog_Happy(int tipus)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
 
@@ -489,7 +308,104 @@ public class ContentServiceTests : BaseTest
 
         var guid = Guid.NewGuid();
         var _fixture = new Fixture();
-        var systeminfo = _fixture.Create<SystemInfo>();
+        var content = _fixture.Create<Content>();
+        content.Cim = "Blog cím";
+        content.Nid = guid;
+        content.Tipus = (int)Forras.b777;
+        content.Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03";
+        content.Inserted = DateTime.Parse(DateTime.Now.ToString("yyyy") + "-02-03");
+
+        context.Content.Add(content);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+
+        var result = contentService.GetBlog(tipus).ToList();
+
+        result[0].ContentDetails.Cim.Should().Be("Blog cím");
+        result.Count.Should().Be(1);
+    }
+
+    [Theory]
+    [InlineData((int)Forras.kurir)]
+    [InlineData(0)]
+    public void GetHirek_Happy(int tipus)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var guid = Guid.NewGuid();
+        var _fixture = new Fixture();
+        var content = new Content
+        {
+            Cim = "Hír cím",
+            Nid = guid,
+            Tipus = (int)Forras.kurir,
+            Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03",
+            Inserted = DateTime.Parse(DateTime.Now.ToString("yyyy") + "-02-03"),
+            Idezet = "Idézet",
+            KulsoLink = "KulsoLink"
+        };
+
+        context.Content.Add(content);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+
+        var result = contentService.GetHirek(tipus).ToList();
+
+        result[0].ContentDetails.Cim.Should().Be("Hír cím");
+        result[0].ContentDetails.Idezet.Should().Be("Idézet");
+        result[0].ContentDetails.KulsoLink.Should().Be("KulsoLink");
+        result.Count.Should().Be(1);
+    }
+
+    [Theory, AutoDataWithCustomData]
+    public void GetHumor_Happy(FixContent fixContent)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        fixContent.Tipus = (int)Forras.humor;
+        context.FixContent.Add(fixContent);
+        context.SaveChanges();
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+
+        var result = contentService.GetHumor().ToList();
+
+        result[0].MetaData.Image.Should().Be("images/smile.jpg");
+        result[0].MetaData.TipusNev.Should().Be("Humor");
+        result[0].MetaData.TipusId.Should().Be(Forras.humor);
+        result[0].ContentDetails.Cim.Should().Be("Cím");
+        result[0].ContentDetails.Tipus.Should().Be((int)Forras.humor);
+        result.Count.Should().Be(1);
+    }
+
+    [Theory, AutoData]
+    public void GetRadioPage_Happy(SystemInfo systeminfo)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var guid = Guid.NewGuid();
         systeminfo.Key = "radio";
         systeminfo.Value = "{ \"ˇmariaradio\": \"url\"}";
 
@@ -498,47 +414,45 @@ public class ContentServiceTests : BaseTest
 
         var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
         var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
-		var result = contentService.GetRadioPage().ToList();
+        var result = contentService.GetRadioPage().ToList();
 
         result[0].Name.Should().Be("ˇmariaradio");
         result[0].Url.Should().Be("url");
         result.Count.Should().Be(1);
-	}
+    }
 
-	[Test]
-	public void GetSzent_Happy()
-	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
+    [Theory, AutoData]
+    public void GetSzent_Happy(Maiszent maiszent)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
 
-		var loggerRepo = new Mock<ILogger<CacheRepository>>();
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
 
-		using var context = new AndrokatContext(GetDbContextOptions());
+        using var context = new AndrokatContext(GetDbContextOptions());
 
-		var guid = Guid.NewGuid();
-		var _fixture = new Fixture();
-		var maiszent = _fixture.Create<Maiszent>();
-		maiszent.Cim = "Mai szent cím";
-		maiszent.Nid = guid;
-		maiszent.Idezet = "Idézet";
-		maiszent.Datum = "02-03";
+        var guid = Guid.NewGuid();
+        maiszent.Cim = "Mai szent cím";
+        maiszent.Nid = guid;
+        maiszent.Idezet = "Idézet";
+        maiszent.Datum = "02-03";
 
-		context.MaiSzent.Add(maiszent);
-		context.SaveChanges();
+        context.MaiSzent.Add(maiszent);
+        context.SaveChanges();
 
-		var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
-		var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
-		var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
-		var result = contentService.GetSzent().ToList();
+        var result = contentService.GetSzent().ToList();
 
-		result[0].MetaData.Image.Should().Be("images/katolikus_hu.jpg");
-		result[0].MetaData.TipusNev.Should().Be("Mai Szent");
-		result[0].MetaData.TipusId.Should().Be(Forras.maiszent);
-		result[0].ContentDetails.Cim.Should().Be("Mai szent cím");
-		result[0].ContentDetails.Tipus.Should().Be((int)Forras.maiszent);
-		result.Count.Should().Be(1);
-	}
+        result[0].MetaData.Image.Should().Be("images/katolikus_hu.jpg");
+        result[0].MetaData.TipusNev.Should().Be("Mai Szent");
+        result[0].MetaData.TipusId.Should().Be(Forras.maiszent);
+        result[0].ContentDetails.Cim.Should().Be("Mai szent cím");
+        result[0].ContentDetails.Tipus.Should().Be((int)Forras.maiszent);
+        result.Count.Should().Be(1);
+    }
 }

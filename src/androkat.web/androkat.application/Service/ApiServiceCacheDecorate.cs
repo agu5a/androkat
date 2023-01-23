@@ -19,9 +19,13 @@ public class ApiServiceCacheDecorate : IApiService
     private readonly ICacheService _cacheService;
     private readonly IMapper _mapper;
 
-    public ApiServiceCacheDecorate(IApiService worker, IMemoryCache memoryCache, ICacheService cacheService, IMapper mapper)
+    public ApiServiceCacheDecorate(
+        IApiService apiService, 
+        IMemoryCache memoryCache, 
+        ICacheService cacheService, 
+        IMapper mapper)
     {
-        _apiService = worker;
+        _apiService = apiService;
         _memoryCache = memoryCache;
         _cacheService = cacheService;
         _mapper = mapper;
