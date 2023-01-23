@@ -242,9 +242,9 @@ public class ContentService : IContentService
 		var res = GetCache<ImaCache>(CacheKey.ImaCacheKey.ToString(), () => { return _cacheService.ImaCacheFillUp(); });
 
 		if (!string.IsNullOrWhiteSpace(csoport))
-			return res.Imak.Where(w => w.Csoport == csoport).OrderBy(o => o.Cim).ToList();
+			return res.Imak.Where(w => w.Csoport == csoport).OrderBy(o => o.Cim);
 		else
-			return res.Imak.OrderBy(o => o.Cim).ToList();
+			return res.Imak.OrderBy(o => o.Cim);
 	}
 
 	private Dictionary<string, string> GetRadio()
@@ -255,11 +255,7 @@ public class ContentService : IContentService
 		if (ra is null)
 			return new Dictionary<string, string>();
 
-		var dic = JsonSerializer.Deserialize<Dictionary<string, string>>(ra.Value);
-		if (dic is null)
-			return new Dictionary<string, string>();
-
-		return dic;
+		return JsonSerializer.Deserialize<Dictionary<string, string>>(ra.Value);
 	}
 
 	private IEnumerable<VideoSourceModel> GetVideoSource()
@@ -279,7 +275,8 @@ public class ContentService : IContentService
 		if (tipus > 0)
             return res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).ToList();
 
-		return res.Egyeb.Where(w => w.Tipus == (int)Forras.bonumtv || w.Tipus == (int)Forras.kurir || w.Tipus == (int)Forras.keresztenyelet).OrderByDescending(o => o.Fulldatum).ToList();
+		var list = new List<int> { (int)Forras.bonumtv, (int)Forras.kurir, (int)Forras.keresztenyelet };
+		return res.Egyeb.Where(w => list.Contains(w.Tipus)).OrderByDescending(o => o.Fulldatum);
 	}
 
 	private IEnumerable<ContentDetailsModel> GetBlogByCategory(int tipus)
@@ -289,7 +286,8 @@ public class ContentService : IContentService
 		if (tipus > 0)
             return res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).ToList();
 
-        return res.Egyeb.Where(w => w.Tipus == (int)Forras.b777 || w.Tipus == (int)Forras.bkatolikusma || w.Tipus == (int)Forras.jezsuitablog).OrderByDescending(o => o.Fulldatum).ToList();
+        var list = new List<int> { (int)Forras.b777, (int)Forras.bkatolikusma, (int)Forras.jezsuitablog };
+        return res.Egyeb.Where(w => list.Contains(w.Tipus)).OrderByDescending(o => o.Fulldatum);
 	}
 
 	private C GetCache<C>(string key, Func<C> function)

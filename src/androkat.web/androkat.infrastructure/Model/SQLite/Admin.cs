@@ -13,12 +13,6 @@ public class Admin
     [DataMember(Name = "id")]
     public int Id { get; set; }
 
-    [DataMember(Name = "username")]
-    public string UserName { get; set; }
-
-    [DataMember(Name = "pwd")]
-    public string Pwd { get; set; }
-
     [DataMember(Name = "email")]
     public string Email { get; set; }
 

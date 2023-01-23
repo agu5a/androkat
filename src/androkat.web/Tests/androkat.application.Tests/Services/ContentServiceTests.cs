@@ -322,10 +322,34 @@ public class ContentServiceTests : BaseTest
         var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
         var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
+        var result = contentService.GetBlog(tipus);
+        foreach (var item in result)
+        {
+            item.ContentDetails.Cim.Should().Be("Blog cím");
+        }
+
+        result.Count.Should().Be(1);
+    }
+
+    [Theory]
+    [InlineData((int)Forras.b777)]
+    [InlineData(0)]
+    public void GetBlog_NotFound(int tipus)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+
         var result = contentService.GetBlog(tipus).ToList();
 
-        result[0].ContentDetails.Cim.Should().Be("Blog cím");
-        result.Count.Should().Be(1);
+        result.Count.Should().Be(0);
     }
 
     [Theory]
@@ -360,12 +384,36 @@ public class ContentServiceTests : BaseTest
         var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
         var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
 
+        var result = contentService.GetHirek(tipus);
+        foreach (var item in result)
+        {
+            item.ContentDetails.Cim.Should().Be("Hír cím");
+            item.ContentDetails.Idezet.Should().Be("Idézet");
+            item.ContentDetails.KulsoLink.Should().Be("KulsoLink");
+        }
+        
+        result.Count.Should().Be(1);
+    }
+
+    [Theory]
+    [InlineData((int)Forras.kurir)]
+    [InlineData(0)]
+    public void GetHirek_NotFound(int tipus)
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+
         var result = contentService.GetHirek(tipus).ToList();
 
-        result[0].ContentDetails.Cim.Should().Be("Hír cím");
-        result[0].ContentDetails.Idezet.Should().Be("Idézet");
-        result[0].ContentDetails.KulsoLink.Should().Be("KulsoLink");
-        result.Count.Should().Be(1);
+        result.Count.Should().Be(0);
     }
 
     [Theory, AutoDataWithCustomData]
@@ -421,6 +469,25 @@ public class ContentServiceTests : BaseTest
         result[0].Name.Should().Be("ˇmariaradio");
         result[0].Url.Should().Be("url");
         result.Count.Should().Be(1);
+    }
+
+    [Fact]
+    public void GetRadioPage_NotFound()
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var loggerRepo = new Mock<ILogger<CacheRepository>>();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var repository = new CacheRepository(context, loggerRepo.Object, GetClock().Object, mapper);
+        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, GetClock().Object);
+        var contentService = new ContentService(GetIMemoryCache(), cacheService, GetAndrokatConfiguration());
+
+        var result = contentService.GetRadioPage().ToList();
+
+        result.Count.Should().Be(0);
     }
 
     [Theory, AutoData]

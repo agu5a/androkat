@@ -69,7 +69,10 @@ public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStar
 		dbContext.Content.Add(new Content { Tipus = 1, Cim = "cím1" });
 		dbContext.SaveChanges();
 
-		dbContext.RadioMusor.Add(new RadioMusor { Source = "Source1", Musor = "Műsor1" });
+        dbContext.TempContent.Add(new TempContent { Tipus = 1, Cim = "cím1" });
+        dbContext.SaveChanges();
+
+        dbContext.RadioMusor.Add(new RadioMusor { Source = "Source1", Musor = "Műsor1" });
 		dbContext.SaveChanges();
 	}
 }

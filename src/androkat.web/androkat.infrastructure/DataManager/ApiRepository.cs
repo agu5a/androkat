@@ -44,4 +44,16 @@ public class ApiRepository : BaseRepository, IApiRepository
 		_ctx.SaveChanges();
 		return true;
 	}
+
+public bool AddTempContent(ContentDetailsModel contentDetailsModel)
+    {
+        var exist = _ctx.TempContent.FirstOrDefault(w => w.Tipus == contentDetailsModel.Tipus
+       && (w.Cim.Contains(contentDetailsModel.Cim) || w.Nid == contentDetailsModel.Nid));
+        if (exist is not null)
+            return false;
+
+        _ctx.TempContent.Add(_mapper.Map<TempContent>(contentDetailsModel));
+        _ctx.SaveChanges();
+        return true;
+    }
 }

@@ -22,6 +22,11 @@ public class AutoMapperProfile : Profile
 
 		CreateMap<ImaContent, ImaModel>().ReverseMap();
 
+CreateMap<TempContent, ContentDetailsModel>()
+			.ForMember(x => x.Fulldatum, y => y.MapFrom(z => DateTime.Parse(z.Fulldatum)));
+		CreateMap<ContentDetailsModel, TempContent>()
+			.ForMember(x => x.Fulldatum, y => y.MapFrom(z => z.Fulldatum.ToString("yyyy-MM-dd HH:mm:s")));
+
 CreateMap<RadioMusor, RadioMusorModel>().ReverseMap();
 CreateMap<SystemInfo, SystemInfoModel>().ReverseMap();
 		CreateMap<VideoContent, VideoModel>().ReverseMap();
