@@ -2,6 +2,8 @@
 using androkat.domain.Enum;
 using androkat.domain.Model;
 using androkat.infrastructure.DataManager;
+using androkat.infrastructure.Mapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -19,6 +21,12 @@ namespace androkat.web.Tests;
 
 public class BaseTest
 {
+    public static IMapper GetMapper()
+    {
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        return config.CreateMapper();
+    }
+
     public static (PageContext pageContext, TempDataDictionary tempData, ActionContext actionContext) GetPreStuff(HttpContext context = null)
     {
         var httpContext = context ?? new DefaultHttpContext();

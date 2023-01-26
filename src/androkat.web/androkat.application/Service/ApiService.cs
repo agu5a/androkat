@@ -4,7 +4,6 @@ using androkat.domain.Enum;
 using androkat.domain.Model;
 using androkat.domain.Model.ContentCache;
 using androkat.domain.Model.WebResponse;
-using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +14,10 @@ namespace androkat.application.Service;
 public class ApiService : IApiService
 {
     private readonly IClock _iClock;
-    private readonly IMapper _mapper;
 
-    public ApiService(IClock iClock, IMapper mapper)
+    public ApiService(IClock iClock)
     {
         _iClock = iClock;
-        _mapper = mapper;
     }
 
     public IReadOnlyCollection<VideoResponse> GetVideoByOffset(int offset, VideoCache videoCache)
