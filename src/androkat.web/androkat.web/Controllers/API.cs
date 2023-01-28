@@ -32,4 +32,19 @@ public class Api : ControllerBase
         var result = _apiService.GetVideoByOffset(offset, default);
         return Ok(result);
     }
+
+    /// <summary>
+    /// android radio
+    /// </summary>
+    [Route("api/radio")]
+    [HttpPost]
+    [ProducesResponseType(200)]
+    public ActionResult<IEnumerable<RadioMusorResponse>> GetRadioBySource([FromForm] string s)
+    {
+        if (string.IsNullOrWhiteSpace(s) || (s.ToLower() != "katolikushu" && s.ToLower() != "mariaradio" && s.ToLower() != "szentistvan"))
+            return BadRequest("Hiba");
+
+        var result = _apiService.GetRadioBySource(s, default);
+        return Ok(result);
+    }
 }

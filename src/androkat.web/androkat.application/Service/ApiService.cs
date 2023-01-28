@@ -37,5 +37,16 @@ public class ApiService : IApiService
             }
 
             return temp.AsReadOnly();
-    }    
+    }  
+
+public IEnumerable<RadioMusorResponse> GetRadioBySource(string s, BookRadioSysCache bookRadioSysCache)
+    {
+        foreach (var item in bookRadioSysCache.RadioMusor.Where(w => w.Source == s))
+        {
+            yield return new RadioMusorResponse
+            {
+                Musor = item.Musor
+            };
+        }
+    }  
 }

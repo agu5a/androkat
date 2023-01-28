@@ -27,6 +27,20 @@ public class ApiServiceCacheDecorate : IApiService
         _cacheService = cacheService;
     }
 
+public IEnumerable<RadioMusorResponse> GetRadioBySource(string s, BookRadioSysCache bookRadioSysCache)
+    {
+        string key = CacheKey.RadioResponseCacheKey + "_" + s;
+        var result = GetCache<IEnumerable<RadioMusorResponse>>(key);
+        if (result is not null)
+            return result;
+
+        bookRadioSysCache = GetCache(CacheKey.BookRadioSysCacheKey.ToString(), () => { return _cacheService.BookRadioSysCacheFillUp(); });
+        result = _apiService.GetRadioBySource(s, bookRadioSysCache);
+        _memoryCache.Set(key, result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
+
+        return result;
+    }
+
     public IReadOnlyCollection<VideoResponse> GetVideoByOffset(int offset, VideoCache videoCache)
     {
         string key = CacheKey.VideoResponseCacheKey + "_" + offset;

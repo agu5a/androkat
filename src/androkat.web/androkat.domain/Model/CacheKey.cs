@@ -6,5 +6,6 @@ public enum CacheKey
 BookRadioSysCacheKey,
 	ImaCacheKey,
 	VideoCacheKey,
-VideoResponseCacheKey
+VideoResponseCacheKey,
+RadioResponseCacheKey,
 }

@@ -7,4 +7,5 @@ namespace androkat.application.Interfaces;
 public interface IApiService
 {
     IReadOnlyCollection<VideoResponse> GetVideoByOffset(int offset, VideoCache videoCache);
+    IEnumerable<RadioMusorResponse> GetRadioBySource(string s, BookRadioSysCache bookRadioSysCache);
 }
