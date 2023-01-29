@@ -34,7 +34,7 @@ public class BookRadioSysCacheFillUpTests : BaseTest
         });
         cacheRepository.Setup(s => s.GetRadioToCache()).Returns(new List<RadioMusorModel>
         {
-            new RadioMusorModel { Nid = radioNid }
+            new RadioMusorModel (radioNid, string.Empty, string.Empty, string.Empty)
         });
         cacheRepository.Setup(s => s.GetSystemInfoToCache()).Returns(new List<SystemInfoModel>
         {

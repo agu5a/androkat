@@ -55,7 +55,13 @@ public class GetRadioBySourceTests : BaseTest
         var clock = new Mock<IClock>();
         clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse("2012-02-03T04:05:06"));
 
-        object result = new BookRadioSysCache { RadioMusor = new List<RadioMusorModel> { new RadioMusorModel { Source = "katolikushu", Musor = "musor", Nid = Guid.NewGuid(), Inserted = DateTime.Now.ToString("yyyy-MM-dd") } } };
+        object result = new BookRadioSysCache
+        {
+            RadioMusor = new List<RadioMusorModel>
+            {
+                new RadioMusorModel (Guid.NewGuid(), "katolikushu", "musor", DateTime.Now.ToString("yyyy-MM-dd"))
+            }
+        };
         var memoryCache = new Mock<IMemoryCache>();
         memoryCache.Setup(c => c.TryGetValue(It.IsAny<object>(), out result)).Returns(true);
 
@@ -76,7 +82,12 @@ public class GetRadioBySourceTests : BaseTest
         var clock = new Mock<IClock>();
         clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse("2012-02-03T04:05:06"));
 
-        object result = new BookRadioSysCache { RadioMusor = new List<RadioMusorModel>(), Books = new List<ContentDetailsModel>(), SystemData = new List<SystemInfoModel>() };
+        object result = new BookRadioSysCache
+        {
+            RadioMusor = new List<RadioMusorModel>(),
+            Books = new List<ContentDetailsModel>(),
+            SystemData = new List<SystemInfoModel>()
+        };
         var cache = GetIMemoryCache();
         _ = cache.Set(CacheKey.BookRadioSysCacheKey.ToString(), result);
 

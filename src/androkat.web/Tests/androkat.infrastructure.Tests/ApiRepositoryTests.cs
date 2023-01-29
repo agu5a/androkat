@@ -1,5 +1,4 @@
-﻿using androkat.domain.Enum;
-using androkat.infrastructure.DataManager;
+﻿using androkat.infrastructure.DataManager;
 using androkat.infrastructure.Mapper;
 using androkat.infrastructure.Model.SQLite;
 using AutoMapper;
@@ -8,10 +7,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace androkat.infrastructure.Tests;
 
@@ -30,10 +26,7 @@ public class ApiRepositoryTests : BaseTest
 		using (var context = new AndrokatContext(GetDbContextOptions()))
 		{
 			var repo = new ApiRepository(context, logger.Object, clock.Object, mapper);
-			var result = repo.UpdateRadioMusor(new domain.Model.RadioMusorModel
-			{
-				Source = "Source"
-			});
+            var result = repo.UpdateRadioMusor(new domain.Model.RadioMusorModel(Guid.Empty, "Source", string.Empty, string.Empty));
 			result.Should().Be(false);
 			context.RadioMusor.FirstOrDefault(f=> f.Source == "Source").Should().BeNull();
 		}
@@ -62,12 +55,7 @@ public class ApiRepositoryTests : BaseTest
 			context.SaveChanges();
 
 			var repo = new ApiRepository(context, logger.Object, clock.Object, mapper);
-			var result = repo.UpdateRadioMusor(new domain.Model.RadioMusorModel
-			{
-				Source = "Source",
-				Musor = "Műsor 2",
-				Inserted = "2023-01-11"
-			});
+            var result = repo.UpdateRadioMusor(new domain.Model.RadioMusorModel(Guid.Empty, "Source", "Műsor 2", "2023-01-11"));
 			result.Should().Be(true);
 			var radio = context.RadioMusor.FirstOrDefault(f => f.Source == "Source");
 			radio.Musor.Should().Be("Műsor 2");
