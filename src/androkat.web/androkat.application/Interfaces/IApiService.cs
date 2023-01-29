@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace androkat.application.Interfaces;
 
 public interface IApiService
-{
+{    
+    IReadOnlyCollection<RadioMusorResponse> GetRadioBySource(string s, BookRadioSysCache bookRadioSysCache);
     IReadOnlyCollection<VideoResponse> GetVideoByOffset(int offset, VideoCache videoCache);
-    IEnumerable<RadioMusorResponse> GetRadioBySource(string s, BookRadioSysCache bookRadioSysCache);
 }

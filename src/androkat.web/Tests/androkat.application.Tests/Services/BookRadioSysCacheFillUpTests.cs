@@ -38,7 +38,7 @@ public class BookRadioSysCacheFillUpTests : BaseTest
         });
         cacheRepository.Setup(s => s.GetSystemInfoToCache()).Returns(new List<SystemInfoModel>
         {
-            new SystemInfoModel()
+            new SystemInfoModel(default, default, default)
         });
 
         var cacheService = new CacheService(cacheRepository.Object, new Mock<ILogger<CacheService>>().Object, clock.Object);

@@ -27,10 +27,10 @@ public class ApiServiceCacheDecorate : IApiService
         _cacheService = cacheService;
     }
 
-public IEnumerable<RadioMusorResponse> GetRadioBySource(string s, BookRadioSysCache bookRadioSysCache)
+public IReadOnlyCollection<RadioMusorResponse> GetRadioBySource(string s, BookRadioSysCache bookRadioSysCache)
     {
         string key = CacheKey.RadioResponseCacheKey + "_" + s;
-        var result = GetCache<IEnumerable<RadioMusorResponse>>(key);
+        var result = GetCache<IReadOnlyCollection<RadioMusorResponse>>(key);
         if (result is not null)
             return result;
 
