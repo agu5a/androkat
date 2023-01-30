@@ -24,14 +24,8 @@ public class HanganyagModelTests : BaseTest
         var contentService = new Mock<IContentService>();
         contentService.Setup(s => s.GetAudio()).Returns(new List<AudioModel>
         {
-            new AudioModel 
-            {
-                Cim = "Audio Cim",
-                Idezet = "Idézet",
-                Tipus = (int)Forras.audionapievangelium,
-                Inserted = now,
-                MetaDataModel= GetContentMetaDataModel(image: "Image")
-            }
+            new AudioModel(string.Empty, string.Empty, string.Empty, "Idézet", now,
+                "Audio Cim", (int)Forras.audionapievangelium, GetContentMetaDataModel(image: "Image"))
         });
 
         var model = new HanganyagModel(contentService.Object)

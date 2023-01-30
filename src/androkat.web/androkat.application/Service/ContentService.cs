@@ -221,17 +221,9 @@ public class ContentService : IContentService
 		{
 			var url = string.IsNullOrEmpty(f.FileUrl) ? f.Idezet : f.FileUrl;
 			var idezet = GetAudio(string.IsNullOrEmpty(f.FileUrl) ? f.Idezet : f.FileUrl);
-			list.Add(new AudioModel
-			{
-				Cim = f.Cim,
-				Inserted = f.Inserted,
-				Tipus = tipus,
-				Idezet = idezet,
-				MetaDataModel = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus),
-				EncodedUrl = HttpUtility.UrlEncode(url),
-				ShareTitle = HttpUtility.UrlEncode(f.Cim),
-				Url = url
-			});
+            list.Add(new AudioModel(HttpUtility.UrlEncode(url), HttpUtility.UrlEncode(f.Cim), url, idezet, f.Inserted, f.Cim, tipus,
+                _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus))
+            );
 		});
 
 		return list;

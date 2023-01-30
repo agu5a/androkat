@@ -4,6 +4,18 @@ namespace androkat.domain.Model;
 
 public class AudioModel
 {
+    public AudioModel(string encodedUrl, string shareTitle, string url, string idezet, DateTime inserted, string cim, int tipus, ContentMetaDataModel metaDataModel)
+    {
+        EncodedUrl = encodedUrl;
+        ShareTitle = shareTitle;
+        Url = url;
+        Idezet = idezet;
+        Inserted = inserted;
+        Cim = cim;
+        Tipus = tipus;
+        MetaDataModel = metaDataModel;
+    }
+
     public string EncodedUrl { get; set; }
     public string ShareTitle { get; set; }
     public string Url { get; set; }
