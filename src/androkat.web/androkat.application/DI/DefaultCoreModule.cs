@@ -13,6 +13,7 @@ public class DefaultCoreModule : Module
         builder.RegisterType<ApiService>().As<IApiService>().InstancePerLifetimeScope();
         builder.RegisterDecorator<ApiServiceCacheDecorate, IApiService>();
         builder.RegisterType<WarmupService>().As<IWarmupService>().InstancePerLifetimeScope();
+        builder.RegisterType<CronService>().As<ICronService>().InstancePerLifetimeScope();
         builder.RegisterType<ContentService>().As<IContentService>().InstancePerLifetimeScope();
     }
 }

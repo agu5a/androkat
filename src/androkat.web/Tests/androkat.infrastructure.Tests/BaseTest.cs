@@ -1,4 +1,6 @@
 ﻿using androkat.application.Interfaces;
+using androkat.domain.Enum;
+using androkat.domain.Model;
 using androkat.infrastructure.DataManager;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -10,6 +12,12 @@ namespace androkat.infrastructure.Tests;
 
 public class BaseTest
 {
+    public ContentMetaDataModel GetContentMetaDataModel(Forras? tipusId, string tipusNev = null, string forras = null, 
+        string link = null, string segedlink = null, string image = null)
+    {
+        return new ContentMetaDataModel(tipusId ?? Forras.pio, tipusNev ?? "", forras ?? "", link ?? "", segedlink ?? "", image ?? "");
+    }
+
 	/// <summary>
 	/// DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"
 	/// </summary>

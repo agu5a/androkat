@@ -21,6 +21,12 @@ namespace androkat.web.Tests;
 
 public class BaseTest
 {
+    public static ContentMetaDataModel GetContentMetaDataModel(Forras? tipusId = null, string tipusNev = null, string forras = null,
+        string link = null, string segedlink = null, string image = null)
+    {
+        return new ContentMetaDataModel(tipusId ?? Forras.pio, tipusNev ?? "", forras ?? "", link ?? "", segedlink ?? "", image ?? "");
+    }
+
     public static IMapper GetMapper()
     {
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
@@ -50,26 +56,26 @@ public class BaseTest
             new ContentModel
             {
                 ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = new ContentMetaDataModel { Image = "Image", Link = "MetaLink", Forras = "MetaForras", TipusId = (Forras)Enum.ToObject(typeof(Forras), tipus) }
+                MetaData = GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))                
             });
 		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.szentbernat)).Returns(
 			new ContentModel
 			{
 				ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "", Forras = "Forras" },
-				MetaData = new ContentMetaDataModel { Image = "Image", Link = "MetaLink", Forras = "MetaForras", TipusId = (Forras)Enum.ToObject(typeof(Forras), tipus) }
-			});
+				MetaData = GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))
+            });
 		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.ajanlatweb)).Returns(
 			new ContentModel
 			{
 				ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-				MetaData = new ContentMetaDataModel { Image = "Image", Link = "MetaLink", Forras = "MetaForras", TipusId = (Forras)Enum.ToObject(typeof(Forras), tipus) }
-			});
-		contentService.Setup(s => s.GetHumor()).Returns(new List<ContentModel>
+				MetaData = GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))
+            });
+        contentService.Setup(s => s.GetHumor()).Returns(new List<ContentModel>
         {
             new ContentModel
             {
                 ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = new ContentMetaDataModel { Image = "Image" }
+                MetaData = GetContentMetaDataModel(image: "Image")
             }
         });
         contentService.Setup(s => s.GetHome()).Returns(new List<ContentModel>
@@ -77,7 +83,7 @@ public class BaseTest
             new ContentModel
             {
                 ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = new ContentMetaDataModel { Image = "Image" }
+                MetaData = GetContentMetaDataModel(image: "Image")
             }
         });
         contentService.Setup(s => s.GetAjanlat()).Returns(new List<ContentModel>
@@ -85,7 +91,7 @@ public class BaseTest
             new ContentModel
             {
                 ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = new ContentMetaDataModel { Image = "Image" }
+                MetaData = GetContentMetaDataModel(image: "Image")
             }
         });
         contentService.Setup(s => s.GetSzentek()).Returns(new List<ContentModel>
@@ -93,7 +99,7 @@ public class BaseTest
             new ContentModel
             {
                 ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = new ContentMetaDataModel { Image = "Image" }
+                MetaData = GetContentMetaDataModel(image: "Image")
             }
         });
         contentService.Setup(s => s.GetSzent()).Returns(new List<ContentModel>
@@ -101,7 +107,7 @@ public class BaseTest
             new ContentModel
             {
                 ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = new ContentMetaDataModel { Image = "Image" }
+                MetaData = GetContentMetaDataModel(image : "Image")
             }
         });
         contentService.Setup(s => s.GetHirek(It.IsAny<int>())).Returns(new List<ContentModel>
@@ -109,7 +115,7 @@ public class BaseTest
             new ContentModel
             {
                 ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = new ContentMetaDataModel { Image = "Image" }
+                MetaData = GetContentMetaDataModel(image : "Image")
             }
         });
         contentService.Setup(s => s.GetBlog(It.IsAny<int>())).Returns(new List<ContentModel>
@@ -117,7 +123,7 @@ public class BaseTest
             new ContentModel
             {
                 ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = new ContentMetaDataModel { Image = "Image" }
+                MetaData = GetContentMetaDataModel(image : "Image")
             }
         });
 

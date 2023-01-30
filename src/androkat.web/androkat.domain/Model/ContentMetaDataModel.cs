@@ -4,10 +4,20 @@ namespace androkat.domain.Model;
 
 public class ContentMetaDataModel
 {
-    public Forras TipusId { get; set; }
-    public string TipusNev { get; set; }
-    public string Forras { get; set; }
-    public string Link { get; set; }
-    public string Segedlink { get; set; }
-    public string Image { get; set; }
+    public ContentMetaDataModel(Forras tipusId, string tipusNev, string forras, string link, string segedlink, string image)
+    {
+        TipusId = tipusId;
+        TipusNev = tipusNev;
+        Forras = forras;
+        Link = link;
+        Segedlink = segedlink;
+        Image = image;
+    }
+
+    public Forras TipusId { get; }
+    public string TipusNev { get; }
+    public string Forras { get; }
+    public string Link { get; }
+    public string Segedlink { get; }
+    public string Image { get; }
 }

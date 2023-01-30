@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace androkat.infrastructure.Tests;
 
-public class AndrokatConfigurationOptionsTests
+public class AndrokatConfigurationOptionsTests : BaseTest
 {
     [Test]
     public void Configure()
@@ -20,7 +20,7 @@ public class AndrokatConfigurationOptionsTests
         var logger = new Mock<ILogger<AndrokatConfigurationOptions>>();
 
         var service = new Mock<IContentMetaDataService>();
-        service.Setup(s => s.GetContentMetaDataList(It.IsAny<string>())).Returns(new List<ContentMetaDataModel> { new ContentMetaDataModel { TipusId = Forras.mello } });
+        service.Setup(s => s.GetContentMetaDataList(It.IsAny<string>())).Returns(new List<ContentMetaDataModel> { GetContentMetaDataModel(Forras.mello) });
         var options = new AndrokatConfigurationOptions(service.Object, logger.Object);
         var config = new AndrokatConfiguration();
         options.Configure(config);

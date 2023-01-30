@@ -30,10 +30,7 @@ public class HanganyagModelTests : BaseTest
                 Idezet = "Idézet",
                 Tipus = (int)Forras.audionapievangelium,
                 Inserted = now,
-                MetaDataModel= new ContentMetaDataModel
-                {
-                    Image = "Image"
-                }
+                MetaDataModel= GetContentMetaDataModel(image: "Image")
             }
         });
 
