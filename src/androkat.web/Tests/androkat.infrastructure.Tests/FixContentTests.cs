@@ -14,7 +14,17 @@ public class FixContentTests
 		{
 			Datum = "10-10"
 		};
-		model.FullDate.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + model.Datum);
+		model.FullDate.ToString("yyyy-MM-dd").Should().Be(DateTime.UtcNow.ToString("yyyy-") + model.Datum);
+	}
+
+    [Test]
+    public void FixContent_2023_And_02_29_Happy()
+    {
+        var model = new FixContent
+        {
+            Datum = "02-29"
+        };
+        model.FullDate.ToString("yyyy-MM-dd").Should().Be("2024-" + model.Datum);
 	}
 
 	[Test]

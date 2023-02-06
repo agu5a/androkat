@@ -22,7 +22,7 @@ public class FixContent
     {
         get
         {
-            return DateTime.TryParse(DateTime.Now.ToString("yyyy") + "-" + Datum, out DateTime date) ? date : DateTime.MinValue;
+            return DateTime.TryParse((Datum == "02-29" ? "2024" : DateTime.UtcNow.ToString("yyyy")) + "-" + Datum, out DateTime date) ? date : DateTime.MinValue;
         }
     }
 

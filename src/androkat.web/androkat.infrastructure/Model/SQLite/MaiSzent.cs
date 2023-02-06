@@ -22,8 +22,8 @@ public class Maiszent
     {
         get
         {
-            _ = DateTime.TryParse(DateTime.Now.ToString("yyyy") + "-" + Datum, out DateTime date);
-            return date;
+            return DateTime.TryParse((Datum == "02-29" ? "2024" : DateTime.UtcNow.ToString("yyyy")) + "-" + Datum, out DateTime date) ? date : DateTime.MinValue;
+            
         }
     }
 

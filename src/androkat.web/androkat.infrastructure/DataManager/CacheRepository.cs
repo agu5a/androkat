@@ -74,7 +74,7 @@ public class CacheRepository : BaseRepository, ICacheRepository
 
         var month = _clock.Now.ToString("MM");
         var rows = _ctx.FixContent.AsNoTracking().AsEnumerable()
-            .Where(w => w.Tipus == (int)Forras.humor && w.Datum.StartsWith($"{month}-") && w.FullDate < _clock.Now)
+            .Where(w => w.Tipus == (int)Forras.humor && w.Datum.StartsWith($"{month}-") && w.FullDate < _clock.Now.DateTime)
             .OrderByDescending(o => o.Datum).ToList();
 
         rows.ForEach(w =>
