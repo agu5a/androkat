@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="456" height="456"  viewBox="0 0 456 456" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+	<defs>
+		<path id="path-0" d="M 148.276 202.874 C 203.295 251.178 257.411 244.253 302.874 244.253 C 324.68 244.253 328.739 220.11 337.356 205.747 C 338.506 193.713 348.851 183.546 348.851 176.437 L 351.149 172.989 C 352.908 165.369 351.819 155.798 354.598 148.851" style="fill: none;"/>
+		<style bx:fonts="Montaga">@import url(https://fonts.googleapis.com/css2?family=Montaga%3Aital%2Cwght%400%2C400&amp;display=swap);</style>
+	</defs>
+	<text style="fill: rgb(254, 251, 251); font-family: Montaga; font-size: 100px; letter-spacing: 4px; text-anchor: middle; word-spacing: 21.3px; white-space: pre;" 
+		  x="240.23" 
+		  y="263.793">AndroKat</text>
+</svg>
