@@ -11,7 +11,7 @@ public class AutoMapperProfile : Profile
 	public AutoMapperProfile()
 	{
 		CreateMap<FixContent, ContentDetailsModel>()
-			.ForMember(x => x.Fulldatum, y => y.MapFrom(z => DateTime.Parse(DateTime.Now.ToString("yyyy-") + z.Datum + " 00:00:01")))
+            .ForMember(x => x.Fulldatum, y => y.MapFrom(z => Get(z.Datum)))
 			.ForMember(x => x.FileUrl, y => y.MapFrom(z => string.Empty));
 
 		CreateMap<Content, ContentDetailsModel>()
@@ -37,4 +37,13 @@ CreateMap<SystemInfo, SystemInfoModel>().ReverseMap();
 			.ForMember(x => x.Tipus, y => y.MapFrom(z => (int)Forras.maiszent))
 			.ForMember(x => x.FileUrl, y => y.MapFrom(z => string.Empty));
 	}
+
+private static DateTime Get(string honapNap)
+    {
+        if (honapNap == "02-29")
+            return DateTime.Parse("2024-" + honapNap + " 00:00:01");
+        else
+            return DateTime.Parse(DateTime.UtcNow.ToString("yyyy-") + honapNap + " 00:00:01");
+
+    }
 }

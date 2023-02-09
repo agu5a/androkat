@@ -53,78 +53,77 @@ public class BaseTest
     {
         var contentService = new Mock<IContentService>();
 		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.maiszent)).Returns(
-            new ContentModel
-            {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))                
-            });
+            new ContentModel(
+                 new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                 GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))                
+            ));
 		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.szentbernat)).Returns(
 			new ContentModel
-			{
-				ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "", Forras = "Forras" },
-				MetaData = GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))
-            });
+			(
+				new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "", Forras = "Forras" },
+				GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))
+            ));
 		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.ajanlatweb)).Returns(
 			new ContentModel
-			{
-				ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-				MetaData = GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))
-            });
+			(
+				new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+				GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))
+            ));
         contentService.Setup(s => s.GetHumor()).Returns(new List<ContentModel>
         {
             new ContentModel
-            {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = GetContentMetaDataModel(image: "Image")
-            }
+            (
+                new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                GetContentMetaDataModel(image: "Image")
+            )
         });
         contentService.Setup(s => s.GetHome()).Returns(new List<ContentModel>
         {
             new ContentModel
-            {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = GetContentMetaDataModel(image: "Image")
-            }
+            (
+                new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                GetContentMetaDataModel(image: "Image")
+            )
         });
         contentService.Setup(s => s.GetAjanlat()).Returns(new List<ContentModel>
         {
             new ContentModel
-            {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = GetContentMetaDataModel(image: "Image")
-            }
+            (
+                new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                GetContentMetaDataModel(image: "Image")
+            )
         });
         contentService.Setup(s => s.GetSzentek()).Returns(new List<ContentModel>
         {
             new ContentModel
-            {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = GetContentMetaDataModel(image: "Image")
-            }
+            (
+                new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                GetContentMetaDataModel(image: "Image")
+            )
         });
         contentService.Setup(s => s.GetSzent()).Returns(new List<ContentModel>
         {
             new ContentModel
-            {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = GetContentMetaDataModel(image : "Image")
-            }
+            (
+                new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                GetContentMetaDataModel(image : "Image")
+            )
         });
         contentService.Setup(s => s.GetHirek(It.IsAny<int>())).Returns(new List<ContentModel>
         {
             new ContentModel
-            {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = GetContentMetaDataModel(image : "Image")
-            }
+            (
+                new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                GetContentMetaDataModel(image : "Image")
+            )
         });
         contentService.Setup(s => s.GetBlog(It.IsAny<int>())).Returns(new List<ContentModel>
         {
             new ContentModel
-            {
-                ContentDetails = new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
-                MetaData = GetContentMetaDataModel(image : "Image")
-            }
+            (
+                new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                GetContentMetaDataModel(image : "Image")
+            )
         });
 
         return contentService;

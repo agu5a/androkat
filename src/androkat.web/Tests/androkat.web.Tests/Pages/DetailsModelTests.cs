@@ -106,9 +106,9 @@ public class DetailsModelTests : BaseTest
 		var contentService = new Mock<IContentService>();
 		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.szentbernat))
             .Returns(new ContentModel 
-            {
-                ContentDetails = new ContentDetailsModel()
-            });
+            (
+                new ContentDetailsModel(), default
+            ));
 
 		var model = new web.Pages.DetailsModel(contentService.Object)
 		{

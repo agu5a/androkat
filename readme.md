@@ -21,3 +21,13 @@ MOTTÓ
 
 #### AndroKat az Instagram-on
 [instagram](https://www.instagram.com/androkat_app)
+
+## Adatbázis
+Jelenleg SQLite az adatbázis. Tekintve, hogy a tárolandó anyagmennyiség nem számottevő és minden tartalom alapvetően "in-memory cache"-ből érhető el a weboldalon és a mobil alkalmazásban, így nincs szükség erősebb adatbázis engine-re.
+
+## Deploy
+Jelenleg az AndroKat backend az AWS Lightsail szolgáltatását használja. A webalkalmazás .NET 7-re épül és egy Ubuntu instance-on fut Kestrel használva, mint egy cross-platform web server.
+A Kestrel előtt még egy Nginx webserver is telepítve van, mint reverse proxy.
+A deploy egyelőre manuálisan történik, de van rá terv, hogy a GitHub-ról automatikusan kikerüljön a legfrissebb verzió.
+
+

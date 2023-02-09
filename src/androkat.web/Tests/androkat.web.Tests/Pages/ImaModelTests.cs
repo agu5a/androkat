@@ -19,7 +19,7 @@ public class ImaModelTests : BaseTest
         var contentService = new Mock<IContentService>();
         contentService.Setup(s => s.GetImaPage(string.Empty)).Returns(new List<ContentModel>
         {
-            new ContentModel { ContentDetails = new ContentDetailsModel{ Cim = "Ima Cim" } }
+            new ContentModel (new ContentDetailsModel{ Cim = "Ima Cim" }, default )
         });
 
         var model = new web.Pages.Ima.IndexModel(contentService.Object)

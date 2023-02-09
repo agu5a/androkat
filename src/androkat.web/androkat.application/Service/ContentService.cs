@@ -80,14 +80,12 @@ public class ContentService : IContentService
 		var list = new List<ContentModel>();
 		var result = GetIma(csoport);
 		foreach (var item in result)
-			list.Add(new ContentModel
-			{
-				ContentDetails = new ContentDetailsModel
+            list.Add(new ContentModel(new ContentDetailsModel
 				{
 					Nid = item.Nid,
 					Cim = item.Cim
-				}
-			});
+            }, default)
+            );
 
 		return list.AsReadOnly();
 	}
@@ -135,11 +133,7 @@ public class ContentService : IContentService
 		var result = GetNewsByCategory(tipus);
 		foreach (var item in result)
 		{
-			list.Add(new ContentModel
-			{
-				ContentDetails = item,
-				MetaData = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus)
-			});
+            list.Add(new ContentModel(item, _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus)));
 		}
 
 		return list.AsReadOnly();
@@ -151,11 +145,7 @@ public class ContentService : IContentService
 		var result = GetBlogByCategory(tipus);
 		foreach (var item in result)
 		{
-			list.Add(new ContentModel
-			{
-				ContentDetails = item,
-				MetaData = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus)
-			});
+            list.Add(new ContentModel(item, _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus)));
 		}
 		return list.AsReadOnly();
 	}
@@ -166,7 +156,7 @@ public class ContentService : IContentService
 		var res = GetMainCache();
 
 		foreach (var item in res.ContentDetailsModels.Where(w => w.Tipus == (int)Forras.humor))
-			list.Add(new ContentModel { ContentDetails = item, MetaData = _androkatConfiguration.Value.GetContentMetaDataModelByTipus((int)Forras.humor) });
+            list.Add(new ContentModel(item, _androkatConfiguration.Value.GetContentMetaDataModelByTipus((int)Forras.humor)));
 
 		return list.AsReadOnly();
 	}
@@ -178,7 +168,7 @@ public class ContentService : IContentService
 			return default;
 
 		var data = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus);
-		return new ContentModel { ContentDetails = contentDetailsModel, MetaData = data };
+        return new ContentModel(contentDetailsModel, data);
 	}
 
 	public ImaModel GetImaById(Guid nid)
@@ -193,7 +183,7 @@ public class ContentService : IContentService
 
 		var result = Get(tipusok);
 		foreach (var item in result)
-			list.Add(new ContentModel { ContentDetails = item, MetaData = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus) });
+            list.Add(new ContentModel(item, _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus)));
 
 		return list.AsReadOnly();
 	}
