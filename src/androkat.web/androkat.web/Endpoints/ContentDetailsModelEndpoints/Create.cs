@@ -1,5 +1,6 @@
 ﻿using androkat.domain;
 using androkat.domain.Configuration;
+using androkat.web.Service;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -15,12 +16,14 @@ public class Create : Endpoint<ContentDetailsModelRequest, ContentDetailsModelRe
     private readonly IApiRepository _apiRepository;
     private readonly ILogger<Create> _logger;
     private readonly string _route;
+    private readonly IApiKeyValidator _apiKeyValidator;
 
-    public Create(IApiRepository apiRepository, ILogger<Create> logger, IOptions<EndPointConfiguration> endPointsCongfig)
+    public Create(IApiRepository apiRepository, ILogger<Create> logger, IOptions<EndPointConfiguration> endPointsCongfig, IApiKeyValidator apiKeyValidator)
     {
         _apiRepository = apiRepository;
         _logger = logger;
         _route = endPointsCongfig.Value.SaveContentDetailsModelApiUrl;
+        _apiKeyValidator = apiKeyValidator;
     }
 
     public override void Configure()
@@ -31,6 +34,12 @@ public class Create : Endpoint<ContentDetailsModelRequest, ContentDetailsModelRe
 
     public override async Task HandleAsync(ContentDetailsModelRequest request, CancellationToken ct)
     {
+        if (!_apiKeyValidator.IsValid(request.ApiKeyHeaderName))
+        {
+            await SendAsync(new ContentDetailsModelResponse(false), StatusCodes.Status401Unauthorized, ct);
+            return;
+        }
+
         await AddContentDetailsModel(request, ct);
     }
 

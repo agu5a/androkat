@@ -11,18 +11,18 @@ public class FixContent
     [Key]
     [Required]
     [DataMember(Name = "nid")]
-    public Guid Nid { get; set; } 
+    public Guid Nid { get; set; }
 
     [StringLength(100)]
     [DataMember(Name = "datum")]
-    public string Fulldatum { get; set; } //"MM-dd"
+    public string Datum { get; set; } //"MM-dd"
 
     [NotMapped]
-    public DateTime FullDate
+    public DateTime Fulldatum
     {
         get
         {
-            return DateTime.TryParse((Fulldatum == "02-29" ? "2024" : DateTime.UtcNow.ToString("yyyy")) + "-" + Fulldatum, out DateTime date) ? date : DateTime.MinValue;
+            return DateTime.TryParse((Datum == "02-29" ? "2024" : DateTime.UtcNow.ToString("yyyy")) + "-" + Datum, out DateTime date) ? date : DateTime.MinValue;
         }
     }
 
@@ -34,4 +34,13 @@ public class FixContent
 
     [DataMember(Name = "tipus")]
     public int Tipus { get; set; }
+
+    [NotMapped]
+    public DateTime Inserted
+    {
+        get
+        {
+            return DateTime.UtcNow;
+        }
+    }
 }

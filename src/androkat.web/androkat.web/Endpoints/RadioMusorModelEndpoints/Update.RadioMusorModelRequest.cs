@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FastEndpoints;
+using System.ComponentModel.DataAnnotations;
 
 namespace androkat.web.Endpoints.RadioMusorModelEndpoints;
 
@@ -10,4 +11,7 @@ public class RadioMusorModelRequest
 	public string Musor { get; set; }
 	[Required]
 	public string Inserted { get; set; }
+    [FromHeader("X-API-Key")]
+    [Required]
+    public string ApiKeyHeaderName { get; set; }
 }

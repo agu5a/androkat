@@ -3,6 +3,7 @@ using androkat.application.Service;
 using androkat.domain.Configuration;
 using androkat.infrastructure.Configuration;
 using androkat.infrastructure.DataManager;
+using androkat.web.Attributes;
 using androkat.web.Service;
 using FastEndpoints;
 using FastEndpoints.ApiExplorer;
@@ -31,6 +32,8 @@ public static class DependencyInjection
         builder.Services.AddOptions<CredentialConfiguration>().BindConfiguration("CredentialConfiguration").ValidateDataAnnotations().ValidateOnStart();
         builder.Services.AddSingleton<IContentMetaDataService, ContentMetaDataService>();
         builder.Services.SetAuthentication(builder.Configuration);
+        builder.Services.AddSingleton<ApiKeyAuthorizationFilter>();
+        builder.Services.AddSingleton<IApiKeyValidator, ApiKeyValidator>();
 
         builder.Services.AddCors(options =>
         {

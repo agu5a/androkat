@@ -1,5 +1,6 @@
 ﻿using androkat.domain;
 using androkat.domain.Configuration;
+using androkat.web.Service;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -15,12 +16,14 @@ public class Update : Endpoint<RadioMusorModelRequest, RadioMusorModelResponse>
 	private readonly IApiRepository _apiRepository;
 	private readonly ILogger<Update> _logger;
 	private readonly string _route;
+    private readonly IApiKeyValidator _apiKeyValidator;
 
-	public Update(IApiRepository apiRepository, ILogger<Update> logger, IOptions<EndPointConfiguration> endPointsCongfig)
+    public Update(IApiRepository apiRepository, ILogger<Update> logger, IOptions<EndPointConfiguration> endPointsCongfig, IApiKeyValidator apiKeyValidator)
 	{
 		_apiRepository = apiRepository;
 		_logger = logger;
 		_route = endPointsCongfig.Value.UpdateRadioMusorModelApiUrl;
+        _apiKeyValidator = apiKeyValidator;
 	}
 
 	public override void Configure()
@@ -31,6 +34,12 @@ public class Update : Endpoint<RadioMusorModelRequest, RadioMusorModelResponse>
 
 	public override async Task HandleAsync(RadioMusorModelRequest request, CancellationToken ct)
 	{
+        if (!_apiKeyValidator.IsValid(request.ApiKeyHeaderName))
+        {
+            await SendAsync(new RadioMusorModelResponse(false), StatusCodes.Status401Unauthorized, ct);
+            return;
+        }
+        
 		await UpdateRadioMusor(request, ct);
 	}
 

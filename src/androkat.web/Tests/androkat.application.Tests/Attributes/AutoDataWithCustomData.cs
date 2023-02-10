@@ -20,7 +20,7 @@ public class AutoDataWithCustomData : AutoDataAttribute
             fixture.Customize<FixContent>(composer =>
             composer.With(x => x.Cim, "Cím")
             .With(x => x.Nid, Guid.NewGuid())
-            .With(x => x.Fulldatum, "02-03"));
+            .With(x => x.Datum, "02-03"));
 
             fixture.Customize<ImaContent>(composer =>
             composer.With(x => x.Cim, "Cím")

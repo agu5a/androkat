@@ -504,7 +504,7 @@ public class ContentServiceTests : BaseTest
         maiszent.Cim = "Mai szent cím";
         maiszent.Nid = guid;
         maiszent.Idezet = "Idézet";
-        maiszent.Fulldatum = "02-03";
+        maiszent.Datum = "02-03";
 
         context.MaiSzent.Add(maiszent);
         context.SaveChanges();

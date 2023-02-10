@@ -19,6 +19,7 @@ public class CreateTempContentTests : IClassFixture<CustomWebApplicationFactory<
     public CreateTempContentTests(CustomWebApplicationFactory<WebMarker> factory)
     {
         _client = factory.CreateClient();
+        _client.DefaultRequestHeaders.Add("X-API-Key", "CronApiKey");
     }
 
     [Fact]

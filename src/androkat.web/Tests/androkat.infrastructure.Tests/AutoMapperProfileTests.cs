@@ -107,7 +107,7 @@ public class AutoMapperProfileTests
 
 		var result = mapper.Map<FixContent, ContentDetailsModel>(new FixContent
 		{
-			Fulldatum = "12-15"
+			Datum = "12-15"
 		});
 
 		result.Cim.Should().BeNull();
@@ -123,7 +123,7 @@ public class AutoMapperProfileTests
 
 		var result = mapper.Map<Maiszent, ContentDetailsModel>(new Maiszent
 		{
-			Fulldatum = "12-15"
+			Datum = "12-15"
 		});
 
 		result.Cim.Should().BeNull();

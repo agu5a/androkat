@@ -5,7 +5,7 @@ namespace androkat.domain.Model;
 public class ContentDetailsModel
 {
     public ContentDetailsModel(Guid nid, DateTime fulldatum, string cim,
-        string idezet, int tipus, DateTime inserted = default, string kulsoLink = default, string img = default, string fileUrl = default, string forras = default)
+        string idezet, int tipus, DateTime inserted, string kulsoLink = default, string img = default, string fileUrl = default, string forras = default)
     {
         Nid = nid;
         Fulldatum = fulldatum;

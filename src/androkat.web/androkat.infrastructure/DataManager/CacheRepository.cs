@@ -74,8 +74,8 @@ public class CacheRepository : BaseRepository, ICacheRepository
 
         var month = _clock.Now.ToString("MM");
         var rows = _ctx.FixContent.AsNoTracking().AsEnumerable()
-            .Where(w => w.Tipus == (int)Forras.humor && w.Fulldatum.StartsWith($"{month}-") && w.FullDate < _clock.Now.DateTime)
-            .OrderByDescending(o => o.Fulldatum).ToList();
+            .Where(w => w.Tipus == (int)Forras.humor && w.Datum.StartsWith($"{month}-") && w.Fulldatum < _clock.Now.DateTime)
+            .OrderByDescending(o => o.Datum).ToList();
 
         rows.ForEach(w =>
         {
@@ -91,14 +91,14 @@ public class CacheRepository : BaseRepository, ICacheRepository
         var hoNap = _clock.Now.ToString("MM-dd");
         var month = _clock.Now.ToString("MM");
 
-        var rows = _ctx.MaiSzent.AsNoTracking().Where(w => w.Fulldatum == hoNap);
+        var rows = _ctx.MaiSzent.AsNoTracking().Where(w => w.Datum == hoNap);
         if (!rows.Any())
         {
             _logger.LogDebug("{name}: nincs mai szent mai napra", nameof(GetMaiSzentToCache));
 
             var rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
-            .Where(w => w.Fulldatum.StartsWith($"{month}-") && w.FullDate < _clock.Now)
-            .OrderByDescending(o => o.Fulldatum).Take(1);
+            .Where(w => w.Datum.StartsWith($"{month}-") && w.Fulldatum < _clock.Now)
+            .OrderByDescending(o => o.Datum).Take(1);
 
             if (!rows2.Any())
             {
@@ -106,8 +106,8 @@ public class CacheRepository : BaseRepository, ICacheRepository
 
                 var prevmonth = _clock.Now.AddMonths(-1).ToString("MM");
                 rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
-                    .Where(w => w.Fulldatum.StartsWith($"{prevmonth}-"))
-                    .OrderByDescending(o => o.Fulldatum).Take(1);
+                    .Where(w => w.Datum.StartsWith($"{prevmonth}-"))
+                    .OrderByDescending(o => o.Datum).Take(1);
             }
 
             rows2.ToList().ForEach(row =>
@@ -136,7 +136,7 @@ public class CacheRepository : BaseRepository, ICacheRepository
 
         var date = _clock.Now.ToString("MM-dd");
 
-        var napiFixek = _ctx.FixContent.AsNoTracking().Where(w => tipusok.Contains(w.Tipus) && w.Fulldatum == date);
+        var napiFixek = _ctx.FixContent.AsNoTracking().Where(w => tipusok.Contains(w.Tipus) && w.Datum == date);
         foreach (var napiFix in napiFixek)
         {
             result.Add(_mapper.Map<ContentDetailsModel>(napiFix));

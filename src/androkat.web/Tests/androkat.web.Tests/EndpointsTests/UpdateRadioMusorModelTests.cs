@@ -18,6 +18,7 @@ public class UpdateRadioMusorModelTests : IClassFixture<CustomWebApplicationFact
 	public UpdateRadioMusorModelTests(CustomWebApplicationFactory<WebMarker> factory)
 	{
 		_client = factory.CreateClient();
+        _client.DefaultRequestHeaders.Add("X-API-Key", "CronApiKey");
 	}
 
 	[Fact]

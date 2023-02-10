@@ -29,7 +29,7 @@ public class CacheRepositoryTests : BaseTest
         {
             var entity = new FixContent
             {
-                Fulldatum = "02-03",
+                Datum = "02-03",
                 Tipus = (int)Forras.humor
             };
             context.FixContent.Add(entity);
@@ -37,7 +37,7 @@ public class CacheRepositoryTests : BaseTest
 
             var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
             var result = repo.GetHumorToCache();
-            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Fulldatum);
+            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
         }
     }
 
@@ -56,7 +56,7 @@ public class CacheRepositoryTests : BaseTest
         {
             var entity = new FixContent
             {
-                Fulldatum = "02-03",
+                Datum = "02-03",
                 Tipus = tipus
             };
             context.FixContent.Add(entity);
@@ -67,7 +67,7 @@ public class CacheRepositoryTests : BaseTest
             if (tipus == (int)Forras.pio)
             {
                 result.Count().Should().Be(1);  
-                result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Fulldatum);
+                result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
             }
             else
             {
@@ -90,7 +90,7 @@ public class CacheRepositoryTests : BaseTest
 		{
 			var entity = new FixContent
 			{
-				Fulldatum = "02-03",
+				Datum = "02-03",
 				Tipus = 1000 //invalid tipus
 			};
 			context.FixContent.Add(entity);
@@ -116,14 +116,14 @@ public class CacheRepositoryTests : BaseTest
         {
             var entity = new Maiszent
             {
-                Fulldatum = "02-03"
+                Datum = "02-03"
             };
             context.MaiSzent.Add(entity);
             context.SaveChanges();
 
             var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
             var result = repo.GetMaiSzentToCache();
-            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Fulldatum);
+            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
         }
     }
 
@@ -141,14 +141,14 @@ public class CacheRepositoryTests : BaseTest
         {
             var entity = new Maiszent
             {
-                Fulldatum = "02-02"
+                Datum = "02-02"
             };
             context.MaiSzent.Add(entity);
             context.SaveChanges();
 
             var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
             var result = repo.GetMaiSzentToCache();
-            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Fulldatum);
+            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
         }
     }
 
@@ -166,14 +166,14 @@ public class CacheRepositoryTests : BaseTest
         {
             var entity = new Maiszent
             {
-                Fulldatum = "01-31"
+                Datum = "01-31"
             };
             context.MaiSzent.Add(entity);
             context.SaveChanges();
 
             var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
             var result = repo.GetMaiSzentToCache();
-            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Fulldatum);
+            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
         }
     }
 
