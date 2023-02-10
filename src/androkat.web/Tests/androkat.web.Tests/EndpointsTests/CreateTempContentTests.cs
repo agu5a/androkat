@@ -1,5 +1,6 @@
 ﻿using androkat.web.Endpoints.TempContentEndpoints;
 using Ardalis.HttpClientTestExtensions;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -25,11 +26,7 @@ public class CreateTempContentTests : IClassFixture<CustomWebApplicationFactory<
     {
         var content = new StringContent(JsonSerializer.Serialize(new ContentDetailsModelRequest
         {
-            ContentDetailsModel = new domain.Model.ContentDetailsModel
-            {
-                Tipus = 1,
-                Cim = "cím2"
-            }
+            ContentDetailsModel = new domain.Model.ContentDetailsModel(Guid.Empty, DateTime.MinValue, "cím2", string.Empty, 1, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty)
         }),
         Encoding.UTF8, "application/json");
 
@@ -43,11 +40,7 @@ public class CreateTempContentTests : IClassFixture<CustomWebApplicationFactory<
     {
         var content = new StringContent(JsonSerializer.Serialize(new ContentDetailsModelRequest
         {
-            ContentDetailsModel = new domain.Model.ContentDetailsModel
-            {
-                Tipus = 1,
-                Cim = "cím1"
-            }
+            ContentDetailsModel = new domain.Model.ContentDetailsModel(Guid.Empty, DateTime.MinValue, "cím1", string.Empty, 1, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty)
         }),
         Encoding.UTF8, "application/json");
 

@@ -4,6 +4,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Moq;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +20,8 @@ public class ImaModelTests : BaseTest
         var contentService = new Mock<IContentService>();
         contentService.Setup(s => s.GetImaPage(string.Empty)).Returns(new List<ContentModel>
         {
-            new ContentModel (new ContentDetailsModel{ Cim = "Ima Cim" }, default )
+            new ContentModel (new ContentDetailsModel(Guid.Empty, DateTime.MinValue, "Ima Cim", string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty), 
+            default )
         });
 
         var model = new web.Pages.Ima.IndexModel(contentService.Object)

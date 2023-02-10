@@ -93,12 +93,8 @@ public class AutoMapperProfileTests
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
 		var mapper = config.CreateMapper();
-
-		var result = mapper.Map<ContentDetailsModel, Content>(new ContentDetailsModel
-		{
-			Fulldatum = DateTime.Parse("2022-12-15 01:02:03")
-		});
-
+        var result = mapper.Map<ContentDetailsModel, Content>(new ContentDetailsModel(Guid.Empty, DateTime.Parse("2022-12-15 01:02:03"), null, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
+        );
 		result.Cim.Should().BeNull();
 		result.Fulldatum.Should().Be("2022-12-15 01:02:03");
 	}
@@ -111,12 +107,12 @@ public class AutoMapperProfileTests
 
 		var result = mapper.Map<FixContent, ContentDetailsModel>(new FixContent
 		{
-			Datum = "12-15"
+			Fulldatum = "12-15"
 		});
 
 		result.Cim.Should().BeNull();
-		result.FileUrl.Should().BeEmpty();
-		result.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss").Should().Be(DateTime.Now.ToString("yyyy-") + "12-15 00:00:01");
+		result.FileUrl.Should().BeNull();
+		result.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss").Should().Be(DateTime.Now.ToString("yyyy-") + "12-15 00:00:00");
 	}
 
 	[Test]
@@ -127,11 +123,11 @@ public class AutoMapperProfileTests
 
 		var result = mapper.Map<Maiszent, ContentDetailsModel>(new Maiszent
 		{
-			Datum = "12-15"
+			Fulldatum = "12-15"
 		});
 
 		result.Cim.Should().BeNull();
-		result.FileUrl.Should().BeEmpty();
-		result.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss").Should().Be(DateTime.Now.ToString("yyyy-") + "12-15 00:00:01");
+		result.FileUrl.Should().BeNull();
+		result.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss").Should().Be(DateTime.Now.ToString("yyyy-") + "12-15 00:00:00");
 	}
 }

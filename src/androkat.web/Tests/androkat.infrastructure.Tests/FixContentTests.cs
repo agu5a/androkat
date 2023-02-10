@@ -12,9 +12,9 @@ public class FixContentTests
 	{
 		var model = new FixContent
 		{
-			Datum = "10-10"
+			Fulldatum = "10-10"
 		};
-		model.FullDate.ToString("yyyy-MM-dd").Should().Be(DateTime.UtcNow.ToString("yyyy-") + model.Datum);
+		model.FullDate.ToString("yyyy-MM-dd").Should().Be(DateTime.UtcNow.ToString("yyyy-") + model.Fulldatum);
 	}
 
     [Test]
@@ -22,9 +22,9 @@ public class FixContentTests
     {
         var model = new FixContent
         {
-            Datum = "02-29"
+            Fulldatum = "02-29"
         };
-        model.FullDate.ToString("yyyy-MM-dd").Should().Be("2024-" + model.Datum);
+        model.FullDate.ToString("yyyy-MM-dd").Should().Be("2024-" + model.Fulldatum);
 	}
 
 	[Test]
@@ -32,7 +32,7 @@ public class FixContentTests
 	{
 		var model = new FixContent
 		{
-			Datum = ""
+			Fulldatum = ""
 		};
 		model.FullDate.Should().Be(DateTime.MinValue);
 	}

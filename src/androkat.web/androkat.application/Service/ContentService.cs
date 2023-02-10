@@ -80,11 +80,8 @@ public class ContentService : IContentService
 		var list = new List<ContentModel>();
 		var result = GetIma(csoport);
 		foreach (var item in result)
-            list.Add(new ContentModel(new ContentDetailsModel
-				{
-					Nid = item.Nid,
-					Cim = item.Cim
-            }, default)
+            list.Add(new ContentModel(new ContentDetailsModel(item.Nid, DateTime.MinValue, item.Cim, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
+            , default)
             );
 
 		return list.AsReadOnly();

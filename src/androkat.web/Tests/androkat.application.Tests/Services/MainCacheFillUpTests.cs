@@ -32,23 +32,23 @@ public class MainCacheFillUpTests : BaseTest
         var cacheRepository = new Mock<ICacheRepository>();
         cacheRepository.Setup(s => s.GetHirekBlogokToCache()).Returns(new List<ContentDetailsModel>
         {
-            new ContentDetailsModel()
+            new ContentDetailsModel(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
         });
         cacheRepository.Setup(s => s.GetHumorToCache()).Returns(new List<ContentDetailsModel>
         {
-            new ContentDetailsModel()
+            new ContentDetailsModel(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
         });
         cacheRepository.Setup(s => s.GetMaiSzentToCache()).Returns(new List<ContentDetailsModel>
         {
-            new ContentDetailsModel()
+            new ContentDetailsModel(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
         });
         cacheRepository.Setup(s => s.GetNapiFixToCache()).Returns(new List<ContentDetailsModel>
         {
-            new ContentDetailsModel()
+            new ContentDetailsModel(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
         });
         cacheRepository.Setup(s => s.GetContentDetailsModelToCache()).Returns(new List<ContentDetailsModel>
         {
-            new ContentDetailsModel()
+            new ContentDetailsModel(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
         });
 
         var cacheService = new CacheService(cacheRepository.Object, new Mock<ILogger<CacheService>>().Object, clock.Object);

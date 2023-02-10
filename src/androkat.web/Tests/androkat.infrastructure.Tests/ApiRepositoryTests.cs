@@ -88,12 +88,8 @@ public class ApiRepositoryTests : BaseTest
 			context.SaveChanges();
 
 			var repo = new ApiRepository(context, logger.Object, clock.Object, mapper);
-			var result = repo.AddContentDetailsModel(new domain.Model.ContentDetailsModel
-			{
-				Tipus = tipus,
-				Cim = cim,
-				Nid = nid
-			});
+            var result = repo.AddContentDetailsModel(new domain.Model.ContentDetailsModel(nid, DateTime.MinValue, cim, string.Empty, tipus, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
+            );
 			result.Should().Be(false);
 			context.Content.FirstOrDefault(f => f.Nid == nid && f.Cim == cim).Should().BeNull();
 		}
@@ -123,12 +119,8 @@ public class ApiRepositoryTests : BaseTest
 			context.SaveChanges();
 
 			var repo = new ApiRepository(context, logger.Object, clock.Object, mapper);
-			var result = repo.AddContentDetailsModel(new domain.Model.ContentDetailsModel
-			{
-				Tipus = tipus,
-				Cim = cim,
-				Nid = nid
-			});
+            var result = repo.AddContentDetailsModel(new domain.Model.ContentDetailsModel(nid, DateTime.MinValue, cim, string.Empty, tipus, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
+            );
 			result.Should().Be(true);
 			context.Content.FirstOrDefault(f => f.Nid == nid && f.Cim == cim).Should().NotBeNull();
 		}

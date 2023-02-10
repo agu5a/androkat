@@ -25,7 +25,10 @@ public class WarmupServiceTests : BaseTest
 
 		_cacheService.Setup(s => s.MainCacheFillUp()).Returns(new MainCache
 		{
-			ContentDetailsModels = new List<ContentDetailsModel> { new ContentDetailsModel { Cim = "cim" } },
+			ContentDetailsModels = new List<ContentDetailsModel> 
+			{
+				new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "cim", string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
+			},
 			Inserted = DateTime.Now
 		});
 		var service = new WarmupService(cache, _cacheService.Object, logger.Object);
@@ -54,7 +57,10 @@ public class WarmupServiceTests : BaseTest
 
 		_cacheService.Setup(s => s.BookRadioSysCacheFillUp()).Returns(new BookRadioSysCache
 		{
-			Books = new List<ContentDetailsModel> { new ContentDetailsModel { Cim = "cim" } },
+			Books = new List<ContentDetailsModel> 
+			{
+				new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "cim", string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
+            },
 			Inserted = DateTime.Now
 		});
 		var service = new WarmupService(cache, _cacheService.Object, logger.Object);

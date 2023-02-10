@@ -15,14 +15,14 @@ public class FixContent
 
     [StringLength(100)]
     [DataMember(Name = "datum")]
-    public string Datum { get; set; } //"MM-dd"
+    public string Fulldatum { get; set; } //"MM-dd"
 
     [NotMapped]
     public DateTime FullDate
     {
         get
         {
-            return DateTime.TryParse((Datum == "02-29" ? "2024" : DateTime.UtcNow.ToString("yyyy")) + "-" + Datum, out DateTime date) ? date : DateTime.MinValue;
+            return DateTime.TryParse((Fulldatum == "02-29" ? "2024" : DateTime.UtcNow.ToString("yyyy")) + "-" + Fulldatum, out DateTime date) ? date : DateTime.MinValue;
         }
     }
 

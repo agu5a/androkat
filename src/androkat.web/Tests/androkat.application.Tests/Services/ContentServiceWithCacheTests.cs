@@ -53,18 +53,11 @@ public class ContentServiceWithCacheTests : BaseTest
         object emptyResult = new MainCache { ContentDetailsModels = new List<ContentDetailsModel>() };
         var data = new List<ContentDetailsModel>
                 {
-                new ContentDetailsModel
-                    {
-                    Cim = "cim1", Tipus = 60, Fulldatum = now.DateTime, Nid = Guid.Parse("281cd115-1289-11ea-8aa1-cbeb38570c35"),
-                        Idezet = "audiofile",
-                        FileUrl = ""
-                },
-                new ContentDetailsModel
-                {
-                    Cim = "cim2", Tipus = 60, Fulldatum = now.AddDays(-1).DateTime, Nid = Guid.Parse("181cd115-1289-11ea-8aa1-cbeb38570c35"),
-                    Idezet = "idezet", //ezt felül kell írja a FileUrl audio típusnál
-                    FileUrl = "audiofile"
-                    }
+                new ContentDetailsModel(Guid.Parse("281cd115-1289-11ea-8aa1-cbeb38570c35"), now.DateTime, "cim1", "audiofile", 60, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)                        
+                ,
+                new ContentDetailsModel(Guid.Parse("181cd115-1289-11ea-8aa1-cbeb38570c35"), now.AddDays(-1).DateTime, "cim2",
+                "idezet", //ezt felül kell írja a FileUrl audio típusnál 
+                60, DateTime.MinValue, string.Empty, string.Empty, "audiofile", string.Empty)                
             };
 
         object result = new MainCache

@@ -107,7 +107,7 @@ public class DetailsModelTests : BaseTest
 		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.szentbernat))
             .Returns(new ContentModel 
             (
-                new ContentDetailsModel(), default
+                new ContentDetailsModel(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty), default
             ));
 
 		var model = new web.Pages.DetailsModel(contentService.Object)

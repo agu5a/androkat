@@ -74,8 +74,8 @@ public class CacheRepository : BaseRepository, ICacheRepository
 
         var month = _clock.Now.ToString("MM");
         var rows = _ctx.FixContent.AsNoTracking().AsEnumerable()
-            .Where(w => w.Tipus == (int)Forras.humor && w.Datum.StartsWith($"{month}-") && w.FullDate < _clock.Now.DateTime)
-            .OrderByDescending(o => o.Datum).ToList();
+            .Where(w => w.Tipus == (int)Forras.humor && w.Fulldatum.StartsWith($"{month}-") && w.FullDate < _clock.Now.DateTime)
+            .OrderByDescending(o => o.Fulldatum).ToList();
 
         rows.ForEach(w =>
         {
@@ -91,23 +91,23 @@ public class CacheRepository : BaseRepository, ICacheRepository
         var hoNap = _clock.Now.ToString("MM-dd");
         var month = _clock.Now.ToString("MM");
 
-        var rows = _ctx.MaiSzent.AsNoTracking().Where(w => w.Datum == hoNap);
+        var rows = _ctx.MaiSzent.AsNoTracking().Where(w => w.Fulldatum == hoNap);
         if (!rows.Any())
         {
-			_logger.LogDebug("{name}: nincs mai szent mai napra", nameof(GetMaiSzentToCache));
+            _logger.LogDebug("{name}: nincs mai szent mai napra", nameof(GetMaiSzentToCache));
 
             var rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
-            .Where(w => w.Datum.StartsWith($"{month}-") && w.FullDate < _clock.Now)
-            .OrderByDescending(o => o.Datum).Take(1);
+            .Where(w => w.Fulldatum.StartsWith($"{month}-") && w.FullDate < _clock.Now)
+            .OrderByDescending(o => o.Fulldatum).Take(1);
 
             if (!rows2.Any())
             {
-				_logger.LogDebug("{name}: nincs mai szent az aktuális hónapra", nameof(GetMaiSzentToCache));
+                _logger.LogDebug("{name}: nincs mai szent az aktuális hónapra", nameof(GetMaiSzentToCache));
 
                 var prevmonth = _clock.Now.AddMonths(-1).ToString("MM");
                 rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
-					.Where(w => w.Datum.StartsWith($"{prevmonth}-"))
-                    .OrderByDescending(o => o.Datum).Take(1);
+                    .Where(w => w.Fulldatum.StartsWith($"{prevmonth}-"))
+                    .OrderByDescending(o => o.Fulldatum).Take(1);
             }
 
             rows2.ToList().ForEach(row =>
@@ -136,11 +136,11 @@ public class CacheRepository : BaseRepository, ICacheRepository
 
         var date = _clock.Now.ToString("MM-dd");
 
-        var napiFixek = _ctx.FixContent.AsNoTracking().Where(w => tipusok.Contains(w.Tipus) && w.Datum == date);
-            foreach (var napiFix in napiFixek)
-            {
-                result.Add(_mapper.Map<ContentDetailsModel>(napiFix));
-            }
+        var napiFixek = _ctx.FixContent.AsNoTracking().Where(w => tipusok.Contains(w.Tipus) && w.Fulldatum == date);
+        foreach (var napiFix in napiFixek)
+        {
+            result.Add(_mapper.Map<ContentDetailsModel>(napiFix));
+        }
 
         return result.AsReadOnly();
     }
@@ -169,14 +169,14 @@ public class CacheRepository : BaseRepository, ICacheRepository
             if (tipus == (int)Forras.fokolare)
                 date = _clock.Now.ToString("yyyy-MM") + "-01";
 
-			var res = GetContentDetailsModel(allRecords, tipus, date, tomorrow, osszes);
+            var res = GetContentDetailsModel(allRecords, tipus, date, tomorrow, osszes);
             result.AddRange(_mapper.Map<List<ContentDetailsModel>>(res));
         }
 
         return result.AsReadOnly();
     }
 
-	private IEnumerable<Content> GetContentDetailsModel(List<Content> allRecords, int tipus, string date, string tomorrow, List<int> osszes)
+    private IEnumerable<Content> GetContentDetailsModel(List<Content> allRecords, int tipus, string date, string tomorrow, List<int> osszes)
     {
         IEnumerable<Content> res;
         if (tipus == (int)Forras.maievangelium) //szombaton már megjelenik a vasárnapi is
@@ -187,11 +187,11 @@ public class CacheRepository : BaseRepository, ICacheRepository
             res = allRecords.Where(w => w.Tipus == tipus && w.Fulldatum.StartsWith(date)).OrderByDescending(o => o.Inserted);
 
         if (res is null || !res.Any())
-		{
-			_logger.LogDebug("{name}: nincs mai, akkor egy a korábbiakból, ha van. tipus {tipus} date {date}", nameof(GetContentDetailsModel), tipus, date);
+        {
+            _logger.LogDebug("{name}: nincs mai, akkor egy a korábbiakból, ha van. tipus {tipus} date {date}", nameof(GetContentDetailsModel), tipus, date);
             res = allRecords.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted).Take(1);
-		}
+        }
 
         return res;
-    }    
+    }
 }

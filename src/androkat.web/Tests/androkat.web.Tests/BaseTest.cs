@@ -54,26 +54,26 @@ public class BaseTest
         var contentService = new Mock<IContentService>();
 		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.maiszent)).Returns(
             new ContentModel(
-                 new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                 new ContentDetailsModel(Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
                  GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))                
             ));
 		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.szentbernat)).Returns(
 			new ContentModel
 			(
-				new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "", Forras = "Forras" },
+				new ContentDetailsModel(Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, string.Empty, string.Empty, "Forras"),                
 				GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))
             ));
 		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.ajanlatweb)).Returns(
 			new ContentModel
 			(
-				new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+				new ContentDetailsModel(Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),                
 				GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))
             ));
         contentService.Setup(s => s.GetHumor()).Returns(new List<ContentModel>
         {
             new ContentModel
             (
-                new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
                 GetContentMetaDataModel(image: "Image")
             )
         });
@@ -81,7 +81,7 @@ public class BaseTest
         {
             new ContentModel
             (
-                new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
                 GetContentMetaDataModel(image: "Image")
             )
         });
@@ -89,7 +89,7 @@ public class BaseTest
         {
             new ContentModel
             (
-                new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
                 GetContentMetaDataModel(image: "Image")
             )
         });
@@ -97,7 +97,7 @@ public class BaseTest
         {
             new ContentModel
             (
-                new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
                 GetContentMetaDataModel(image: "Image")
             )
         });
@@ -105,7 +105,7 @@ public class BaseTest
         {
             new ContentModel
             (
-                new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
                 GetContentMetaDataModel(image : "Image")
             )
         });
@@ -113,7 +113,7 @@ public class BaseTest
         {
             new ContentModel
             (
-                new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
                 GetContentMetaDataModel(image : "Image")
             )
         });
@@ -121,7 +121,7 @@ public class BaseTest
         {
             new ContentModel
             (
-                new ContentDetailsModel { Cim = "Cim", Tipus = tipus, Img = "Image" },
+                new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
                 GetContentMetaDataModel(image : "Image")
             )
         });

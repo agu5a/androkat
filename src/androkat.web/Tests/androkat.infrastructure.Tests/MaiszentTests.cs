@@ -12,9 +12,9 @@ public class MaiszentTests
 	{
 		var model = new Maiszent
 		{
-			Datum = "10-10"
+            Fulldatum = "10-10"
 		};
-		model.FullDate.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + model.Datum);
+        model.FullDate.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + model.Fulldatum);
 	}
 
     [Test]
@@ -22,8 +22,8 @@ public class MaiszentTests
     {
         var model = new Maiszent
         {
-            Datum = "02-29"
+            Fulldatum = "02-29"
         };
-        model.FullDate.ToString("yyyy-MM-dd").Should().Be("2024-" + model.Datum);
+        model.FullDate.ToString("yyyy-MM-dd").Should().Be("2024-" + model.Fulldatum);
     }
 }

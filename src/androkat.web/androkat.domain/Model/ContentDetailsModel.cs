@@ -4,14 +4,29 @@ namespace androkat.domain.Model;
 
 public class ContentDetailsModel
 {
-    public Guid Nid { get; set; }
-    public DateTime Fulldatum { get; set; }
-    public string Cim { get; set; }
-    public string Idezet { get; set; }
-    public int Tipus { get; set; }
-    public DateTime Inserted { get; set; }
-    public string KulsoLink { get; set; }
-    public string Img { get; set; }
-    public string FileUrl { get; set; }    
-    public string Forras { get; set; }
+    public ContentDetailsModel(Guid nid, DateTime fulldatum, string cim,
+        string idezet, int tipus, DateTime inserted = default, string kulsoLink = default, string img = default, string fileUrl = default, string forras = default)
+    {
+        Nid = nid;
+        Fulldatum = fulldatum;
+        Cim = cim;
+        Idezet = idezet;
+        Tipus = tipus;
+        Inserted = inserted;
+        KulsoLink = kulsoLink;
+        Img = img;
+        FileUrl = fileUrl;
+        Forras = forras;
+    }
+
+    public Guid Nid { get; }
+    public DateTime Fulldatum { get; }
+    public string Cim { get; }
+    public string Idezet { get; }
+    public int Tipus { get; }
+    public DateTime Inserted { get; }
+    public string KulsoLink { get; }
+    public string Img { get; }
+    public string FileUrl { get; }
+    public string Forras { get; }
 }

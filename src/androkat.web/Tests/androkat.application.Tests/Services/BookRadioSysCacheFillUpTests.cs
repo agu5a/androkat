@@ -30,7 +30,7 @@ public class BookRadioSysCacheFillUpTests : BaseTest
         var cacheRepository = new Mock<ICacheRepository>();
         cacheRepository.Setup(s => s.GetBooksToCache()).Returns(new List<ContentDetailsModel>
         {
-            new ContentDetailsModel()
+            new ContentDetailsModel(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
         });
         cacheRepository.Setup(s => s.GetRadioToCache()).Returns(new List<RadioMusorModel>
         {
