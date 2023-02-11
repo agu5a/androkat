@@ -1,11 +1,11 @@
-﻿using Ardalis.HttpClientTestExtensions;
+﻿using androkat.web.ViewModels;
+using Ardalis.HttpClientTestExtensions;
+using FluentAssertions;
+using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
-using FluentAssertions;
-using System.Linq;
-using androkat.web.ViewModels;
 
 namespace androkat.web.Tests.EndpointsTests;
 
@@ -13,7 +13,7 @@ namespace androkat.web.Tests.EndpointsTests;
 public class HealthCheckTests : IClassFixture<CustomWebApplicationFactory<WebMarker>>
 {
     private readonly HttpClient _client;
-    private const string _url = "/fake_health";
+    private const string _url = Constants.HealthCheckTestsUrl;
 
     public HealthCheckTests(CustomWebApplicationFactory<WebMarker> factory)
     {

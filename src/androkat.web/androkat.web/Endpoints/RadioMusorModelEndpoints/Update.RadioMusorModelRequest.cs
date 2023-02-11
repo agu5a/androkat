@@ -13,5 +13,5 @@ public class RadioMusorModelRequest
 	public string Inserted { get; set; }
     [FromHeader("X-API-Key")]
     [Required]
-    public string ApiKeyHeaderName { get; set; }
+    public string ApiKey { get; set; }
 }

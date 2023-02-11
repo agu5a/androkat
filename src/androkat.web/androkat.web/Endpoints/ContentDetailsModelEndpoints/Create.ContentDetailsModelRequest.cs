@@ -11,5 +11,5 @@ public class ContentDetailsModelRequest
 
     [FromHeader("X-API-Key")]
     [Required]
-    public string ApiKeyHeaderName { get; set; }
+    public string ApiKey { get; set; }
 }

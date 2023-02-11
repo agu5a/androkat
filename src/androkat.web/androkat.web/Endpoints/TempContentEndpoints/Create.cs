@@ -34,7 +34,7 @@ public class Create : Endpoint<ContentDetailsModelRequest, ContentDetailsModelRe
 
     public override async Task HandleAsync(ContentDetailsModelRequest request, CancellationToken ct)
     {
-        if (!_apiKeyValidator.IsValid(request.ApiKeyHeaderName))
+        if (!_apiKeyValidator.IsValid(request.ApiKey))
         {
             await SendAsync(new ContentDetailsModelResponse(false), StatusCodes.Status401Unauthorized, ct);
             return;

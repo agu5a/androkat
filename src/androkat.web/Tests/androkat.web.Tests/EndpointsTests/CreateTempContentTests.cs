@@ -14,12 +14,12 @@ namespace androkat.web.Tests.EndpointsTests;
 public class CreateTempContentTests : IClassFixture<CustomWebApplicationFactory<WebMarker>>
 {
     private readonly HttpClient _client;
-    private const string _url = "/api/saveTempContent";
+    private const string _url = Constants.CreateTempContentTestsUrl;
 
     public CreateTempContentTests(CustomWebApplicationFactory<WebMarker> factory)
     {
         _client = factory.CreateClient();
-        _client.DefaultRequestHeaders.Add("X-API-Key", "CronApiKey");
+        _client.DefaultRequestHeaders.Add("X-API-Key", Constants.XAPIKey);
     }
 
     [Fact]

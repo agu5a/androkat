@@ -34,7 +34,7 @@ public class Update : Endpoint<RadioMusorModelRequest, RadioMusorModelResponse>
 
 	public override async Task HandleAsync(RadioMusorModelRequest request, CancellationToken ct)
 	{
-        if (!_apiKeyValidator.IsValid(request.ApiKeyHeaderName))
+        if (!_apiKeyValidator.IsValid(request.ApiKey))
         {
             await SendAsync(new RadioMusorModelResponse(false), StatusCodes.Status401Unauthorized, ct);
             return;
