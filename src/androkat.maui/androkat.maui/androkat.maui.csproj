@@ -19,17 +19,17 @@
 		<ApplicationDisplayVersion>1.17</ApplicationDisplayVersion>
 		<ApplicationVersion>17</ApplicationVersion>
 
+                <!-- Required for C# Hot Reload -->
+                <UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
+
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
-		<EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
-	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<!--MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#00796B" /-->
-		<MauiIcon Include="Resources\AppIcon\ic_launcher.png" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#00796B" />
+		<!--MauiIcon Include="Resources\AppIcon\ic_launcher.png" /-->
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#00796B" BaseSize="128,128" />
@@ -113,9 +113,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+          <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+          <PackageReference Include="MonkeyCache.FileStore" Version="2.0.1" />
+          <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 	  <ProjectReference Include="..\androkat.maui.library\androkat.maui.library.csproj" />
 	</ItemGroup>
 
-	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionandrokatmauiHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>
