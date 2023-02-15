@@ -1,0 +1,16 @@
+body {
+	font: normal normal 16px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+	color: #707070;
+	background-color: #f5f5f5;
+	padding: 0px;
+    margin: 0px;
+}
+div{margin-bottom: 8px;
+font: normal normal 16px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+	color: #707070;}
+#alapkizart {
+	font: normal normal 16px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+	color: #707070;
+}
+a:link,a:visited,a:hover,a:active {
+color: #707070;}

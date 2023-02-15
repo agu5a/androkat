@@ -1,0 +1,391 @@
+{
+  "sources": [
+    {
+      "id": 1,
+      "title": "Mello",
+      "source": "Mello",
+      "sourcelink": "Mello",
+      "img": "ic_launcher",
+      "group":"group_napiolvaso",
+      "active": false
+    },
+    {
+      "id": 2,
+      "title": "Pio atya breviáriuma",
+      "source": "Szent Gellért Kiadó",
+      "sourcelink": "https://www.szentgellertkiado.hu",
+      "img": "pio",
+      "group":"group_szentek",
+      "active": true
+    },
+    {
+      "id": 3,
+      "title": "II. János Pál pápa breviáriuma",
+      "source": "Szent Gellért Kiadó",
+      "sourcelink": "https://www.szentgellertkiado.hu",
+      "img": "janospal",
+      "group":"group_szentek",
+      "active": true
+    },
+    {
+      "id": 4,
+      "title": "Keresztes Szent János aranymondásai",
+      "source": "Magyar Kármelita Rendtartomány",
+      "sourcelink": "http://www.karmelitarend.hu",
+      "img": "szentjanos",
+      "group":"group_szentek",
+      "active": true
+    },
+    {
+      "id": 5,
+      "title": "Kis Szent Teréz breviáriuma",
+      "source": "Sarutlan Kármelita Nővérek",
+      "sourcelink": "http://karmelita.hu",
+      "img": "kisterez",
+      "group":"group_szentek",
+      "active": true
+    },
+    {
+      "id": 6,
+      "title": "Horváth István Sándor atya",
+      "source": "Horváth István Sándor atya",
+      "sourcelink": "http://evangelium365.hu",
+      "img": "evangelium365",
+      "group":"group_audio",
+      "active": true
+    },
+    {
+      "id": 7,
+      "title": "Fokoláre: életige",
+      "source": "Fokoláre Mozgalom",
+      "sourcelink": "http://www.fokolare.hu",
+      "img": "focolare",
+      "group":"group_napiolvaso",
+      "active": true
+    },
+    {
+      "id": 8,
+      "title": "Teréz Anya breviáriuma",
+      "source": "Szent Gellért Kiadó",
+      "sourcelink": "https://www.szentgellertkiado.hu",
+      "img": "terezanya",
+      "group":"group_szentek",
+      "active": true
+    },
+    {
+      "id": 9,
+      "title": "Ferenc pápa twitter üzenete",
+      "source": "Magyar Kurír",
+      "sourcelink": "https://www.magyarkurir.hu/ferenc-papa/ferenc-papa-twitter",
+      "img": "ferencpapa",
+      "group":"group_napiolvaso",
+      "active": true
+    },
+    {
+      "id": 10,
+      "title": "Advent",
+      "source": "Országúti Ferences Plébánia",
+      "sourcelink": "http://orszagutiferencesek.hu",
+      "img": "advent",
+      "group":"group_napiolvaso",
+      "active": false
+    },
+    {
+      "id": 11,
+      "title": "Napi Ige és olvasmányok",
+      "source": "katolikus.hu",
+      "sourcelink": "https://igenaptar.katolikus.hu",
+      "img": "napibible",
+      "group":"group_napiolvaso",
+      "active": true
+    },
+    {
+      "id": 12,
+      "title": "Loyolai Szent Ignác gondolatai",
+      "source": "Korda Kiadó",
+      "sourcelink": "http://szikrak.jezsuita.hu",
+      "img": "ignac",
+      "group":"group_szentek",
+      "active": true
+    },
+    {
+      "id": 13,
+      "title": "Barsi és Telek: Magasság és mélység",
+      "source": "barsitelekmm.blogspot.hu",
+      "sourcelink": "http://barsitelekmm.blogspot.hu",
+      "img": "barsi",
+      "group":"group_napiolvaso",
+      "active": true
+    },
+    {
+      "id": 14,
+      "title": "Horváth István Sándor atya",
+      "source": "Horváth István Sándor atya",
+      "sourcelink": "https://www.evangelium365.hu",
+      "img": "evangelium365",
+      "group":"group_napiolvaso",
+      "active": true
+    },
+    {
+      "id": 15,
+      "title": "Jezsuita napi-útra-való",
+      "source": "jezsuita.hu",
+      "sourcelink": "https://www.mixcloud.com/napiutravalo",
+      "img": "prayasyougo",
+      "group":"group_audio",
+      "active": true
+    },
+    {
+      "id": 16,
+      "title": "Nagyböjti elmélkedések",
+      "source": "orszagutiferencesek.hu",
+      "sourcelink": "http://orszagutiferencesek.hu",
+      "img": "nagybojt",
+      "group":"group_napiolvaso",
+      "active": true
+    },
+    {
+      "id": 17,
+      "title": "Böjte Csaba testvér gondolatai",
+      "source": "Szent Gellért Kiadó",
+      "sourcelink": "https://www.szentgellertkiado.hu",
+      "img": "bojte",
+      "group":"group_napiolvaso",
+      "active": true
+    },
+    {
+      "id": 18,
+      "title": "magyarkurir.hu",
+      "source": "Magyar Kurír",
+      "sourcelink": "https://www.magyarkurir.hu",
+      "img": "kurir",
+      "group":"group_news",
+      "active": true
+    },
+    {
+      "id": 19,
+      "title": "Kempis Tamás: Krisztus követése (válogatás)",
+      "source": "Szent Gellért Kiadó",
+      "sourcelink": "https://www.szentgellertkiado.hu",
+      "img": "kempis",
+      "group":"group_napiolvaso",
+      "active": true
+    },
+    {
+      "id": 20,
+      "title": "bonumtv.hu",
+      "source": "bonumtv.hu",
+      "sourcelink": "https://bonumtv.hu",
+      "img": "bonumtv",
+      "group":"group_news",
+      "active": true
+    },
+    {
+      "id": 21,
+      "title": "Mai Szent",
+      "source": "katolikus.hu",
+      "sourcelink": "https://archiv.katolikus.hu/szentek/d.html",
+      "img": "katolikus_hu",
+      "group":"maiszent",
+      "active": true
+    },
+    {
+      "id": 23,
+      "title": "Imádság",
+      "source": "Ima gyűjtemény",
+      "sourcelink": "Ima gyűjtemény",
+      "img": "candle",
+      "group":"group_ima",
+      "active": true
+    },
+    {
+      "id": 24,
+      "title": "Szeretet-újság",
+      "source": "Szent Gellért Kiadó",
+      "sourcelink": "https://www.szentgellertkiado.hu",
+      "img": "szentgellertkiado",
+      "group":"group_napiolvaso",
+      "active": true
+    },
+    {
+      "id": 25,
+      "title": "Nevessünk!",
+      "source": "Szent Gellért Kiadó",
+      "sourcelink": "https://www.szentgellertkiado.hu",
+      "img": "ic_smile",
+      "group":"group_humor",
+      "active": true
+    },
+    {
+      "id": 28,
+      "title": "Napi evangélium",
+      "source": "katolikusradio.hu",
+      "sourcelink": "https://www.katolikusradio.hu",
+      "img": "katolikusradio",
+      "group":"group_audio",
+      "active": true
+    },
+    {
+      "id": 29,
+      "title": "Keresztény Élet",
+      "source": "keresztenyelet.hu",
+      "sourcelink": "http://www.keresztenyelet.hu",
+      "img": "keresztenyelet",
+      "group":"group_news",
+      "active": true
+    },
+    {
+      "id": 34,
+      "title": "Elmélkedés gyónáshoz",
+      "source": "katolikus.hu",
+      "sourcelink": "https://katolikus.hu",
+      "img": "nagybojt",
+      "group":"gyonas",
+      "active": true
+    },
+    {
+      "id": 38,
+      "title": "Barsi Balázs atya prédikációi",
+      "source": "Barsi Balázs youtube csatorna",
+      "sourcelink": "https://www.youtube.com/channel/UC_aC_9qFjPI5U0JrznoyYRA",
+      "img": "barsi",
+      "group":"group_audio",
+      "active": true
+    },
+    {
+      "id": 39,
+      "title": "Pál Feri atya prédikációi",
+      "source": "palferi.hu",
+      "sourcelink": "https://www.palferi.hu/hanganyagok",
+      "img": "palferi",
+      "group":"group_audio",
+      "active": true
+    },
+    {
+      "id": 42,
+      "title": "Vianney Szent János breviáriuma",
+      "source": "Szent Gellért Kiadó",
+      "sourcelink": "https://www.szentgellertkiado.hu",
+      "img": "vianney",
+      "group":"group_szentek",
+      "active": true
+    },
+    {
+      "id": 43,
+      "title": "777blog.hu",
+      "source": "777blog.hu",
+      "sourcelink": "https://777blog.hu",
+      "img": "b777",
+      "group":"group_blog",
+      "active": true
+    },
+    {
+      "id": 45,
+      "title": "Regnum Christi Mozgalom",
+      "source": "Regnum Christi Mozgalom",
+      "sourcelink": "https://regnumchristi.hu",
+      "img": "regnum",
+      "group":"group_napiolvaso",
+      "active": true
+    },
+    {
+      "id": 46,
+      "title": "EPub könyvek",
+      "source": "EPub könyvek",
+      "sourcelink": "EPub könyvek",
+      "img": "book",
+      "group":"book",
+      "active": true
+    },
+    {
+      "id": 47,
+      "title": "Taizé",
+      "source": "Taizé",
+      "sourcelink": "https://www.taize.fr",
+      "img": "taize",
+      "group":"group_napiolvaso",
+      "active": true
+    },
+    {
+      "id": 48,
+      "title": "Prohászka Ottokár breviáriuma",
+      "source": "Székesfehérvári Egyházmegye",
+      "sourcelink": "http://www.szfvar.katolikus.hu/proima/prohaszka_breviarium",
+      "img": "prohaszka",
+      "group":"group_napiolvaso",
+      "active": true
+    },
+    {
+      "id": 49,
+      "title": "Katolikus Ma",
+      "source": "Katolikus Ma",
+      "sourcelink": "https://katolikus.ma",
+      "img": "katolikusma",
+      "group":"group_blog",
+      "active": true
+    },
+    {
+      "id": 50,
+      "title": "Szent Bernát idézetek",
+      "source": "Zirci Ciszterci Apátság",
+      "sourcelink": "https://ciszterna.ocist.hu",
+      "img": "szentbernat",
+      "group":"group_szentek",
+      "active": true
+    },
+    {
+      "id": 51,
+      "title": "Jezsuita bloggerek",
+      "source": "jezsuita.blog.hu",
+      "sourcelink": "https://jezsuita.blog.hu",
+      "img": "jezsuitablog",
+      "group":"group_blog",
+      "active": true
+    },
+    {
+      "id": 52,
+      "title": "Szalézi Szent Ferenc gondolatok",
+      "source": "kairosz.hu",
+      "sourcelink": "http://kairosz.hu",
+      "img": "szentszalezi",
+      "group":"group_szentek",
+      "active": true
+    },
+    {
+      "id": 57,
+      "title": "Varga László megyéspüspök gondolatai",
+      "source": "facebook.com",
+      "sourcelink": "https://www.facebook.com/profile.php?id=100050238980182",
+      "img": "laciatya",
+      "group":"group_napiolvaso",
+      "active": true
+    },
+    {
+      "id": 58,
+      "title": "KÖNYVAJÁNLÓ",
+      "source": "Szent Gellért Kiadó",
+      "sourcelink": "https://www.szentgellertkiado.hu",
+      "img": "gift",
+      "group":"group_ajanlatok",
+      "active": true
+    },
+    {
+      "id": 60,
+      "title": "Taizé napi imák",
+      "source": "Taizé",
+      "sourcelink": "https://www.taize.fr",
+      "img": "taize",
+      "group":"group_audio",
+      "active": true
+    },
+    {
+      "id": 61,
+      "title": "Sienai Szent Katalin breviáriuma",
+      "source": "Szent Gellért Kiadó",
+      "sourcelink": "https://www.szentgellertkiado.hu",
+      "img": "sienaikatalin",
+      "group":"group_szentek",
+      "active": true
+    }
+  ]
+}
