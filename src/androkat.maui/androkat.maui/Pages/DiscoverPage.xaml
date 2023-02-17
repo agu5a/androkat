@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             
+             Title="Home"
+             x:Name="this"
+             xmlns:view="clr-namespace:androkat.hu.Views"
+             xmlns:viewmodels="clr-namespace:androkat.hu.ViewModels"
+             
+             Shell.NavBarIsVisible="False"
+             x:DataType="viewmodels:DiscoverViewModel"
+             x:Class="androkat.hu.Pages.DiscoverPage">
+    <ContentPage.Resources>
+        <Style x:Key="ListTitleStyle"
+               TargetType="Label"
+               BasedOn="{OnIdiom Default={StaticResource H5LabelStyle}, Phone={StaticResource H6LabelStyle}}">
+            <Setter Property="Padding"
+                    Value="{OnIdiom Desktop='48,0,0,12', Phone='16,0,0,0'}" />
+        </Style>
+    </ContentPage.Resources>
+    <Grid Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}">
+        <StackLayout Margin="10,0">
+            
+        </StackLayout>
+        <CollectionView ItemsSource="{Binding PodcastsGroup}"
+                        Margin="{OnIdiom Phone='10,50,10,0', Default='10,50,10,0'}"
+                        SelectionMode="None"
+                        IsGrouped="True">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                            Span="{OnIdiom Phone=2, Tablet=3, Default=2}"
+                            HorizontalItemSpacing="5"
+                            VerticalItemSpacing="5" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <view:ContentItemView SubscriptionCommand="{Binding SubscribeCommand, Source={RelativeSource AncestorType={x:Type viewmodels:DiscoverViewModel}}}"
+                                       SubscriptionCommandParameter="{Binding }" 
+                                       SemanticProperties.Description="Description"/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="{x:Null}">
+                    <Label Text="{Binding Name}"
+                           Style="{StaticResource ListTitleStyle}"
+                           FontSize="32" />
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>           
+        </CollectionView>
+
+      
+
+    </Grid>
+</ContentPage>

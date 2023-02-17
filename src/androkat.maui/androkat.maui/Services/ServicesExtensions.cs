@@ -11,8 +11,14 @@ public static class ServicesExtensions
 
         string dbPath = FileAccessHelper.GetLocalFilePath("androkat.db3");
         builder.Services.AddSingleton<IRepository>(s => ActivatorUtilities.CreateInstance<Repository>(s, dbPath));
-        
+
+        builder.Services.AddSingleton<DownloadService>(s =>
+            ActivatorUtilities.CreateInstance<DownloadService>(s, s.GetRequiredService<IAndrokatService>(),
+            s.GetRequiredService<IRepository>(), s.GetRequiredService<IHelperSharedPreferences>(), s.GetRequiredService<ISourceData>())
+        );
+
         builder.Services.AddSingleton<ISourceData, SourceDataMapper>();
+        builder.Services.AddSingleton<IHelperSharedPreferences, HelperSharedPreferences>();
         builder.Services.AddSingleton<IAndrokatService, AndrokatService>();
         return builder;
     }
