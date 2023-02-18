@@ -2,25 +2,27 @@
 
 namespace androkat.hu.Pages;
 
-public partial class DiscoverPage : ContentPage
+public partial class ContentListPage : ContentPage
 {
-    private DiscoverViewModel viewModel => BindingContext as DiscoverViewModel;
+    private ContentListViewModel viewModel => BindingContext as ContentListViewModel;
 
-    public DiscoverPage(DiscoverViewModel vm)
+    public ContentListPage(ContentListViewModel vm)
     {
         InitializeComponent();
-        BindingContext = vm;
+        BindingContext = vm;    
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        //player.OnAppearing();
         await viewModel.InitializeAsync();
     }
 
 
     protected override void OnDisappearing()
     {
+        //player.OnDisappearing();
         base.OnDisappearing();
     }
 }

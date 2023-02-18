@@ -15,6 +15,7 @@ public partial class App : Application
         MainPage = new MobileShell();
 
         Routing.RegisterRoute(nameof(DiscoverPage), typeof(DiscoverPage));
+        Routing.RegisterRoute(nameof(ContentListPage), typeof(ContentListPage));
         Routing.RegisterRoute(nameof(ShowDetailPage), typeof(ShowDetailPage));
     }
 
