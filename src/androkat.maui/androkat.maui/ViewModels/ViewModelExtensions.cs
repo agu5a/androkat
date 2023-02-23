@@ -8,6 +8,7 @@ public static class ViewModelExtensions
         builder.Services.AddSingleton<DiscoverViewModel>();
         builder.Services.AddSingleton<NavigationViewModel>();
 
+        builder.Services.AddSingleton<ShellViewModel>();
 
         return builder;
     }
