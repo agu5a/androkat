@@ -10,6 +10,10 @@
         <Tab Title="{Binding Discover.Title}"
              Icon="{Binding Discover.Icon}">
             <ShellContent ContentTemplate="{DataTemplate pages:DiscoverPage}" />
+        </Tab>
+<Tab Title="{Binding Settings.Title}"
+             Icon="{Binding Settings.Icon}">
+            <ShellContent ContentTemplate="{DataTemplate pages:DiscoverPage}" />
         </Tab>       
     </TabBar>
 </Shell>

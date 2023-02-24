@@ -13,7 +13,7 @@ namespace androkat.hu.ViewModels;
 [QueryProperty(nameof(Id), nameof(Id))]
 public partial class ContentListViewModel : ViewModelBase
 {
-    private readonly ShowsService showsService;
+    private readonly PageService _pageService;
     private readonly SubscriptionsService subscriptionsService;
     private IEnumerable<ContentViewModel> _contents;
     private readonly ISourceData _sourceData;
@@ -21,11 +21,18 @@ public partial class ContentListViewModel : ViewModelBase
     public string Id { get; set; }
 
     [ObservableProperty]
+    string text;
+
+    [ObservableProperty]
+    string pageTitle;
+
+    [ObservableProperty]
     ObservableRangeCollection<List<ContentViewModel>> contents;
 
-    public ContentListViewModel(ShowsService shows, SubscriptionsService subs, CategoriesViewModel categories, ISourceData sourceData)
+    public ContentListViewModel(PageService pageService, SubscriptionsService subs, CategoriesViewModel categories, ISourceData sourceData)
     {
-        showsService = shows;
+        PageTitle = "Page cím";
+        _pageService = pageService;
         subscriptionsService = subs;
         Contents = new ObservableRangeCollection<List<ContentViewModel>>();
         _sourceData = sourceData;
@@ -40,7 +47,7 @@ public partial class ContentListViewModel : ViewModelBase
 
     private async Task FetchAsync()
     {
-        var podcastsModels = await showsService.GetShowsAsync(Id);
+        var podcastsModels = await _pageService.GetShowsAsync(Id);
 
         if (podcastsModels == null)
         {

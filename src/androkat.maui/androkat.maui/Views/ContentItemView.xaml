@@ -9,44 +9,43 @@
     <VerticalStackLayout.GestureRecognizers>
         <TapGestureRecognizer Command="{Binding NavigateToDetailCommand}" />
     </VerticalStackLayout.GestureRecognizers>
-    <Grid>
-        <ActivityIndicator WidthRequest="50" HeightRequest="50" IsRunning="{Binding IsLoading, Source={x:Reference self}}"/>
+    <Frame BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
+        <Grid>
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateToDetailCommand}" />
+            </Grid.GestureRecognizers>
+            <HorizontalStackLayout>
+                
 
-        <Image Aspect="AspectFit"
-               MinimumWidthRequest="{x:OnIdiom Phone=180, Default=264}"
-               MinimumHeightRequest="{x:OnIdiom Default=264, Phone=180}"
-               MaximumHeightRequest="{x:OnIdiom Phone=190, Default=264}"
-               MaximumWidthRequest="{x:OnIdiom Phone=190, Default=264}"
-               Source="{Binding NapiElmelkedesDto.img}"
-               Loaded="Image_Loaded"
-               HorizontalOptions="Start"
-               Margin="0,0,0,12" />
+                <Image Aspect="AspectFit"
+                   MinimumWidthRequest="{x:OnIdiom Phone=48}"
+                   MinimumHeightRequest="{x:OnIdiom Default=48}"
+                   MaximumHeightRequest="{x:OnIdiom Phone=48}"
+                   MaximumWidthRequest="{x:OnIdiom Phone=48}"
+                   Source="{Binding NapiElmelkedesDto.img}"
+                   Loaded="Image_Loaded"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center"
+                   Margin="0,0,15,0" />
 
-        <Image Source="suscribed.png"
-               HorizontalOptions="End"
-               VerticalOptions="End"
-               SemanticProperties.Description="Suscribed icon"
-               Margin="22"
-               IsVisible="{Binding IsSubscribed}"
-               WidthRequest="24"
-               HeightRequest="24">
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding SubscriptionCommand, Source={x:Reference self}}" CommandParameter="{Binding }"/>
-            </Image.GestureRecognizers>
-        </Image>
-    </Grid>
-    <Label Text="{Binding NapiElmelkedesDto.cim}"
-           MaxLines="1"
-           HorizontalOptions="Start"
-           LineBreakMode="TailTruncation"
-           MaximumWidthRequest="{x:OnIdiom Phone=190, Default=264}"
-           Style="{OnIdiom Default={StaticResource BodyXLLabelStyle},Phone={StaticResource BodyLLabelStyle}}" />
-    <Label Text="{Binding datum}"
-           LineBreakMode="TailTruncation"
-           MaxLines="1"
-           Style="{OnIdiom Default={StaticResource BodyMLabelStyle},Phone={StaticResource BodySLabelStyle}}" />
-    <Label Text="{Binding forras}"
-           LineBreakMode="TailTruncation"
-           MaxLines="1"
-           Style="{OnIdiom Default={StaticResource BodyMLabelStyle},Phone={StaticResource BodySLabelStyle}}" />
+                <VerticalStackLayout VerticalOptions="FillAndExpand">
+                    <Label Text="{Binding NapiElmelkedesDto.cim}"
+                       MaxLines="1"
+                       HorizontalOptions="Start"
+                       LineBreakMode="WordWrap"
+                       MaximumWidthRequest="{x:OnIdiom Phone=250}"
+                       Style="{OnIdiom Default={StaticResource BodyXLLabelStyle},Phone={StaticResource BodyLLabelStyle}}" />
+                    <Label Text="{Binding datum}"
+                       LineBreakMode="TailTruncation"
+                       MaxLines="1"
+                       Style="{OnIdiom Default={StaticResource BodyMLabelStyle},Phone={StaticResource BodySLabelStyle}}" />
+                    <Label Text="{Binding forras}"
+                       LineBreakMode="TailTruncation"
+                       MaxLines="1"
+                       Style="{OnIdiom Default={StaticResource BodyMLabelStyle},Phone={StaticResource BodySLabelStyle}}" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </Grid>
+
+    </Frame>
 </VerticalStackLayout>

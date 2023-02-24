@@ -8,7 +8,7 @@ namespace androkat.hu.ViewModels;
 
 public partial class DiscoverViewModel : ViewModelBase
 {
-    private readonly ShowsService showsService;
+    private readonly PageService _pageService;
     private readonly SubscriptionsService subscriptionsService;
     private readonly ISourceData _sourceData;
 
@@ -16,13 +16,13 @@ public partial class DiscoverViewModel : ViewModelBase
     string text;
 
     [ObservableProperty]
-    ObservableRangeCollection<List<NavigationViewModel>> podcastsGroup;
+    ObservableRangeCollection<List<NavigationViewModel>> pages;
 
-    public DiscoverViewModel(ShowsService shows, SubscriptionsService subs, CategoriesViewModel categories, ISourceData sourceData)
+    public DiscoverViewModel(PageService pageService, SubscriptionsService subs, CategoriesViewModel categories, ISourceData sourceData)
     {
-        showsService = shows;
+        _pageService = pageService;
         subscriptionsService = subs;
-        PodcastsGroup = new ObservableRangeCollection<List<NavigationViewModel>>();
+        Pages = new ObservableRangeCollection<List<NavigationViewModel>>();
         _sourceData = sourceData;
     }
 
@@ -37,9 +37,10 @@ public partial class DiscoverViewModel : ViewModelBase
         {
             new NavigationViewModel(false) { contentImg = "book", id = "0", detailscim = "Elmélkedés" },
             new NavigationViewModel(false) { contentImg = "gift", id = "1", detailscim = "AJÁNLATAINK" },
-            new NavigationViewModel(false) { contentImg = "saint", id = "2", detailscim = "Mai Szent" }
+            new NavigationViewModel(false) { contentImg = "saint", id = "2", detailscim = "Mai Szent" },
+            new NavigationViewModel(false) { contentImg = "book", id = "3", detailscim = "Szentek idézetei" }
         };
 
-        PodcastsGroup.ReplaceRange(new List<List<NavigationViewModel>> { podcastsModels });
+        Pages.ReplaceRange(new List<List<NavigationViewModel>> { podcastsModels });
     }    
 }

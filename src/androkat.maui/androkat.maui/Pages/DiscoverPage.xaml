@@ -22,7 +22,7 @@
         <StackLayout Margin="10,0">
             
         </StackLayout>
-        <CollectionView ItemsSource="{Binding PodcastsGroup}"
+        <CollectionView ItemsSource="{Binding Pages}"
                         Margin="{OnIdiom Phone='10,50,10,0', Default='10,50,10,0'}"
                         SelectionMode="None"
                         IsGrouped="True">

@@ -20,7 +20,7 @@ public static class ServicesExtensions
         builder.Services.AddSingleton<ISourceData, SourceDataMapper>();
         builder.Services.AddSingleton<IHelperSharedPreferences, HelperSharedPreferences>();
         builder.Services.AddSingleton<IAndrokatService, AndrokatService>();
-        builder.Services.AddSingleton<ShowsService>();
+        builder.Services.AddSingleton<PageService>();
         return builder;
     }
 }
