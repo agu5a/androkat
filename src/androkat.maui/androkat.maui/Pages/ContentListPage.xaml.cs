@@ -24,5 +24,6 @@ public partial class ContentListPage : ContentPage
     {
         //player.OnDisappearing();
         base.OnDisappearing();
+        viewModel.Contents.Clear();
     }
 }

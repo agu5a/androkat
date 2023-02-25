@@ -19,5 +19,8 @@ public partial class NavigationViewModel : ObservableObject
     }
 
     [RelayCommand]
-    Task NavigateToDetail() => Shell.Current.GoToAsync($"{nameof(ContentListPage)}?Id={id}");
+    Task NavigateToDetail()
+    {
+       return Shell.Current.GoToAsync($"{nameof(ContentListPage)}?Id={id}");
+    }
 }

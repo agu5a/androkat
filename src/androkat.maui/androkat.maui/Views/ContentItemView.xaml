@@ -22,14 +22,14 @@
                    MinimumHeightRequest="{x:OnIdiom Default=48}"
                    MaximumHeightRequest="{x:OnIdiom Phone=48}"
                    MaximumWidthRequest="{x:OnIdiom Phone=48}"
-                   Source="{Binding NapiElmelkedesDto.img}"
+                   Source="{Binding ContentDto.Image}"
                    Loaded="Image_Loaded"
                    HorizontalOptions="Start"
                    VerticalOptions="Center"
                    Margin="0,0,15,0" />
 
                 <VerticalStackLayout VerticalOptions="FillAndExpand">
-                    <Label Text="{Binding NapiElmelkedesDto.cim}"
+                    <Label Text="{Binding ContentDto.Cim}"
                        MaxLines="1"
                        HorizontalOptions="Start"
                        LineBreakMode="WordWrap"

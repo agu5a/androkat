@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Beállítások"
+    
+    xmlns:viewmodels="clr-namespace:androkat.hu.ViewModels"
+    Style="{StaticResource MainSectionStyle}"
+    x:Class="androkat.hu.Pages.SettingsPage">
+
+    <StackLayout Orientation="Vertical" Padding="15">
+        <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
+            <Label
+               Grid.ColumnSpan="2"
+               Grid.Row="7"
+               Margin="0,11,0,0"
+               VerticalOptions="Center"
+               SemanticProperties.Description="Version"
+               Style="{StaticResource BodySLabelStyle}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Version"/>
+                        <Span Text=" - "/>
+                        <Span Text="{Binding AppVersion}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </Frame>
+        <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
+            <HorizontalStackLayout>
+                <Label Text="Téma választás"
+                       FontSize="Large"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start"
+                       Margin="0, 0, 20, 0"/>
+                <Switch IsToggled="{Binding IsDarkModeEnabled}"  />
+
+            </HorizontalStackLayout>
+        </Frame>
+        <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
+            <HorizontalStackLayout>
+                <Label Text="Max. tárolt offline elem"
+                       FontSize="Large"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start"
+                       Margin="0, 0, 20, 0" />
+                <Entry x:Name="maxOffline"
+                   MaxLength="4"                   
+                   Keyboard="Numeric"
+                   Text="{Binding MaxOffline}"
+                   Placeholder="max 1000"
+                   TextChanged="maxOffline_TextChanged"  />
+            </HorizontalStackLayout>
+        </Frame>
+        <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
+            <Button Text="Frissítés" Clicked="Button_Clicked">
+            </Button>
+        </Frame>
+        <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
+            <Button Text="Db" Clicked="Button_Clicked_1"></Button>
+        </Frame>
+    </StackLayout>
+
+
+</ContentPage>

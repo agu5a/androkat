@@ -15,13 +15,11 @@ public partial class ShowDetailPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        //this.player.OnAppearing();
         await viewModel.InitializeAsync();
     }
 
     protected override void OnDisappearing()
     {
-        //this.player.OnDisappearing();
         base.OnDisappearing();
     }
 }

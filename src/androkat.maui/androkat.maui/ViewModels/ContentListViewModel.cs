@@ -1,12 +1,8 @@
 ﻿using androkat.hu.Models;
-using androkat.hu.Pages;
 using androkat.hu.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Java.Util;
 using MvvmHelpers;
-using System.Collections.Generic;
-using static Android.Content.ClipData;
 
 namespace androkat.hu.ViewModels;
 
@@ -47,9 +43,9 @@ public partial class ContentListViewModel : ViewModelBase
 
     private async Task FetchAsync()
     {
-        var podcastsModels = await _pageService.GetShowsAsync(Id);
+        var contents = await _pageService.GetShowsAsync(Id);
 
-        if (podcastsModels == null)
+        if (contents == null)
         {
             await Shell.Current.DisplayAlert(
                 "Error_Title",
@@ -59,26 +55,26 @@ public partial class ContentListViewModel : ViewModelBase
             return;
         }
 
-        _contents = ConvertToViewModels(podcastsModels);
+        _contents = ConvertToViewModels(contents);
         var s = new List<List<ContentViewModel>> { _contents.ToList() };
         Contents.ReplaceRange(s);
     }
 
-    private List<ContentViewModel> ConvertToViewModels(IEnumerable<NapiElmelkedesDto> items)
+    private List<ContentViewModel> ConvertToViewModels(IEnumerable<ContentDto> items)
     {
         var viewmodels = new List<ContentViewModel>();
         foreach (var item in items)
         {
-            SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.tipus));
-            var origImg = item.img;
-            item.img = idezetSource.Img;                       
+            SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
+            var origImg = item.Image;
+            item.Image = idezetSource.Img;
             var showViewModel = new ContentViewModel(item, true); 
-            showViewModel.datum = $"Dátum: {item.datum.ToString("yyyy-MM-dd")}"; 
+            showViewModel.datum = $"Dátum: {item.Datum.ToString("yyyy-MM-dd")}";
             showViewModel.detailscim = idezetSource.Title;
             showViewModel.contentImg = origImg;
             showViewModel.isFav = false;
             showViewModel.forras = $"Forrás: {idezetSource.Forrasszoveg}";
-            showViewModel.type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.tipus));
+            showViewModel.type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus));
             viewmodels.Add(showViewModel);
         }
 

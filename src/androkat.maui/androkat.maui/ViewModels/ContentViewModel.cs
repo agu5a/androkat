@@ -7,7 +7,7 @@ namespace androkat.hu.ViewModels;
 
 public partial class ContentViewModel : ObservableObject
 {
-    public NapiElmelkedesDto NapiElmelkedesDto { get; set; }
+    public ContentDto ContentDto { get; set; }
 
     public string contentImg { get; set; }
 
@@ -21,11 +21,11 @@ public partial class ContentViewModel : ObservableObject
 
     public string forras { get; set; }
 
-    public ContentViewModel(NapiElmelkedesDto napiElmelkedesDto)
+    public ContentViewModel(ContentDto contentDto)
     {
-        NapiElmelkedesDto = napiElmelkedesDto;
+        ContentDto = contentDto;
     }
 
     [RelayCommand]
-    Task NavigateToDetail() => Shell.Current.GoToAsync($"{nameof(ShowDetailPage)}?Id={NapiElmelkedesDto.nid}");
+    Task NavigateToDetail() => Shell.Current.GoToAsync($"{nameof(ShowDetailPage)}?Id={ContentDto.Nid}");
 }

@@ -13,7 +13,7 @@
         </Tab>
 <Tab Title="{Binding Settings.Title}"
              Icon="{Binding Settings.Icon}">
-            <ShellContent ContentTemplate="{DataTemplate pages:DiscoverPage}" />
-        </Tab>       
+            <ShellContent ContentTemplate="{DataTemplate pages:SettingsPage}" />
+        </Tab>     
     </TabBar>
 </Shell>
