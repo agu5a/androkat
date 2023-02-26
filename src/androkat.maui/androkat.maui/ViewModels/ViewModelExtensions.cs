@@ -8,6 +8,7 @@ public static class ViewModelExtensions
         builder.Services.AddSingleton<DiscoverViewModel>();
         builder.Services.AddSingleton<NavigationViewModel>();
 
+        builder.Services.AddSingleton<WebViewModel>();
         builder.Services.AddSingleton<SettingsViewModel>();
         builder.Services.AddSingleton<ShellViewModel>();
         builder.Services.AddTransient<ShowDetailViewModel>();

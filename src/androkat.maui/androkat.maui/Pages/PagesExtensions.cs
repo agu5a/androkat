@@ -7,6 +7,7 @@ public static class PagesExtensions
         // main tabs of the app
         builder.Services.AddSingleton<ContentListPage>();
         builder.Services.AddSingleton<DiscoverPage>();
+        builder.Services.AddSingleton<WebPage>();
         builder.Services.AddSingleton<SettingsPage>();
 
         builder.Services.AddTransient<ShowDetailPage>();

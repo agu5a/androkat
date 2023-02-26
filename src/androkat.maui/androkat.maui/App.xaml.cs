@@ -16,6 +16,7 @@ public partial class App : Application
 
         Routing.RegisterRoute(nameof(DiscoverPage), typeof(DiscoverPage));
         Routing.RegisterRoute(nameof(ContentListPage), typeof(ContentListPage));
+        Routing.RegisterRoute(nameof(WebPage), typeof(WebPage));
         Routing.RegisterRoute(nameof(ShowDetailPage), typeof(ShowDetailPage));
     }
 
