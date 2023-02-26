@@ -47,15 +47,15 @@
     
     <Style x:Key="MainSectionStyle"
            TargetType="Page">
-        <Setter Property="Shell.BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}" />
+        <!--<Setter Property="Shell.BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}" />-->
         <Setter Property="Shell.NavBarIsVisible"
-                Value="False" />
+                Value="True" />
     </Style>
 
     <Style x:Key="DetailPageStyle" BasedOn="{StaticResource MainSectionStyle}" TargetType="Page">
         <Setter Property="Shell.NavBarIsVisible"
-                    Value="{OnPlatform Android=true, iOS=true, UWP=false, MacCatalyst=true}" />
+                    Value="{OnPlatform Android=true, iOS=true}" />
     </Style>
 
     <Style TargetType="Page"

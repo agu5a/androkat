@@ -28,11 +28,11 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#00796B" />
+		<MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" Color="#00796B" />
 		<!--MauiIcon Include="Resources\AppIcon\ic_launcher.png" /-->
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#00796B" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\splash.svg" Color="#00796B" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -56,66 +56,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="AppFlyout.xaml.cs">
-		  <DependentUpon>AppFlyout.xaml</DependentUpon>
-		</Compile>
-		<Compile Update="FlyoutMenuPage.xaml.cs">
-		  <DependentUpon>FlyoutMenuPage.xaml</DependentUpon>
-		</Compile>
-		<Compile Update="Page\BookDetails.xaml.cs">
-		  <DependentUpon>BookDetails.xaml</DependentUpon>
-		</Compile>
-		<Compile Update="Page\AudioDetails.xaml.cs">
-		  <DependentUpon>AudioDetails.xaml</DependentUpon>
-		</Compile>
-		<Compile Update="Page\WebPages.xaml.cs">
-		  <DependentUpon>WebPages.xaml</DependentUpon>
-		</Compile>
-		<Compile Update="Page\Settings.xaml.cs">
-		  <DependentUpon>Settings.xaml</DependentUpon>
-		</Compile>
-		<Compile Update="Page\Contact.xaml.cs">
-			<DependentUpon>Contact.xaml</DependentUpon>
-		</Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-		<MauiXaml Update="AppFlyout.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
-		<MauiXaml Update="FlyoutMenuPage.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
-		<MauiXaml Update="Page\BookDetails.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
-		<MauiXaml Update="Page\AudioDetails.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
-		<MauiXaml Update="Page\WebPages.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
-		<MauiXaml Update="Page\Settings.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
-		<MauiXaml Update="Page\Contact.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
-		<MauiXaml Update="Page\Details.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
-		<MauiXaml Update="Views\FilterPopup.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Folder Include="Platforms\Android\Resources\drawable\" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\androkat.maui.library\androkat.maui.library.csproj" />
 	</ItemGroup>
-
 
 </Project>

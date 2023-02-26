@@ -4,7 +4,7 @@ using androkat.hu.ViewModels;
 
 namespace androkat.hu.Pages;
 
-public partial class SettingsPage
+public partial class SettingsPage : ContentPage
 {
     private readonly PageService _pageService;
 

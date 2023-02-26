@@ -6,8 +6,8 @@
              x:Name="this"
              xmlns:view="clr-namespace:androkat.hu.Views"
              xmlns:viewmodels="clr-namespace:androkat.hu.ViewModels"
+             Style="{StaticResource MainSectionStyle}"
              
-             Shell.NavBarIsVisible="True"
              x:DataType="viewmodels:ContentListViewModel"
              x:Class="androkat.hu.Pages.ContentListPage">
     <ContentPage.Resources>

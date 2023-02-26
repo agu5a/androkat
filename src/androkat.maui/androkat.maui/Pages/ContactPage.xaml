@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Kapcsolat"
+    x:Name="this"
+    
+    xmlns:viewmodels="clr-namespace:androkat.hu.ViewModels"
+    Style="{StaticResource MainSectionStyle}"
+    
+    x:Class="androkat.hu.Pages.ContactPage">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" Padding="10" Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}">
+            <HorizontalStackLayout>
+                <Image 
+                Source="appicon.png"
+                Aspect="AspectFit"                                
+                WidthRequest="50" />
+                <VerticalStackLayout>
+                    <Label Text="AndroKat"
+                        Style="{StaticResource BodyLLabelStyle}"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start" />
+                    <Label Text="{Binding Version}" Style="{StaticResource BodyMLabelStyle}"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+            <Label Text="{Binding Text1}" Style="{StaticResource BodyMLabelStyle}"
+               VerticalOptions="Center" 
+               TextType="Html"
+               Margin="5"
+               HorizontalOptions="Start" />
+            <Label Text="{Binding Text2}" Style="{StaticResource BodyMLabelStyle}"
+               VerticalOptions="Center" 
+               TextType="Html"
+               Margin="5"
+               HorizontalOptions="Start" />
+            <Label Text="Bármi észrevétele, ötlete van, örömmel fogadjuk:" Style="{StaticResource BodyMLabelStyle}"
+               Margin="5"
+               VerticalOptions="Center" 
+               HorizontalOptions="Start" />
+            <Label Text="{Binding Text3}" Style="{StaticResource BodyMLabelStyle}"
+               VerticalOptions="Center" 
+               TextType="Html"
+               Margin="3"
+               HorizontalOptions="Start" />
+            <Label Text="{Binding Text4}" Style="{StaticResource BodyMLabelStyle}"
+               VerticalOptions="Center" 
+               TextType="Html"
+               Margin="3"
+               HorizontalOptions="Start" />
+            <Label Text="{Binding Text5}" Style="{StaticResource BodyMLabelStyle}"
+               VerticalOptions="Center" 
+               TextType="Html"
+               Margin="3"
+               HorizontalOptions="Start" />
+            <Label Text="{Binding Text6}" Style="{StaticResource BodyMLabelStyle}"
+               VerticalOptions="Center" 
+               TextType="Html"
+               Margin="3"
+               HorizontalOptions="Start" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

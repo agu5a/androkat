@@ -4,7 +4,7 @@ namespace androkat.hu.Pages;
 
 public partial class ContentListPage : ContentPage
 {
-    private ContentListViewModel viewModel => BindingContext as ContentListViewModel;
+    private ContentListViewModel _viewModel => BindingContext as ContentListViewModel;
 
     public ContentListPage(ContentListViewModel vm)
     {
@@ -15,15 +15,29 @@ public partial class ContentListPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        //player.OnAppearing();
-        await viewModel.InitializeAsync();
     }
 
+    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        // Hack: Get the category Id
+        _viewModel.Id = GetCategoryIdFromRoute();
+
+        await _viewModel.InitializeAsync();
+        base.OnNavigatedTo(args);
+    }
 
     protected override void OnDisappearing()
     {
-        //player.OnDisappearing();
         base.OnDisappearing();
         viewModel.Contents.Clear();
+    }
+
+    private string GetCategoryIdFromRoute()
+    {
+        // Hack: As the shell can't define query parameters
+        // in XAML, we have to parse the route. 
+        // as a convention the last route section defines the category.
+        // ugly but works for now :-(
+        return Shell.Current.CurrentState.Location.OriginalString.Split("/").LastOrDefault();
     }
 }

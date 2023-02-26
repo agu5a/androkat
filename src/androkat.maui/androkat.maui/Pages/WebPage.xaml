@@ -3,16 +3,16 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="WebOldalak"
+    x:Name="this"
     
     xmlns:viewmodels="clr-namespace:androkat.hu.ViewModels"
     Style="{StaticResource MainSectionStyle}"
+    
     x:Class="androkat.hu.Pages.WebPage">
-
-    <StackLayout Orientation="Vertical" Padding="15">
-        <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
-        <Picker x:Name="webPicker" Title="WebOldalak" SelectedIndexChanged="webPicker_SelectedIndexChanged">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" Padding="10" Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}">
+            <Picker x:Name="webPicker" Title="WebOldalak" SelectedIndexChanged="webPicker_SelectedIndexChanged" Style="{StaticResource BodySLabelStyle}">
         </Picker>
-        </Frame>
     </StackLayout>
-
+    </ContentPage.Content>
 </ContentPage>

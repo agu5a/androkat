@@ -6,9 +6,10 @@
     
     xmlns:viewmodels="clr-namespace:androkat.hu.ViewModels"
     Style="{StaticResource MainSectionStyle}"
+    
     x:Class="androkat.hu.Pages.SettingsPage">
 
-    <StackLayout Orientation="Vertical" Padding="15">
+    <StackLayout Orientation="Vertical" Padding="15" Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}">
         <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
             <Label
                Grid.ColumnSpan="2"
@@ -19,9 +20,9 @@
                Style="{StaticResource BodySLabelStyle}">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="Version"/>
-                        <Span Text=" - "/>
-                        <Span Text="{Binding AppVersion}"/>
+                        <Span Text="Version" Style="{StaticResource BodySLabelStyle}"/>
+                        <Span Text=" - " Style="{StaticResource BodySLabelStyle}"/>
+                        <Span Text="{Binding AppVersion}" Style="{StaticResource BodySLabelStyle}"/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>

@@ -4,7 +4,7 @@ using androkat.hu.ViewModels;
 
 namespace androkat.hu.Pages;
 
-public partial class WebPage
+public partial class WebPage : ContentPage
 {
     private readonly PageService _pageService;
     private readonly IBrowser _browser;

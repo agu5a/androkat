@@ -34,7 +34,7 @@ public partial class ContentListViewModel : ViewModelBase
         _sourceData = sourceData;
     }
 
-    internal async Task InitializeAsync()
+    public async Task InitializeAsync()
     {
         //Delay on first load until window loads
         await Task.Delay(1000);
