@@ -23,12 +23,12 @@
             
         </StackLayout>
         <CollectionView ItemsSource="{Binding Pages}"
-                        Margin="{OnIdiom Phone='10,50,10,0', Default='10,50,10,0'}"
+                        Margin="{OnIdiom Phone='10,50,10,0'}"
                         SelectionMode="None"
                         IsGrouped="True">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
-                            Span="{OnIdiom Phone=2, Tablet=3, Default=2}"
+                            Span="{OnIdiom Phone=2, Tablet=3}"
                             HorizontalItemSpacing="5"
                             VerticalItemSpacing="5" />
             </CollectionView.ItemsLayout>

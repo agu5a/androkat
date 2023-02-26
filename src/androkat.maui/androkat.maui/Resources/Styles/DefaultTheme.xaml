@@ -24,6 +24,18 @@
     <Color x:Key="Grey9">#323130</Color>
     <Color x:Key="Grey0">#979797</Color>
 
+    <Color x:Key="Cardviewback">#F5F5F5</Color>
+    <Color x:Key="CardviewbackDark">#121212</Color>
+
+    <Color x:Key="BackgroundActivity">#EEEEEE</Color>
+    <Color x:Key="BackgroundActivityDark">#121212</Color>
+
+    <Color x:Key="Cardviewsep">#F5F5F5</Color>
+    <Color x:Key="CardviewsepDark">#292929</Color>
+
+    <Color x:Key="TextColor">#494949</Color>
+    <Color x:Key="TextColorDark">#C8FFFFFF</Color>
+
     <Style x:Key="BaseStyle"  TargetType="Element">
         <Setter Property="Shell.BackgroundColor" 
                 Value="{AppThemeBinding Dark=Black, Light=White}" />
@@ -47,10 +59,8 @@
     
     <Style x:Key="MainSectionStyle"
            TargetType="Page">
-        <!--<Setter Property="Shell.BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}" />-->
-        <Setter Property="Shell.NavBarIsVisible"
-                Value="True" />
+        <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource Grey9}}" />
+        <Setter Property="Shell.NavBarIsVisible" Value="True" />
     </Style>
 
     <Style x:Key="DetailPageStyle" BasedOn="{StaticResource MainSectionStyle}" TargetType="Page">
@@ -130,7 +140,7 @@
         <Setter Property="FontFamily"
                 Value="OpenSansSemibold" />
         <Setter Property="TextColor"
-                Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource Grey1}}" />
+                Value="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColorDark}}" />
     </Style>
 
     <Style TargetType="Label"
@@ -140,7 +150,7 @@
         <Setter Property="FontFamily"
                 Value="OpenSansSemibold" />
         <Setter Property="TextColor"
-                Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource Grey1}}" />
+                Value="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColorDark}}" />
     </Style>
 
     <Style TargetType="Label"
@@ -150,7 +160,7 @@
         <Setter Property="FontFamily"
                 Value="OpenSansRegular" />
         <Setter Property="TextColor"
-                Value="{AppThemeBinding Light={StaticResource Grey7}, Dark={StaticResource Grey1}}" />
+                Value="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColorDark}}" />
     </Style>
 
     <Style TargetType="Label"
@@ -160,7 +170,7 @@
         <Setter Property="FontFamily"
                 Value="OpenSansRegular" />
         <Setter Property="TextColor"
-                Value="{AppThemeBinding Light={StaticResource Dark}, Dark={StaticResource Grey1}}" />
+                Value="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColorDark}}" />
     </Style>
 
     <Style TargetType="Label"

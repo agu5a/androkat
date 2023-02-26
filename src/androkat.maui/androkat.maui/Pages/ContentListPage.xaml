@@ -18,9 +18,9 @@
                     Value="{OnIdiom Phone='0,0,0,0'}" />
         </Style>
     </ContentPage.Resources>
-    <Grid Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}">
+    <Grid Background="{AppThemeBinding Light={StaticResource BackgroundActivity}, Dark={StaticResource BackgroundActivityDark}}">
         <CollectionView ItemsSource="{Binding Contents}"
-                        Margin="{OnIdiom Phone='10,0,10,0'}"
+                        Margin="{OnIdiom Phone='10,10,10,0'}"
                         SelectionMode="None"
                         IsGrouped="True">
             <CollectionView.ItemsLayout>

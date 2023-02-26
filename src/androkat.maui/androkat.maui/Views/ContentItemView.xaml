@@ -9,17 +9,16 @@
     <VerticalStackLayout.GestureRecognizers>
         <TapGestureRecognizer Command="{Binding NavigateToDetailCommand}" />
     </VerticalStackLayout.GestureRecognizers>
-    <Frame BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
+    <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource CardviewbackDark}, Light={StaticResource Cardviewback}}">
         <Grid>
             <Grid.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding NavigateToDetailCommand}" />
             </Grid.GestureRecognizers>
-            <HorizontalStackLayout>
-                
+            <HorizontalStackLayout>                
 
                 <Image Aspect="AspectFit"
                    MinimumWidthRequest="{x:OnIdiom Phone=48}"
-                   MinimumHeightRequest="{x:OnIdiom Default=48}"
+                   MinimumHeightRequest="{x:OnIdiom Phone=48}"
                    MaximumHeightRequest="{x:OnIdiom Phone=48}"
                    MaximumWidthRequest="{x:OnIdiom Phone=48}"
                    Source="{Binding ContentDto.Image}"
@@ -43,7 +42,8 @@
                        LineBreakMode="TailTruncation"
                        MaxLines="1"
                        Style="{OnIdiom Default={StaticResource BodyMLabelStyle},Phone={StaticResource BodySLabelStyle}}" />
-                </VerticalStackLayout>
+                </VerticalStackLayout>                
+                
             </HorizontalStackLayout>
         </Grid>
 
