@@ -111,7 +111,7 @@
         <Setter Property="FontFamily"
                 Value="OpenSansSemibold" />
         <Setter Property="TextColor"
-                Value="{AppThemeBinding Light={StaticResource Grey8}, Dark={StaticResource Grey1}}" />
+                Value="{AppThemeBinding Light={StaticResource TextColor}, Dark={StaticResource TextColorDark}}" />
     </Style>
 
     <Style TargetType="Label"

@@ -10,153 +10,84 @@
              Title="{Binding ContentView.detailscim}"
              Style="{StaticResource DetailPageStyle}"
              x:DataType="viewmodels:ShowDetailViewModel">
-    <Grid Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}">
-        <CollectionView ItemsSource="{Binding Episodes}"
-                        SelectionMode="None"
-                        Margin="{OnIdiom Phone='10,0'}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:Episode">
-                    <Grid Margin="0,6"
-                          Padding="22,0"
-                          ColumnDefinitions="auto,*"
-                          ColumnSpacing="10"
-                          RowDefinitions="56, auto">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ShowDetailViewModel}}, Path=TapEpisodeCommand}"
-                                                  CommandParameter="{Binding}" />
-                        </Grid.GestureRecognizers>
-                        <ImageButton Aspect="AspectFill"
-                                     Grid.Column="0"
-                                     Grid.Row="0"
-                                     HeightRequest="{OnIdiom Phone=44}"
-                                     Source="player_play.png"
-                                     VerticalOptions="Center"
-                                     SemanticProperties.Description="Description"
-                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ShowDetailViewModel}}, Path=PlayEpisodeCommand}"
-                                     CommandParameter="{Binding}"
-                                     WidthRequest="{OnIdiom Phone=44}">
-                        </ImageButton>
 
-                        <Label Grid.Column="0"
-                               Grid.Row="1"
-                               Style="{StaticResource BodySLabelStyle}"
-                               Text="{Binding Duration, Converter={StaticResource DurationConverter}}" />
-                        <Label Grid.Column="1"
-                               Grid.Row="1"
-                               Style="{StaticResource BodySLabelStyle}"
-                               Text="{Binding Published, StringFormat='{0:MMM dd, yyyy}'}" />
-                        <Label Grid.Column="1"
-                               Grid.Row="0"
-                               HorizontalOptions="FillAndExpand"
-                               VerticalOptions="Center"
-                               Style="{StaticResource LinkLLabelStyle}"
-                               Text="{Binding Title}" />
-                        <ImageButton Aspect="AspectFill"
-                                     Grid.Column="1"
-                                     Grid.RowSpan="2"
-                                     HorizontalOptions="End"
-                                     VerticalOptions="Center"
-                                     Source="clockpink.png"
-                                     HeightRequest="28"
-                                     SemanticProperties.Description="Description"
-                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ShowDetailViewModel}}, Path=AddToListenLaterCommand}"
-                                     CommandParameter="{Binding}"
-                                     WidthRequest="28">
-                            <ImageButton.IsVisible>
-                                <OnPlatform x:TypeArguments="x:Boolean">
-                                    <On Platform="Android, iOS">true</On>                                    
-                                </OnPlatform>
-                            </ImageButton.IsVisible>
-                            <ImageButton.Triggers>
-                                <DataTrigger Binding="{Binding IsInListenLater}"
-                                             TargetType="ImageButton"
-                                             Value="true">
-                                    <Setter Property="Source"
-                                            Value="listenlaterfilled.png" />
-                                </DataTrigger>
-                            </ImageButton.Triggers>
-                        </ImageButton>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-            <CollectionView.Header>
-                <Grid Padding="{OnIdiom Phone=22}"
+    <ScrollView VerticalOptions="FillAndExpand" Margin="5,0,5,0">
+    <Grid Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}" Padding="{OnIdiom Phone=22}"
                       ColumnDefinitions="auto, *"
                       ColumnSpacing="{OnIdiom Phone=10}"
-                      RowDefinitions="auto,auto,auto,auto,auto"
+                      RowDefinitions="auto,auto,auto,auto"
                       RowSpacing="{OnIdiom Phone=6}">
 
-                    <Image Aspect="AspectFit"
-                           Grid.Column="0"
-                           Grid.Row="0"
-                           Grid.RowSpan="{OnIdiom Phone=2}"
-                           HeightRequest="{OnIdiom Phone=156}"
-                           Source="{Binding ContentView.ContentDto.Image, FallbackValue=default_podcast_image.png}"
-                           WidthRequest="{OnIdiom Phone=156}" />
-                    
-                    <Label Grid.Column="1"
-                           Grid.Row="0"
-                           HorizontalOptions="Start"
-                           Style="{OnIdiom Phone={StaticResource H6LabelStyle}}"
+        <Label Text="{Binding ContentView.detailscim}"
+               Style="{OnIdiom Phone={StaticResource H6LabelStyle}}"
+               Grid.Column="0"
+               Grid.ColumnSpan="2"
+               Grid.Row="0"
+               Margin="0,10,0,10"               
+               LineBreakMode="WordWrap"
+               VerticalOptions="FillAndExpand" 
+               HorizontalOptions="Start" />
+
+        <Image Aspect="AspectFit"
+               Grid.Column="0"
+               Grid.Row="1"   
+               HorizontalOptions="Center"
+               VerticalOptions="Start"
+               HeightRequest="{OnIdiom Phone=48}"
+               Source="{Binding ContentView.ContentDto.Image}"
+               WidthRequest="{OnIdiom Phone=48}" />
+
+        <VerticalStackLayout Grid.Column="1" Grid.Row="1">
+            <Label                            
+                           Style="{OnIdiom Phone={StaticResource BodyMLabelStyle}}"
                            Text="{Binding ContentView.ContentDto.Cim}" />
+            <Label 
+                           Style="{StaticResource BodyMLabelStyle}" TextType="Html"
+                           Text="{Binding ContentView.forras}" />
+            <Label 
+                           Style="{StaticResource BodyMLabelStyle}" TextType="Html"
+                           Text="{Binding ContentView.datum}" />
 
-                    <Label Grid.Column="1"
-                           Grid.Row="1"
-                           Style="{StaticResource BodyMLabelStyle}"
-                           Text="{Binding ContentView.forras}"
-                           TextColor="{AppThemeBinding Light={StaticResource Grey7},Dark={StaticResource Grey4}}" />
-                    <Label Grid.Column="1"
-                           Grid.Row="2"
-                           Style="{StaticResource BodyMLabelStyle}"
-                           Text="{Binding ContentView.datum}"
-                           TextColor="{AppThemeBinding Light={StaticResource Grey7},Dark={StaticResource Grey4}}" />
+        </VerticalStackLayout>
 
-                    <WebView x:Name="MyWebView" android:WebView.MixedContentMode="AlwaysAllow"                         
-                         android:WebView.EnableZoomControls="false"
-                         android:WebView.DisplayZoomControls="false"
-                             Grid.Column="{OnIdiom Phone=0}"
-                           Grid.ColumnSpan="{OnIdiom Phone=2}"
-                           Grid.Row="{OnIdiom Phone=4}">
-                        <WebView.Source>
-                            <HtmlWebViewSource Html="{Binding ContentView.ContentDto.Idezet}" android:WebView.MixedContentMode="AlwaysAllow">
-                                <!-- BaseUrl="https://szentgellertkiado.hu"  Handler="{local:MyCustomWebViewHandler}" -->
-                            </HtmlWebViewSource>
-                        </WebView.Source>
-                    </WebView>
-                    
-                    <!--<Label 
-                           Grid.Column="{OnIdiom Phone=0}"
-                           Grid.ColumnSpan="{OnIdiom Phone=2}"
-                           Grid.Row="{OnIdiom Phone=4}"
-                           TextColor="{AppThemeBinding Light={StaticResource Dark},Dark={StaticResource Grey1}}"
-                           Style="{StaticResource BodyMLabelStyle}"
-                           Text="{Binding Show.ContentView.idezet}" />-->
-
-                    <Button BackgroundColor="{StaticResource Primary}"
-                            Grid.Column="{OnIdiom Phone=0}"
-                            Grid.ColumnSpan="{OnIdiom Phone=2}"
-                            Grid.Row="{OnIdiom Phone=3}"
-                            HeightRequest="44"
+        <HorizontalStackLayout Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Margin="0,10,0,0">
+            <Button BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
+                            
+                            HeightRequest="34"
+                            WidthRequest="34"
+                            Margin="0,0,5,0"
                             Command="{Binding SubscribeCommand}"
-                            Text="Subscribe">
-                        <Button.Triggers>
-                            <DataTrigger Binding="{Binding ContentView.IsSubscribed }"
+                            ImageSource="ic_send_24dp2">
+            </Button>
+            <Button BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
+                            HeightRequest="34"
+                            WidthRequest="34"
+                            Margin="0,0,5,0"
+                            Command="{Binding AddFavoriteCommand}"
+                            ImageSource="favorite2">
+                <Button.Triggers>
+                    <DataTrigger Binding="{Binding ContentView.IsSubscribed }"
                                          Value="true"
                                          TargetType="Button">
-                                <Setter Property="Text"
+                        <Setter Property="Text"
                                         Value="Subscribed" />
-                            </DataTrigger>
-                        </Button.Triggers>
-                    </Button>
-
-                </Grid>
-            </CollectionView.Header>
-            <CollectionView.Footer>
-                <Grid HeightRequest="56" />
-            </CollectionView.Footer>
-        </CollectionView>
-
-
-        
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+        </HorizontalStackLayout>
+        <VerticalStackLayout Margin="0,10,0,10"
+                             Grid.Column="{OnIdiom Phone=0}"
+                 Grid.ColumnSpan="{OnIdiom Phone=2}"
+                 Grid.Row="{OnIdiom Phone=3}">
+            <WebView x:Name="MyWebView" android:WebView.MixedContentMode="AlwaysAllow"
+                 android:WebView.EnableZoomControls="false"
+                 android:WebView.DisplayZoomControls="false">
+            <WebView.Source>
+                <HtmlWebViewSource Html="{Binding ContentView.ContentDto.Idezet}" android:WebView.MixedContentMode="AlwaysAllow">
+                </HtmlWebViewSource>
+            </WebView.Source>
+        </WebView>
+        </VerticalStackLayout>
     </Grid>
+    </ScrollView>
 </ContentPage>

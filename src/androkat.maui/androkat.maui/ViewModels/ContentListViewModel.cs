@@ -20,14 +20,13 @@ public partial class ContentListViewModel : ViewModelBase
     string text;
 
     [ObservableProperty]
-    string pageTitle;
+    public string pageTitle;
 
     [ObservableProperty]
     ObservableRangeCollection<List<ContentViewModel>> contents;
 
-    public ContentListViewModel(PageService pageService, SubscriptionsService subs, CategoriesViewModel categories, ISourceData sourceData)
+    public ContentListViewModel(PageService pageService, SubscriptionsService subs, ISourceData sourceData)
     {
-        PageTitle = "Page cím";
         _pageService = pageService;
         subscriptionsService = subs;
         Contents = new ObservableRangeCollection<List<ContentViewModel>>();
@@ -43,7 +42,7 @@ public partial class ContentListViewModel : ViewModelBase
 
     private async Task FetchAsync()
     {
-        var contents = await _pageService.GetShowsAsync(Id);
+        var contents = await _pageService.GetContentsAsync(Id);
 
         if (contents == null)
         {
