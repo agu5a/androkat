@@ -14,7 +14,7 @@ public partial class ShowDetailViewModel : ViewModelBase
 
     private Guid showId;
 
-    private readonly PageService showsService;
+    private readonly PageService _pageService;
     private readonly ISourceData _sourceData;
 
     [ObservableProperty]
@@ -23,9 +23,9 @@ public partial class ShowDetailViewModel : ViewModelBase
     [ObservableProperty]
     string textToSearch;
 
-    public ShowDetailViewModel(PageService shows, SubscriptionsService subs, ISourceData sourceData)
+    public ShowDetailViewModel(PageService pageService, SubscriptionsService subs, ISourceData sourceData)
     {
-        showsService = shows;
+        _pageService = pageService;
         subscriptionsService = subs;
         _sourceData = sourceData;
     }
@@ -42,7 +42,7 @@ public partial class ShowDetailViewModel : ViewModelBase
 
     async Task FetchAsync()
     {
-        var item = await showsService.GetContentDtoByIdAsync(showId);
+        var item = await _pageService.GetContentDtoByIdAsync(showId);
 
         if (item == null)
         {
@@ -69,7 +69,18 @@ public partial class ShowDetailViewModel : ViewModelBase
     [RelayCommand]
     async Task AddFavorite()
     {
-        
+        var item = await _pageService.InsertFavoriteContentAsync(new FavoriteContentDto
+        {
+            Cim = ContentView.ContentDto.Cim,
+            Datum = ContentView.ContentDto.Datum,
+            Forras = ContentView.ContentDto.Forras,
+            Image = ContentView.ContentDto.Image,
+            KulsoLink = ContentView.ContentDto.KulsoLink,
+            Idezet = ContentView.ContentDto.Idezet,
+            Nid = ContentView.ContentDto.Nid,
+            Tipus = ContentView.ContentDto.Tipus,
+            TypeName = ContentView.ContentDto.TypeName 
+        });
     }
 
     [RelayCommand]

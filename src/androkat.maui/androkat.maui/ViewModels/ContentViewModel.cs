@@ -5,9 +5,10 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace androkat.hu.ViewModels;
 
-public partial class ContentViewModel : ObservableObject
+public partial class BaseView : ObservableObject
 {
-    public ContentDto ContentDto { get; set; }
+    [ObservableProperty]
+    bool isSubscribed;
 
     public string contentImg { get; set; }
 
@@ -19,11 +20,31 @@ public partial class ContentViewModel : ObservableObject
 
     public string datum { get; set; }
 
-    public string forras { get; set; }
+    public string forras { get; set; }        
+}
 
-    public ContentViewModel(ContentDto contentDto)
+public partial class FavoriteContentViewModel : BaseView
+{
+    public FavoriteContentDto ContentDto { get; set; }
+
+    public FavoriteContentViewModel(FavoriteContentDto contentDto, bool isSubscribed)
     {
         ContentDto = contentDto;
+        //IsSubscribed = isSubscribed;
+    }
+
+    [RelayCommand]
+    Task NavigateToDetail() => Shell.Current.GoToAsync($"{nameof(ShowDetailPage)}?Id={ContentDto.Nid}");
+}
+
+public partial class ContentViewModel : BaseView
+{
+    public ContentDto ContentDto { get; set; }
+
+    public ContentViewModel(ContentDto contentDto, bool isSubscribed)
+    {
+        ContentDto = contentDto;
+        //IsSubscribed = isSubscribed;
     }
 
     [RelayCommand]

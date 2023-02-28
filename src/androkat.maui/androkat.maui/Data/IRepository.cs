@@ -24,4 +24,6 @@ public interface IRepository
     Task<List<ContentDto>> GetNewsContents();
     
     Task<int> SetContentAsReadById(Guid nid);
+    Task<List<FavoriteContentDto>> GetFavoriteContents();
+    Task<int> InsertFavoriteContent(FavoriteContentDto dto);
 }

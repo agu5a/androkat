@@ -89,14 +89,19 @@
             <ShellContent ContentTemplate="{DataTemplate pages:WebPage}" Route="15" />
         </Tab>
     </FlyoutItem>
+    <FlyoutItem Title="Kedvencek" Icon="favorite">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="16" />
+        </Tab>
+    </FlyoutItem>
     <FlyoutItem Title="Kapcsolat" Icon="ic_contacts_24dp">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContactPage}" Route="16" />
+            <ShellContent ContentTemplate="{DataTemplate pages:ContactPage}" Route="17" />
         </Tab>
     </FlyoutItem>
     <FlyoutItem Title="Beállítások" Icon="ic_settings_24dp">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:SettingsPage}" Route="17" />
+            <ShellContent ContentTemplate="{DataTemplate pages:SettingsPage}" Route="18" />
         </Tab>
     </FlyoutItem>    
 </Shell>
