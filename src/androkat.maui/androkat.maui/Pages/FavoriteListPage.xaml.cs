@@ -7,7 +7,7 @@ public partial class FavoriteListPage : ContentPage
 {
     private FavoriteListViewModel _viewModel => BindingContext as FavoriteListViewModel;
 
-    public FavoriteListPage(ContentListViewModel vm)
+    public FavoriteListPage(FavoriteListViewModel vm)
     {
         InitializeComponent();
         BindingContext = vm;    
@@ -16,25 +16,22 @@ public partial class FavoriteListPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();        
-        //await _viewModel.InitializeAsync();
     }
 
     protected override async void OnNavigatedTo(NavigatedToEventArgs args)
-    {
-        _viewModel.PageTitle = GetPageTitle();
+    {        
         await _viewModel.InitializeAsync();
+        _viewModel.PageTitle = GetPageTitle();
         base.OnNavigatedTo(args);
     }
 
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        //_viewModel.Contents.Clear();
-        //Navigation.RemovePage(this);
     }
 
     private string GetPageTitle()
     {
-        return "Kedvencek {_viewModel}";
+        return $"Kedvencek {_viewModel.FavoriteCount}";
     }    
 }

@@ -8,7 +8,7 @@
              xmlns:viewmodels="clr-namespace:androkat.hu.ViewModels"
              Style="{StaticResource MainSectionStyle}"
              
-             x:DataType="viewmodels:ContentListViewModel"
+             x:DataType="viewmodels:FavoriteListViewModel"
              x:Class="androkat.hu.Pages.FavoriteListPage">
     <ContentPage.Resources>
         <Style x:Key="ListTitleStyle"

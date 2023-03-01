@@ -91,7 +91,7 @@
     </FlyoutItem>
     <FlyoutItem Title="Kedvencek" Icon="favorite">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="16" />
+            <ShellContent ContentTemplate="{DataTemplate pages:FavoriteListPage}" Route="16" />
         </Tab>
     </FlyoutItem>
     <FlyoutItem Title="Kapcsolat" Icon="ic_contacts_24dp">

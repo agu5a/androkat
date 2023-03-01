@@ -17,6 +17,9 @@ public partial class FavoriteListViewModel : ViewModelBase
     string text;
 
     [ObservableProperty]
+    int favoriteCount;
+
+    [ObservableProperty]
     public string pageTitle;
 
     [ObservableProperty]
@@ -42,6 +45,7 @@ public partial class FavoriteListViewModel : ViewModelBase
         //if (_contents?.Any() ?? false)
         //    return;
 
+        FavoriteCount = await _pageService.GetFavoriteCountAsync();
         var contents = await _pageService.GetFavoriteContentsAsync();
 
         if (contents == null)

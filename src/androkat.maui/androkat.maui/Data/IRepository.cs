@@ -26,4 +26,5 @@ public interface IRepository
     Task<int> SetContentAsReadById(Guid nid);
     Task<List<FavoriteContentDto>> GetFavoriteContents();
     Task<int> InsertFavoriteContent(FavoriteContentDto dto);
+    Task<int> GetFavoriteCount();
 }

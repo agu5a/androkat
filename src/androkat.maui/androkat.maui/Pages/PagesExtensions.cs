@@ -12,6 +12,7 @@ public static class PagesExtensions
         builder.Services.AddSingleton<ContactPage>();
         builder.Services.AddSingleton<SettingsPage>();
 
+        // pages that are navigated to
         builder.Services.AddTransient<ShowDetailPage>();
 
         return builder;
