@@ -9,7 +9,6 @@ namespace androkat.hu.ViewModels;
 public partial class FavoriteListViewModel : ViewModelBase
 {
     private readonly PageService _pageService;
-    private readonly SubscriptionsService subscriptionsService;
     private IEnumerable<FavoriteContentViewModel> _contents;
     private readonly ISourceData _sourceData;
 
@@ -25,10 +24,9 @@ public partial class FavoriteListViewModel : ViewModelBase
     [ObservableProperty]
     ObservableRangeCollection<List<FavoriteContentViewModel>> contents;
 
-    public FavoriteListViewModel(PageService pageService, SubscriptionsService subs, ISourceData sourceData)
+    public FavoriteListViewModel(PageService pageService, ISourceData sourceData)
     {
         _pageService = pageService;
-        subscriptionsService = subs;
         Contents = new ObservableRangeCollection<List<FavoriteContentViewModel>>();
         _sourceData = sourceData;
     }

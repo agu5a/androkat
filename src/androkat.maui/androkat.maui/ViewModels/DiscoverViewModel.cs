@@ -8,7 +8,6 @@ namespace androkat.hu.ViewModels;
 public partial class DiscoverViewModel : ViewModelBase
 {
     private readonly PageService _pageService;
-    private readonly SubscriptionsService subscriptionsService;
     private readonly ISourceData _sourceData;
 
     [ObservableProperty]
@@ -17,10 +16,9 @@ public partial class DiscoverViewModel : ViewModelBase
     [ObservableProperty]
     ObservableRangeCollection<List<NavigationViewModel>> pages;
 
-    public DiscoverViewModel(PageService pageService, SubscriptionsService subs, CategoriesViewModel categories, ISourceData sourceData)
+    public DiscoverViewModel(PageService pageService, CategoriesViewModel categories, ISourceData sourceData)
     {
         _pageService = pageService;
-        subscriptionsService = subs;
         Pages = new ObservableRangeCollection<List<NavigationViewModel>>();
         _sourceData = sourceData;
     }

@@ -10,7 +10,6 @@ namespace androkat.hu.ViewModels;
 public partial class ContentListViewModel : ViewModelBase
 {
     private readonly PageService _pageService;
-    private readonly SubscriptionsService subscriptionsService;
     private IEnumerable<ContentViewModel> _contents;
     private readonly ISourceData _sourceData;
 
@@ -25,10 +24,9 @@ public partial class ContentListViewModel : ViewModelBase
     [ObservableProperty]
     ObservableRangeCollection<List<ContentViewModel>> contents;
 
-    public ContentListViewModel(PageService pageService, SubscriptionsService subs, ISourceData sourceData)
+    public ContentListViewModel(PageService pageService, ISourceData sourceData)
     {
         _pageService = pageService;
-        subscriptionsService = subs;
         Contents = new ObservableRangeCollection<List<ContentViewModel>>();
         _sourceData = sourceData;
     }

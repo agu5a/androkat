@@ -20,6 +20,7 @@ public partial class ShowDetailPage : ContentPage
 
     protected override void OnDisappearing()
     {
+        viewModel.CancelSpeech();
         base.OnDisappearing();
     }
 }

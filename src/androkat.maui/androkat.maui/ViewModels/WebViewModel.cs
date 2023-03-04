@@ -11,6 +11,8 @@ public partial class WebViewModel : ViewModelBase
     {
         _pageService = pageService;
 
+        //dialog title: Katolikus weboldalak
+
         WebPageUrls.Add(new WebUrl("Katekizmus", "https://archiv.katolikus.hu/kek/"));
         WebPageUrls.Add(new WebUrl("E-Biblia", "http://szentiras.hu/"));
         WebPageUrls.Add(new WebUrl("Zsolozsma", "http://zsolozsma.katolikus.hu/"));
