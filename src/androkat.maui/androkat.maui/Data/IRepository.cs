@@ -27,4 +27,7 @@ public interface IRepository
     Task<List<FavoriteContentDto>> GetFavoriteContents();
     Task<int> InsertFavoriteContent(FavoriteContentDto dto);
     Task<int> GetFavoriteCount();
+    Task<ImadsagDto> GetFirstImadsag();
+    Task<int> DeleteImadsagByNid(Guid nid);
+    Task<int> InsertImadsag(ImadsagDto dto);
 }
