@@ -19,13 +19,13 @@ public class ImadsagDto
     public bool IsHided { get; set; }
 
     [DataMember(Name = "cim")]
-    public string Title { get; set; }
+    public string Cim { get; set; }
 
     [DataMember(Name = "leiras")]
     public string Content { get; set; }
 
-    [DataMember(Name = "time")]
-    public DateTime RecordDate { get; set; }
+    [DataMember(Name = "datum")]
+    public DateTime Datum { get; set; }
 
     [DataMember(Name = "groupName")]
     public string GroupName { get; set; }

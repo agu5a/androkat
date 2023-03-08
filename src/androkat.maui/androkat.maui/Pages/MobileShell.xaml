@@ -46,7 +46,7 @@
     </FlyoutItem>
     <FlyoutItem Title="Imádság" Icon="candle">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="7" />
+            <ShellContent ContentTemplate="{DataTemplate pages:ImaListPage}" Route="7" />
         </Tab>
     </FlyoutItem>
     <FlyoutItem Title="Hanganyagok" Icon="ic_volume_up_24dp">

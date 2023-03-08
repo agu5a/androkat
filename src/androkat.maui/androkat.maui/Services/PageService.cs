@@ -22,7 +22,7 @@ public class PageService
         _sourceData = sourceData;
         _downloadService = downloadService;
         _repository = repository;
-    }   
+    }
 
     public async Task<ContentDto> GetContentDtoByIdAsync(Guid id)
     {
@@ -46,6 +46,11 @@ public class PageService
         return await _repository.GetFavoriteContents();
     }
 
+    public async Task<List<ImadsagDto>> GetImaContents()
+    {
+        return await _repository.GetImaContents();
+    }
+
     public async Task<int> GetFavoriteCountAsync()
     {
         return await _repository.GetFavoriteCount();
@@ -61,8 +66,8 @@ public class PageService
             "4" => await _repository.GetNewsContents(),
             "5" => await _repository.GetBlogContents(),
             "6" => await _repository.GetHumorContents(),
-            "7" => await _repository.GetHumorContents(),
-            "8" => await _repository.GetAudioContents(),            
+            //"7" => await _repository.GetHumorContents(), ima
+            "8" => await _repository.GetHumorContents(),   //hanganyag         
             "11" => await _repository.GetBookContents(),
             _ => await _repository.GetElmelkedesContents(),
         };

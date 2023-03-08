@@ -15,9 +15,9 @@ public partial class ContentItemView
     public static readonly BindableProperty SubscriptionCommandParameterProperty =
         BindableProperty.Create(
             nameof(SubscriptionCommandParameter),
-            typeof(ContentViewModel),
+            typeof(ContentItemViewModel),
             typeof(ContentItemView),
-            default(ContentViewModel));
+            default(ContentItemViewModel));
 
     public static readonly BindableProperty IsLoadingProperty =
         BindableProperty.Create(
@@ -32,9 +32,9 @@ public partial class ContentItemView
         set { SetValue(SubscriptionCommandProperty, value); }
     }
 
-    public ContentViewModel SubscriptionCommandParameter
+    public ContentItemViewModel SubscriptionCommandParameter
     {
-        get { return (ContentViewModel)GetValue(SubscriptionCommandParameterProperty); }
+        get { return (ContentItemViewModel)GetValue(SubscriptionCommandParameterProperty); }
         set { SetValue(SubscriptionCommandParameterProperty, value); }
     }
 

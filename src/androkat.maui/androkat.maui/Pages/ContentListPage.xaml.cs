@@ -48,22 +48,6 @@ public partial class ContentListPage : ContentPage
             //Weboldalak
             _ => "Evangélium, elmélkedés",
         };
-
-        //Kedvencek "Kedvencek (%d)" getDataAccess().KedvencCount()
-        //Gyónás előkészítő
-        //Gyónás szövege
-        //Gyónáshoz jegyzet
-        //Gyónáshoz elmélkedés //gyónás olvasás megnyitásakor is a details oldalon
-        //Gyónáshoz lelkitükör
-        //Igenaptár
-        //Keresztút
-        //Webrádiók
-        //Beállítások
-        //"Menü sorrend/láthatóság"
-        //Videók
-        
-        //Menü
-        //Frissítés
     }
 
     private string GetCategoryIdFromRoute()

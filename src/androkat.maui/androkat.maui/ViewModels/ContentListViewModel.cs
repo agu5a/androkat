@@ -10,7 +10,7 @@ namespace androkat.hu.ViewModels;
 public partial class ContentListViewModel : ViewModelBase
 {
     private readonly PageService _pageService;
-    private IEnumerable<ContentViewModel> _contents;
+    private IEnumerable<ContentItemViewModel> _contents;
     private readonly ISourceData _sourceData;
 
     public string Id { get; set; }
@@ -22,12 +22,12 @@ public partial class ContentListViewModel : ViewModelBase
     public string pageTitle;
 
     [ObservableProperty]
-    ObservableRangeCollection<List<ContentViewModel>> contents;
+    ObservableRangeCollection<List<ContentItemViewModel>> contents;
 
     public ContentListViewModel(PageService pageService, ISourceData sourceData)
     {
         _pageService = pageService;
-        Contents = new ObservableRangeCollection<List<ContentViewModel>>();
+        Contents = new ObservableRangeCollection<List<ContentItemViewModel>>();
         _sourceData = sourceData;
     }
 
@@ -53,19 +53,19 @@ public partial class ContentListViewModel : ViewModelBase
         }
 
         _contents = ConvertToViewModels(contents);
-        var s = new List<List<ContentViewModel>> { _contents.ToList() };
+        var s = new List<List<ContentItemViewModel>> { _contents.ToList() };
         Contents.ReplaceRange(s);
     }
 
-    private List<ContentViewModel> ConvertToViewModels(IEnumerable<ContentDto> items)
+    private List<ContentItemViewModel> ConvertToViewModels(IEnumerable<ContentDto> items)
     {
-        var viewmodels = new List<ContentViewModel>();
+        var viewmodels = new List<ContentItemViewModel>();
         foreach (var item in items)
         {
             SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
             var origImg = item.Image;
             item.Image = idezetSource.Img;
-            var showViewModel = new ContentViewModel(item, true); 
+            var showViewModel = new ContentItemViewModel(item, true); 
             showViewModel.datum = $"Dátum: {item.Datum.ToString("yyyy-MM-dd")}";
             showViewModel.detailscim = idezetSource.Title;
             showViewModel.contentImg = origImg;

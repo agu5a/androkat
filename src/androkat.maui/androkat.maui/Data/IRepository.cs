@@ -30,4 +30,5 @@ public interface IRepository
     Task<ImadsagDto> GetFirstImadsag();
     Task<int> DeleteImadsagByNid(Guid nid);
     Task<int> InsertImadsag(ImadsagDto dto);
+    Task<List<ImadsagDto>> GetImaContents();
 }
