@@ -12,5 +12,9 @@ namespace androkat.application.Service;
 
 public class CronService : ICronService
 {
-    
+    public void Start()
+    {}
+
+    public void DeleteCaches()
+    {}
 }

@@ -2,5 +2,6 @@
 
 public interface ICronService
 {
-   
+    void DeleteCaches();
+    void Start();
 }
