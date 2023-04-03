@@ -1,0 +1,57 @@
+﻿@page
+@using androkat.web.Pages.Ad
+@model UploadModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@section meta_extra {
+}
+
+@section scripts {
+}
+
+<div class="container-fluid">
+    <div class="mb-2">
+        @Html.Raw(Model.Result)
+    </div>
+    <div class="border p-2 mb-3">
+        <form enctype="multipart/form-data" method="post">
+            <dl>
+                <dt class="mb-2">
+                    <label>audió és egyéb fájl feltöltés a 'download' folderbe</label>
+                </dt>
+                <dd>
+                    <input asp-for="FileUpload1.FormFile" type="file" />
+                    <span asp-validation-for="FileUpload1.FormFile"></span>
+                </dd>
+            </dl>
+            <input asp-page-handler="Upload" class="btn btn-sm btn-success" type="submit" value="feltöltés" />
+        </form>
+    </div>
+    <div class="border p-2 mb-3">
+        <form enctype="multipart/form-data" method="post">
+            <dl>
+                <dt class="mb-2">
+                    <label>kép feltöltés a 'Images/Ajanlatok' folderbe</label>
+                </dt>
+                <dd>
+                    <input asp-for="FileUpload2.FormFile" type="file" />
+                    <span asp-validation-for="FileUpload2.FormFile"></span>
+                </dd>
+            </dl>
+            <input asp-page-handler="UploadImages" class="btn btn-sm btn-success" type="submit" value="feltöltés" />
+        </form>
+    </div>
+    <div class="border p-2">
+        <form method="post">
+            <dl>
+                <dt class="mb-2">
+                    <label>Fájl név tisztítás</label>
+                </dt>
+                <dd>
+                    <input asp-for="FileNameReplace" type="text" class="form-control w-25" />
+                </dd>
+            </dl>
+            <input asp-page-handler="Replace" class="btn btn-sm btn-success" type="submit" value="tisztítás" />
+        </form>
+    </div>
+</div>
