@@ -14,7 +14,7 @@
         @Html.Raw(Model.Result)
     </div>
     <div class="border p-2 mb-3">
-        <form enctype="multipart/form-data" method="post">
+        <form enctype="multipart/form-data" method="post" asp-page-handler="Upload">
             <dl>
                 <dt class="mb-2">
                     <label>audió és egyéb fájl feltöltés a 'download' folderbe</label>
@@ -28,7 +28,7 @@
         </form>
     </div>
     <div class="border p-2 mb-3">
-        <form enctype="multipart/form-data" method="post">
+        <form enctype="multipart/form-data" method="post" asp-page-handler="UploadImages">
             <dl>
                 <dt class="mb-2">
                     <label>kép feltöltés a 'Images/Ajanlatok' folderbe</label>
@@ -42,7 +42,7 @@
         </form>
     </div>
     <div class="border p-2">
-        <form method="post">
+        <form method="post" asp-page-handler="Replace">
             <dl>
                 <dt class="mb-2">
                     <label>Fájl név tisztítás</label>

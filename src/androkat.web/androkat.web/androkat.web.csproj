@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
-		<Version>2.55.0</Version>
+		<Version>2.56.0</Version>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
@@ -13,11 +13,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="FastEndpoints" Version="5.8.1" />
+		<PackageReference Include="FastEndpoints" Version="5.10.0" />
 		<PackageReference Include="FastEndpoints.ApiExplorer" Version="2.0.1" />
 		<PackageReference Include="FastEndpoints.Swagger.Swashbuckle" Version="2.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.4" />
-		<PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.5" />
+		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
 		<PackageReference Include="Serilog.Sinks.Logz.Io" Version="7.2.0" />
 	</ItemGroup>
