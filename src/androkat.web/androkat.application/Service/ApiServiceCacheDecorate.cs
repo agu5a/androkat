@@ -1,13 +1,10 @@
 ﻿using androkat.application.Interfaces;
-using androkat.domain.Configuration;
-using androkat.domain.Enum;
 using androkat.domain.Model;
 using androkat.domain.Model.ContentCache;
 using androkat.domain.Model.WebResponse;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace androkat.application.Service;
 
@@ -18,8 +15,8 @@ public class ApiServiceCacheDecorate : IApiService
     private readonly ICacheService _cacheService;
 
     public ApiServiceCacheDecorate(
-        IApiService apiService, 
-        IMemoryCache memoryCache, 
+        IApiService apiService,
+        IMemoryCache memoryCache,
         ICacheService cacheService)
     {
         _apiService = apiService;
@@ -27,7 +24,7 @@ public class ApiServiceCacheDecorate : IApiService
         _cacheService = cacheService;
     }
 
-public IReadOnlyCollection<RadioMusorResponse> GetRadioBySource(string s, BookRadioSysCache bookRadioSysCache)
+    public IReadOnlyCollection<RadioMusorResponse> GetRadioBySource(string s, BookRadioSysCache bookRadioSysCache)
     {
         string key = CacheKey.RadioResponseCacheKey + "_" + s;
         var result = GetCache<IReadOnlyCollection<RadioMusorResponse>>(key);
@@ -53,7 +50,21 @@ public IReadOnlyCollection<RadioMusorResponse> GetRadioBySource(string s, BookRa
         _memoryCache.Set(key, result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
 
         return result;
-    }    
+    }
+
+    public string GetVideoForWebPage(string f, int offset, VideoCache videoCache)
+    {
+        string key = CacheKey.VideoResponseCacheKey + "_" + f + "_" + offset;
+        var result = GetCache<string>(key);
+        if (!string.IsNullOrWhiteSpace(result))
+            return result;
+
+        videoCache = GetCache(CacheKey.VideoCacheKey.ToString(), () => { return _cacheService.VideoCacheFillUp(); });
+        result = _apiService.GetVideoForWebPage(f, offset, videoCache);
+        _memoryCache.Set(key, result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
+
+        return result;
+    }
 
     private C GetCache<C>(string key)
     {

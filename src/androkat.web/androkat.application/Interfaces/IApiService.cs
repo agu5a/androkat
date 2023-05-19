@@ -8,4 +8,5 @@ public interface IApiService
 {    
     IReadOnlyCollection<RadioMusorResponse> GetRadioBySource(string s, BookRadioSysCache bookRadioSysCache);
     IReadOnlyCollection<VideoResponse> GetVideoByOffset(int offset, VideoCache videoCache);
+    string GetVideoForWebPage(string f, int offset, VideoCache videoCache);
 }
