@@ -1,0 +1,107 @@
+﻿@page
+@using androkat.web.Pages.Ad
+@model VideoModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@section scripts {
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#tisztit').on('click', function () {
+				var temp = $('#cim').val().trim();
+				temp = temp.replace(new RegExp("'", 'g'), "`");
+				temp = temp.replace(new RegExp("–", 'g'), "-");
+				temp = temp.replace(new RegExp("—", 'g'), "-");
+				temp = temp.replace(new RegExp("„", 'g'), '"');
+				temp = temp.replace(new RegExp("”", 'g'), '"');
+				temp = temp.replace(new RegExp("&quot;", 'g'), '"');
+				temp = temp.replace(new RegExp("&ouml;", 'g'), "ö");
+				temp = temp.replace(new RegExp("&uuml;", 'g'), "ü");
+				temp = temp.replace(new RegExp("&Ouml;", 'g'), "Ö");
+				temp = temp.replace(new RegExp("&Uuml;", 'g'), "Ü");
+				temp = temp.replace(new RegExp(/ +/g, 'g'), ' ');
+				temp = temp.charAt(0).toUpperCase() + temp.slice(1);
+				$('#cim').val(temp);
+			});
+		});
+	</script>
+}
+	<div class="container-fluid">
+		<div class="py-5 text-center">
+			<h3>Új Videó</h3>
+		</div>
+		<div class="row">
+			<div class="col-md-12 order-md-1">
+				<form method="post">
+					<div class="mb-3">
+						<div>
+							<span>
+								@Model.VideoPageData.Error
+							</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 mb-3">
+							<div>
+								<span class="p-1 mb-3 bg-primary text-white">cím:</span>
+							</div>
+							<div style="margin: 10px 0 0 0;">
+								<input type="text" class="form-control" asp-for="VideoPageData.Cim" required value="@Model.VideoPageData.Cim" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 mb-3">
+							<div>
+								<span class="p-1 mb-3 bg-primary text-white">videolink</span>
+								pl: https://www.youtube.com/embed/iCYeq-iYce4
+							</div>
+							<div style="margin: 10px 0 0 0;">
+								<input type="text" class="form-control" asp-for="VideoPageData.Idezet" required value="@Model.VideoPageData.Idezet" />
+							</div>
+						</div>
+						<div class="col-md-6 mb-3">
+							<div>
+								<span class="p-1 mb-3 bg-primary text-white">channelId:</span>
+								pl: UCF3mEbdkhZwjQE8reJHm4sg
+							</div>
+							<div style="margin-top: 10px;">
+								<input type="text" class="form-control" asp-for="VideoPageData.ChannelId" required value="@Model.VideoPageData.ChannelId" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 mb-3">
+							<div>
+								<span class="p-1 mb-3 bg-primary text-white">forras:</span>
+								pl: Androkat
+							</div>
+							<div style="margin-top: 10px;">
+								<input type="text" class="form-control" asp-for="VideoPageData.Forras" required value="@Model.VideoPageData.Forras" />
+							</div>
+						</div>
+						<div class="col-md-6 mb-3">
+							<div>
+								<span class="p-1 mb-3 bg-primary text-white">img:</span>
+								pl: https://img.youtube.com/vi/zxRr7YN02eY/hqdefault.jpg <a href="http://thumbnailsave.com" rel="noopener" target="_blank">thumbnailsave.com</a>
+							</div>
+							<div style="margin-top: 10px;">
+								<input type="text" class="form-control" asp-for="VideoPageData.Img" required value="@Model.VideoPageData.Img" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3 mb-3">
+							<button type="submit" class="btn btn-lg btn-primary" id="submit">
+								mehet
+							</button>
+						</div>
+						<div class="col-md-3 mb-3">
+							<button type="button" class="btn btn-lg btn-info" id="tisztit">
+								tisztít
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
