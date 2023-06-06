@@ -20,7 +20,10 @@ public partial class ShowDetailViewModel : ViewModelBase
     private readonly ISourceData _sourceData;
 
     [ObservableProperty]
-    ContentViewModel contentView;
+    ContentItemViewModel contentView;
+
+    [ObservableProperty]
+    bool isPlaying;
 
     [ObservableProperty]
     string textToSearch;
@@ -58,7 +61,7 @@ public partial class ShowDetailViewModel : ViewModelBase
         SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
         var origImg = item.Image;
         item.Image = idezetSource.Img;
-        var showViewModel = new ContentViewModel(item, true);
+        var showViewModel = new ContentItemViewModel(item, true);
         showViewModel.datum = $"<b>Dátum</b>: {item.Datum.ToString("yyyy-MM-dd")}";
         showViewModel.detailscim = idezetSource.Title;
         showViewModel.contentImg = origImg;
@@ -67,6 +70,9 @@ public partial class ShowDetailViewModel : ViewModelBase
         showViewModel.type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus));
         ContentView = showViewModel;
     }
+
+    [RelayCommand]
+    Task TapEpisode(Episode episode) => Shell.Current.GoToAsync($"{nameof(EpisodeDetailPage)}?Id={episode.Id}&ShowId={showId}");
 
     [RelayCommand]
     async Task AddFavorite()
@@ -81,7 +87,7 @@ public partial class ShowDetailViewModel : ViewModelBase
             Idezet = ContentView.ContentDto.Idezet,
             Nid = ContentView.ContentDto.Nid,
             Tipus = ContentView.ContentDto.Tipus,
-            TypeName = ContentView.ContentDto.TypeName 
+            TypeName = ContentView.ContentDto.TypeName
         });
     }
 
@@ -159,5 +165,40 @@ public partial class ShowDetailViewModel : ViewModelBase
             Title = "AndroKat: " + ContentView.ContentDto.Cim,
             Text = ContentView.ContentDto.Idezet
         });
+
+        //if (ContentView is null || subscriptionsService is null)
+        //    return;
+
+        //if (ContentView.IsSubscribed)
+        //{
+        //    //var isUnsubcribe = await subscriptionsService.UnSubscribeFromShowAsync(Show.Show);
+        //    //Show.IsSubscribed = !isUnsubcribe;
+        //}
+        //else
+        //{
+        //    //subscriptionsService.SubscribeToShow(Show.Show);
+        //    ContentView.IsSubscribed = true;
+        //}
+    }
+
+    [RelayCommand]
+    Task PlayEpisode(Episode episode) => Task.Run(() => { }); //playerService.PlayAsync(episode, Show.Show);
+
+    [RelayCommand]
+    Task AddToListenLater(Episode episode)
+    {
+        //var itemHasInListenLaterList = listenLaterService.IsInListenLater(episode);
+        //if (itemHasInListenLaterList)
+        //{
+        //    listenLaterService.Remove(episode);
+        //}
+        //else
+        //{
+        //    listenLaterService.Add(episode, Show.Show);
+        //}
+
+        //episode.IsInListenLater = !itemHasInListenLaterList;
+
+        return Task.CompletedTask;
     }
 }

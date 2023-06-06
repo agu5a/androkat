@@ -16,8 +16,8 @@
 		<ApplicationIdGuid>0BE13A10-A7E4-44D6-AFF1-12038428A25C</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.17</ApplicationDisplayVersion>
-		<ApplicationVersion>17</ApplicationVersion>
+		<ApplicationDisplayVersion>1.18</ApplicationDisplayVersion>
+		<ApplicationVersion>18</ApplicationVersion>
 
                 <!-- Required for C# Hot Reload -->
                 <UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
@@ -29,7 +29,6 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" Color="#00796B" />
-		<!--MauiIcon Include="Resources\AppIcon\ic_launcher.png" /-->
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\splash.svg" Color="#00796B" BaseSize="128,128" />
@@ -45,22 +44,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="5.1.0" />
-		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="3.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
                 <PackageReference Include="MonkeyCache.FileStore" Version="2.0.1" />
                 <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
-		<PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.4" />
+		<PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.5" />
                 <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Platforms\Android\Resources\drawable\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\androkat.maui.library\androkat.maui.library.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="androkat.hu.Pages.EpisodeDetailPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:androkat.hu.ViewModels"
+             x:DataType="viewmodels:EpisodeDetailViewModel"
+             Style="{StaticResource DetailPageStyle}"
+             Title="{Binding Episode.Title}"            
+             xmlns:converters="clr-namespace:androkat.hu.Converters"
+             
+             >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:TextToTypeTextConverter x:Key="TextToTypeTextConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}">
+        <ScrollView>
+            <VerticalStackLayout Padding="16"
+                                 Spacing="8">
+                <Image Margin="0,4,0,8"
+                       HeightRequest="156"
+                       Source="{Binding Image}"
+                       SemanticProperties.Description="It is the banner of the episode"
+                       WidthRequest="156" />
+                <Label Style="{StaticResource H6LabelStyle}"
+                       Text="{Binding Episode.Title}" />
+                <Label Style="{StaticResource SH6LabelStyle}"
+                       Text="{Binding Show.Title}" />
+                <Label Margin="0,0,0,16"
+                       Style="{StaticResource BodySLabelStyle}"
+                       Text="{Binding Episode.Published, StringFormat='{0:MMM dd, yyyy}'}" />
+                <Grid Margin="0,0,0,16"
+                      ColumnDefinitions="auto,auto,auto,auto"
+                      ColumnSpacing="12">
+                    <Button BackgroundColor="{StaticResource Primary}"
+                            Command="{Binding PlayCommand}"
+                            SemanticProperties.Hint="Play the episode"
+                            Text="Play" />
+                    <Label Grid.Column="1"
+                           Style="{StaticResource BodySLabelStyle}"
+                           Text="{Binding Episode.Duration}"
+                           VerticalOptions="Center" />
+                    <ImageButton Grid.Column="2"
+                                 HeightRequest="{OnIdiom Default=28, Phone=44}"
+                                 Aspect="AspectFill"
+                                 Source="sare_button.png"
+                                 SemanticProperties.Description="Tap to share the episode"
+                                 VerticalOptions="Center"
+                                 Command="{Binding ShareCommand}"
+                                 WidthRequest="{OnIdiom Default=28, Phone=44}">
+                    </ImageButton>
+                    <ImageButton Grid.Column="3"
+                                 HeightRequest="{OnIdiom Default=28, Phone=44}"
+                                 Aspect="AspectFill"
+                                 Source="clockpink.png"
+                                 SemanticProperties.Description="Tap to add the episode to listen later"
+                                 VerticalOptions="Center"
+                                 Command="{Binding ListenLaterCommand}"
+                                 WidthRequest="{OnIdiom Default=28, Phone=44}">
+                        <ImageButton.Triggers>
+                            <DataTrigger Binding="{Binding IsInListenLater}"
+                                         TargetType="ImageButton"
+                                         Value="true">
+                                <Setter Property="Source"
+                                        Value="listenlaterfilled.png" />
+                            </DataTrigger>
+                        </ImageButton.Triggers>
+                    </ImageButton>
+                </Grid>
+                <Label Style="{StaticResource BodySLabelStyle}"
+                       Text="{Binding Episode.Description}"
+                       TextType="{Binding Episode.Description,Converter={StaticResource TextToTypeTextConverter}}"/>
+            </VerticalStackLayout>
+        </ScrollView>
+
+
+        
+
+    </Grid>
+</ContentPage>

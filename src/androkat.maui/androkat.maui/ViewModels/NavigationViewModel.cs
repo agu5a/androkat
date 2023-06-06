@@ -6,6 +6,9 @@ namespace androkat.hu.ViewModels;
 
 public partial class NavigationViewModel : ObservableObject
 {
+    [ObservableProperty]
+    bool isSubscribed;
+
     public string id { get; set; }
 
     public string contentImg { get; set; }
@@ -14,8 +17,9 @@ public partial class NavigationViewModel : ObservableObject
 
     public string detailscim { get; set; }
 
-    public NavigationViewModel()
+    public NavigationViewModel(bool isSubscribed)
     {        
+        //IsSubscribed = isSubscribed;
     }
 
     [RelayCommand]

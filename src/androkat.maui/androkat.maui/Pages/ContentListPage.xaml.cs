@@ -29,7 +29,8 @@ public partial class ContentListPage : ContentPage
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        viewModel.Contents.Clear();
+        //_viewModel.Contents.Clear();
+        //Navigation.RemovePage(this);
     }
 
     private string GetPageTitle(string pageTypeId)

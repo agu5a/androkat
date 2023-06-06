@@ -52,5 +52,30 @@ public partial class DiscoverViewModel : ViewModelBase
         };
 
         Pages.ReplaceRange(new List<List<NavigationViewModel>> { podcastsModels });
-    }    
+    }
+
+    /*[RelayCommand]
+    async Task Search()
+    {
+        IEnumerable<Show> list;
+        if (string.IsNullOrWhiteSpace(Text))
+        {
+            list = await showsService.GetShowsAsync();
+        }
+        else
+        {
+            list = await showsService.SearchShowsAsync(Text);
+        }
+
+        if (list != null)
+        {
+            UpdatePodcasts(ConvertToViewModels(list));
+        }
+    }*/
+
+    [RelayCommand]
+    async Task Subscribe(ShowViewModel showViewModel) => Task.Run(() => { });//showViewModel.IsSubscribed = await subscriptionsService.UnSubscribeFromShowAsync(showViewModel.Show);
+
+    //[RelayCommand]
+    //Task SeeAllCategories() => Shell.Current.GoToAsync($"{nameof(CategoriesPage)}");
 }
