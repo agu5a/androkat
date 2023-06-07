@@ -1,15 +1,21 @@
 ﻿using androkat.application.Interfaces;
 using androkat.domain;
 using androkat.domain.Configuration;
+using androkat.domain.Enum;
 using androkat.domain.Model;
 using androkat.domain.Model.AdminPage;
+using androkat.domain.Model.WebResponse;
 using androkat.infrastructure.Model.SQLite;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json;
 
 namespace androkat.infrastructure.DataManager;
 

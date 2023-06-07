@@ -1,0 +1,39 @@
+﻿@page
+@using androkat.web.Pages.Ad
+@model CacheModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@section meta_extra {
+}
+
+@section scripts {
+}
+
+<div class="container-fluid">
+    <div class="py-5 text-center">
+        <h3>Cache törlés</h3>
+    </div>
+    <div class="">
+        @Html.Raw(Model.Torolve > 0 ? "<span>Törölve: " + Model.Torolve + "</span>" : "")
+    </div>
+    <div class="">
+        @Html.Raw(Model.Torolve > 0 ? "<span>Törölve: " + Model.Torolve + "</span>" : "")
+    </div>
+    <div class="border">
+        <form method="post">
+            <button type="submit" class="btn btn-lg btn-danger" asp-page-handler="All">
+                összes törlés
+            </button>
+        </form>
+    </div>
+    <div class="border">
+        <div>
+            @{
+                foreach (var item in Model.AllCachedResult)
+                {
+                    @Html.Raw("<span>" + item.Key + " " + item.Inserted + "<br></span>")
+                }
+            }
+        </div>
+    </div>
+</div>
