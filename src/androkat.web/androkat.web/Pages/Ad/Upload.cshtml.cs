@@ -18,7 +18,7 @@ namespace androkat.web.Pages.Ad;
 //https://github.com/dotnet/AspNetCore.Docs/blob/main/aspnetcore/mvc/models/file-uploads/samples/3.x/SampleApp/Pages/BufferedSingleFileUploadPhysical.cshtml.cs
 //https://docs.microsoft.com/en-us/aspnet/core/mvc/models/file-uploads?view=aspnetcore-6.0#upload-small-files-with-buffered-model-binding-to-physical-storage
 
-[Authorize()]
+//[Authorize()]
 public class UploadModel : PageModel
 {
     private readonly ILogger<UploadModel> _logger;

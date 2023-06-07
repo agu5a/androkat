@@ -9,14 +9,14 @@ using System;
 
 namespace androkat.web.Pages.Ad;
 
-[Authorize()]
+//[Authorize()]
 public class VideoModel : PageModel
 {
     protected readonly ILogger<VideoModel> _logger;
     protected readonly AndrokatContext _ctx;
 
     [BindProperty]
-    public VideoPageData VideoPageData { get; set; }
+    public VideoData VideoPageData { get; set; }
 
     public VideoModel(ILogger<VideoModel> logger, AndrokatContext ctx)
     {
@@ -26,7 +26,7 @@ public class VideoModel : PageModel
 
     public void OnGet()
     {
-        VideoPageData = new VideoPageData();
+        VideoPageData = new VideoData();
     }
 
     public void OnPost()
@@ -44,14 +44,12 @@ public class VideoModel : PageModel
                 Inserted = DateTime.Now
             });
             _ctx.SaveChanges();
-            VideoPageData.Error = "sikerült";
+            VideoPageData = new VideoData { Error = "sikerült" };
         }
         catch (Exception ex)
         {
-            VideoPageData.Error = ex.Message;
+            VideoPageData = new VideoData { Error = ex.Message };
             _logger.LogError(ex, "Exception: ");
         }
-
-        VideoPageData = new VideoPageData();
     }
 }

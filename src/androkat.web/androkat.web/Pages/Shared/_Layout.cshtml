@@ -2,6 +2,7 @@
 @using Microsoft.Extensions.Options;
 @using androkat.domain.Configuration;
 @inject IOptions<CredentialConfiguration> Configuration
+@inject IOptions<GeneralConfiguration> GeneralConfiguration
 <!doctype html>
 <html lang="hu">
 <head>
@@ -32,46 +33,46 @@
                 <div class="collapse navbar-collapse" id="navbarmain">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="https://androkat.hu/">Napi olvasó</a>
+                            <a class="nav-link" href="@Html.Raw(GeneralConfiguration.Value.HostUrl)/">Napi olvasó</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://androkat.hu/ajanlat">AJÁNDÉKOZZ KÖNYVET</a>
+                            <a class="nav-link" href="@Html.Raw(GeneralConfiguration.Value.HostUrl)/ajanlat">AJÁNDÉKOZZ KÖNYVET</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://androkat.hu/szentek">Szentek idézetei</a>
+                            <a class="nav-link" href="@Html.Raw(GeneralConfiguration.Value.HostUrl)/szentek">Szentek idézetei</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://androkat.hu/ima/">Imádság</a>
+                            <a class="nav-link" href="@Html.Raw(GeneralConfiguration.Value.HostUrl)/ima/">Imádság</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://androkat.hu/hanganyag">Hanganyagok</a>
+                            <a class="nav-link" href="@Html.Raw(GeneralConfiguration.Value.HostUrl)/hanganyag">Hanganyagok</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://androkat.hu/video">Videók</a>
+                            <a class="nav-link" href="@Html.Raw(GeneralConfiguration.Value.HostUrl)/video">Videók</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="http://api.androkat.hu/radio">Rádiók</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://androkat.hu/szent">Mai szent</a>
+                            <a class="nav-link" href="@Html.Raw(GeneralConfiguration.Value.HostUrl)/szent">Mai szent</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://androkat.hu/hirek">Katolikus hírek</a>
+                            <a class="nav-link" href="@Html.Raw(GeneralConfiguration.Value.HostUrl)/hirek">Katolikus hírek</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://androkat.hu/blog">Magazin, blog</a>
+                            <a class="nav-link" href="@Html.Raw(GeneralConfiguration.Value.HostUrl)/blog">Magazin, blog</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://androkat.hu/humor">Humor</a>
+                            <a class="nav-link" href="@Html.Raw(GeneralConfiguration.Value.HostUrl)/humor">Humor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://androkat.hu/gyonas/">Gyónás</a>
+                            <a class="nav-link" href="@Html.Raw(GeneralConfiguration.Value.HostUrl)/gyonas/">Gyónás</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://androkat.hu/hasznos">Hasznos oldalak</a>
+                            <a class="nav-link" href="@Html.Raw(GeneralConfiguration.Value.HostUrl)/hasznos">Hasznos oldalak</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://androkat.hu/kapcsolat">Kapcsolat</a>
+                            <a class="nav-link" href="@Html.Raw(GeneralConfiguration.Value.HostUrl)/kapcsolat">Kapcsolat</a>
                         </li>
                     </ul>
                 </div>
@@ -88,7 +89,7 @@
             <img alt="" src="~/images/twitter.png" style="width: 21px;"> <a href="https://twitter.com/AndroKat" rel="noopener" target="_blank">twitter</a>
             <img alt="" src="~/images/youtube.png" style="width: 21px;"> <a href="https://www.youtube.com/channel/UCF3mEbdkhZwjQE8reJHm4sg" rel="noopener" target="_blank">youtube</a>
             <img alt="" src="~/images/instagram.png" style="width: 21px;"> <a href="https://www.instagram.com/androkat_app/" rel="noopener" target="_blank">instagram</a>
-            <a class="" href="https://androkat.hu/adatvedelem">Adatvédelem</a>
+            <a class="" href="@Html.Raw(GeneralConfiguration.Value.HostUrl)/adatvedelem">Adatvédelem</a>
         </p>
         <p>® 2012-@(DateTime.Now.ToString("yyyy")) :: Androkat :: Android app weben :: @("verzió: " + Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion)</p>
     </footer>

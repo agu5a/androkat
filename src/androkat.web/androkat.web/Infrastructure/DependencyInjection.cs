@@ -30,6 +30,7 @@ public static class DependencyInjection
         builder.Services.AddSingleton<IConfigureOptions<AndrokatConfiguration>, AndrokatConfigurationOptions>();
         builder.Services.AddOptions<EndPointConfiguration>().BindConfiguration("EndPointConfiguration").ValidateDataAnnotations().ValidateOnStart();
         builder.Services.AddOptions<CredentialConfiguration>().BindConfiguration("CredentialConfiguration").ValidateDataAnnotations().ValidateOnStart();
+        builder.Services.AddOptions<GeneralConfiguration>().BindConfiguration("GeneralConfiguration").ValidateDataAnnotations().ValidateOnStart();
         builder.Services.AddSingleton<IContentMetaDataService, ContentMetaDataService>();
         builder.Services.SetAuthentication(builder.Configuration);
         builder.Services.AddSingleton<ApiKeyAuthorizationFilter>();
