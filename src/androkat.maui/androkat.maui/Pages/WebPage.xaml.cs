@@ -1,6 +1,6 @@
 ﻿using androkat.hu.Models;
-using androkat.hu.Services;
 using androkat.hu.ViewModels;
+using androkat.maui.library.Services;
 
 namespace androkat.hu.Pages;
 

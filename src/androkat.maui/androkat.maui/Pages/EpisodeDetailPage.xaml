@@ -6,7 +6,7 @@
              x:DataType="viewmodels:EpisodeDetailViewModel"
              Style="{StaticResource DetailPageStyle}"
              Title="{Binding Episode.Title}"            
-             xmlns:converters="clr-namespace:androkat.hu.Converters"
+             xmlns:converters="clr-namespace:androkat.maui.library.Converters;assembly=androkat.maui.library"
              
              >
     <ContentPage.Resources>

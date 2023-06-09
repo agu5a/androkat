@@ -1,4 +1,4 @@
-﻿using androkat.hu.Models;
+﻿using androkat.maui.library.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace androkat.hu.ViewModels;

@@ -1,4 +1,5 @@
-﻿using androkat.hu.Services;
+﻿using androkat.maui.library.Abstraction;
+using androkat.maui.library.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MvvmHelpers;

@@ -1,6 +1,6 @@
 ﻿using androkat.hu.Pages;
-using androkat.hu.Services;
 using androkat.hu.ViewModels;
+using androkat.maui.library.Services;
 using MonkeyCache.FileStore;
 
 namespace androkat.hu;

@@ -63,9 +63,6 @@ public class CacheModel : PageModel
             if (_memoryCache.TryGetValue(CacheKey.BookRadioSysCacheKey.ToString(), out result))
                 res.Add(new AllCachedResult { Key = CacheKey.BookRadioSysCacheKey.ToString(), Inserted = ((BookRadioSysCache)result).Inserted.ToString("yyyy-MM-dd HH:mm:ss") });
 
-            if (_memoryCache.TryGetValue(CacheKey.MainCacheKey.ToString(), out result))
-                res.Add(new AllCachedResult { Key = CacheKey.MainCacheKey.ToString(), Inserted = ((MainCache)result).Inserted.ToString("yyyy-MM-dd HH:mm:ss") });
-
             if (_memoryCache.TryGetValue(CacheKey.ImaCacheKey.ToString(), out result))
                 res.Add(new AllCachedResult { Key = CacheKey.ImaCacheKey.ToString(), Inserted = ((ImaCache)result).Inserted.ToString("yyyy-MM-dd HH:mm:ss") });
 

@@ -1,5 +1,5 @@
-﻿using androkat.hu.Models;
-using androkat.hu.Services;
+﻿using androkat.maui.library.Models;
+using androkat.maui.library.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -90,7 +90,7 @@ public partial class EpisodeDetailViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    Task Play() => Task.Run(()=> { }); //playerService.PlayAsync(Episode, Show);
+    Task Play() => Task.Run(() => { }); //playerService.PlayAsync(Episode, Show);
 
     [RelayCommand]
     Task Share() =>

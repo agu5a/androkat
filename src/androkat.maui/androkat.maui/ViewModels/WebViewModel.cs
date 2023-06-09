@@ -1,5 +1,5 @@
 ﻿using androkat.hu.Models;
-using androkat.hu.Services;
+using androkat.maui.library.Services;
 
 namespace androkat.hu.ViewModels;
 

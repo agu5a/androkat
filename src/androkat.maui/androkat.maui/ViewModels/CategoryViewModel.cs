@@ -1,5 +1,7 @@
 ﻿using androkat.hu.Models;
-using androkat.hu.Services;
+using androkat.maui.library.Models;
+using androkat.maui.library.Models.Responses;
+using androkat.maui.library.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -41,7 +43,7 @@ public partial class CategoryViewModel : ViewModelBase
     async Task LoadCategoryAsync()
     {
         //var allCategories = await showsService.GetAllCategories();
-        Category = new Category(new Models.Responses.CategoryResponse { }) { };// allCategories?.First(c => c.Id == new Guid(Id));
+        Category = new Category(new CategoryResponse { }) { };// allCategories?.First(c => c.Id == new Guid(Id));
     }
 
     [RelayCommand]

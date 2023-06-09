@@ -1,5 +1,5 @@
-﻿using androkat.hu.Models;
-using androkat.hu.Pages;
+﻿using androkat.hu.Pages;
+using androkat.maui.library.Models;
 using CommunityToolkit.Mvvm.Input;
 
 namespace androkat.hu.ViewModels;

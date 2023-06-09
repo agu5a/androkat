@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using androkat.maui.library.Services;
+using androkat.maui.library.Helpers;
 using androkat.hu.Helpers;
-using androkat.hu.Services;
 
 namespace androkat.hu.ViewModels;
 

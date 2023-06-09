@@ -1,4 +1,4 @@
-﻿using androkat.hu;
+﻿using androkat.maui.library.Helpers;
 
 namespace androkat.hu.Helpers;
 
@@ -10,10 +10,10 @@ public static class TheTheme
         {
             default:
             case AppTheme.Light:
-                App.Current.UserAppTheme = AppTheme.Light;
+                Application.Current.UserAppTheme = AppTheme.Light;
                 break;
             case AppTheme.Dark:
-                App.Current.UserAppTheme = AppTheme.Dark;
+                Application.Current.UserAppTheme = AppTheme.Dark;
                 break;
 
         }

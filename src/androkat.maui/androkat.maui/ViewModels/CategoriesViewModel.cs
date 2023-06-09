@@ -1,6 +1,8 @@
 ﻿using androkat.hu.Models;
 using androkat.hu.Pages;
-using androkat.hu.Services;
+using androkat.maui.library.Models;
+using androkat.maui.library.Models.Responses;
+using androkat.maui.library.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -22,7 +24,7 @@ public partial class CategoriesViewModel : ViewModelBase
     {
         //var categories = await showsService.GetAllCategories();
 
-        Categories = new List<Category> { new Category(new Models.Responses.CategoryResponse { }) { } };//categories?.ToList();
+        Categories = new List<Category> { new Category(new CategoryResponse { }) { } };//categories?.ToList();
     }
 
     [RelayCommand]
