@@ -57,4 +57,16 @@ public partial class ContentItemView
             IsLoading = false;
         });
     }
+
+    protected override void OnBindingContextChanged()
+    {
+        base.OnBindingContextChanged();
+
+        if (BindingContext is not ContentItemViewModel vm)
+        {
+            return;
+        }
+
+        //vm.InitializeCommand.Execute(null);
+    }
 }

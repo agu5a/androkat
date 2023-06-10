@@ -1,7 +1,6 @@
 ﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Models;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
 namespace androkat.maui.library.Services;
@@ -26,18 +25,18 @@ public class SourceDataMapper : ISourceData
         return _sources[index];
     }
 
-    private Dictionary<int, SourceData> GetFromSources()
+    private static Dictionary<int, SourceData> GetFromSources()
     {
         try
         {
             using var stream = FileSystem.OpenAppPackageFileAsync("sources.json").Result;
             using var reader = new StreamReader(stream);
 
-            SourceData data = new SourceData();
+            var data = new SourceData();
             var contents = reader.ReadToEnd();
 
             var result = JsonSerializer.Deserialize<SourcesImport>(contents);
-            return result.Sources.ToDictionary(d => d.Id);            
+            return result.Sources.ToDictionary(d => d.Id);
         }
         catch (Exception ex)
         {

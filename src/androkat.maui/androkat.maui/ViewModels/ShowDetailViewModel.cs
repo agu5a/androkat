@@ -1,6 +1,4 @@
-﻿using androkat.hu.Models;
-using androkat.hu.Pages;
-using androkat.maui.library.Abstraction;
+﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Models;
 using androkat.maui.library.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,11 +10,11 @@ namespace androkat.hu.ViewModels;
 [QueryProperty(nameof(Id), nameof(Id))]
 public partial class ShowDetailViewModel : ViewModelBase
 {
-    private CancellationTokenSource cts;
+    private CancellationTokenSource cancellationTokenSource;
 
     public string Id { get; set; }
 
-    private Guid showId;
+    private Guid contentGuid;
 
     private readonly PageService _pageService;
     private readonly ISourceData _sourceData;
@@ -24,15 +22,9 @@ public partial class ShowDetailViewModel : ViewModelBase
     [ObservableProperty]
     ContentItemViewModel contentView;
 
-    [ObservableProperty]
-    bool isPlaying;
-
-    [ObservableProperty]
-    string textToSearch;
-
     public ShowDetailViewModel(PageService pageService, ISourceData sourceData)
     {
-        cts = new CancellationTokenSource();
+        cancellationTokenSource = new CancellationTokenSource();
         _pageService = pageService;
         _sourceData = sourceData;
     }
@@ -41,7 +33,7 @@ public partial class ShowDetailViewModel : ViewModelBase
     {
         if (Id != null)
         {
-            showId = new Guid(Id);
+            contentGuid = new Guid(Id);
         }
 
         await FetchAsync();
@@ -49,14 +41,14 @@ public partial class ShowDetailViewModel : ViewModelBase
 
     async Task FetchAsync()
     {
-        var item = await _pageService.GetContentDtoByIdAsync(showId);
+        var item = await _pageService.GetContentDtoByIdAsync(contentGuid);
 
         if (item == null)
         {
             await Shell.Current.DisplayAlert(
-                      "Title",
-                      "Message",
-                      "Close");
+                      "Hiba",
+                      "Nincs tartalom",
+                      "Bezárás");
             return;
         }
 
@@ -72,9 +64,6 @@ public partial class ShowDetailViewModel : ViewModelBase
         showViewModel.type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus));
         ContentView = showViewModel;
     }
-
-    [RelayCommand]
-    Task TapEpisode(Episode episode) => Shell.Current.GoToAsync($"{nameof(EpisodeDetailPage)}?Id={episode.Id}&ShowId={showId}");
 
     [RelayCommand]
     async Task AddFavorite()
@@ -123,7 +112,7 @@ public partial class ShowDetailViewModel : ViewModelBase
 
         if (toSpeak.Length < max)
         {
-            await TextToSpeech.Default.SpeakAsync(title + ". " + idezet, new SpeechOptions { Locale = locale }, cancelToken: cts.Token);
+            await TextToSpeech.Default.SpeakAsync(title + ". " + idezet, new SpeechOptions { Locale = locale }, cancelToken: cancellationTokenSource.Token);
             return;
         }
 
@@ -131,7 +120,7 @@ public partial class ShowDetailViewModel : ViewModelBase
 
         var task = new List<Task>
             {
-                TextToSpeech.Default.SpeakAsync(title, new SpeechOptions { Locale = locale }, cancelToken: cts.Token)
+                TextToSpeech.Default.SpeakAsync(title, new SpeechOptions { Locale = locale }, cancelToken: cancellationTokenSource.Token)
             };
 
         if (idezet.Contains('.'))
@@ -140,11 +129,11 @@ public partial class ShowDetailViewModel : ViewModelBase
             for (int i = 0; i < sep.Length; i++)
             {
                 string temp = sep[i] + ".";
-                task.Add(TextToSpeech.Default.SpeakAsync(temp, new SpeechOptions { Locale = locale }, cancelToken: cts.Token));
+                task.Add(TextToSpeech.Default.SpeakAsync(temp, new SpeechOptions { Locale = locale }, cancelToken: cancellationTokenSource.Token));
             }
         }
         else
-            task.Add(TextToSpeech.Default.SpeakAsync(idezet, new SpeechOptions { Locale = locale }, cancelToken: cts.Token));
+            task.Add(TextToSpeech.Default.SpeakAsync(idezet, new SpeechOptions { Locale = locale }, cancelToken: cancellationTokenSource.Token));
 
         await Task.WhenAll(task).ContinueWith((t) => { isBusy = false; }, TaskScheduler.FromCurrentSynchronizationContext());
     }
@@ -153,54 +142,19 @@ public partial class ShowDetailViewModel : ViewModelBase
 
     public void CancelSpeech()
     {
-        if (cts?.IsCancellationRequested ?? true)
+        if (cancellationTokenSource?.IsCancellationRequested ?? true)
             return;
 
-        cts.Cancel();
+        cancellationTokenSource.Cancel();
     }
 
     [RelayCommand]
-    async Task Subscribe()
+    async Task ShareContent()
     {
         await Share.RequestAsync(new ShareTextRequest
         {
             Title = "AndroKat: " + ContentView.ContentDto.Cim,
             Text = ContentView.ContentDto.Idezet
         });
-
-        //if (ContentView is null || subscriptionsService is null)
-        //    return;
-
-        //if (ContentView.IsSubscribed)
-        //{
-        //    //var isUnsubcribe = await subscriptionsService.UnSubscribeFromShowAsync(Show.Show);
-        //    //Show.IsSubscribed = !isUnsubcribe;
-        //}
-        //else
-        //{
-        //    //subscriptionsService.SubscribeToShow(Show.Show);
-        //    ContentView.IsSubscribed = true;
-        //}
-    }
-
-    [RelayCommand]
-    Task PlayEpisode(Episode episode) => Task.Run(() => { }); //playerService.PlayAsync(episode, Show.Show);
-
-    [RelayCommand]
-    Task AddToListenLater(Episode episode)
-    {
-        //var itemHasInListenLaterList = listenLaterService.IsInListenLater(episode);
-        //if (itemHasInListenLaterList)
-        //{
-        //    listenLaterService.Remove(episode);
-        //}
-        //else
-        //{
-        //    listenLaterService.Add(episode, Show.Show);
-        //}
-
-        //episode.IsInListenLater = !itemHasInListenLaterList;
-
-        return Task.CompletedTask;
     }
 }

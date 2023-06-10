@@ -37,7 +37,7 @@ public partial class SettingsPage : ContentPage
     {
         await Share.RequestAsync(new ShareFileRequest
         {
-            Title = "Share text file",
+            Title = "Adatbázis fájl megosztása",
             File = new ShareFile(FileAccessHelper.GetLocalFilePath("androkat.db3"))
         });
     }

@@ -1,5 +1,4 @@
-﻿using AndroidX.Lifecycle;
-using androkat.hu.ViewModels;
+﻿using androkat.hu.ViewModels;
 
 namespace androkat.hu.Pages;
 
@@ -10,16 +9,16 @@ public partial class FavoriteListPage : ContentPage
     public FavoriteListPage(FavoriteListViewModel vm)
     {
         InitializeComponent();
-        BindingContext = vm;    
+        BindingContext = vm;
     }
 
-    protected override async void OnAppearing()
+    protected override void OnAppearing()
     {
-        base.OnAppearing();        
+        base.OnAppearing();
     }
 
     protected override async void OnNavigatedTo(NavigatedToEventArgs args)
-    {        
+    {
         await _viewModel.InitializeAsync();
         _viewModel.PageTitle = GetPageTitle();
         base.OnNavigatedTo(args);
@@ -33,5 +32,5 @@ public partial class FavoriteListPage : ContentPage
     private string GetPageTitle()
     {
         return $"Kedvencek {_viewModel.FavoriteCount}";
-    }    
+    }
 }

@@ -1,0 +1,61 @@
+App.cs
+
+ - RegisterRoute ShowDetailPage
+
+ MobileShell.cs
+ - FlyoutItems (Pages)
+   
+   ViewModel: ShellViewModel.cs : ViewModelBase : ObservableObject
+   
+	 Page: ContentListPage  *** lista oldal
+
+	   XAML: 
+	    Binding Contents, PageTitle, SubscribeCommand
+		Properties: SubscriptionCommand, SubscriptionCommandParameter
+
+	   CS: 
+	    OnNavigatedTo
+		  Set: PageTitle, Id paraméter 
+		  ViewModel-> InitializeAsync
+
+	    ViewModel: ContentListViewModel //[QueryProperty(nameof(Id), nameof(Id))]
+	    - Id
+		- PageTitle
+		- Contents : List<ContentItemViewModel> ( ContentDto, NavigateToDetail() ) 
+	    - InitializeAsync
+		   PageService.GetContentsAsync(Id);
+	    - Subscribe(ContentItemViewModel)
+	   
+	   View: ContentItemView (ContentItemViewModel)
+	    XAML:
+		  TapGestureRecognizer Binding: NavigateToDetailCommand (ContentItemViewModel -> GoToAsync ShowDetailPage)
+		  Image.Loaded -> Image_Loaded
+		  Binding: ContentDto, datum, forras
+		CS:
+		- SubscriptionCommand (SubscriptionCommandProperty)
+		- SubscriptionCommandParameter (SubscriptionCommandParameterProperty)
+		- IsLoading (IsLoadingProperty)
+		- Image_Loaded
+		   IsLoading = false;
+	 
+ 
+	 Page: ShowDetailPage
+       
+	   XAML: 
+	    Binding: ContentView
+		Button Binding: StartTextToSpeechCommand
+		Button Binding: AddFavoriteCommand, DataTrigger -> Binding: ContentView.IsSubscribed 
+		Button Binding: ShareContentCommand
+	   
+	   CS:
+	    OnAppearing
+		  ViewModel-> InitializeAsync
+	   
+	   ViewModel: ShowDetailViewModel
+	   - InitializeAsync
+	      PageService.GetContentDtoByIdAsync(contentGuid)
+	   - ShareContent
+	   - CancelSpeech
+	   - StartTextToSpeech
+	   - AddFavorite
+	   

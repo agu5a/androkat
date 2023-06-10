@@ -11,7 +11,6 @@ public partial class ImaContentViewModel : BaseView
     public ImaContentViewModel(ImadsagDto contentDto, bool isSubscribed)
     {
         ContentDto = contentDto;
-        //IsSubscribed = isSubscribed;
     }
 
     [RelayCommand]

@@ -17,9 +17,6 @@ public partial class ContentListViewModel : ViewModelBase
     public string Id { get; set; }
 
     [ObservableProperty]
-    string text;
-
-    [ObservableProperty]
     public string pageTitle;
 
     [ObservableProperty]
@@ -46,9 +43,9 @@ public partial class ContentListViewModel : ViewModelBase
         if (contents == null)
         {
             await Shell.Current.DisplayAlert(
-                "Error_Title",
-                "Error_Message",
-                "Close");
+                "Hiba",
+                "Nincs adat",
+                "Bezárás");
 
             return;
         }
@@ -66,39 +63,21 @@ public partial class ContentListViewModel : ViewModelBase
             SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
             var origImg = item.Image;
             item.Image = idezetSource.Img;
-            var showViewModel = new ContentItemViewModel(item, true); 
-            showViewModel.datum = $"Dátum: {item.Datum.ToString("yyyy-MM-dd")}";
-            showViewModel.detailscim = idezetSource.Title;
-            showViewModel.contentImg = origImg;
-            showViewModel.isFav = false;
-            showViewModel.forras = $"Forrás: {idezetSource.Forrasszoveg}";
-            showViewModel.type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus));
+            var showViewModel = new ContentItemViewModel(item, true)
+            {
+                datum = $"Dátum: {item.Datum.ToString("yyyy-MM-dd")}",
+                detailscim = idezetSource.Title,
+                contentImg = origImg,
+                isFav = false,
+                forras = $"Forrás: {idezetSource.Forrasszoveg}",
+                type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus))
+            };
             viewmodels.Add(showViewModel);
         }
 
         return viewmodels;
     }
 
-
-    /*[RelayCommand]
-    async Task Search()
-    {
-        IEnumerable<Show> list;
-        if (string.IsNullOrWhiteSpace(Text))
-        {
-            list = await showsService.GetShowsAsync();
-        }
-        else
-        {
-            list = await showsService.SearchShowsAsync(Text);
-        }
-
-        if (list != null)
-        {
-            UpdatePodcasts(ConvertToViewModels(list));
-        }
-    }*/
-
     [RelayCommand]
-    async Task Subscribe(ShowViewModel showViewModel) => Task.Run(() => { });//showViewModel.IsSubscribed = await subscriptionsService.UnSubscribeFromShowAsync(showViewModel.Show);
+    async Task Subscribe(ContentItemViewModel viewModel) => Task.Run(() => { });
 }

@@ -11,7 +11,6 @@ public partial class ContentItemViewModel : BaseView
     public ContentItemViewModel(ContentDto contentDto, bool isSubscribed)
     {
         ContentDto = contentDto;
-        //IsSubscribed = isSubscribed;
     }
 
     [RelayCommand]

@@ -67,13 +67,11 @@ public static class ActivitiesHelper
     {
         try
         {
-            Activities foo = (Activities)value;
-            return foo;
+            Activities activity = (Activities)value;
+            return activity;
         }
         catch (Exception)
         {
-
-
         }
 
         return Activities.noone;

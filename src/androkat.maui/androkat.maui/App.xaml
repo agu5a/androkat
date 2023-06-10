@@ -7,7 +7,6 @@
         <ResourceDictionary>
             <ResourceDictionary Source="Resources/Styles/DefaultTheme.xaml"/>
             <converters:IsNullConverter x:Key="IsNullConverter"/>
-            <converters:DurationConverter x:Key="DurationConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

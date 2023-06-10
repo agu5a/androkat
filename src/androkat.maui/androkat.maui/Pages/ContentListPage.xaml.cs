@@ -4,15 +4,15 @@ namespace androkat.hu.Pages;
 
 public partial class ContentListPage : ContentPage
 {
-    private ContentListViewModel _viewModel => BindingContext as ContentListViewModel;
+    private ContentListViewModel ViewModel => BindingContext as ContentListViewModel;
 
-    public ContentListPage(ContentListViewModel vm)
+    public ContentListPage(ContentListViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = vm;    
+        BindingContext = viewModel;
     }
 
-    protected override async void OnAppearing()
+    protected override void OnAppearing()
     {
         base.OnAppearing();
     }
@@ -20,9 +20,9 @@ public partial class ContentListPage : ContentPage
     protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
         // Hack: Get the category Id
-        _viewModel.Id = GetCategoryIdFromRoute();
-        _viewModel.PageTitle = GetPageTitle(_viewModel.Id);
-        await _viewModel.InitializeAsync();
+        ViewModel.Id = GetCategoryIdFromRoute();
+        ViewModel.PageTitle = GetPageTitle(ViewModel.Id);
+        await ViewModel.InitializeAsync();
         base.OnNavigatedTo(args);
     }
 
@@ -33,7 +33,7 @@ public partial class ContentListPage : ContentPage
         //Navigation.RemovePage(this);
     }
 
-    private string GetPageTitle(string pageTypeId)
+    private static string GetPageTitle(string pageTypeId)
     {
         return pageTypeId switch
         {
@@ -47,11 +47,11 @@ public partial class ContentListPage : ContentPage
             "8" => "Hanganyagok",
             "11" => "Könyvolvasó",
             //Weboldalak
-            _ => "Evangélium, elmélkedés",
+            _ => "Evangélium, elmélkedés", //0
         };
     }
 
-    private string GetCategoryIdFromRoute()
+    private static string GetCategoryIdFromRoute()
     {
         // Hack: As the shell can't define query parameters
         // in XAML, we have to parse the route. 

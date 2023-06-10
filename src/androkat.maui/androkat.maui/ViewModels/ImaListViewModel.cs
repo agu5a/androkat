@@ -38,17 +38,14 @@ public partial class ImaListViewModel : ViewModelBase
 
     private async Task FetchAsync()
     {
-        //if (_contents?.Any() ?? false)
-        //    return;
-
         var contents = await _pageService.GetImaContents();
 
         if (contents == null)
         {
             await Shell.Current.DisplayAlert(
-                "Error_Title",
-                "Error_Message",
-                "Close");
+               "Hiba",
+                "Nincs adat",
+                "Bezárás");
 
             return;
         }
@@ -79,26 +76,6 @@ public partial class ImaListViewModel : ViewModelBase
         return viewmodels;
     }
 
-
-    /*[RelayCommand]
-    async Task Search()
-    {
-        IEnumerable<Show> list;
-        if (string.IsNullOrWhiteSpace(Text))
-        {
-            list = await showsService.GetShowsAsync();
-        }
-        else
-        {
-            list = await showsService.SearchShowsAsync(Text);
-        }
-
-        if (list != null)
-        {
-            UpdatePodcasts(ConvertToViewModels(list));
-        }
-    }*/
-
     [RelayCommand]
-    async Task Subscribe(ShowViewModel showViewModel) => Task.Run(() => { });//showViewModel.IsSubscribed = await subscriptionsService.UnSubscribeFromShowAsync(showViewModel.Show);
+    async Task Subscribe(ContentItemViewModel viewModel) => Task.Run(() => { });
 }

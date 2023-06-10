@@ -11,7 +11,6 @@ public partial class FavoriteContentViewModel : BaseView
     public FavoriteContentViewModel(FavoriteContentDto contentDto, bool isSubscribed)
     {
         ContentDto = contentDto;
-        //IsSubscribed = isSubscribed;
     }
 
     [RelayCommand]

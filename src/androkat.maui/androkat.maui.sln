@@ -9,6 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiUnitTest", "MauiUnitTes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "androkat.maui.library", "androkat.maui.library\androkat.maui.library.csproj", "{9E1B68A2-65AC-44E1-9341-D4AC4D72C8D4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_notes", "_notes", "{E8185A8B-ED8C-487A-BCA3-049ABFC7CC0E}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\_notes\androkat.maui.notes.txt = ..\..\_notes\androkat.maui.notes.txt
+		..\..\_notes\androkat.maui.structure.txt = ..\..\_notes\androkat.maui.structure.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -4,11 +4,10 @@ public static class PagesExtensions
 {
     public static MauiAppBuilder ConfigurePages(this MauiAppBuilder builder)
     {
-        // main tabs of the app
+        // pages
         builder.Services.AddSingleton<ContentListPage>();
         builder.Services.AddSingleton<ImaListPage>();
         builder.Services.AddSingleton<FavoriteListPage>();
-        builder.Services.AddSingleton<DiscoverPage>();
         builder.Services.AddSingleton<WebPage>();
         builder.Services.AddSingleton<ContactPage>();
         builder.Services.AddSingleton<SettingsPage>();
