@@ -1,13 +1,14 @@
 using androkat.maui.library.Abstraction;
 using androkat.maui.library.Data;
 using androkat.maui.library.Models;
+using androkat.maui.library.Services;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace UnitTest.MauiTests;
+namespace androkat.maui.unittest.Services;
 
 public class DownloadServiceTests
 {
@@ -27,17 +28,19 @@ public class DownloadServiceTests
     [Test]
     public async Task DownloadAll_All_Return_Test()
     {
-        /*androkatService.Setup(s => s.GetEgyebOlvasnivalo(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(new List<EgyebOlvasnivalo>
+        androkatService.Setup(s => s.GetContents(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<ContentResponse>
         {
-            new EgyebOlvasnivalo{ nid = Guid.NewGuid(), cim = "cim", kulsolink = "kulsolink", leiras = "leiras", time = "2023-01-01"}
-        });
-        androkatService.Setup(s => s.GetNapiElmelkedes(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<NapiElmelkedes>
-        {
-            new NapiElmelkedes{ nid = Guid.NewGuid(), cim = "cim", idezet = "idezet", img = "img", datum = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")}
+            new ContentResponse{
+                Nid = Guid.NewGuid(), 
+                Cim = "cim", 
+                Idezet = "idezet", 
+                Image = "img", 
+                KulsoLink = string.Empty,
+                Datum = DateTime.Now.AddDays(1)}
         });
 
-        repository.Setup(s => s.GetByTypeName(It.IsAny<string>())).ReturnsAsync(default(NapiElmelkedesDto));
-        repository.Setup(s => s.GetWithoutBook()).ReturnsAsync(new List<NapiElmelkedesDto> { });
+        repository.Setup(s => s.GetContentsByTypeName(It.IsAny<string>())).ReturnsAsync(default(ContentDto));
+        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentDto> { });
 
         helperSharedPreferences.Setup(s => s.getSharedPreferencesBoolean(It.IsAny<string>(), It.IsAny<bool>())).Returns(true);
 
@@ -48,25 +51,27 @@ public class DownloadServiceTests
 
         var res = await service.DownloadAll();
 
-        Assert.That(res, Is.EqualTo(21));*/
+        Assert.That(res, Is.EqualTo(40));
     }
 
     [Test]
     public async Task StartUpdate_Fokolare_Already_Exists()
     {
-        /*androkatService.Setup(s => s.GetEgyebOlvasnivalo(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(new List<EgyebOlvasnivalo>
+        androkatService.Setup(s => s.GetContents(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<ContentResponse>
         {
-            new EgyebOlvasnivalo{ nid = Guid.NewGuid(), cim = "cim", kulsolink = "kulsolink", leiras = "leiras", time = "2023-01-01"}
-        });
-        androkatService.Setup(s => s.GetNapiElmelkedes(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<NapiElmelkedes>
-        {
-            new NapiElmelkedes{ nid = Guid.NewGuid(), cim = "cim", idezet = "idezet", img = "img", datum = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")}
+            new ContentResponse{
+                Nid = Guid.NewGuid(),
+                Cim = "cim",
+                Idezet = "idezet",
+                Image = "img",
+                KulsoLink = string.Empty,
+                Datum = DateTime.Now.AddDays(1)}
         });
 
-        repository.Setup(s => s.GetByTypeName(It.IsNotIn<string>(Activities.fokolare.ToString()))).ReturnsAsync(default(NapiElmelkedesDto));
-        repository.Setup(s => s.GetByTypeName(It.IsIn<string>(Activities.fokolare.ToString())))
-            .ReturnsAsync(GetNapiElmelkedesDto("7", Activities.fokolare.ToString()));
-        repository.Setup(s => s.GetWithoutBook()).ReturnsAsync(new List<NapiElmelkedesDto> { });
+        repository.Setup(s => s.GetContentsByTypeName(It.IsNotIn<string>(Activities.fokolare.ToString()))).ReturnsAsync(default(ContentDto));
+        repository.Setup(s => s.GetContentsByTypeName(It.IsIn<string>(Activities.fokolare.ToString())))
+            .ReturnsAsync(GetContentDto("7", Activities.fokolare.ToString()));
+        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentDto> { });
 
         helperSharedPreferences.Setup(s => s.getSharedPreferencesBoolean(It.IsAny<string>(), It.IsAny<bool>())).Returns(true);
 
@@ -77,7 +82,7 @@ public class DownloadServiceTests
 
         var res = await service.StartUpdate(Activities.fokolare);
 
-        Assert.That(res, Is.EqualTo(0));*/
+        Assert.That(res, Is.EqualTo(0));
     }
 
     [TestCase(Activities.papaitwitter, 0)]
@@ -102,17 +107,19 @@ public class DownloadServiceTests
     [TestCase(Activities.sienaikatalin, 0)]
     public async Task StartUpdate_User_Dont_Download(Activities activities, int expected)
     {
-        /*androkatService.Setup(s => s.GetEgyebOlvasnivalo(It.IsAny<int>(), It.IsAny<string>())).ReturnsAsync(new List<EgyebOlvasnivalo>
+        androkatService.Setup(s => s.GetContents(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<ContentResponse>
         {
-            new EgyebOlvasnivalo{ nid = Guid.NewGuid(), cim = "cim", kulsolink = "kulsolink", leiras = "leiras", time = "2023-01-01"}
-        });
-        androkatService.Setup(s => s.GetNapiElmelkedes(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<NapiElmelkedes>
-        {
-            new NapiElmelkedes{ nid = Guid.NewGuid(), cim = "cim", idezet = "idezet", img = "img", datum = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")}
+            new ContentResponse{
+                Nid = Guid.NewGuid(),
+                Cim = "cim",
+                Idezet = "idezet",
+                Image = "img",
+                KulsoLink = string.Empty,
+                Datum = DateTime.Now.AddDays(1)}
         });
 
-        repository.Setup(s => s.GetByTypeName(It.IsAny<string>())).ReturnsAsync(default(NapiElmelkedesDto));
-        repository.Setup(s => s.GetWithoutBook()).ReturnsAsync(new List<NapiElmelkedesDto> { });
+        repository.Setup(s => s.GetContentsByTypeName(It.IsAny<string>())).ReturnsAsync(default(ContentDto));
+        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentDto> { });
 
         helperSharedPreferences.Setup(s => s.getSharedPreferencesBoolean(It.IsNotIn<string>(Activities.maiszent.ToString(),
             Activities.ajanlatweb.ToString(), Activities.humor.ToString()), true)).Returns(false);
@@ -124,23 +131,23 @@ public class DownloadServiceTests
 
         var res = await service.StartUpdate(activities);
 
-        Assert.That(res, Is.EqualTo(expected));*/
+        Assert.That(res, Is.EqualTo(expected));
     }
 
-    /*private NapiElmelkedesDto GetNapiElmelkedesDto(string tipus, string typeName)
+    private static ContentDto GetContentDto(string tipus, string typeName)
     {
-        return new NapiElmelkedesDto
+        return new ContentDto
         {
-            cim = "cim",
-            datum = DateTime.Now,
+            Cim = "cim",
+            Datum = DateTime.Now,
             GroupName = "groupname",
-            idezet = "idezet",
-            forras = "forras",
-            nid = Guid.NewGuid(),
-            tipus = tipus,
+            Idezet = "idezet",
+            Forras = "forras",
+            Nid = Guid.NewGuid(),
+            Tipus = tipus,
             TypeName = typeName,
-            img = "img",
+            Image = "img",
             KulsoLink = "kulsolink"
         };
-    }*/
+    }
 }

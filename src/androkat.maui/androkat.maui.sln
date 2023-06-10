@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31815.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "androkat.maui", "androkat.maui\androkat.maui.csproj", "{2CCD7D31-AD01-4364-A656-B8219F85E934}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiUnitTest", "MauiUnitTest\MauiUnitTest.csproj", "{012A27E3-EB01-4A4E-B32C-3A493C39DA94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "androkat.maui.unittest", "androkat.maui.unittest\androkat.maui.unittest.csproj", "{012A27E3-EB01-4A4E-B32C-3A493C39DA94}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "androkat.maui.library", "androkat.maui.library\androkat.maui.library.csproj", "{9E1B68A2-65AC-44E1-9341-D4AC4D72C8D4}"
 EndProject

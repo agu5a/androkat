@@ -8,7 +8,7 @@ namespace androkat.maui.library.Services;
 public class DownloadService : IDownloadService
 {
     private readonly IRepository _repository;
-    private readonly IAndrokatService _service;
+    private readonly IAndrokatService _androkatService;
     private readonly IHelperSharedPreferences _helperSharedPreferences;
     private readonly ISourceData _sourceData;
 
@@ -16,7 +16,7 @@ public class DownloadService : IDownloadService
         IHelperSharedPreferences helperSharedPreferences, ISourceData sourceData)
     {
         _repository = repository;
-        _service = androkatService;
+        _androkatService = androkatService;
         _helperSharedPreferences = helperSharedPreferences;
         _sourceData = sourceData;
     }
@@ -305,7 +305,7 @@ public class DownloadService : IDownloadService
 
         try
         {
-            ImaResponse response = await _service.GetImadsag(date);
+            ImaResponse response = await _androkatService.GetImadsag(date);
             if (response == null)
                 return result;
 
@@ -351,7 +351,7 @@ public class DownloadService : IDownloadService
 
         try
         {
-            var res = await _service.GetContents(tipus, nid);
+            var res = await _androkatService.GetContents(tipus, nid);
             SourceData idezetSource = _sourceData.GetSourcesFromMemory(tipusId);
             var count = 0;
             foreach (var item in res)
