@@ -76,7 +76,7 @@
     </FlyoutItem>
     <FlyoutItem Title="Igenaptár" Icon="book">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="13" />
+            <ShellContent ContentTemplate="{DataTemplate pages:IgeNaptarPage}" Route="13" />
         </Tab>
     </FlyoutItem>
     <FlyoutItem Title="Keresztút" Icon="crossroad">

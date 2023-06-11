@@ -14,9 +14,6 @@ public partial class FavoriteListViewModel : ViewModelBase
     private readonly ISourceData _sourceData;
 
     [ObservableProperty]
-    string text;
-
-    [ObservableProperty]
     int favoriteCount;
 
     [ObservableProperty]

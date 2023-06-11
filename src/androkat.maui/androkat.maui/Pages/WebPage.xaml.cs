@@ -1,19 +1,16 @@
 ﻿using androkat.hu.Models;
 using androkat.hu.ViewModels;
-using androkat.maui.library.Services;
 
 namespace androkat.hu.Pages;
 
 public partial class WebPage : ContentPage
 {
-    private readonly PageService _pageService;
     private readonly IBrowser _browser;
 
-    public WebPage(WebViewModel vm, PageService pageService, IBrowser browser)
+    public WebPage(WebViewModel vm, IBrowser browser)
     {
         InitializeComponent();
         BindingContext = vm;
-        _pageService = pageService;
         _browser = browser;
 
         webPicker.ItemsSource = vm.WebPageUrls;

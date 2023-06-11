@@ -11,6 +11,7 @@ public static class PagesExtensions
         builder.Services.AddSingleton<WebPage>();
         builder.Services.AddSingleton<ContactPage>();
         builder.Services.AddSingleton<SettingsPage>();
+        builder.Services.AddSingleton<IgeNaptarPage>();
 
         // pages that are navigated to
         builder.Services.AddTransient<ShowDetailPage>();

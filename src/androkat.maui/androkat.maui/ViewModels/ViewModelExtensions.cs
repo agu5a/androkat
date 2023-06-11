@@ -12,6 +12,7 @@ public static class ViewModelExtensions
         builder.Services.AddSingleton<SettingsViewModel>();
         builder.Services.AddSingleton<ShellViewModel>();
         builder.Services.AddTransient<ShowDetailViewModel>();
+        builder.Services.AddTransient<IgeNaptarViewModel>();
 
         return builder;
     }

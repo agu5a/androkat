@@ -1,5 +1,4 @@
-﻿using androkat.maui.library.Abstraction;
-using androkat.maui.library.Models;
+﻿using androkat.maui.library.Models;
 using androkat.maui.library.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,10 +10,6 @@ public partial class ImaListViewModel : ViewModelBase
 {
     private readonly PageService _pageService;
     private IEnumerable<ImaContentViewModel> _contents;
-    private readonly ISourceData _sourceData;
-
-    [ObservableProperty]
-    string text;
 
     [ObservableProperty]
     public string pageTitle;
@@ -22,11 +17,10 @@ public partial class ImaListViewModel : ViewModelBase
     [ObservableProperty]
     ObservableRangeCollection<List<ImaContentViewModel>> contents;
 
-    public ImaListViewModel(PageService pageService, ISourceData sourceData)
+    public ImaListViewModel(PageService pageService)
     {
         _pageService = pageService;
         Contents = new ObservableRangeCollection<List<ImaContentViewModel>>();
-        _sourceData = sourceData;
     }
 
     public async Task InitializeAsync()
@@ -60,15 +54,10 @@ public partial class ImaListViewModel : ViewModelBase
         var viewmodels = new List<ImaContentViewModel>();
         foreach (var item in items)
         {
-            //SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
-            //var origImg = item.Image;
-            //item.Image = idezetSource.Img;
-            var showViewModel = new ImaContentViewModel(item, true); 
+            var showViewModel = new ImaContentViewModel(item, true);
             showViewModel.datum = $"Dátum: {item.Datum.ToString("yyyy-MM-dd")}";
-            showViewModel.detailscim = "Imádságok"; // idezetSource.Title;
-            //showViewModel.contentImg = origImg;
+            showViewModel.detailscim = "Imádságok";
             showViewModel.isFav = false;
-            //showViewModel.forras = $"Forrás: {idezetSource.Forrasszoveg}";
             showViewModel.type = Activities.ima;
             viewmodels.Add(showViewModel);
         }
