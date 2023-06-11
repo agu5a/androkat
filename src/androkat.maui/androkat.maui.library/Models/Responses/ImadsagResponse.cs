@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace androkat.maui.library.Models;
+namespace androkat.maui.library.Models.Responses;
 
 public class ImadsagResponse
 {

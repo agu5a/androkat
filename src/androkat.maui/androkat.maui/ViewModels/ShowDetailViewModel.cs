@@ -1,5 +1,6 @@
 ﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Models;
+using androkat.maui.library.Models.Entities;
 using androkat.maui.library.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,16 +12,10 @@ namespace androkat.hu.ViewModels;
 public partial class ShowDetailViewModel : ViewModelBase
 {
     private CancellationTokenSource cancellationTokenSource;
-
-    public string Id { get; set; }
-
     private Guid contentGuid;
-
     private readonly PageService _pageService;
     private readonly ISourceData _sourceData;
-
-    [ObservableProperty]
-    ContentItemViewModel contentView;
+    private bool isBusy = false;
 
     public ShowDetailViewModel(PageService pageService, ISourceData sourceData)
     {
@@ -28,6 +23,11 @@ public partial class ShowDetailViewModel : ViewModelBase
         _pageService = pageService;
         _sourceData = sourceData;
     }
+
+    public string Id { get; set; }
+
+    [ObservableProperty]
+    ContentItemViewModel contentView;    
 
     internal async Task InitializeAsync()
     {
@@ -55,20 +55,22 @@ public partial class ShowDetailViewModel : ViewModelBase
         SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
         var origImg = item.Image;
         item.Image = idezetSource.Img;
-        var viewModel = new ContentItemViewModel(item, true);
-        viewModel.datum = $"<b>Dátum</b>: {item.Datum.ToString("yyyy-MM-dd")}";
-        viewModel.detailscim = idezetSource.Title;
-        viewModel.contentImg = origImg;
-        viewModel.isFav = false;
-        viewModel.forras = $"<b>Forrás</b>: {idezetSource.Forrasszoveg}";
-        viewModel.type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus));
+        var viewModel = new ContentItemViewModel(item, true)
+        {
+            datum = $"<b>Dátum</b>: {item.Datum.ToString("yyyy-MM-dd")}",
+            detailscim = idezetSource.Title,
+            contentImg = origImg,
+            isFav = false,
+            forras = $"<b>Forrás</b>: {idezetSource.Forrasszoveg}",
+            type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus))
+        };
         ContentView = viewModel;
     }
 
     [RelayCommand]
     async Task AddFavorite()
     {
-        var item = await _pageService.InsertFavoriteContentAsync(new FavoriteContentDto
+        _ = await _pageService.InsertFavoriteContentAsync(new FavoriteContentEntity
         {
             Cim = ContentView.ContentDto.Cim,
             Datum = ContentView.ContentDto.Datum,
@@ -136,9 +138,7 @@ public partial class ShowDetailViewModel : ViewModelBase
             task.Add(TextToSpeech.Default.SpeakAsync(idezet, new SpeechOptions { Locale = locale }, cancelToken: cancellationTokenSource.Token));
 
         await Task.WhenAll(task).ContinueWith((t) => { isBusy = false; }, TaskScheduler.FromCurrentSynchronizationContext());
-    }
-
-    bool isBusy = false;
+    }    
 
     public void CancelSpeech()
     {

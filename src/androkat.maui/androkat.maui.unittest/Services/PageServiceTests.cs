@@ -1,7 +1,7 @@
 ﻿using androkat.hu.Data;
 using androkat.maui.library.Abstraction;
 using androkat.maui.library.Data;
-using androkat.maui.library.Models;
+using androkat.maui.library.Models.Entities;
 using androkat.maui.library.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui;
@@ -36,7 +36,7 @@ public class PageServiceTests
     public async Task Test_GetContentDtoByIdAsync()
     {
         var repositoryMock = new Mock<IRepository>();
-        var expectedContent = new ContentDto
+        var expectedContent = new ContentEntity
         {
             Nid = Guid.NewGuid(),
             Cim = "Test Cim",
@@ -75,14 +75,14 @@ public class PageServiceTests
     public async Task Test_InsertFavoriteContentAsync()
     {
         var repositoryMock = new Mock<IRepository>();
-        var favoriteContentDto = new FavoriteContentDto
+        var favoriteContentDto = new FavoriteContentEntity
         {
             Nid = Guid.NewGuid(),
             Cim = "Test Cim",
             Idezet = "Test Idezet"
         };
         var expectedCount = 1;
-        repositoryMock.Setup(repo => repo.InsertFavoriteContent(It.IsAny<FavoriteContentDto>())).ReturnsAsync(expectedCount).Verifiable();
+        repositoryMock.Setup(repo => repo.InsertFavoriteContent(It.IsAny<FavoriteContentEntity>())).ReturnsAsync(expectedCount).Verifiable();
         var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
 
         var result = await pageService.InsertFavoriteContentAsync(favoriteContentDto);
@@ -95,11 +95,11 @@ public class PageServiceTests
     public async Task Test_GetFavoriteContentsAsync()
     {
         var repositoryMock = new Mock<IRepository>();
-        var expectedContents = new List<FavoriteContentDto>
+        var expectedContents = new List<FavoriteContentEntity>
             {
-                new FavoriteContentDto {Nid = Guid.NewGuid(), Cim = "Test Cim 1", Idezet = "Test Idezet 1", Image = "Image1.png"},
-                new FavoriteContentDto {Nid = Guid.NewGuid(), Cim = "Test Cim 2", Idezet = "Test Idezet 2", Image = "Image2.png"},
-                new FavoriteContentDto {Nid = Guid.NewGuid(), Cim = "Test Cim 3", Idezet = "Test Idezet 3", Image = "Image3.png"}
+                new FavoriteContentEntity {Nid = Guid.NewGuid(), Cim = "Test Cim 1", Idezet = "Test Idezet 1", Image = "Image1.png"},
+                new FavoriteContentEntity {Nid = Guid.NewGuid(), Cim = "Test Cim 2", Idezet = "Test Idezet 2", Image = "Image2.png"},
+                new FavoriteContentEntity {Nid = Guid.NewGuid(), Cim = "Test Cim 3", Idezet = "Test Idezet 3", Image = "Image3.png"}
             };
         repositoryMock.Setup(repo => repo.GetFavoriteContents()).ReturnsAsync(expectedContents).Verifiable();
         var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
@@ -114,11 +114,11 @@ public class PageServiceTests
     public async Task Test_GetImaContents()
     {
         var repositoryMock = new Mock<IRepository>();
-        var expectedContents = new List<ImadsagDto>
+        var expectedContents = new List<ImadsagEntity>
             {
-                new ImadsagDto {Nid = Guid.NewGuid(), Cim = "Test Cim 1", Content = "Test Content 1", Csoport = 1 },
-                new ImadsagDto {Nid = Guid.NewGuid(), Cim = "Test Cim 2", Content = "Test Content 2", Csoport = 2 },
-                new ImadsagDto {Nid = Guid.NewGuid(), Cim = "Test Cim 3", Content = "Test Content 3", Csoport = 3 }
+                new ImadsagEntity {Nid = Guid.NewGuid(), Cim = "Test Cim 1", Content = "Test Content 1", Csoport = 1 },
+                new ImadsagEntity {Nid = Guid.NewGuid(), Cim = "Test Cim 2", Content = "Test Content 2", Csoport = 2 },
+                new ImadsagEntity {Nid = Guid.NewGuid(), Cim = "Test Cim 3", Content = "Test Content 3", Csoport = 3 }
             };
         repositoryMock.Setup(repo => repo.GetImaContents()).ReturnsAsync(expectedContents).Verifiable();
         var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
@@ -156,7 +156,7 @@ public class PageServiceTests
     public async Task Test_GetContentsAsync(string pageTypeId, string methodName)
     {
         var repositoryMock = new Mock<IRepository>();
-        var expectedContents = Activator.CreateInstance(typeof(List<ContentDto>)) as List<ContentDto>;
+        var expectedContents = Activator.CreateInstance(typeof(List<ContentEntity>)) as List<ContentEntity>;
         repositoryMock.Setup(repo => repo.GetAjanlatokContents()).ReturnsAsync(expectedContents).Verifiable();
         repositoryMock.Setup(repo => repo.GetMaiszentContents()).ReturnsAsync(expectedContents).Verifiable();
         repositoryMock.Setup(repo => repo.GetSzentekContents()).ReturnsAsync(expectedContents).Verifiable();
@@ -201,7 +201,7 @@ public class PageServiceTests
                 break;
         };
 
-        Assert.IsType<List<ContentDto>>(result);
+        Assert.IsType<List<ContentEntity>>(result);
         Assert.Equal(expectedContents, result);
     }
 }

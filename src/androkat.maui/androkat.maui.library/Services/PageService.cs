@@ -1,6 +1,6 @@
 ﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Data;
-using androkat.maui.library.Models;
+using androkat.maui.library.Models.Entities;
 using MonkeyCache.FileStore;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -24,13 +24,13 @@ public class PageService
         _repository = repository;
     }
 
-    public async Task<ContentDto> GetContentDtoByIdAsync(Guid id)
+    public async Task<ContentEntity> GetContentDtoByIdAsync(Guid id)
     {
         var temp = await _repository.GetElmelkedesContentById(id);
         return temp;
     }
 
-    public async Task<int> InsertFavoriteContentAsync(FavoriteContentDto favoriteContentDto)
+    public async Task<int> InsertFavoriteContentAsync(FavoriteContentEntity favoriteContentDto)
     {
         var temp = await _repository.InsertFavoriteContent(favoriteContentDto);
         return temp;
@@ -41,12 +41,12 @@ public class PageService
         return await _downloadService.DownloadAll();
     }
 
-    public async Task<List<FavoriteContentDto>> GetFavoriteContentsAsync()
+    public async Task<List<FavoriteContentEntity>> GetFavoriteContentsAsync()
     {
         return await _repository.GetFavoriteContents();
     }
 
-    public async Task<List<ImadsagDto>> GetImaContents()
+    public async Task<List<ImadsagEntity>> GetImaContents()
     {
         return await _repository.GetImaContents();
     }
@@ -56,7 +56,7 @@ public class PageService
         return await _repository.GetFavoriteCount();
     }
 
-    public async Task<List<ContentDto>> GetContentsAsync(string pageTypeId)
+    public async Task<List<ContentEntity>> GetContentsAsync(string pageTypeId)
     {
         return pageTypeId switch
         {

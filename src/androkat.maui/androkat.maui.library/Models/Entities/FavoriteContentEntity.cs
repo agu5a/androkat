@@ -1,10 +1,10 @@
 ﻿using SQLite;
 using System.Runtime.Serialization;
 
-namespace androkat.maui.library.Models;
+namespace androkat.maui.library.Models.Entities;
 
-[Table("napielmelkedesv1")]
-public class ContentDto
+[Table("FavoriteContent_V1")]
+public class FavoriteContentEntity
 {
     [PrimaryKey]
     [DataMember(Name = "nid")]
@@ -42,12 +42,6 @@ public class ContentDto
     [DataMember(Name = "TypeName")]
     public string TypeName { get; set; }
 
-    [DataMember(Name = "IsRead")]
-    public bool IsRead { get; set; }
-
     [DataMember(Name = "KulsoLink")]
     public string KulsoLink { get; set; }
-
-    [DataMember(Name = "GroupName")]
-    public string GroupName { get; set; }
 }

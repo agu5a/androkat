@@ -1,10 +1,10 @@
 ﻿using SQLite;
 using System.Runtime.Serialization;
 
-namespace androkat.maui.library.Models;
+namespace androkat.maui.library.Models.Entities;
 
 [Table("Imadsag_V1")]
-public class ImadsagDto
+public class ImadsagEntity
 {
     [DataMember(Name = "nid")]
     public Guid Nid { get; set; }

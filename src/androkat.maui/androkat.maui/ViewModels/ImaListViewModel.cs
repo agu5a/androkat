@@ -1,4 +1,5 @@
 ﻿using androkat.maui.library.Models;
+using androkat.maui.library.Models.Entities;
 using androkat.maui.library.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -49,7 +50,7 @@ public partial class ImaListViewModel : ViewModelBase
         Contents.ReplaceRange(s);
     }
 
-    private List<ImaContentViewModel> ConvertToViewModels(IEnumerable<ImadsagDto> items)
+    private List<ImaContentViewModel> ConvertToViewModels(IEnumerable<ImadsagEntity> items)
     {
         var viewmodels = new List<ImaContentViewModel>();
         foreach (var item in items)

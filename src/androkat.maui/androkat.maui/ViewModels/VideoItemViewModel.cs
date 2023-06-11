@@ -1,14 +1,14 @@
-﻿using androkat.maui.library.Models;
+﻿using androkat.maui.library.Models.Entities;
 using CommunityToolkit.Mvvm.Input;
 
 namespace androkat.hu.ViewModels;
 
 public partial class VideoItemViewModel : BaseView
 {
-    public VideoDto VideoDto { get; set; }
+    public VideoEntity VideoDto { get; set; }
     private readonly IBrowser _browser;
 
-    public VideoItemViewModel(VideoDto contentDto, IBrowser browser)
+    public VideoItemViewModel(VideoEntity contentDto, IBrowser browser)
     {
         VideoDto = contentDto;
         _browser = browser;

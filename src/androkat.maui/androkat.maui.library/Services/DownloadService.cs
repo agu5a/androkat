@@ -2,6 +2,8 @@
 using androkat.maui.library.Data;
 using androkat.maui.library.Helpers;
 using androkat.maui.library.Models;
+using androkat.maui.library.Models.Entities;
+using androkat.maui.library.Models.Responses;
 
 namespace androkat.maui.library.Services;
 
@@ -23,7 +25,7 @@ public class DownloadService : IDownloadService
 
     private async Task DeleteOldItems()
     {
-        if (!int.TryParse(_helperSharedPreferences.getSharedPreferencesstring("maxOffline", ConsValues.defMaxOffline.ToString()), out int max))
+        if (!int.TryParse(_helperSharedPreferences.GetSharedPreferencesstring("maxOffline", ConsValues.defMaxOffline.ToString()), out int max))
         {
             max = ConsValues.defMaxOffline;
         }
@@ -146,7 +148,7 @@ public class DownloadService : IDownloadService
             //a mai szent-et, ajanlatokat, humort nem lehet letiltani a beallitásokban, így mindig ellenőrizzük
             if (act != Activities.maiszent && act != Activities.ajanlatweb
                 && act != Activities.humor
-                && !_helperSharedPreferences.getSharedPreferencesBoolean(act.ToString(), true))// A tobbit csak ha keri a beállításokban
+                && !_helperSharedPreferences.GetSharedPreferencesBoolean(act.ToString(), true))// A tobbit csak ha keri a beállításokban
                 return 0;
 
             int result = 0;
@@ -199,7 +201,7 @@ public class DownloadService : IDownloadService
 
                     if (datum > DateTime.MinValue && datum < imadsag.RecordDate || datum == DateTime.MinValue)
                     {
-                        await _repository.InsertImadsag(new ImadsagDto
+                        await _repository.InsertImadsag(new ImadsagEntity
                         {
                             Cim = imadsag.Title.Replace("<b>", "").Replace("</b>", ""),
                             Content = imadsag.Content,
@@ -234,7 +236,7 @@ public class DownloadService : IDownloadService
         {
             if (type == Activities.group_ima)
             {
-                ImadsagDto imadsag = await _repository.GetFirstImadsag();
+                ImadsagEntity imadsag = await _repository.GetFirstImadsag();
                 if (imadsag != null)
                 {
                     return (imadsag.Nid, imadsag.Datum);
@@ -242,7 +244,7 @@ public class DownloadService : IDownloadService
             }
             else
             {
-                ContentDto idezet = await _repository.GetContentsByTypeName(type.ToString());
+                ContentEntity idezet = await _repository.GetContentsByTypeName(type.ToString());
                 if (idezet != null)
                     return (idezet.Nid, idezet.Datum);
             }
@@ -361,7 +363,7 @@ public class DownloadService : IDownloadService
             {
                 try
                 {
-                    await _repository.InsertContent(new ContentDto
+                    await _repository.InsertContent(new ContentEntity
                     {
                         Cim = Helper.ReplaceUtf8(item.Cim.Replace("<b>", "").Replace("</b>", "")),
                         Nid = item.Nid,

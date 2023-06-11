@@ -1,5 +1,6 @@
 ﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Models;
+using androkat.maui.library.Models.Entities;
 using androkat.maui.library.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -56,7 +57,7 @@ public partial class FavoriteListViewModel : ViewModelBase
         Contents.ReplaceRange(s);
     }
 
-    private List<FavoriteContentViewModel> ConvertToViewModels(IEnumerable<FavoriteContentDto> items)
+    private List<FavoriteContentViewModel> ConvertToViewModels(IEnumerable<FavoriteContentEntity> items)
     {
         var viewmodels = new List<FavoriteContentViewModel>();
         foreach (var item in items)

@@ -1,6 +1,8 @@
 using androkat.maui.library.Abstraction;
 using androkat.maui.library.Data;
 using androkat.maui.library.Models;
+using androkat.maui.library.Models.Entities;
+using androkat.maui.library.Models.Responses;
 using androkat.maui.library.Services;
 using Moq;
 using System;
@@ -69,10 +71,10 @@ public class DownloadServiceTests
             }
         });
 
-        repository.Setup(s => s.GetContentsByTypeName(It.IsAny<string>())).ReturnsAsync(default(ContentDto));
-        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentDto> { new ContentDto { } });
+        repository.Setup(s => s.GetContentsByTypeName(It.IsAny<string>())).ReturnsAsync(default(ContentEntity));
+        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentEntity> { new ContentEntity { } });
 
-        helperSharedPreferences.Setup(s => s.getSharedPreferencesBoolean(It.IsAny<string>(), It.IsAny<bool>())).Returns(true);
+        helperSharedPreferences.Setup(s => s.GetSharedPreferencesBoolean(It.IsAny<string>(), It.IsAny<bool>())).Returns(true);
 
         sourceData.Setup(s => s.GetSourcesFromMemory(It.IsAny<int>())).Returns(new SourceData { GroupName = "groupname" });
 
@@ -98,12 +100,12 @@ public class DownloadServiceTests
                 Datum = DateTime.Now.AddDays(1)}
         });
 
-        repository.Setup(s => s.GetContentsByTypeName(It.IsNotIn<string>(Activities.fokolare.ToString()))).ReturnsAsync(default(ContentDto));
+        repository.Setup(s => s.GetContentsByTypeName(It.IsNotIn<string>(Activities.fokolare.ToString()))).ReturnsAsync(default(ContentEntity));
         repository.Setup(s => s.GetContentsByTypeName(It.IsIn<string>(Activities.fokolare.ToString())))
             .ReturnsAsync(GetContentDto("7", Activities.fokolare.ToString()));
-        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentDto> { });
+        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentEntity> { });
 
-        helperSharedPreferences.Setup(s => s.getSharedPreferencesBoolean(It.IsAny<string>(), It.IsAny<bool>())).Returns(true);
+        helperSharedPreferences.Setup(s => s.GetSharedPreferencesBoolean(It.IsAny<string>(), It.IsAny<bool>())).Returns(true);
 
         sourceData.Setup(s => s.GetSourcesFromMemory(It.IsAny<int>())).Returns(new SourceData { GroupName = "groupname" });
 
@@ -149,10 +151,10 @@ public class DownloadServiceTests
                 Datum = DateTime.Now.AddDays(1)}
         });
 
-        repository.Setup(s => s.GetContentsByTypeName(It.IsAny<string>())).ReturnsAsync(default(ContentDto));
-        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentDto> { });
+        repository.Setup(s => s.GetContentsByTypeName(It.IsAny<string>())).ReturnsAsync(default(ContentEntity));
+        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentEntity> { });
 
-        helperSharedPreferences.Setup(s => s.getSharedPreferencesBoolean(It.IsNotIn<string>(Activities.maiszent.ToString(),
+        helperSharedPreferences.Setup(s => s.GetSharedPreferencesBoolean(It.IsNotIn<string>(Activities.maiszent.ToString(),
             Activities.ajanlatweb.ToString(), Activities.humor.ToString()), true)).Returns(false);
 
         sourceData.Setup(s => s.GetSourcesFromMemory(It.IsAny<int>())).Returns(new SourceData { GroupName = "groupname" });
@@ -165,9 +167,9 @@ public class DownloadServiceTests
         Assert.Equal(res, expected);
     }
 
-    private static ContentDto GetContentDto(string tipus, string typeName)
+    private static ContentEntity GetContentDto(string tipus, string typeName)
     {
-        return new ContentDto
+        return new ContentEntity
         {
             Cim = "cim",
             Datum = DateTime.Now,

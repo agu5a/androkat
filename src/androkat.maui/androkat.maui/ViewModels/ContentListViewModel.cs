@@ -1,5 +1,6 @@
 ﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Models;
+using androkat.maui.library.Models.Entities;
 using androkat.maui.library.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -55,7 +56,7 @@ public partial class ContentListViewModel : ViewModelBase
         Contents.ReplaceRange(s);
     }
 
-    private List<ContentItemViewModel> ConvertToViewModels(IEnumerable<ContentDto> items)
+    private List<ContentItemViewModel> ConvertToViewModels(IEnumerable<ContentEntity> items)
     {
         var viewmodels = new List<ContentItemViewModel>();
         foreach (var item in items)

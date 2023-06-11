@@ -4,14 +4,13 @@ namespace androkat.maui.library.Services;
 
 internal class HelperSharedPreferences : IHelperSharedPreferences
 {
-    public void delete(string key)
+    public void Delete(string key)
     {
         throw new NotImplementedException();
-        //throw new NotImplementedException();
         //preferences.Edit().Remove(key).Apply();
     }
 
-    public void putSharedPreferencesLong(string key, long value)
+    public void PutSharedPreferencesLong(string key, long value)
     {
         throw new NotImplementedException();
         //var edit = preferences.Edit();
@@ -19,7 +18,7 @@ internal class HelperSharedPreferences : IHelperSharedPreferences
         //edit.Apply();
     }
 
-    public void putSharedPreferencesInt(string key, int value)
+    public void PutSharedPreferencesInt(string key, int value)
     {
         throw new NotImplementedException();
         //var edit = preferences.Edit();
@@ -27,12 +26,12 @@ internal class HelperSharedPreferences : IHelperSharedPreferences
         //edit.Apply();
     }
 
-    public void putSharedPreferencesBoolean(string key, bool val)
+    public void PutSharedPreferencesBoolean(string key, bool val)
     {
         Preferences.Set(key, val);
     }
 
-    public void putSharedPreferencesstring(string key, string val)
+    public void PutSharedPreferencesstring(string key, string val)
     {
         throw new NotImplementedException();
         //var edit = preferences.Edit();
@@ -40,31 +39,28 @@ internal class HelperSharedPreferences : IHelperSharedPreferences
         //edit.Apply();
     }
 
-    public long getSharedPreferencesLong(string key, long _default)
+    public long GetSharedPreferencesLong(string key, long _default)
     {
         throw new NotImplementedException();
-        //return preferences.GetLong(key, _default);
     }
 
-    public string getSharedPreferencesstring(string key, string _default)
+    public string GetSharedPreferencesstring(string key, string _default)
     {
         var preferences = Preferences.Get(key, _default);
         return preferences;
     }
 
-    public int getSharedPreferencesInt(string key, int _default)
+    public int GetSharedPreferencesInt(string key, int _default)
     {
         throw new NotImplementedException();
-        //return preferences.GetInt(key, _default);
     }
 
-    public int getTextSize()
+    public int GetTextSize()
     {
         throw new NotImplementedException();
-        //return PreferenceManager.GetDefaultSharedPreferences(mContext).GetInt("charSize3", 0);
     }
 
-    public bool getSharedPreferencesBoolean(string key, bool _default)
+    public bool GetSharedPreferencesBoolean(string key, bool _default)
     {
         var preferences = Preferences.Get(key, _default);
         return preferences;

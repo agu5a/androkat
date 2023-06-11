@@ -2,23 +2,23 @@
 
 public interface IHelperSharedPreferences
 {
-    void delete(string key);
+    void Delete(string key);
 
-    void putSharedPreferencesLong(string key, long value);
+    void PutSharedPreferencesLong(string key, long value);
 
-    void putSharedPreferencesInt(string key, int value);
+    void PutSharedPreferencesInt(string key, int value);
 
-    void putSharedPreferencesBoolean(string key, bool val);
+    void PutSharedPreferencesBoolean(string key, bool val);
 
-    void putSharedPreferencesstring(string key, string val);
+    void PutSharedPreferencesstring(string key, string val);
 
-    long getSharedPreferencesLong(string key, long _default);
+    long GetSharedPreferencesLong(string key, long _default);
 
-    string getSharedPreferencesstring(string key, string _default);
+    string GetSharedPreferencesstring(string key, string _default);
 
-    int getSharedPreferencesInt(string key, int _default);
+    int GetSharedPreferencesInt(string key, int _default);
 
-    int getTextSize();
+    int GetTextSize();
 
-    bool getSharedPreferencesBoolean(string key, bool _default);
+    bool GetSharedPreferencesBoolean(string key, bool _default);
 }

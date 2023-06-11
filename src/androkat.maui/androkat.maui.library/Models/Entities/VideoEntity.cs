@@ -1,10 +1,10 @@
 ﻿using SQLite;
 using System.Runtime.Serialization;
 
-namespace androkat.maui.library.Models;
+namespace androkat.maui.library.Models.Entities;
 
 [Table("Video_V1")]
-public class VideoDto
+public class VideoEntity
 {
     [DataMember(Name = "nid")]
     public Guid Nid { get; set; }

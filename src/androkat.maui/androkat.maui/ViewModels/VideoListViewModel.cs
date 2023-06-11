@@ -1,4 +1,4 @@
-﻿using androkat.maui.library.Models;
+﻿using androkat.maui.library.Models.Entities;
 using androkat.maui.library.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -34,9 +34,9 @@ public partial class VideoListViewModel : ViewModelBase
 
     private async Task FetchAsync()
     {
-        var contents = new List<VideoDto>
+        var contents = new List<VideoEntity>
         {
-            new VideoDto
+            new VideoEntity
             {
                 Image = "https://img.youtube.com/vi/zxRr7YN02eY/hqdefault.jpg",
                 Nid = Guid.NewGuid(),
@@ -63,7 +63,7 @@ public partial class VideoListViewModel : ViewModelBase
         Contents.ReplaceRange(s);
     }
 
-    private List<VideoItemViewModel> ConvertToViewModels(IEnumerable<VideoDto> items)
+    private List<VideoItemViewModel> ConvertToViewModels(IEnumerable<VideoEntity> items)
     {
         var viewmodels = new List<VideoItemViewModel>();
         foreach (var item in items)

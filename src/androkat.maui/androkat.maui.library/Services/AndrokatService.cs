@@ -1,13 +1,12 @@
 ﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Helpers;
-using androkat.maui.library.Models;
+using androkat.maui.library.Models.Responses;
 using System.Text.Json;
 
 namespace androkat.maui.library.Services;
 
 public class AndrokatService : IAndrokatService
 {
-
     HttpClient client;
 
     public async Task<ImaResponse> GetImadsag(DateTime date)
@@ -19,21 +18,21 @@ public class AndrokatService : IAndrokatService
 
         var response = await client.GetStringAsync($"v2/ima?date={date.ToString("yyyy-MM-dd")}");
 
-        JsonSerializerOptions options = new JsonSerializerOptions();
+        var options = new JsonSerializerOptions();
         options.Converters.Add(new DateTimeConverterUsingDateTimeParse());
         return JsonSerializer.Deserialize<ImaResponse>(response, options);
     }
 
-    public async Task<List<ContentResponse>> GetContents(string f, string n)
+    public async Task<List<ContentResponse>> GetContents(string tipus, string nid)
     {
         if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             return new List<ContentResponse>();
 
         HttpClient client = GetClient();
 
-        var response = await client.GetStringAsync($"v3/contents?tipus={f}&id={n}");
+        var response = await client.GetStringAsync($"v3/contents?tipus={tipus}&id={nid}");
 
-        JsonSerializerOptions options = new JsonSerializerOptions();
+        var options = new JsonSerializerOptions();
         options.Converters.Add(new DateTimeConverterUsingDateTimeParse());
         return JsonSerializer.Deserialize<List<ContentResponse>>(response, options);
     }

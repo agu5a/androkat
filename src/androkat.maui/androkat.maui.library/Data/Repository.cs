@@ -1,5 +1,6 @@
 ﻿using androkat.maui.library.Data;
 using androkat.maui.library.Models;
+using androkat.maui.library.Models.Entities;
 using SQLite;
 
 namespace androkat.hu.Data;
@@ -24,20 +25,20 @@ public class Repository : IRepository
 
         if (tableCheck)
         {
-            conn.CreateTableAsync<ContentDto>();
-            conn.CreateTableAsync<FavoriteContentDto>();
-            conn.CreateTableAsync<ImadsagDto>();
-            conn.CreateTableAsync<VideoDto>();
+            conn.CreateTableAsync<ContentEntity>();
+            conn.CreateTableAsync<FavoriteContentEntity>();
+            conn.CreateTableAsync<ImadsagEntity>();
+            conn.CreateTableAsync<VideoEntity>();
         }
     }
 
-    public async Task<ContentDto> GetElmelkedesContentById(Guid id)
+    public async Task<ContentEntity> GetElmelkedesContentById(Guid id)
     {
         try
         {
             Init();
 
-            var res = await conn.Table<ContentDto>().Where(w => w.Nid == id).FirstOrDefaultAsync();
+            var res = await conn.Table<ContentEntity>().Where(w => w.Nid == id).FirstOrDefaultAsync();
 
             return res;
         }
@@ -46,7 +47,7 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new ContentDto();
+        return new ContentEntity();
     }
 
     public async Task<int> GetFavoriteCount()
@@ -55,7 +56,7 @@ public class Repository : IRepository
         {
             Init();
 
-            var res = await conn.Table<FavoriteContentDto>().CountAsync();
+            var res = await conn.Table<FavoriteContentEntity>().CountAsync();
 
             return res;
         }
@@ -67,13 +68,13 @@ public class Repository : IRepository
         return 0;
     }
 
-    public async Task<List<FavoriteContentDto>> GetFavoriteContents()
+    public async Task<List<FavoriteContentEntity>> GetFavoriteContents()
     {
         try
         {
             Init();
 
-            var res = await conn.Table<FavoriteContentDto>().OrderByDescending(o => o.Datum).ToListAsync();
+            var res = await conn.Table<FavoriteContentEntity>().OrderByDescending(o => o.Datum).ToListAsync();
 
             return res;
         }
@@ -82,16 +83,16 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<FavoriteContentDto>();
+        return new List<FavoriteContentEntity>();
     }
 
-    public async Task<List<ContentDto>> GetElmelkedesContents()
+    public async Task<List<ContentEntity>> GetElmelkedesContents()
     {
         try
         {
             Init();
 
-            var res = await conn.Table<ContentDto>()
+            var res = await conn.Table<ContentEntity>()
                 .Where(w => w.GroupName == "group_napiolvaso").OrderByDescending(o => o.Datum).ToListAsync();
 
             return res;
@@ -101,15 +102,15 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentDto>();
+        return new List<ContentEntity>();
     }
 
-    public async Task<int> InsertContent(ContentDto dto)
+    public async Task<int> InsertContent(ContentEntity dto)
     {
         try
         {
             Init();
-            var exists = await conn.Table<ContentDto>()
+            var exists = await conn.Table<ContentEntity>()
                 .Where(w => w.Nid == dto.Nid && w.Tipus == dto.Tipus).FirstOrDefaultAsync();
             if (exists is null)
                 return await conn.InsertAsync(dto);
@@ -121,12 +122,12 @@ public class Repository : IRepository
         return -1;
     }
 
-    public async Task<int> InsertImadsag(ImadsagDto dto)
+    public async Task<int> InsertImadsag(ImadsagEntity dto)
     {
         try
         {
             Init();
-            var exists = await conn.Table<ImadsagDto>()
+            var exists = await conn.Table<ImadsagEntity>()
                 .Where(w => w.Nid == dto.Nid).FirstOrDefaultAsync();
             if (exists is null)
                 return await conn.InsertAsync(dto);
@@ -138,12 +139,12 @@ public class Repository : IRepository
         return -1;
     }
 
-    public async Task<int> InsertFavoriteContent(FavoriteContentDto dto)
+    public async Task<int> InsertFavoriteContent(FavoriteContentEntity dto)
     {
         try
         {
             Init();
-            var exists = await conn.Table<FavoriteContentDto>()
+            var exists = await conn.Table<FavoriteContentEntity>()
                 .Where(w => w.Nid == dto.Nid && w.Tipus == dto.Tipus).FirstOrDefaultAsync();
             if (exists is null)
                 return await conn.InsertAsync(dto);
@@ -156,12 +157,12 @@ public class Repository : IRepository
         return -1;
     }
 
-    public async Task<ImadsagDto> GetFirstImadsag()
+    public async Task<ImadsagEntity> GetFirstImadsag()
     {
         try
         {
             Init();
-            var res = await conn.Table<ImadsagDto>().OrderByDescending(o => o.Datum).FirstOrDefaultAsync();
+            var res = await conn.Table<ImadsagEntity>().OrderByDescending(o => o.Datum).FirstOrDefaultAsync();
             return res;
         }
         catch (Exception ex)
@@ -172,12 +173,12 @@ public class Repository : IRepository
         return null;
     }
 
-    public async Task<ContentDto> GetContentsByTypeName(string typeName)
+    public async Task<ContentEntity> GetContentsByTypeName(string typeName)
     {
         try
         {
             Init();
-            var res = await conn.Table<ContentDto>().Where(w => w.TypeName == typeName).OrderByDescending(o => o.Datum).FirstOrDefaultAsync();
+            var res = await conn.Table<ContentEntity>().Where(w => w.TypeName == typeName).OrderByDescending(o => o.Datum).FirstOrDefaultAsync();
             return res;
         }
         catch (Exception ex)
@@ -193,7 +194,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            var res = await conn.Table<ContentDto>().DeleteAsync(d => d.Nid == nid);
+            var res = await conn.Table<ContentEntity>().DeleteAsync(d => d.Nid == nid);
             return res;
         }
         catch (Exception ex)
@@ -208,7 +209,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            var res = await conn.Table<ImadsagDto>().DeleteAsync(d => d.Nid == nid);
+            var res = await conn.Table<ImadsagEntity>().DeleteAsync(d => d.Nid == nid);
             return res;
         }
         catch (Exception ex)
@@ -218,13 +219,13 @@ public class Repository : IRepository
         return -1;
     }
 
-    public virtual async Task<List<ContentDto>> GetAjanlatokContents()
+    public virtual async Task<List<ContentEntity>> GetAjanlatokContents()
     {
         try
         {
             Init();
             var id = ((int)Activities.ajanlatweb).ToString();
-            var res = await conn.Table<ContentDto>().Where(w => w.Tipus == id).OrderByDescending(o => o.Datum).ToListAsync();
+            var res = await conn.Table<ContentEntity>().Where(w => w.Tipus == id).OrderByDescending(o => o.Datum).ToListAsync();
             return res;
         }
         catch (Exception ex)
@@ -232,15 +233,15 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentDto>();
+        return new List<ContentEntity>();
     }
 
-    public async Task<List<ImadsagDto>> GetImaContents()
+    public async Task<List<ImadsagEntity>> GetImaContents()
     {
         try
         {
             Init();
-            var res = await conn.Table<ImadsagDto>()
+            var res = await conn.Table<ImadsagEntity>()
                 .Where(w => w.IsHided == false).OrderBy(o => o.Cim).ToListAsync();
 
             return res;
@@ -250,15 +251,15 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ImadsagDto>();
+        return new List<ImadsagEntity>();
     }
 
-    public async Task<List<ContentDto>> GetAudioContents()
+    public async Task<List<ContentEntity>> GetAudioContents()
     {
         try
         {
             Init();
-            var res = await conn.Table<ContentDto>()
+            var res = await conn.Table<ContentEntity>()
                 .Where(w => w.GroupName == "group_audio").OrderByDescending(o => o.Datum).ToListAsync();
 
             return res;
@@ -268,16 +269,16 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentDto>();
+        return new List<ContentEntity>();
     }
 
-    public async Task<List<ContentDto>> GetBookContents()
+    public async Task<List<ContentEntity>> GetBookContents()
     {
         try
         {
             Init();
             var bookId = ((int)Activities.book).ToString();
-            var res = await conn.Table<ContentDto>().Where(w => w.Tipus == bookId).OrderByDescending(o => o.Datum).ToListAsync();
+            var res = await conn.Table<ContentEntity>().Where(w => w.Tipus == bookId).OrderByDescending(o => o.Datum).ToListAsync();
             return res;
         }
         catch (Exception ex)
@@ -285,15 +286,15 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentDto>();
+        return new List<ContentEntity>();
     }
 
-    public async Task<List<ContentDto>> GetHumorContents()
+    public async Task<List<ContentEntity>> GetHumorContents()
     {
         try
         {
             Init();
-            var res = await conn.Table<ContentDto>().Where(w => w.GroupName == "group_humor").OrderByDescending(o => o.Datum).ToListAsync();
+            var res = await conn.Table<ContentEntity>().Where(w => w.GroupName == "group_humor").OrderByDescending(o => o.Datum).ToListAsync();
             return res;
         }
         catch (Exception ex)
@@ -301,16 +302,16 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentDto>();
+        return new List<ContentEntity>();
     }
 
-    public async Task<List<ContentDto>> GetMaiszentContents()
+    public async Task<List<ContentEntity>> GetMaiszentContents()
     {
         try
         {
             Init();
             var id = ((int)Activities.maiszent).ToString();
-            var res = await conn.Table<ContentDto>().Where(w => w.Tipus == id).OrderByDescending(o => o.Datum).ToListAsync();
+            var res = await conn.Table<ContentEntity>().Where(w => w.Tipus == id).OrderByDescending(o => o.Datum).ToListAsync();
             return res;
         }
         catch (Exception ex)
@@ -318,16 +319,16 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentDto>();
+        return new List<ContentEntity>();
     }
 
-    public async Task<List<ContentDto>> GetSzentekContents()
+    public async Task<List<ContentEntity>> GetSzentekContents()
     {
         try
         {
             Init();
             var type = Activities.group_szentek.ToString();
-            var res = await conn.Table<ContentDto>()
+            var res = await conn.Table<ContentEntity>()
                 .Where(w => w.GroupName == type).OrderByDescending(o => o.Datum).ToListAsync();
             return res;
         }
@@ -336,15 +337,15 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentDto>();
+        return new List<ContentEntity>();
     }
 
-    public async Task<List<ContentDto>> GetBlogContents()
+    public async Task<List<ContentEntity>> GetBlogContents()
     {
         try
         {
             Init();
-            var res = await conn.Table<ContentDto>().Where(w => w.GroupName == "group_blog").OrderByDescending(o => o.Datum).ToListAsync();
+            var res = await conn.Table<ContentEntity>().Where(w => w.GroupName == "group_blog").OrderByDescending(o => o.Datum).ToListAsync();
             return res;
         }
         catch (Exception ex)
@@ -352,15 +353,15 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentDto>();
+        return new List<ContentEntity>();
     }
 
-    public async Task<List<ContentDto>> GetNewsContents()
+    public async Task<List<ContentEntity>> GetNewsContents()
     {
         try
         {
             Init();
-            var res = await conn.Table<ContentDto>().Where(w => w.GroupName == "group_news").OrderByDescending(o => o.Datum).ToListAsync();
+            var res = await conn.Table<ContentEntity>().Where(w => w.GroupName == "group_news").OrderByDescending(o => o.Datum).ToListAsync();
             return res;
         }
         catch (Exception ex)
@@ -368,15 +369,15 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentDto>();
+        return new List<ContentEntity>();
     }
 
-    public async Task<List<ContentDto>> GetContentsWithoutBook()
+    public async Task<List<ContentEntity>> GetContentsWithoutBook()
     {
         try
         {
             Init();
-            var res = await conn.Table<ContentDto>().Where(w => w.TypeName != "book")
+            var res = await conn.Table<ContentEntity>().Where(w => w.TypeName != "book")
                 .OrderBy(o => o.Datum)
                 .ToListAsync();
             return res;
@@ -386,7 +387,7 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentDto>();
+        return new List<ContentEntity>();
     }
 
     public async Task<int> SetContentAsReadById(Guid nid)
@@ -394,7 +395,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            var res = await conn.Table<ContentDto>().Where(w => w.Nid == nid && !w.IsRead).ToListAsync();
+            var res = await conn.Table<ContentEntity>().Where(w => w.Nid == nid && !w.IsRead).ToListAsync();
             if (res != null && res.Any())
             {
                 res[0].IsRead = true;
