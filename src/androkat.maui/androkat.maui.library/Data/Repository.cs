@@ -27,6 +27,7 @@ public class Repository : IRepository
             conn.CreateTableAsync<ContentDto>();
             conn.CreateTableAsync<FavoriteContentDto>();
             conn.CreateTableAsync<ImadsagDto>();
+            conn.CreateTableAsync<VideoDto>();
         }
     }
 

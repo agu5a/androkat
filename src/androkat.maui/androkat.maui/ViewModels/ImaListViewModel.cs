@@ -54,12 +54,12 @@ public partial class ImaListViewModel : ViewModelBase
         var viewmodels = new List<ImaContentViewModel>();
         foreach (var item in items)
         {
-            var showViewModel = new ImaContentViewModel(item, true);
-            showViewModel.datum = $"Dátum: {item.Datum.ToString("yyyy-MM-dd")}";
-            showViewModel.detailscim = "Imádságok";
-            showViewModel.isFav = false;
-            showViewModel.type = Activities.ima;
-            viewmodels.Add(showViewModel);
+            var viewModel = new ImaContentViewModel(item, true);
+            viewModel.datum = $"Dátum: {item.Datum.ToString("yyyy-MM-dd")}";
+            viewModel.detailscim = "Imádságok";
+            viewModel.isFav = false;
+            viewModel.type = Activities.ima;
+            viewmodels.Add(viewModel);
         }
 
         return viewmodels;

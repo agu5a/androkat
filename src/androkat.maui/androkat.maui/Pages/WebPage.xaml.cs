@@ -7,13 +7,13 @@ public partial class WebPage : ContentPage
 {
     private readonly IBrowser _browser;
 
-    public WebPage(WebViewModel vm, IBrowser browser)
+    public WebPage(WebViewModel viewModel, IBrowser browser)
     {
         InitializeComponent();
-        BindingContext = vm;
+        BindingContext = viewModel;
         _browser = browser;
 
-        webPicker.ItemsSource = vm.WebPageUrls;
+        webPicker.ItemsSource = viewModel.WebPageUrls;
         webPicker.ItemDisplayBinding = new Binding("Name");
     }
 

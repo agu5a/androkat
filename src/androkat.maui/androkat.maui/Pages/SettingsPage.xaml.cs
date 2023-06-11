@@ -8,10 +8,10 @@ public partial class SettingsPage : ContentPage
 {
     private readonly PageService _pageService;
 
-    public SettingsPage(SettingsViewModel vm, PageService pageService)
+    public SettingsPage(SettingsViewModel viewModel, PageService pageService)
     {
         InitializeComponent();
-        BindingContext = vm;
+        BindingContext = viewModel;
         _pageService = pageService;
     }
 

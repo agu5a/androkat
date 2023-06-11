@@ -4,16 +4,16 @@ namespace androkat.hu.Pages;
 
 public partial class KeresztutPage : ContentPage
 {
-    private KeresztutViewModel _viewModel => BindingContext as KeresztutViewModel;
+    private KeresztutViewModel ViewModel => BindingContext as KeresztutViewModel;
 
-    public KeresztutPage(KeresztutViewModel vm)
+    public KeresztutPage(KeresztutViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = vm;
+        BindingContext = viewModel;
     }
 
     protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
-        await _viewModel.InitializeAsync();
+        await ViewModel.InitializeAsync();
     }
 }

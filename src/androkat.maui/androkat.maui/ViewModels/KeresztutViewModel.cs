@@ -17,12 +17,7 @@ public partial class KeresztutViewModel : ViewModelBase
     {
         //Delay on first load until window loads
         await Task.Delay(1000);
-        var s = new List<KeresztutView> { new KeresztutView { html = "1" }, new KeresztutView { html = "2" }, new KeresztutView { html = "3" } };
+        var s = new List<KeresztutView> { new KeresztutView { Html = "1" }, new KeresztutView { Html = "2" }, new KeresztutView { Html = "3" } };
         Contents.ReplaceRange(s);
     }
-}
-
-public partial class KeresztutView : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
-{
-    public string html { get; set; }
 }

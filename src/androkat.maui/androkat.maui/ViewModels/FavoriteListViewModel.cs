@@ -64,14 +64,14 @@ public partial class FavoriteListViewModel : ViewModelBase
             SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
             var origImg = item.Image;
             item.Image = idezetSource.Img;
-            var showViewModel = new FavoriteContentViewModel(item, true); 
-            showViewModel.datum = $"Dátum: {item.Datum.ToString("yyyy-MM-dd")}";
-            showViewModel.detailscim = idezetSource.Title;
-            showViewModel.contentImg = origImg;
-            showViewModel.isFav = false;
-            showViewModel.forras = $"Forrás: {idezetSource.Forrasszoveg}";
-            showViewModel.type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus));
-            viewmodels.Add(showViewModel);
+            var viewModel = new FavoriteContentViewModel(item, true); 
+            viewModel.datum = $"Dátum: {item.Datum.ToString("yyyy-MM-dd")}";
+            viewModel.detailscim = idezetSource.Title;
+            viewModel.contentImg = origImg;
+            viewModel.isFav = false;
+            viewModel.forras = $"Forrás: {idezetSource.Forrasszoveg}";
+            viewModel.type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus));
+            viewmodels.Add(viewModel);
         }
 
         return viewmodels;

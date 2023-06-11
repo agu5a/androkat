@@ -13,6 +13,7 @@ public static class PagesExtensions
         builder.Services.AddSingleton<SettingsPage>();
         builder.Services.AddSingleton<IgeNaptarPage>();
         builder.Services.AddSingleton<KeresztutPage>();
+        builder.Services.AddSingleton<VideoListPage>();
 
         // pages that are navigated to
         builder.Services.AddTransient<ShowDetailPage>();

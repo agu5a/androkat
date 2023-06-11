@@ -29,12 +29,7 @@ public partial class IgeNaptarViewModel : ViewModelBase
     {
         //Delay on first load until window loads
         await Task.Delay(1000);
-        var s = new List<IgeNaptarView> { new IgeNaptarView { html = "1" }, new IgeNaptarView { html = day.ToString() }, new IgeNaptarView { html = "3" } };
+        var s = new List<IgeNaptarView> { new IgeNaptarView { Html = "1" }, new IgeNaptarView { Html = day.ToString() }, new IgeNaptarView { Html = "3" } };
         Contents.ReplaceRange(s);
     }
-}
-
-public partial class IgeNaptarView : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
-{
-    public string html { get; set; }
 }

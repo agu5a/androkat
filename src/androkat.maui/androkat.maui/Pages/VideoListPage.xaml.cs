@@ -2,11 +2,11 @@
 
 namespace androkat.hu.Pages;
 
-public partial class ImaListPage : ContentPage
+public partial class VideoListPage : ContentPage
 {
-    private ImaListViewModel ViewModel => BindingContext as ImaListViewModel;
+    private VideoListViewModel ViewModel => BindingContext as VideoListViewModel;
 
-    public ImaListPage(ImaListViewModel viewModel)
+    public VideoListPage(VideoListViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;
@@ -19,13 +19,8 @@ public partial class ImaListPage : ContentPage
 
     protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
+        // Hack: Get the category Id
         await ViewModel.InitializeAsync();
-        ViewModel.PageTitle = "Imádságok";
         base.OnNavigatedTo(args);
-    }
-
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
-    }
+    }    
 }

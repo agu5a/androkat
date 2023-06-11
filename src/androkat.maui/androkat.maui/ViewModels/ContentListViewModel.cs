@@ -63,7 +63,7 @@ public partial class ContentListViewModel : ViewModelBase
             SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
             var origImg = item.Image;
             item.Image = idezetSource.Img;
-            var showViewModel = new ContentItemViewModel(item, true)
+            var viewModel = new ContentItemViewModel(item, true)
             {
                 datum = $"Dátum: {item.Datum.ToString("yyyy-MM-dd")}",
                 detailscim = idezetSource.Title,
@@ -72,7 +72,7 @@ public partial class ContentListViewModel : ViewModelBase
                 forras = $"Forrás: {idezetSource.Forrasszoveg}",
                 type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus))
             };
-            viewmodels.Add(showViewModel);
+            viewmodels.Add(viewModel);
         }
 
         return viewmodels;

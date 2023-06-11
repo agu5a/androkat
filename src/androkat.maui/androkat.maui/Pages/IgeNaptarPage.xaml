@@ -28,7 +28,7 @@
                                                  android:WebView.EnableZoomControls="false"
                                                  android:WebView.DisplayZoomControls="false">
                                             <WebView.Source>
-                                                <HtmlWebViewSource Html="{Binding Path=html}" android:WebView.MixedContentMode="AlwaysAllow">
+                                                <HtmlWebViewSource Html="{Binding Path=Html}" android:WebView.MixedContentMode="AlwaysAllow">
                                                 </HtmlWebViewSource>
                                             </WebView.Source>
                                         </WebView>

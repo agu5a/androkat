@@ -56,7 +56,7 @@
     </FlyoutItem>
     <FlyoutItem Title="Videók" Icon="ic_video_collection_24dp">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="9" />
+            <ShellContent ContentTemplate="{DataTemplate pages:VideoListPage}" Route="9" />
         </Tab>
     </FlyoutItem>
     <FlyoutItem Title="Webrádiók" Icon="ic_radio_24dp">

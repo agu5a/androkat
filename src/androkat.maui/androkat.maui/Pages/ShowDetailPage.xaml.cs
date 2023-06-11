@@ -4,23 +4,23 @@ namespace androkat.hu.Pages;
 
 public partial class ShowDetailPage : ContentPage
 {
-    private ShowDetailViewModel viewModel => BindingContext as ShowDetailViewModel;
+    private ShowDetailViewModel ViewModel => BindingContext as ShowDetailViewModel;
 
-    public ShowDetailPage(ShowDetailViewModel vm)
+    public ShowDetailPage(ShowDetailViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = vm;
+        BindingContext = viewModel;
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await viewModel.InitializeAsync();
+        await ViewModel.InitializeAsync();
     }
 
     protected override void OnDisappearing()
     {
-        viewModel.CancelSpeech();
+        ViewModel.CancelSpeech();
         base.OnDisappearing();
     }
 }

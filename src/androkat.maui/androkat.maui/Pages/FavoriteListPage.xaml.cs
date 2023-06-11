@@ -4,12 +4,12 @@ namespace androkat.hu.Pages;
 
 public partial class FavoriteListPage : ContentPage
 {
-    private FavoriteListViewModel _viewModel => BindingContext as FavoriteListViewModel;
+    private FavoriteListViewModel ViewModel => BindingContext as FavoriteListViewModel;
 
-    public FavoriteListPage(FavoriteListViewModel vm)
+    public FavoriteListPage(FavoriteListViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = vm;
+        BindingContext = viewModel;
     }
 
     protected override void OnAppearing()
@@ -19,8 +19,8 @@ public partial class FavoriteListPage : ContentPage
 
     protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
-        await _viewModel.InitializeAsync();
-        _viewModel.PageTitle = GetPageTitle();
+        await ViewModel.InitializeAsync();
+        ViewModel.PageTitle = GetPageTitle();
         base.OnNavigatedTo(args);
     }
 
@@ -31,6 +31,6 @@ public partial class FavoriteListPage : ContentPage
 
     private string GetPageTitle()
     {
-        return $"Kedvencek {_viewModel.FavoriteCount}";
+        return $"Kedvencek {ViewModel.FavoriteCount}";
     }
 }

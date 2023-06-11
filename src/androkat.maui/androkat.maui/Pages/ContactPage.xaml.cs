@@ -4,9 +4,9 @@ namespace androkat.hu.Pages;
 
 public partial class ContactPage : ContentPage
 {
-    public ContactPage(ContactViewModel vm)
+    public ContactPage(ContactViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = vm;
+        BindingContext = viewModel;
     }
 }

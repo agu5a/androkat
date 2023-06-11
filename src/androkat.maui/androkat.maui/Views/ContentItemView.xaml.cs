@@ -62,11 +62,11 @@ public partial class ContentItemView
     {
         base.OnBindingContextChanged();
 
-        if (BindingContext is not ContentItemViewModel vm)
+        if (BindingContext is not ContentItemViewModel viewModel)
         {
             return;
         }
 
-        //vm.InitializeCommand.Execute(null);
+        //viewModel.InitializeCommand.Execute(null);
     }
 }

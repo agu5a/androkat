@@ -14,6 +14,7 @@ public static class ViewModelExtensions
         builder.Services.AddTransient<ShowDetailViewModel>();
         builder.Services.AddTransient<IgeNaptarViewModel>();
         builder.Services.AddTransient<KeresztutViewModel>();
+        builder.Services.AddTransient<VideoListViewModel>();
 
         return builder;
     }

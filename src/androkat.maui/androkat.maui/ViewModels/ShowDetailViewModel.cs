@@ -55,14 +55,14 @@ public partial class ShowDetailViewModel : ViewModelBase
         SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
         var origImg = item.Image;
         item.Image = idezetSource.Img;
-        var showViewModel = new ContentItemViewModel(item, true);
-        showViewModel.datum = $"<b>Dátum</b>: {item.Datum.ToString("yyyy-MM-dd")}";
-        showViewModel.detailscim = idezetSource.Title;
-        showViewModel.contentImg = origImg;
-        showViewModel.isFav = false;
-        showViewModel.forras = $"<b>Forrás</b>: {idezetSource.Forrasszoveg}";
-        showViewModel.type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus));
-        ContentView = showViewModel;
+        var viewModel = new ContentItemViewModel(item, true);
+        viewModel.datum = $"<b>Dátum</b>: {item.Datum.ToString("yyyy-MM-dd")}";
+        viewModel.detailscim = idezetSource.Title;
+        viewModel.contentImg = origImg;
+        viewModel.isFav = false;
+        viewModel.forras = $"<b>Forrás</b>: {idezetSource.Forrasszoveg}";
+        viewModel.type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus));
+        ContentView = viewModel;
     }
 
     [RelayCommand]

@@ -4,21 +4,21 @@ namespace androkat.hu.Pages;
 
 public partial class IgeNaptarPage : ContentPage
 {
-    private IgeNaptarViewModel _viewModel => BindingContext as IgeNaptarViewModel;
+    private IgeNaptarViewModel ViewModel => BindingContext as IgeNaptarViewModel;
 
-    public IgeNaptarPage(IgeNaptarViewModel vm)
+    public IgeNaptarPage(IgeNaptarViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = vm;
+        BindingContext = viewModel;
     }
 
     private async void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
     {
-        await _viewModel.InitializeAsync(e.NewDate.Day);
+        await ViewModel.InitializeAsync(e.NewDate.Day);
     }
 
     protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
-        await _viewModel.InitializeAsync(100);
+        await ViewModel.InitializeAsync(100);
     }
 }
