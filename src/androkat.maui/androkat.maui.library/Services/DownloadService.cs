@@ -65,7 +65,7 @@ public class DownloadService : IDownloadService
 
     public async Task<int> DownloadAll()
     {
-        List<Activities> fooldalResources = new List<Activities>
+        var fooldalResources = new List<Activities>
         {
             Activities.barsi,
             Activities.horvath,
@@ -140,8 +140,7 @@ public class DownloadService : IDownloadService
         {
             if (act == Activities.group_ima)
             {
-                InsertIma();
-                return 0;
+                return await InsertIma(0);
             }
 
             //a mai szent-et, ajanlatokat, humort nem lehet letiltani a beallitásokban, így mindig ellenőrizzük
@@ -182,7 +181,7 @@ public class DownloadService : IDownloadService
         return 0;
     }
 
-    public async void InsertIma()
+    private async Task<int> InsertIma(int imak)
     {
         try
         {
@@ -212,17 +211,21 @@ public class DownloadService : IDownloadService
                             Nid = imadsag.Nid,
                             Csoport = imadsag.Csoport
                         });
+
+                        imak++;
                     }
                 }
 
                 if (result.HasMore)
-                    InsertIma();
+                    imak = await InsertIma(imak);
             }
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"********************************** InsertIma EXCEPTION! {ex}");
         }
+
+        return imak;
     }
 
     private async Task<(Guid nid, DateTime datum)> GetLatestFromLocalDb(Activities type)
@@ -252,7 +255,7 @@ public class DownloadService : IDownloadService
         return (Guid.Empty, DateTime.MinValue);
     }
 
-    public async Task<(Guid nid, bool exists)> HasTodayData(Activities type)
+    private async Task<(Guid nid, bool exists)> HasTodayData(Activities type)
     {
         var latestItem = await GetLatestFromLocalDb(type);
 
@@ -298,7 +301,7 @@ public class DownloadService : IDownloadService
 
     private async Task<ImaResponse> GetImaFromServer(DateTime date)
     {
-        ImaResponse result = new ImaResponse();
+        var result = new ImaResponse();
         List<ImadsagResponse> list = new();
         result.Imak = list;
         result.HasMore = false;

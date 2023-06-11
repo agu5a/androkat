@@ -6,16 +6,10 @@ public static class TheTheme
 {
     public static void SetTheme()
     {
-        switch (Settings.Theme)
+        Application.Current.UserAppTheme = Settings.Theme switch
         {
-            default:
-            case AppTheme.Light:
-                Application.Current.UserAppTheme = AppTheme.Light;
-                break;
-            case AppTheme.Dark:
-                Application.Current.UserAppTheme = AppTheme.Dark;
-                break;
-
-        }
+            AppTheme.Dark => AppTheme.Dark,
+            _ => AppTheme.Light,
+        };
     }
 }

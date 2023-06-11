@@ -73,7 +73,6 @@ public class PageService
         };
     }
 
-
     private Task<T> TryGetAsync<T>(string path)
     {
         if (firstLoad)

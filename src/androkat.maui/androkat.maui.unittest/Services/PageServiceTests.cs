@@ -53,6 +53,25 @@ public class PageServiceTests
     }
 
     [Fact]
+    public async Task DownloadAll_ReturnsCorrectCount()
+    {
+        // Arrange
+        _downloadServiceMock
+            .Setup(dl => dl.DownloadAll())
+            .ReturnsAsync(5);
+
+        var repositoryMock = new Mock<IRepository>();
+        var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
+
+        // Act
+        var result = await pageService.DownloadAll();
+
+        // Assert
+        Assert.Equal(5, result);
+        _downloadServiceMock.Verify(dl => dl.DownloadAll(), Times.Once);
+    }
+
+    [Fact]
     public async Task Test_InsertFavoriteContentAsync()
     {
         var repositoryMock = new Mock<IRepository>();

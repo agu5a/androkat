@@ -3,10 +3,10 @@ using androkat.maui.library.Data;
 using androkat.maui.library.Models;
 using androkat.maui.library.Services;
 using Moq;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace androkat.maui.unittest.Services;
 
@@ -25,22 +25,52 @@ public class DownloadServiceTests
         sourceData = new Mock<ISourceData>();
     }
 
-    [Test]
+    [Fact]
     public async Task DownloadAll_All_Return_Test()
     {
         androkatService.Setup(s => s.GetContents(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<ContentResponse>
         {
             new ContentResponse{
-                Nid = Guid.NewGuid(), 
-                Cim = "cim", 
-                Idezet = "idezet", 
-                Image = "img", 
+                Nid = Guid.NewGuid(),
+                Cim = "cim",
+                Idezet = "idezet",
+                Image = "img",
                 KulsoLink = string.Empty,
-                Datum = DateTime.Now.AddDays(1)}
+                Datum = DateTime.Now.AddDays(-1)}
+        });
+
+        androkatService.SetupSequence(s => s.GetImadsag(It.IsAny<DateTime>())).ReturnsAsync(new ImaResponse
+        {
+            HasMore = true,
+            Imak = new List<ImadsagResponse>
+            {
+                new ImadsagResponse
+                {
+                    RecordDate = DateTime.Now.AddDays(-1),
+                    Content = "Content",
+                    Title = "Title",
+                    Csoport = 1,
+                    Nid = Guid.NewGuid()
+                }
+            }
+        }).ReturnsAsync(new ImaResponse
+        {
+            HasMore = false,
+            Imak = new List<ImadsagResponse>
+            {
+                new ImadsagResponse
+                {
+                    RecordDate = DateTime.Now.AddDays(-1),
+                    Content = "Content",
+                    Title = "Title",
+                    Csoport = 1,
+                    Nid = Guid.NewGuid()
+                }
+            }
         });
 
         repository.Setup(s => s.GetContentsByTypeName(It.IsAny<string>())).ReturnsAsync(default(ContentDto));
-        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentDto> { });
+        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentDto> { new ContentDto { } });
 
         helperSharedPreferences.Setup(s => s.getSharedPreferencesBoolean(It.IsAny<string>(), It.IsAny<bool>())).Returns(true);
 
@@ -51,10 +81,10 @@ public class DownloadServiceTests
 
         var res = await service.DownloadAll();
 
-        Assert.That(res, Is.EqualTo(40));
+        Assert.Equal(res, 42);
     }
 
-    [Test]
+    [Fact]
     public async Task StartUpdate_Fokolare_Already_Exists()
     {
         androkatService.Setup(s => s.GetContents(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<ContentResponse>
@@ -82,30 +112,31 @@ public class DownloadServiceTests
 
         var res = await service.StartUpdate(Activities.fokolare);
 
-        Assert.That(res, Is.EqualTo(0));
+        Assert.Equal(res, 0);
     }
 
-    [TestCase(Activities.papaitwitter, 0)]
-    [TestCase(Activities.fokolare, 0)]
-    [TestCase(Activities.kempis, 0)]
-    [TestCase(Activities.maiszent, 1)]
-    [TestCase(Activities.humor, 1)]
-    [TestCase(Activities.audiohorvath, 0)]
-    [TestCase(Activities.prayasyougo, 0)]
-    [TestCase(Activities.audionapievangelium, 0)]
-    [TestCase(Activities.audiobarsi, 0)]
-    [TestCase(Activities.audiopalferi, 0)]
-    [TestCase(Activities.audiotaize, 0)]
-    [TestCase(Activities.book, 0)]
-    [TestCase(Activities.ajanlatweb, 1)]
-    [TestCase(Activities.kurir, 0)]
-    [TestCase(Activities.bonumtv, 0)]
-    [TestCase(Activities.b777, 0)]
-    [TestCase(Activities.pio, 0)]
-    [TestCase(Activities.kisterez, 0)]
-    [TestCase(Activities.szentszalezi, 0)]
-    [TestCase(Activities.sienaikatalin, 0)]
-    public async Task StartUpdate_User_Dont_Download(Activities activities, int expected)
+    [Theory]
+    [InlineData(Activities.papaitwitter, 0)]
+    [InlineData(Activities.fokolare, 0)]
+    [InlineData(Activities.kempis, 0)]
+    [InlineData(Activities.maiszent, 1)]
+    [InlineData(Activities.humor, 1)]
+    [InlineData(Activities.audiohorvath, 0)]
+    [InlineData(Activities.prayasyougo, 0)]
+    [InlineData(Activities.audionapievangelium, 0)]
+    [InlineData(Activities.audiobarsi, 0)]
+    [InlineData(Activities.audiopalferi, 0)]
+    [InlineData(Activities.audiotaize, 0)]
+    [InlineData(Activities.book, 0)]
+    [InlineData(Activities.ajanlatweb, 1)]
+    [InlineData(Activities.kurir, 0)]
+    [InlineData(Activities.bonumtv, 0)]
+    [InlineData(Activities.b777, 0)]
+    [InlineData(Activities.pio, 0)]
+    [InlineData(Activities.kisterez, 0)]
+    [InlineData(Activities.szentszalezi, 0)]
+    [InlineData(Activities.sienaikatalin, 0)]
+    public async Task StartUpdate_User_Dont_Download_Based_On_SharedPreferences(Activities activities, int expected)
     {
         androkatService.Setup(s => s.GetContents(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<ContentResponse>
         {
@@ -131,7 +162,7 @@ public class DownloadServiceTests
 
         var res = await service.StartUpdate(activities);
 
-        Assert.That(res, Is.EqualTo(expected));
+        Assert.Equal(res, expected);
     }
 
     private static ContentDto GetContentDto(string tipus, string typeName)
