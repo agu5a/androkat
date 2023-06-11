@@ -15,6 +15,7 @@ public static class ViewModelExtensions
         builder.Services.AddTransient<IgeNaptarViewModel>();
         builder.Services.AddTransient<KeresztutViewModel>();
         builder.Services.AddTransient<VideoListViewModel>();
+        builder.Services.AddTransient<WebRadioViewModel>();
 
         return builder;
     }

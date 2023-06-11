@@ -2,11 +2,11 @@
 
 namespace androkat.hu.Pages;
 
-public partial class WebPage : ContentPage
+public partial class WebRadioPage : ContentPage
 {
-    private WebViewModel ViewModel => BindingContext as WebViewModel;
+    private WebRadioViewModel ViewModel => BindingContext as WebRadioViewModel;
 
-    public WebPage(WebViewModel viewModel)
+    public WebRadioPage(WebRadioViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;

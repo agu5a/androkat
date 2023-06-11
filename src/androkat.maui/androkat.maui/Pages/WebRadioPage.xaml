@@ -2,13 +2,13 @@
 <ContentPage 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="WebOldalak"
+    Title="Rádiók"
     x:Name="this"
     
     xmlns:viewmodels="clr-namespace:androkat.hu.ViewModels"
     Style="{StaticResource MainSectionStyle}"
-    x:DataType="viewmodels:WebViewModel"
-    x:Class="androkat.hu.Pages.WebPage">
+    x:DataType="viewmodels:WebRadioViewModel"
+    x:Class="androkat.hu.Pages.WebRadioPage">
     <Grid>
         <ScrollView>
             <FlexLayout x:Name="flexLayout" BindableLayout.ItemsSource="{Binding Items}"

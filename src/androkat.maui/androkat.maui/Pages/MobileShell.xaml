@@ -61,7 +61,7 @@
     </FlyoutItem>
     <FlyoutItem Title="Webrádiók" Icon="ic_radio_24dp">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="10" />
+            <ShellContent ContentTemplate="{DataTemplate pages:WebRadioPage}" Route="10" />
         </Tab>
     </FlyoutItem>
     <FlyoutItem Title="Könyvolvasó" Icon="book">
