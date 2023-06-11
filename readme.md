@@ -1,4 +1,5 @@
 [![build and test](https://github.com/agu5a/androkat/actions/workflows/dotnet.yml/badge.svg)](https://github.com/agu5a/androkat/actions/workflows/dotnet.yml)
+[![build maui and test](https://github.com/agu5a/androkat/actions/workflows/dotnet.maui.yml/badge.svg)](https://github.com/agu5a/androkat/actions/workflows/dotnet.maui.yml)
 
 # AndroKat
 
