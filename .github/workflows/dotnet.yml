@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
+    paths-ignore:
+    - 'src/androkat.maui/**'
+    - 'readme.md'
   pull_request:
     branches: [ "main" ]
     paths-ignore:
