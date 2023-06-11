@@ -1,15 +1,8 @@
 ﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Models;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace androkat.maui.library.Services;
-
-public class SourcesImport
-{
-    [JsonPropertyName("sources")]
-    public List<SourceData> Sources { get; set; }
-}
 
 public class SourceDataMapper : ISourceData
 {
@@ -18,6 +11,11 @@ public class SourceDataMapper : ISourceData
     public SourceDataMapper()
     {
         _sources = GetFromSources();
+    }
+
+    public SourceDataMapper(Dictionary<int, SourceData> sources)
+    {
+        _sources = sources;
     }
 
     public SourceData GetSourcesFromMemory(int index)
