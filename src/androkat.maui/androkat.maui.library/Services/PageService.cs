@@ -13,10 +13,10 @@ public class PageService
     private readonly IAndrokatService _androkatService;
     private readonly ISourceData _sourceData;
     private bool firstLoad = true;
-    private readonly DownloadService _downloadService;
+    private readonly IDownloadService _downloadService;
     private readonly IRepository _repository;
 
-    public PageService(IAndrokatService androkatService, ISourceData sourceData, DownloadService downloadService, IRepository repository)
+    public PageService(IAndrokatService androkatService, ISourceData sourceData, IDownloadService downloadService, IRepository repository)
     {
         _androkatService = androkatService;
         _sourceData = sourceData;
@@ -66,8 +66,8 @@ public class PageService
             "4" => await _repository.GetNewsContents(),
             "5" => await _repository.GetBlogContents(),
             "6" => await _repository.GetHumorContents(),
-            //"7" => await _repository.GetHumorContents(), ima
-            "8" => await _repository.GetHumorContents(),   //hanganyag         
+            //"7" => ima
+            "8" => await _repository.GetAudioContents(),   
             "11" => await _repository.GetBookContents(),
             _ => await _repository.GetElmelkedesContents(),
         };

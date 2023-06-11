@@ -1,0 +1,36 @@
+name: build maui and test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    paths-ignore:
+    - 'readme.md'
+
+env:
+  DOTNET_VERSION: '7.0.x'
+  SOLUTION_FILE: './src/androkat.maui/androkat.maui.sln'
+
+jobs:
+  build-and-test:
+    name: build-and-test-windows
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+  
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.SOLUTION_FILE }}
+
+    - name: Build
+      run: dotnet build ${{ env.SOLUTION_FILE }} --configuration Release --no-restore
+
+    - name: Test
+      run: dotnet test ${{ env.SOLUTION_FILE }} --no-build --configuration Release

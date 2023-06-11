@@ -217,7 +217,7 @@ public class Repository : IRepository
         return -1;
     }
 
-    public async Task<List<ContentDto>> GetAjanlatokContents()
+    public virtual async Task<List<ContentDto>> GetAjanlatokContents()
     {
         try
         {

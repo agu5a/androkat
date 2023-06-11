@@ -81,7 +81,7 @@
     </FlyoutItem>
     <FlyoutItem Title="Keresztút" Icon="crossroad">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="14" />
+            <ShellContent ContentTemplate="{DataTemplate pages:KeresztutPage}" Route="14" />
         </Tab>
     </FlyoutItem>
     <FlyoutItem Title="Weboldalak" Icon="internet">
