@@ -1,4 +1,4 @@
-﻿using androkat.hu.ViewModels;
+﻿using androkat.maui.library.ViewModels;
 using System.Windows.Input;
 
 namespace androkat.hu.Views;

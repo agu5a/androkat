@@ -1,15 +1,15 @@
-﻿using androkat.maui.library.Models;
+﻿using androkat.maui.library.Abstraction;
+using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
-using androkat.maui.library.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MvvmHelpers;
 
-namespace androkat.hu.ViewModels;
+namespace androkat.maui.library.ViewModels;
 
 public partial class ImaListViewModel : ViewModelBase
 {
-    private readonly PageService _pageService;
+    private readonly IPageService _pageService;
     private IEnumerable<ImaContentViewModel> _contents;
 
     [ObservableProperty]
@@ -18,7 +18,7 @@ public partial class ImaListViewModel : ViewModelBase
     [ObservableProperty]
     ObservableRangeCollection<List<ImaContentViewModel>> contents;
 
-    public ImaListViewModel(PageService pageService)
+    public ImaListViewModel(IPageService pageService)
     {
         _pageService = pageService;
         Contents = new ObservableRangeCollection<List<ImaContentViewModel>>();

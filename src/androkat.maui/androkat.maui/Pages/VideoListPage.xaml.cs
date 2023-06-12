@@ -1,4 +1,4 @@
-﻿using androkat.hu.ViewModels;
+﻿using androkat.maui.library.ViewModels;
 
 namespace androkat.hu.Pages;
 
@@ -22,5 +22,5 @@ public partial class VideoListPage : ContentPage
         // Hack: Get the category Id
         await ViewModel.InitializeAsync();
         base.OnNavigatedTo(args);
-    }    
+    }
 }

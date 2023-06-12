@@ -1,26 +1,24 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using androkat.maui.library.Services;
+﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Helpers;
-using androkat.hu.Helpers;
+using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace androkat.hu.ViewModels;
+namespace androkat.maui.library.ViewModels;
 
 public partial class SettingsViewModel : ViewModelBase
 {
-    private readonly PageService _pageService;
+    private readonly IPageService _pageService;
 
-    public SettingsViewModel(PageService pageService)
+    public SettingsViewModel(IPageService pageService)
     {
         _pageService = pageService;
 
         isDarkModeEnabled = Settings.Theme == AppTheme.Dark;
-    }    
+    }
 
     [ObservableProperty]
     bool isDarkModeEnabled;
 
-    partial void OnIsDarkModeEnabledChanged(bool value) =>
-        ChangeUserAppTheme(value);    
+    partial void OnIsDarkModeEnabledChanged(bool value) => ChangeUserAppTheme(value);
 
     public string AppVersion => AppInfo.VersionString;
 
@@ -33,14 +31,10 @@ public partial class SettingsViewModel : ViewModelBase
         if (activateDarkMode)
         {
             Preferences.Default.Set("themeSelection", "themeBlack1");
-            //Application.Current.UserAppTheme = AppTheme.Dark;
         }
         else
         {
             Preferences.Default.Set("themeSelection", "themeNormal");
-            //Application.Current.UserAppTheme = AppTheme.Light;
         }
-
-        TheTheme.SetTheme();
     }
 }

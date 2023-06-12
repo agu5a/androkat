@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Beállítások"
     
-    xmlns:viewmodels="clr-namespace:androkat.hu.ViewModels"
+    xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
     Style="{StaticResource MainSectionStyle}"
     
     x:Class="androkat.hu.Pages.SettingsPage">
@@ -34,7 +34,7 @@
                        VerticalOptions="Center" 
                        HorizontalOptions="Start"
                        Margin="0, 0, 20, 0"/>
-                <Switch IsToggled="{Binding IsDarkModeEnabled}"  />
+                <Switch IsToggled="{Binding IsDarkModeEnabled}" Toggled="Switch_Toggled" />
 
             </HorizontalStackLayout>
         </Frame>

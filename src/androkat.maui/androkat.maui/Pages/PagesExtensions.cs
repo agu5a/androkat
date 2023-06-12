@@ -15,6 +15,7 @@ public static class PagesExtensions
         builder.Services.AddSingleton<KeresztutPage>();
         builder.Services.AddSingleton<VideoListPage>();
         builder.Services.AddSingleton<WebRadioPage>();
+        builder.Services.AddSingleton<GyonasPage>();
 
         // pages that are navigated to
         builder.Services.AddTransient<ShowDetailPage>();

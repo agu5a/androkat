@@ -5,7 +5,7 @@
     Title="Rádiók"
     x:Name="this"
     
-    xmlns:viewmodels="clr-namespace:androkat.hu.ViewModels"
+    xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
     Style="{StaticResource MainSectionStyle}"
     x:DataType="viewmodels:WebRadioViewModel"
     x:Class="androkat.hu.Pages.WebRadioPage">
@@ -19,10 +19,10 @@
                         <StackLayout>
                             <Frame HasShadow="True" BorderColor="DarkGray" CornerRadius="5"
                                        Margin="5">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NavigateToWebCommand}" />
+                                </Frame.GestureRecognizers>
                                 <VerticalStackLayout>
-                                    <VerticalStackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding NavigateToWebCommand}" />
-                                    </VerticalStackLayout.GestureRecognizers>
                                     <Label Text="{Binding Name}" FontSize="16" />
                                 </VerticalStackLayout>
                             </Frame>

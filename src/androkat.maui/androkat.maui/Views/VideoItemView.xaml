@@ -2,13 +2,10 @@
 <VerticalStackLayout  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       x:Class="androkat.hu.Views.VideoItemView"
-                      xmlns:viewmodels="clr-namespace:androkat.hu.ViewModels"
+                      xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
                       x:DataType="viewmodels:VideoItemViewModel"
                       x:Name="self"
                       >
-    <VerticalStackLayout.GestureRecognizers>
-        <TapGestureRecognizer Command="{Binding NavigateToDetailCommand}" />
-    </VerticalStackLayout.GestureRecognizers>
     <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource CardviewbackDark}, Light={StaticResource Cardviewback}}">
         <Grid>
             <Grid.GestureRecognizers>

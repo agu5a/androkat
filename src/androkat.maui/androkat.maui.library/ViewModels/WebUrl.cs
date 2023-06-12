@@ -1,21 +1,24 @@
-﻿using androkat.maui.library.Models.Entities;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace androkat.hu.ViewModels;
+namespace androkat.maui.library.ViewModels;
 
-public partial class VideoItemViewModel : BaseView
+public partial class WebUrl : ObservableObject
 {
-    public VideoEntity VideoDto { get; set; }
     private readonly IBrowser _browser;
 
-    public VideoItemViewModel(VideoEntity contentDto, IBrowser browser)
+    public WebUrl(string name, string url, IBrowser browser)
     {
-        VideoDto = contentDto;
+        Name = name;
+        Url = url;
         _browser = browser;
     }
 
+    public string Name { get; }
+    public string Url { get; }
+
     [RelayCommand]
-    async Task NavigateToDetail()
+    async Task NavigateToWeb()
     {
         var browserOptions = new BrowserLaunchOptions
         {
@@ -23,6 +26,6 @@ public partial class VideoItemViewModel : BaseView
             //PreferredToolbarColor = ColorConstants.BrowserNavigationBarBackgroundColor
         };
 
-        await _browser.OpenAsync(VideoDto.Link, browserOptions);
+        await _browser.OpenAsync(Url, browserOptions);
     }
 }

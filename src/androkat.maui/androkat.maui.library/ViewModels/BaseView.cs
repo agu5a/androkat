@@ -1,7 +1,7 @@
 ﻿using androkat.maui.library.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace androkat.hu.ViewModels;
+namespace androkat.maui.library.ViewModels;
 
 public partial class BaseView : ObservableObject
 {

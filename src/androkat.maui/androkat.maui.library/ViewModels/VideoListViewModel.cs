@@ -1,14 +1,14 @@
-﻿using androkat.maui.library.Models.Entities;
-using androkat.maui.library.Services;
+﻿using androkat.maui.library.Abstraction;
+using androkat.maui.library.Models.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MvvmHelpers;
 
-namespace androkat.hu.ViewModels;
+namespace androkat.maui.library.ViewModels;
 
 public partial class VideoListViewModel : ViewModelBase
 {
-    private readonly PageService _pageService;
+    private readonly IPageService _pageService;
     private IEnumerable<VideoItemViewModel> _contents;
     private readonly IBrowser _browser;
 
@@ -18,7 +18,7 @@ public partial class VideoListViewModel : ViewModelBase
     [ObservableProperty]
     ObservableRangeCollection<List<VideoItemViewModel>> contents;
 
-    public VideoListViewModel(PageService pageService, IBrowser browser)
+    public VideoListViewModel(IPageService pageService, IBrowser browser)
     {
         _pageService = pageService;
         Contents = new ObservableRangeCollection<List<VideoItemViewModel>>();

@@ -45,6 +45,4 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\androkat.maui.library\androkat.maui.library.csproj" />
-	</ItemGroup>
-
-</Project>
+	</ItemGroup></Project>

@@ -1,14 +1,15 @@
-﻿using androkat.hu.ViewModels;
+﻿using androkat.hu.Helpers;
+using androkat.maui.library.Abstraction;
 using androkat.maui.library.Helpers;
-using androkat.maui.library.Services;
+using androkat.maui.library.ViewModels;
 
 namespace androkat.hu.Pages;
 
 public partial class SettingsPage : ContentPage
 {
-    private readonly PageService _pageService;
+    private readonly IPageService _pageService;
 
-    public SettingsPage(SettingsViewModel viewModel, PageService pageService)
+    public SettingsPage(SettingsViewModel viewModel, IPageService pageService)
     {
         InitializeComponent();
         BindingContext = viewModel;
@@ -40,5 +41,10 @@ public partial class SettingsPage : ContentPage
             Title = "Adatbázis fájl megosztása",
             File = new ShareFile(FileAccessHelper.GetLocalFilePath("androkat.db3"))
         });
+    }
+
+    private void Switch_Toggled(object sender, ToggledEventArgs e)
+    {
+        TheTheme.SetTheme();
     }
 }

@@ -5,7 +5,7 @@
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:models="clr-namespace:androkat.hu.Models"
              
-             xmlns:viewmodels="clr-namespace:androkat.hu.ViewModels"
+             xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
              x:Name="this"
              Title="{Binding ContentView.detailscim}"
              Style="{StaticResource DetailPageStyle}"

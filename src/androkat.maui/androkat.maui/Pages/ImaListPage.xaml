@@ -5,7 +5,7 @@
              Title="{Binding PageTitle}"
              x:Name="this"
              xmlns:view="clr-namespace:androkat.hu.Views"
-             xmlns:viewmodels="clr-namespace:androkat.hu.ViewModels"
+             xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
              Style="{StaticResource MainSectionStyle}"
              
              x:DataType="viewmodels:ImaListViewModel"

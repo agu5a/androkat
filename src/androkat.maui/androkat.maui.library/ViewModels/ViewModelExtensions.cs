@@ -1,4 +1,4 @@
-﻿namespace androkat.hu.ViewModels;
+﻿namespace androkat.maui.library.ViewModels;
 
 public static class ViewModelExtensions
 {
@@ -16,6 +16,7 @@ public static class ViewModelExtensions
         builder.Services.AddTransient<KeresztutViewModel>();
         builder.Services.AddTransient<VideoListViewModel>();
         builder.Services.AddTransient<WebRadioViewModel>();
+        builder.Services.AddTransient<GyonasViewModel>();
 
         return builder;
     }

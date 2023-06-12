@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace androkat.maui.library.Services;
 
-public class PageService
+public class PageService : IPageService
 {
     private readonly HttpClient httpClient;
     private readonly IAndrokatService _androkatService;
@@ -67,7 +67,7 @@ public class PageService
             "5" => await _repository.GetBlogContents(),
             "6" => await _repository.GetHumorContents(),
             //"7" => ima
-            "8" => await _repository.GetAudioContents(),   
+            "8" => await _repository.GetAudioContents(),
             "11" => await _repository.GetBookContents(),
             _ => await _repository.GetElmelkedesContents(),
         };

@@ -2,11 +2,11 @@
 
 namespace androkat.hu.Pages;
 
-public partial class WebPage : ContentPage
+public partial class GyonasPage : ContentPage
 {
-    private WebViewModel ViewModel => BindingContext as WebViewModel;
+    private GyonasViewModel ViewModel => BindingContext as GyonasViewModel;
 
-    public WebPage(WebViewModel viewModel)
+    public GyonasPage(GyonasViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;

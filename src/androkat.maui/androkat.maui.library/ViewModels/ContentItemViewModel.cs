@@ -1,8 +1,7 @@
-﻿using androkat.hu.Pages;
-using androkat.maui.library.Models.Entities;
+﻿using androkat.maui.library.Models.Entities;
 using CommunityToolkit.Mvvm.Input;
 
-namespace androkat.hu.ViewModels;
+namespace androkat.maui.library.ViewModels;
 
 public partial class ContentItemViewModel : BaseView
 {
@@ -14,5 +13,5 @@ public partial class ContentItemViewModel : BaseView
     }
 
     [RelayCommand]
-    Task NavigateToDetail() => Shell.Current.GoToAsync($"{nameof(ShowDetailPage)}?Id={ContentDto.Nid}");
+    Task NavigateToDetail() => Shell.Current.GoToAsync($"ShowDetailPage?Id={ContentDto.Nid}");
 }

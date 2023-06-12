@@ -1,4 +1,4 @@
-﻿using androkat.hu.ViewModels;
+﻿using androkat.maui.library.ViewModels;
 
 namespace androkat.hu.Pages;
 

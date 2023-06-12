@@ -3,7 +3,7 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:pages="clr-namespace:androkat.hu.Pages"
        xmlns:root="clr-namespace:androkat.hu"
-       xmlns:viewmodels="clr-namespace:androkat.hu.ViewModels"
+       xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
        x:DataType="viewmodels:ShellViewModel"
        x:Class="androkat.hu.Pages.MobileShell">
     <Shell.FlyoutHeader>
@@ -71,7 +71,7 @@
     </FlyoutItem>
     <FlyoutItem Title="Gyónás" Icon="confession">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="12" />
+            <ShellContent ContentTemplate="{DataTemplate pages:GyonasPage}" Route="12" />
         </Tab>
     </FlyoutItem>
     <FlyoutItem Title="Igenaptár" Icon="book">

@@ -1,8 +1,8 @@
-﻿using androkat.hu.Pages;
-using androkat.maui.library.Models.Entities;
+﻿using androkat.maui.library.Models.Entities;
+using androkat.maui.library.ViewModels;
 using CommunityToolkit.Mvvm.Input;
 
-namespace androkat.hu.ViewModels;
+namespace androkat.maui.library.ViewModels;
 
 public partial class FavoriteContentViewModel : BaseView
 {
@@ -14,5 +14,5 @@ public partial class FavoriteContentViewModel : BaseView
     }
 
     [RelayCommand]
-    Task NavigateToDetail() => Shell.Current.GoToAsync($"{nameof(ShowDetailPage)}?Id={ContentDto.Nid}");
+    Task NavigateToDetail() => Shell.Current.GoToAsync($"ShowDetailPage?Id={ContentDto.Nid}");
 }
