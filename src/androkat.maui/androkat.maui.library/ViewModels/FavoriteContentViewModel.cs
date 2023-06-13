@@ -1,5 +1,4 @@
 ﻿using androkat.maui.library.Models.Entities;
-using androkat.maui.library.ViewModels;
 using CommunityToolkit.Mvvm.Input;
 
 namespace androkat.maui.library.ViewModels;

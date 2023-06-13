@@ -1,7 +1,6 @@
 ﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
-using androkat.maui.library.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MvvmHelpers;
@@ -12,7 +11,6 @@ namespace androkat.maui.library.ViewModels;
 public partial class ContentListViewModel : ViewModelBase
 {
     private readonly IPageService _pageService;
-    private IEnumerable<ContentItemViewModel> _contents;
     private readonly ISourceData _sourceData;
 
     public string Id { get; set; }
@@ -47,8 +45,8 @@ public partial class ContentListViewModel : ViewModelBase
             return;
         }
 
-        _contents = ConvertToViewModels(contents);
-        var s = new List<List<ContentItemViewModel>> { _contents.ToList() };
+        var temp = ConvertToViewModels(contents);
+        var s = new List<List<ContentItemViewModel>> { temp.ToList() };
         Contents.ReplaceRange(s);
     }
 
@@ -76,5 +74,5 @@ public partial class ContentListViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    async Task Subscribe(ContentItemViewModel viewModel) => Task.Run(() => { });
+    public async Task Subscribe(ContentItemViewModel viewModel) => Task.Run(() => { });
 }

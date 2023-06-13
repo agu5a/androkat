@@ -10,7 +10,6 @@ namespace androkat.maui.library.ViewModels;
 public partial class FavoriteListViewModel : ViewModelBase
 {
     private readonly IPageService _pageService;
-    private IEnumerable<FavoriteContentViewModel> _contents;
     private readonly ISourceData _sourceData;
 
     [ObservableProperty]
@@ -51,8 +50,8 @@ public partial class FavoriteListViewModel : ViewModelBase
             return;
         }
 
-        _contents = ConvertToViewModels(contents);
-        var s = new List<List<FavoriteContentViewModel>> { _contents.ToList() };
+        var temp = ConvertToViewModels(contents);
+        var s = new List<List<FavoriteContentViewModel>> { temp.ToList() };
         Contents.ReplaceRange(s);
     }
 
@@ -78,5 +77,5 @@ public partial class FavoriteListViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    async Task Subscribe(ContentItemViewModel viewModel) => Task.Run(() => { });
+    public async Task Subscribe(ContentItemViewModel viewModel) => Task.Run(() => { });
 }

@@ -1,7 +1,6 @@
 ﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
-using androkat.maui.library.Services;
 using androkat.maui.library.ViewModels;
 using Moq;
 using System;
@@ -59,5 +58,19 @@ public class ContentListViewModelTests
 
         _pageServiceMock.Verify(x => x.GetContentsAsync(It.IsAny<string>()), Times.Once);
         _sourceDataMock.Verify(x => x.GetSourcesFromMemory(It.IsAny<int>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task Subscribe_ShouldDoNothing()
+    {
+        //arrange
+        var itemViewModelMock = new ContentItemViewModel(new ContentEntity(), false);
+        var viewModel = new ContentListViewModel(_pageServiceMock.Object, _sourceDataMock.Object);
+
+        //act
+        await viewModel.Subscribe(itemViewModelMock);
+
+        //assert
+
     }
 }
