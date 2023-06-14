@@ -1,0 +1,317 @@
+@page
+@using androkat.web.Pages.Gyonas
+@model TukorModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="container bg-white" style="padding: 15px;">
+	<form method="post">
+		<div class="p-3 border bg-light">
+			<h6>
+				<a href="/gyonas" class="link-primary">Gyónási előtti elmélkedés</a> |
+				<a href="/gyonas/ima" class="link-primary">Gyónási ima</a> |
+				<a href="/gyonas/tukor" class="link-secondary">Lelki tükör</a> |
+				<a href="/gyonas/gyonas" class="link-primary">Gyónás szövege</a>
+			</h6>
+			<h3 style="margin:20px 0 20px 0;">
+				Válassz parancsolatot, majd olvasd el a hozzájuk tartozó kérdéseket, amik segítenek az önvizsgálatban.
+				Válaszd ki azokat a kérdéseket, amiket a legközelebbi gyónásban elmondanál.
+			</h3>
+			<div class="mb-3">
+				<button type="submit" class="btn btn-sm btn-success" asp-page-handler="Save">
+					mentés
+				</button>
+				<button type="submit" class="btn btn-sm btn-primary" asp-page-handler="Clear">
+					visszaállítás
+				</button>
+			</div>
+			<div class="accordion" id="accordionExample">
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="headingOne">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+							1. Uradat, Istenedet imádd és csak Neki szolgálj!
+						</button>
+					</h2>
+					<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+						<div class="accordion-body">
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb11" asp-for="cb11">
+								<label class="form-check-label" for="cb11">@Html.Raw(Parancs.p11)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb12" asp-for="cb12">
+								<label class="form-check-label" for="cb12">@Html.Raw(Parancs.p12)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb13" asp-for="cb13">
+								<label class="form-check-label" for="cb13">@Html.Raw(Parancs.p13)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb14" asp-for="cb14">
+								<label class="form-check-label" for="cb14">@Html.Raw(Parancs.p14)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb15" asp-for="cb15">
+								<label class="form-check-label" for="cb15">@Html.Raw(Parancs.p15)</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="headingTwo">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							2. Isten nevét hiába ne vedd!
+						</button>
+					</h2>
+					<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+						<div class="accordion-body">
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb21" asp-for="cb21">
+								<label class="form-check-label" for="cb21">@Html.Raw(Parancs.p21)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb22" asp-for="cb22">
+								<label class="form-check-label" for="cb22">@Html.Raw(Parancs.p22)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb23" asp-for="cb23">
+								<label class="form-check-label" for="cb23">@Html.Raw(Parancs.p23)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb24" asp-for="cb24">
+								<label class="form-check-label" for="cb24">@Html.Raw(Parancs.p24)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb25" asp-for="cb25">
+								<label class="form-check-label" for="cb25">@Html.Raw(Parancs.p25)</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="headingThree">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+							3. Az Úr napját szenteld meg!
+						</button>
+					</h2>
+					<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+						<div class="accordion-body">
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb31" asp-for="cb31">
+								<label class="form-check-label" for="cb31">@Html.Raw(Parancs.p31)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb32" asp-for="cb32">
+								<label class="form-check-label" for="cb32">@Html.Raw(Parancs.p32)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb33" asp-for="cb33">
+								<label class="form-check-label" for="cb33">@Html.Raw(Parancs.p33)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb34" asp-for="cb34">
+								<label class="form-check-label" for="cb34">@Html.Raw(Parancs.p34)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb35" asp-for="cb35">
+								<label class="form-check-label" for="cb35">@Html.Raw(Parancs.p35)</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="headingFour">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+							4. Atyádat és anyádat tiszteld!
+						</button>
+					</h2>
+					<div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+						<div class="accordion-body">
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb41" asp-for="cb41">
+								<label class="form-check-label" for="cb41">@Html.Raw(Parancs.p41)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb42" asp-for="cb42">
+								<label class="form-check-label" for="cb42">@Html.Raw(Parancs.p42)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb43" asp-for="cb43">
+								<label class="form-check-label" for="cb43">@Html.Raw(Parancs.p43)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb44" asp-for="cb44">
+								<label class="form-check-label" for="cb44">@Html.Raw(Parancs.p44)</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="heading5">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+							5. Ne ölj!
+						</button>
+					</h2>
+					<div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#accordionExample">
+						<div class="accordion-body">
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb51" asp-for="cb51">
+								<label class="form-check-label" for="cb51">@Html.Raw(Parancs.p51)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb52" asp-for="cb52">
+								<label class="form-check-label" for="cb52">@Html.Raw(Parancs.p52)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb53" asp-for="cb53">
+								<label class="form-check-label" for="cb53">@Html.Raw(Parancs.p53)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb54" asp-for="cb54">
+								<label class="form-check-label" for="cb54">@Html.Raw(Parancs.p54)</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="heading6">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+							6. Ne paráználkodj!
+						</button>
+					</h2>
+					<div id="collapse6" class="accordion-collapse collapse" aria-labelledby="heading6" data-bs-parent="#accordionExample">
+						<div class="accordion-body">
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb61" asp-for="cb61">
+								<label class="form-check-label" for="cb61">@Html.Raw(Parancs.p61)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb62" asp-for="cb62">
+								<label class="form-check-label" for="cb62">@Html.Raw(Parancs.p62)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb63" asp-for="cb63">
+								<label class="form-check-label" for="cb63">@Html.Raw(Parancs.p63)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb64" asp-for="cb64">
+								<label class="form-check-label" for="cb64">@Html.Raw(Parancs.p64)</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="heading7">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
+							7. Ne lopj!
+						</button>
+					</h2>
+					<div id="collapse7" class="accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#accordionExample">
+						<div class="accordion-body">
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb71" asp-for="cb71">
+								<label class="form-check-label" for="cb71">@Html.Raw(Parancs.p71)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb72" asp-for="cb72">
+								<label class="form-check-label" for="cb72">@Html.Raw(Parancs.p72)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb73" asp-for="cb73">
+								<label class="form-check-label" for="cb73">@Html.Raw(Parancs.p73)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb74" asp-for="cb74">
+								<label class="form-check-label" for="cb74">@Html.Raw(Parancs.p74)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb75" asp-for="cb75">
+								<label class="form-check-label" for="cb75">@Html.Raw(Parancs.p75)</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="heading8">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
+							8. Ne hazudj, és mások becsületében kárt ne tégy!
+						</button>
+					</h2>
+					<div id="collapse8" class="accordion-collapse collapse" aria-labelledby="heading8" data-bs-parent="#accordionExample">
+						<div class="accordion-body">
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb81" asp-for="cb81">
+								<label class="form-check-label" for="cb81">@Html.Raw(Parancs.p81)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb82" asp-for="cb82">
+								<label class="form-check-label" for="cb82">@Html.Raw(Parancs.p82)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb83" asp-for="cb83">
+								<label class="form-check-label" for="cb83">@Html.Raw(Parancs.p83)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb84" asp-for="cb84">
+								<label class="form-check-label" for="cb84">@Html.Raw(Parancs.p84)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb85" asp-for="cb85">
+								<label class="form-check-label" for="cb85">@Html.Raw(Parancs.p85)</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="heading9">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse9" aria-expanded="false" aria-controls="collapse9">
+							9. Felebarátod házastársát ne kívánd!
+						</button>
+					</h2>
+					<div id="collapse9" class="accordion-collapse collapse" aria-labelledby="heading9" data-bs-parent="#accordionExample">
+						<div class="accordion-body">
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb91" asp-for="cb91">
+								<label class="form-check-label" for="cb91">@Html.Raw(Parancs.p91)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb92" asp-for="cb92">
+								<label class="form-check-label" for="cb92">@Html.Raw(Parancs.p92)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb93" asp-for="cb93">
+								<label class="form-check-label" for="cb93">@Html.Raw(Parancs.p93)</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="heading10">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse10" aria-expanded="false" aria-controls="collapse10">
+							10. Mások tulajdonát ne kívánd!
+						</button>
+					</h2>
+					<div id="collapse10" class="accordion-collapse collapse" aria-labelledby="heading10" data-bs-parent="#accordionExample">
+						<div class="accordion-body">
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb101" asp-for="cb101">
+								<label class="form-check-label" for="cb101">@Html.Raw(Parancs.p101)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb102" asp-for="cb102">
+								<label class="form-check-label" for="cb102">@Html.Raw(Parancs.p102)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb103" asp-for="cb103">
+								<label class="form-check-label" for="cb103">@Html.Raw(Parancs.p103)</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="cb104" asp-for="cb104">
+								<label class="form-check-label" for="cb104">@Html.Raw(Parancs.p104)</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
