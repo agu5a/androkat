@@ -46,6 +46,18 @@ public class PageService : IPageService
         return await _repository.GetFavoriteContents();
     }
 
+    public async Task<int> GetContentsCount()
+    {
+        return await _repository.GetContentsCount();
+    }
+
+    public async Task<int> DeleteAllContentAndIma()
+    {
+        var res = await _repository.DeleteAllContent();
+        res += await _repository.DeleteAllImadsag();
+        return res;
+    }
+
     public async Task<List<ImadsagEntity>> GetImaContents()
     {
         return await _repository.GetImaContents();

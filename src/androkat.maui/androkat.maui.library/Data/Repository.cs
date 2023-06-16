@@ -189,6 +189,22 @@ public class Repository : IRepository
         return null;
     }
 
+    public async Task<int> GetContentsCount()
+    {
+        try
+        {
+            Init();
+            var res = await conn.Table<ContentEntity>().CountAsync();
+            return res;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"********************************** GetContentsCount EXCEPTION! {ex}");
+        }
+
+        return 0;
+    }
+
     public async Task<int> DeleteContentByNid(Guid nid)
     {
         try
@@ -200,6 +216,36 @@ public class Repository : IRepository
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"********************************** DeleteContentByNid EXCEPTION! {ex}");
+        }
+        return -1;
+    }
+
+    public async Task<int> DeleteAllContent()
+    {
+        try
+        {
+            Init();
+            var res = await conn.Table<ContentEntity>().DeleteAsync();
+            return res;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"********************************** DeleteAllContent EXCEPTION! {ex}");
+        }
+        return -1;
+    }
+
+    public async Task<int> DeleteAllImadsag()
+    {
+        try
+        {
+            Init();
+            var res = await conn.Table<ImadsagEntity>().DeleteAsync(d => d.Csoport != 5);
+            return res;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"********************************** DeleteAllImadsag EXCEPTION! {ex}");
         }
         return -1;
     }

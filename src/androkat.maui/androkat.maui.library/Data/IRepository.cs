@@ -31,4 +31,7 @@ public interface IRepository
     Task<int> DeleteImadsagByNid(Guid nid);
     Task<int> InsertImadsag(ImadsagEntity entity);
     Task<List<ImadsagEntity>> GetImaContents();
+    Task<int> GetContentsCount();
+    Task<int> DeleteAllContent();
+    Task<int> DeleteAllImadsag();
 }

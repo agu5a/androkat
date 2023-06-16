@@ -204,4 +204,23 @@ public class PageServiceTests
         Assert.IsType<List<ContentEntity>>(result);
         Assert.Equal(expectedContents, result);
     }
+
+    [Fact]
+    public async Task Should_Delete_All_Content_And_Ima()
+    {
+        // Arrange
+        var repositoryMock = new Mock<IRepository>();
+        repositoryMock.Setup(repo => repo.DeleteAllContent()).ReturnsAsync(5).Verifiable();
+        repositoryMock.Setup(repo => repo.DeleteAllImadsag()).ReturnsAsync(40).Verifiable();
+
+        var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
+
+        // Act
+        var result = await pageService.DeleteAllContentAndIma();
+
+        // Assert
+        repositoryMock.Verify(x => x.DeleteAllContent(), Times.Once);
+        repositoryMock.Verify(x => x.DeleteAllImadsag(), Times.Once);
+        Assert.Equal(45, result);
+    }
 }

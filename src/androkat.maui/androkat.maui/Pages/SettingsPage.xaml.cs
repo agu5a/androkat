@@ -27,6 +27,11 @@ public partial class SettingsPage : ContentPage
 
     private async void Button_Clicked(object sender, EventArgs e)
     {
+        await DownloadAll();
+    }
+
+    private async Task DownloadAll()
+    {
         var result = await _pageService.DownloadAll();
         if (result != -1)
             await Application.Current.MainPage.DisplayAlert("Siker!", "Minden letöltés kész", "OK");
@@ -46,5 +51,33 @@ public partial class SettingsPage : ContentPage
     private void Switch_Toggled(object sender, ToggledEventArgs e)
     {
         TheTheme.SetTheme();
+    }
+
+    private async void Button_Clicked_2(object sender, EventArgs e)
+    {
+        await _pageService.DeleteAllContentAndIma();
+        await DownloadAll();
+        await SetDbButton();
+    }
+
+    private async Task SetDbButton()
+    {
+        try
+        {
+            int c = await _pageService.GetContentsCount();
+            if (c > 0)
+            {
+                DbDeleteButton.IsEnabled = true;
+                DbDeleteButton.Text = string.Format("Törlés ({0})", c);
+            }
+            else
+            {
+                DbDeleteButton.Text = "Törlés (0)";
+                DbDeleteButton.IsEnabled = false;
+            }
+        }
+        catch (Exception ex)
+        {
+        }
     }
 }
