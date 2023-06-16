@@ -70,7 +70,7 @@ public class FavoriteListViewModelTests
     public async Task Subscribe_ShouldDoNothing()
     {
         //arrange
-        var itemViewModelMock = new ContentItemViewModel(new ContentEntity(), false);
+        var itemViewModelMock = new FavoriteContentViewModel(new FavoriteContentEntity(), false);
 
         //act
         await _viewModel.Subscribe(itemViewModelMock);
