@@ -13,21 +13,21 @@
             </Grid.GestureRecognizers>
             <VerticalStackLayout VerticalOptions="FillAndExpand">
                 <Image 
-                       Source="{Binding VideoDto.Image}"
+                       Source="{Binding VideoEntity.Image}"
                        Loaded="Image_Loaded"
                        VerticalOptions="Center"
                        Margin="0,0,0,9" />
-                <Label Text="{Binding VideoDto.Cim}"
+                <Label Text="{Binding VideoEntity.Cim}"
                        MaxLines="1"
                        HorizontalOptions="Start"
                        LineBreakMode="WordWrap"
                        MaximumWidthRequest="{x:OnIdiom Phone=250}"
                        Style="{OnIdiom Default={StaticResource BodyXLLabelStyle},Phone={StaticResource BodyLLabelStyle}}" />
-                <Label Text="{Binding VideoDto.Forras}"
+                <Label Text="{Binding VideoEntity.Forras}"
                        LineBreakMode="TailTruncation"
                        MaxLines="1"
                        Style="{OnIdiom Default={StaticResource BodyMLabelStyle},Phone={StaticResource BodySLabelStyle}}" />
-                <Label Text="{Binding VideoDto.Datum}"
+                <Label Text="{Binding VideoEntity.Datum}"
                        LineBreakMode="TailTruncation"
                        MaxLines="1"
                        Style="{OnIdiom Default={StaticResource BodyMLabelStyle},Phone={StaticResource BodySLabelStyle}}" />

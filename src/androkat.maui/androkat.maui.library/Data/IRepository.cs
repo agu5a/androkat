@@ -6,7 +6,7 @@ public interface IRepository
 {
     void Init(bool tableCheck = false);
 
-    Task<int> InsertContent(ContentEntity dto);
+    Task<int> InsertContent(ContentEntity entity);
     Task<int> DeleteContentByNid(Guid nid);
 
     Task<ContentEntity> GetContentsByTypeName(string typeName);
@@ -25,10 +25,10 @@ public interface IRepository
 
     Task<int> SetContentAsReadById(Guid nid);
     Task<List<FavoriteContentEntity>> GetFavoriteContents();
-    Task<int> InsertFavoriteContent(FavoriteContentEntity dto);
+    Task<int> InsertFavoriteContent(FavoriteContentEntity entity);
     Task<int> GetFavoriteCount();
     Task<ImadsagEntity> GetFirstImadsag();
     Task<int> DeleteImadsagByNid(Guid nid);
-    Task<int> InsertImadsag(ImadsagEntity dto);
+    Task<int> InsertImadsag(ImadsagEntity entity);
     Task<List<ImadsagEntity>> GetImaContents();
 }

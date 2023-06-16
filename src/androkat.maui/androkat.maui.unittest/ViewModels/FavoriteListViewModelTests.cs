@@ -45,7 +45,7 @@ public class FavoriteListViewModelTests
         Assert.Equal(favorites.Count(), _viewModel.FavoriteCount);
         Assert.NotNull(_viewModel.Contents);
         Assert.NotEmpty(_viewModel.Contents);
-        Assert.Collection(_viewModel.Contents[0], item => Assert.Equal("Idezet", item.ContentDto.Idezet));
+        Assert.Collection(_viewModel.Contents[0], item => Assert.Equal("Idezet", item.ContentEntity.Idezet));
     }
 
     [Fact]

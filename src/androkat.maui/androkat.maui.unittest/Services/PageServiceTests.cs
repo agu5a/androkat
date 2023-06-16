@@ -33,7 +33,7 @@ public class PageServiceTests
     }
 
     [Fact]
-    public async Task Test_GetContentDtoByIdAsync()
+    public async Task Test_GetContentEntityByIdAsync()
     {
         var repositoryMock = new Mock<IRepository>();
         var expectedContent = new ContentEntity
@@ -46,7 +46,7 @@ public class PageServiceTests
 
         var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
 
-        var result = await pageService.GetContentDtoByIdAsync(expectedContent.Nid);
+        var result = await pageService.GetContentEntityByIdAsync(expectedContent.Nid);
 
         repositoryMock.Verify(repo => repo.GetElmelkedesContentById(expectedContent.Nid), Times.Once);
         Assert.Equal(expectedContent, result);
@@ -75,7 +75,7 @@ public class PageServiceTests
     public async Task Test_InsertFavoriteContentAsync()
     {
         var repositoryMock = new Mock<IRepository>();
-        var favoriteContentDto = new FavoriteContentEntity
+        var favoriteContentEntity = new FavoriteContentEntity
         {
             Nid = Guid.NewGuid(),
             Cim = "Test Cim",
@@ -85,9 +85,9 @@ public class PageServiceTests
         repositoryMock.Setup(repo => repo.InsertFavoriteContent(It.IsAny<FavoriteContentEntity>())).ReturnsAsync(expectedCount).Verifiable();
         var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
 
-        var result = await pageService.InsertFavoriteContentAsync(favoriteContentDto);
+        var result = await pageService.InsertFavoriteContentAsync(favoriteContentEntity);
 
-        repositoryMock.Verify(repo => repo.InsertFavoriteContent(favoriteContentDto), Times.Once);
+        repositoryMock.Verify(repo => repo.InsertFavoriteContent(favoriteContentEntity), Times.Once);
         Assert.Equal(expectedCount, result);
     }
 

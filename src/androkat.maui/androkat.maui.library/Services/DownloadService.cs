@@ -350,7 +350,7 @@ public class DownloadService : IDownloadService
 
     private async Task<int> DownloadData(string nid, Activities tipusName)
     {
-        //var debug = await conn.Table<ContentDto>().ToListAsync();
+        //var debug = await conn.Table<ContentEntity>().ToListAsync();
         int tipusId = (int)tipusName;
         string tipus = tipusId.ToString();
 
@@ -381,7 +381,7 @@ public class DownloadService : IDownloadService
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine($"********************************** DownloadData InsertAsync ContentDto EXCEPTION! {ex}");
+                    System.Diagnostics.Debug.WriteLine($"********************************** DownloadData InsertAsync ContentEntity EXCEPTION! {ex}");
                 }
             }
 

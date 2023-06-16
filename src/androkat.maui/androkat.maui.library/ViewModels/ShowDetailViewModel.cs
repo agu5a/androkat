@@ -40,7 +40,7 @@ public partial class ShowDetailViewModel : ViewModelBase
 
     async Task FetchAsync()
     {
-        var item = await _pageService.GetContentDtoByIdAsync(contentGuid);
+        var item = await _pageService.GetContentEntityByIdAsync(contentGuid);
 
         if (item == null)
         {
@@ -71,15 +71,15 @@ public partial class ShowDetailViewModel : ViewModelBase
     {
         _ = await _pageService.InsertFavoriteContentAsync(new FavoriteContentEntity
         {
-            Cim = ContentView.ContentDto.Cim,
-            Datum = ContentView.ContentDto.Datum,
-            Forras = ContentView.ContentDto.Forras,
-            Image = ContentView.ContentDto.Image,
-            KulsoLink = ContentView.ContentDto.KulsoLink,
-            Idezet = ContentView.ContentDto.Idezet,
-            Nid = ContentView.ContentDto.Nid,
-            Tipus = ContentView.ContentDto.Tipus,
-            TypeName = ContentView.ContentDto.TypeName
+            Cim = ContentView.ContentEntity.Cim,
+            Datum = ContentView.ContentEntity.Datum,
+            Forras = ContentView.ContentEntity.Forras,
+            Image = ContentView.ContentEntity.Image,
+            KulsoLink = ContentView.ContentEntity.KulsoLink,
+            Idezet = ContentView.ContentEntity.Idezet,
+            Nid = ContentView.ContentEntity.Nid,
+            Tipus = ContentView.ContentEntity.Tipus,
+            TypeName = ContentView.ContentEntity.TypeName
         });
     }
 
@@ -97,8 +97,8 @@ public partial class ShowDetailViewModel : ViewModelBase
                 menu.findItem(R.id.speak).setIcon(drawable);*/
 
 
-        var title = Regex.Replace(ContentView.ContentDto.Cim, "<.*?>", String.Empty);
-        var idezet = Regex.Replace(ContentView.ContentDto.Idezet, "<.*?>", String.Empty);
+        var title = Regex.Replace(ContentView.ContentEntity.Cim, "<.*?>", String.Empty);
+        var idezet = Regex.Replace(ContentView.ContentEntity.Idezet, "<.*?>", String.Empty);
         IEnumerable<Locale> locales = await TextToSpeech.Default.GetLocalesAsync();
 
         var locale = locales.Where(w => w.Country.ToLower() == "hu" && w.Language.ToLower() == "hu").FirstOrDefault();
@@ -152,8 +152,8 @@ public partial class ShowDetailViewModel : ViewModelBase
     {
         await Share.RequestAsync(new ShareTextRequest
         {
-            Title = "AndroKat: " + ContentView.ContentDto.Cim,
-            Text = ContentView.ContentDto.Idezet
+            Title = "AndroKat: " + ContentView.ContentEntity.Cim,
+            Text = ContentView.ContentEntity.Idezet
         });
     }
 }
