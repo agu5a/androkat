@@ -19,7 +19,7 @@ App.cs
     ViewModel: ContentListViewModel //[QueryProperty(nameof(Id), nameof(Id))]
     - Id
     - PageTitle
-    - Contents : List<ContentItemViewModel> ( ContentDto, NavigateToDetail() ) 
+    - Contents : List<ContentItemViewModel> ( ContentEntity, NavigateToDetail() ) 
     - InitializeAsync
        PageService.GetContentsAsync(Id);
     - Subscribe(ContentItemViewModel)
@@ -28,7 +28,7 @@ App.cs
     XAML:
       TapGestureRecognizer Binding: NavigateToDetailCommand (ContentItemViewModel -> GoToAsync ShowDetailPage)
       Image.Loaded -> Image_Loaded
-      Binding: ContentDto, datum, forras
+      Binding: ContentEntity, datum, forras
     Codebehind:
      - SubscriptionCommand (SubscriptionCommandProperty)
      - SubscriptionCommandParameter (SubscriptionCommandParameterProperty)
@@ -50,7 +50,7 @@ App.cs
    
    ViewModel: ShowDetailViewModel
    - InitializeAsync
-      PageService.GetContentDtoByIdAsync(contentGuid)
+      PageService.GetContentEntityByIdAsync(contentGuid)
    - ShareContent
    - CancelSpeech
    - StartTextToSpeech

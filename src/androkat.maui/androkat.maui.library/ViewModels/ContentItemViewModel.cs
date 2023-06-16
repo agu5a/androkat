@@ -5,13 +5,13 @@ namespace androkat.maui.library.ViewModels;
 
 public partial class ContentItemViewModel : BaseView
 {
-    public ContentEntity ContentDto { get; set; }
+    public ContentEntity ContentEntity { get; set; }
 
-    public ContentItemViewModel(ContentEntity contentDto, bool isSubscribed)
+    public ContentItemViewModel(ContentEntity contentEntity, bool isSubscribed)
     {
-        ContentDto = contentDto;
+        ContentEntity = contentEntity;
     }
 
     [RelayCommand]
-    Task NavigateToDetail() => Shell.Current.GoToAsync($"ShowDetailPage?Id={ContentDto.Nid}");
+    Task NavigateToDetail() => Shell.Current.GoToAsync($"ShowDetailPage?Id={ContentEntity.Nid}");
 }

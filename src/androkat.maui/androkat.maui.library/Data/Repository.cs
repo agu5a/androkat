@@ -105,15 +105,15 @@ public class Repository : IRepository
         return new List<ContentEntity>();
     }
 
-    public async Task<int> InsertContent(ContentEntity dto)
+    public async Task<int> InsertContent(ContentEntity entity)
     {
         try
         {
             Init();
             var exists = await conn.Table<ContentEntity>()
-                .Where(w => w.Nid == dto.Nid && w.Tipus == dto.Tipus).FirstOrDefaultAsync();
+                .Where(w => w.Nid == entity.Nid && w.Tipus == entity.Tipus).FirstOrDefaultAsync();
             if (exists is null)
-                return await conn.InsertAsync(dto);
+                return await conn.InsertAsync(entity);
         }
         catch (Exception ex)
         {
@@ -122,15 +122,15 @@ public class Repository : IRepository
         return -1;
     }
 
-    public async Task<int> InsertImadsag(ImadsagEntity dto)
+    public async Task<int> InsertImadsag(ImadsagEntity entity)
     {
         try
         {
             Init();
             var exists = await conn.Table<ImadsagEntity>()
-                .Where(w => w.Nid == dto.Nid).FirstOrDefaultAsync();
+                .Where(w => w.Nid == entity.Nid).FirstOrDefaultAsync();
             if (exists is null)
-                return await conn.InsertAsync(dto);
+                return await conn.InsertAsync(entity);
         }
         catch (Exception ex)
         {
@@ -139,15 +139,15 @@ public class Repository : IRepository
         return -1;
     }
 
-    public async Task<int> InsertFavoriteContent(FavoriteContentEntity dto)
+    public async Task<int> InsertFavoriteContent(FavoriteContentEntity entity)
     {
         try
         {
             Init();
             var exists = await conn.Table<FavoriteContentEntity>()
-                .Where(w => w.Nid == dto.Nid && w.Tipus == dto.Tipus).FirstOrDefaultAsync();
+                .Where(w => w.Nid == entity.Nid && w.Tipus == entity.Tipus).FirstOrDefaultAsync();
             if (exists is null)
-                return await conn.InsertAsync(dto);
+                return await conn.InsertAsync(entity);
         }
         catch (Exception ex)
         {

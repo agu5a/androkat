@@ -24,15 +24,15 @@ public class PageService : IPageService
         _repository = repository;
     }
 
-    public async Task<ContentEntity> GetContentDtoByIdAsync(Guid id)
+    public async Task<ContentEntity> GetContentEntityByIdAsync(Guid id)
     {
         var temp = await _repository.GetElmelkedesContentById(id);
         return temp;
     }
 
-    public async Task<int> InsertFavoriteContentAsync(FavoriteContentEntity favoriteContentDto)
+    public async Task<int> InsertFavoriteContentAsync(FavoriteContentEntity favoriteContentEntity)
     {
-        var temp = await _repository.InsertFavoriteContent(favoriteContentDto);
+        var temp = await _repository.InsertFavoriteContent(favoriteContentEntity);
         return temp;
     }
 

@@ -5,12 +5,12 @@ namespace androkat.maui.library.ViewModels;
 
 public partial class VideoItemViewModel : BaseView
 {
-    public VideoEntity VideoDto { get; set; }
+    public VideoEntity VideoEntity { get; set; }
     private readonly IBrowser _browser;
 
-    public VideoItemViewModel(VideoEntity contentDto, IBrowser browser)
+    public VideoItemViewModel(VideoEntity contentEntity, IBrowser browser)
     {
-        VideoDto = contentDto;
+        VideoEntity = contentEntity;
         _browser = browser;
     }
 
@@ -23,6 +23,6 @@ public partial class VideoItemViewModel : BaseView
             //PreferredToolbarColor = ColorConstants.BrowserNavigationBarBackgroundColor
         };
 
-        await _browser.OpenAsync(VideoDto.Link, browserOptions);
+        await _browser.OpenAsync(VideoEntity.Link, browserOptions);
     }
 }

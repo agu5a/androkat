@@ -54,7 +54,7 @@ public class ContentListViewModelTests
 
         // Assert
         Assert.Equal("SomeImage", viewModel.Contents.First().First().contentImg);
-        Assert.Equal(idezetSourceMock.Img, viewModel.Contents.First().First().ContentDto.Image);
+        Assert.Equal(idezetSourceMock.Img, viewModel.Contents.First().First().ContentEntity.Image);
 
         _pageServiceMock.Verify(x => x.GetContentsAsync(It.IsAny<string>()), Times.Once);
         _sourceDataMock.Verify(x => x.GetSourcesFromMemory(It.IsAny<int>()), Times.Once);

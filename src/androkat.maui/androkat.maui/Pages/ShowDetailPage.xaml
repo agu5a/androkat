@@ -34,13 +34,13 @@
                HorizontalOptions="Center"
                VerticalOptions="Start"
                HeightRequest="{OnIdiom Phone=48}"
-               Source="{Binding ContentView.ContentDto.Image}"
+               Source="{Binding ContentView.ContentEntity.Image}"
                WidthRequest="{OnIdiom Phone=48}" />
 
         <VerticalStackLayout Grid.Column="1" Grid.Row="1">
             <Label                            
                            Style="{OnIdiom Phone={StaticResource BodyMLabelStyle}}"
-                           Text="{Binding ContentView.ContentDto.Cim}" />
+                           Text="{Binding ContentView.ContentEntity.Cim}" />
             <Label 
                            Style="{StaticResource BodyMLabelStyle}" TextType="Html"
                            Text="{Binding ContentView.forras}" />
@@ -94,7 +94,7 @@
                  android:WebView.EnableZoomControls="false"
                  android:WebView.DisplayZoomControls="false">
             <WebView.Source>
-                <HtmlWebViewSource Html="{Binding ContentView.ContentDto.Idezet}" android:WebView.MixedContentMode="AlwaysAllow">
+                <HtmlWebViewSource Html="{Binding ContentView.ContentEntity.Idezet}" android:WebView.MixedContentMode="AlwaysAllow">
                 </HtmlWebViewSource>
             </WebView.Source>
         </WebView>

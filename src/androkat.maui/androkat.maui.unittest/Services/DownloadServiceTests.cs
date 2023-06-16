@@ -102,7 +102,7 @@ public class DownloadServiceTests
 
         repository.Setup(s => s.GetContentsByTypeName(It.IsNotIn<string>(Activities.fokolare.ToString()))).ReturnsAsync(default(ContentEntity));
         repository.Setup(s => s.GetContentsByTypeName(It.IsIn<string>(Activities.fokolare.ToString())))
-            .ReturnsAsync(GetContentDto("7", Activities.fokolare.ToString()));
+            .ReturnsAsync(GetContentEntity("7", Activities.fokolare.ToString()));
         repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentEntity> { });
 
         helperSharedPreferences.Setup(s => s.GetSharedPreferencesBoolean(It.IsAny<string>(), It.IsAny<bool>())).Returns(true);
@@ -167,7 +167,7 @@ public class DownloadServiceTests
         Assert.Equal(res, expected);
     }
 
-    private static ContentEntity GetContentDto(string tipus, string typeName)
+    private static ContentEntity GetContentEntity(string tipus, string typeName)
     {
         return new ContentEntity
         {

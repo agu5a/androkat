@@ -70,7 +70,7 @@ public partial class VideoListViewModel : ViewModelBase
         {
             var viewModel = new VideoItemViewModel(item, _browser)
             {
-                VideoDto = item
+                VideoEntity = item
             };
             viewmodels.Add(viewModel);
         }
