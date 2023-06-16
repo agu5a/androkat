@@ -77,5 +77,5 @@ public partial class FavoriteListViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    public async Task Subscribe(ContentItemViewModel viewModel) => Task.Run(() => { });
+    public async Task Subscribe(FavoriteContentViewModel viewModel) => Task.Run(() => { });
 }
