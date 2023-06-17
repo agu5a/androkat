@@ -58,6 +58,11 @@ public class PageService : IPageService
         return res;
     }
 
+    public async Task<int> DeleteAllFavorite()
+    {
+        return await _repository.DeleteAllFavorite();
+    }
+
     public async Task<List<ImadsagEntity>> GetImaContents()
     {
         return await _repository.GetImaContents();

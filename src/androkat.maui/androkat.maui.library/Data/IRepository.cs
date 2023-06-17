@@ -34,4 +34,5 @@ public interface IRepository
     Task<int> GetContentsCount();
     Task<int> DeleteAllContent();
     Task<int> DeleteAllImadsag();
+    Task<int> DeleteAllFavorite();
 }

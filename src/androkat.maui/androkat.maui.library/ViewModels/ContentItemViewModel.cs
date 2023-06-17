@@ -13,5 +13,5 @@ public partial class ContentItemViewModel : BaseView
     }
 
     [RelayCommand]
-    Task NavigateToDetail() => Shell.Current.GoToAsync($"ShowDetailPage?Id={ContentEntity.Nid}");
+    Task NavigateToDetail() => Shell.Current.GoToAsync($"DetailPage?Id={ContentEntity.Nid}");
 }

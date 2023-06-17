@@ -5,6 +5,7 @@ namespace androkat.maui.library.Abstraction;
 public interface IPageService
 {
     Task<int> DeleteAllContentAndIma();
+    Task<int> DeleteAllFavorite();
     Task<int> DownloadAll();
     Task<ContentEntity> GetContentEntityByIdAsync(Guid id);
     Task<List<ContentEntity>> GetContentsAsync(string pageTypeId);

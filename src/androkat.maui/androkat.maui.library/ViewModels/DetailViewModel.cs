@@ -8,17 +8,17 @@ using System.Text.RegularExpressions;
 namespace androkat.maui.library.ViewModels;
 
 [QueryProperty(nameof(Id), nameof(Id))]
-public partial class ShowDetailViewModel : ViewModelBase
+public partial class DetailViewModel : ViewModelBase
 {
-    private CancellationTokenSource cancellationTokenSource;
-    private Guid contentGuid;
+    private CancellationTokenSource _cancellationTokenSource;
+    private Guid _contentGuid;
     private readonly IPageService _pageService;
     private readonly ISourceData _sourceData;
     private bool isBusy = false;
 
-    public ShowDetailViewModel(IPageService pageService, ISourceData sourceData)
+    public DetailViewModel(IPageService pageService, ISourceData sourceData)
     {
-        cancellationTokenSource = new CancellationTokenSource();
+        _cancellationTokenSource = new CancellationTokenSource();
         _pageService = pageService;
         _sourceData = sourceData;
     }
@@ -32,7 +32,7 @@ public partial class ShowDetailViewModel : ViewModelBase
     {
         if (Id != null)
         {
-            contentGuid = new Guid(Id);
+            _contentGuid = new Guid(Id);
         }
 
         await FetchAsync();
@@ -40,7 +40,7 @@ public partial class ShowDetailViewModel : ViewModelBase
 
     async Task FetchAsync()
     {
-        var item = await _pageService.GetContentEntityByIdAsync(contentGuid);
+        var item = await _pageService.GetContentEntityByIdAsync(_contentGuid);
 
         if (item == null)
         {
@@ -113,7 +113,7 @@ public partial class ShowDetailViewModel : ViewModelBase
 
         if (toSpeak.Length < max)
         {
-            await TextToSpeech.Default.SpeakAsync(title + ". " + idezet, new SpeechOptions { Locale = locale }, cancelToken: cancellationTokenSource.Token);
+            await TextToSpeech.Default.SpeakAsync(title + ". " + idezet, new SpeechOptions { Locale = locale }, cancelToken: _cancellationTokenSource.Token);
             return;
         }
 
@@ -121,7 +121,7 @@ public partial class ShowDetailViewModel : ViewModelBase
 
         var task = new List<Task>
             {
-                TextToSpeech.Default.SpeakAsync(title, new SpeechOptions { Locale = locale }, cancelToken: cancellationTokenSource.Token)
+                TextToSpeech.Default.SpeakAsync(title, new SpeechOptions { Locale = locale }, cancelToken: _cancellationTokenSource.Token)
             };
 
         if (idezet.Contains('.'))
@@ -130,21 +130,21 @@ public partial class ShowDetailViewModel : ViewModelBase
             for (int i = 0; i < sep.Length; i++)
             {
                 string temp = sep[i] + ".";
-                task.Add(TextToSpeech.Default.SpeakAsync(temp, new SpeechOptions { Locale = locale }, cancelToken: cancellationTokenSource.Token));
+                task.Add(TextToSpeech.Default.SpeakAsync(temp, new SpeechOptions { Locale = locale }, cancelToken: _cancellationTokenSource.Token));
             }
         }
         else
-            task.Add(TextToSpeech.Default.SpeakAsync(idezet, new SpeechOptions { Locale = locale }, cancelToken: cancellationTokenSource.Token));
+            task.Add(TextToSpeech.Default.SpeakAsync(idezet, new SpeechOptions { Locale = locale }, cancelToken: _cancellationTokenSource.Token));
 
         await Task.WhenAll(task).ContinueWith((t) => { isBusy = false; }, TaskScheduler.FromCurrentSynchronizationContext());
     }
 
     public void CancelSpeech()
     {
-        if (cancellationTokenSource?.IsCancellationRequested ?? true)
+        if (_cancellationTokenSource?.IsCancellationRequested ?? true)
             return;
 
-        cancellationTokenSource.Cancel();
+        _cancellationTokenSource.Cancel();
     }
 
     [RelayCommand]

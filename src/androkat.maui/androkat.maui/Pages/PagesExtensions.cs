@@ -18,7 +18,7 @@ public static class PagesExtensions
         builder.Services.AddSingleton<GyonasPage>();
 
         // pages that are navigated to
-        builder.Services.AddTransient<ShowDetailPage>();
+        builder.Services.AddTransient<DetailPage>();
 
         return builder;
     }

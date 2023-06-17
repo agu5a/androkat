@@ -1,15 +1,18 @@
-﻿using androkat.maui.library.ViewModels;
+﻿using androkat.maui.library.Abstraction;
+using androkat.maui.library.ViewModels;
 
 namespace androkat.hu.Pages;
 
 public partial class FavoriteListPage : ContentPage
 {
+    private readonly IPageService _pageService;
     private FavoriteListViewModel ViewModel => BindingContext as FavoriteListViewModel;
 
-    public FavoriteListPage(FavoriteListViewModel viewModel)
+    public FavoriteListPage(FavoriteListViewModel viewModel, IPageService pageService)
     {
         InitializeComponent();
         BindingContext = viewModel;
+        _pageService = pageService;
     }
 
     protected override void OnAppearing()
@@ -31,6 +34,11 @@ public partial class FavoriteListPage : ContentPage
 
     private string GetPageTitle()
     {
-        return $"Kedvencek {ViewModel.FavoriteCount}";
+        return $"Kedvencek ({ViewModel.FavoriteCount})";
+    }
+
+    private async void Button_Clicked(object sender, EventArgs e)
+    {
+        await _pageService.DeleteAllFavorite();
     }
 }

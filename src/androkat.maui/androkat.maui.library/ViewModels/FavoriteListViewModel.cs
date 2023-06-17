@@ -51,8 +51,7 @@ public partial class FavoriteListViewModel : ViewModelBase
         }
 
         var temp = ConvertToViewModels(contents);
-        var s = new List<List<FavoriteContentViewModel>> { temp.ToList() };
-        Contents.ReplaceRange(s);
+        Contents.ReplaceRange(new List<List<FavoriteContentViewModel>> { temp.ToList() });
     }
 
     private List<FavoriteContentViewModel> ConvertToViewModels(IEnumerable<FavoriteContentEntity> items)

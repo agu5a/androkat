@@ -30,7 +30,7 @@
         </Frame>
         <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
             <HorizontalStackLayout>
-                <Label Text="Téma választás"
+                <Label Text="Éjszakai téma"
                        FontSize="Large"
                        VerticalOptions="Center" 
                        HorizontalOptions="Start"
