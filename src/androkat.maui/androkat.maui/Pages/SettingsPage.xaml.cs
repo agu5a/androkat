@@ -2,6 +2,8 @@
 using androkat.maui.library.Abstraction;
 using androkat.maui.library.Helpers;
 using androkat.maui.library.ViewModels;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 
 namespace androkat.hu.Pages;
 
@@ -55,9 +57,17 @@ public partial class SettingsPage : ContentPage
 
     private async void Button_Clicked_2(object sender, EventArgs e)
     {
-        await _pageService.DeleteAllContentAndIma();
-        await DownloadAll();
-        await SetDbButton();
+        var isDelete = await Shell.Current.DisplayAlert("Törlés", "Biztos törlöd?\n\nInternet kapcsolat kell, hogy az adatbázis újból szinkronizálódjon.", "Igen", "Nem");
+        if (isDelete)
+        {
+            await _pageService.DeleteAllContentAndIma();
+            await DownloadAll();
+            await SetDbButton();
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            var toast = Toast.Make("Offline adatbázis sikeresen törölve.", ToastDuration.Short, 14d);            
+            await toast.Show(cancellationTokenSource.Token);
+        }
     }
 
     private async Task SetDbButton()

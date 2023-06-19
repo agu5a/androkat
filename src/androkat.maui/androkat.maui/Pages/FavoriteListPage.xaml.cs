@@ -1,5 +1,7 @@
 ﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.ViewModels;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 
 namespace androkat.hu.Pages;
 
@@ -34,11 +36,24 @@ public partial class FavoriteListPage : ContentPage
 
     private string GetPageTitle()
     {
-        return $"Kedvencek ({ViewModel.FavoriteCount})";
+        if (ViewModel.FavoriteCount > 0)
+            return $"Kedvencek ({ViewModel.FavoriteCount})";
+        else
+            return $"Kedvencek";
     }
 
     private async void Button_Clicked(object sender, EventArgs e)
     {
-        await _pageService.DeleteAllFavorite();
+        var isDelete = await Shell.Current.DisplayAlert("Törlés", "Biztos törlöd?", "Igen", "Nem");
+        if (isDelete)
+        {
+            await _pageService.DeleteAllFavorite();
+            ViewModel.PageTitle = "Kedvencek";
+            await ViewModel.InitializeAsync();
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            var toast = Toast.Make("Kedvencek adatbázis sikeresen törölve", ToastDuration.Short, 14d);
+            await toast.Show(cancellationTokenSource.Token);
+        }
     }
 }
