@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 namespace androkat.maui.library.ViewModels;
 
 [QueryProperty(nameof(Id), nameof(Id))]
+[QueryProperty(nameof(IsIma), nameof(IsIma))]
 public partial class DetailViewModel : ViewModelBase
 {
     private CancellationTokenSource _cancellationTokenSource;
@@ -15,6 +16,7 @@ public partial class DetailViewModel : ViewModelBase
     private readonly IPageService _pageService;
     private readonly ISourceData _sourceData;
     private bool isBusy = false;
+    private bool _isIma = false;
 
     public DetailViewModel(IPageService pageService, ISourceData sourceData)
     {
@@ -24,6 +26,7 @@ public partial class DetailViewModel : ViewModelBase
     }
 
     public string Id { get; set; }
+    public string IsIma { get; set; }
 
     [ObservableProperty]
     ContentItemViewModel contentView;
@@ -34,36 +37,70 @@ public partial class DetailViewModel : ViewModelBase
         {
             _contentGuid = new Guid(Id);
         }
+        if (IsIma != null)
+        {
+            _isIma = bool.Parse(IsIma);
+        }
 
         await FetchAsync();
     }
 
     async Task FetchAsync()
     {
-        var item = await _pageService.GetContentEntityByIdAsync(_contentGuid);
-
-        if (item == null)
+        if (!_isIma)
         {
-            await Shell.Current.DisplayAlert(
-                      "Hiba",
-                      "Nincs tartalom",
-                      "Bezárás");
+            var item = await _pageService.GetContentEntityByIdAsync(_contentGuid);
+
+            if (item == null)
+            {
+                await Shell.Current.DisplayAlert(
+                          "Hiba",
+                          "Nincs tartalom",
+                          "Bezárás");
+                return;
+            }
+
+            SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
+            var origImg = item.Image;
+            item.Image = idezetSource.Img;
+            var viewModel = new ContentItemViewModel(item, true)
+            {
+                datum = $"<b>Dátum</b>: {item.Datum.ToString("yyyy-MM-dd")}",
+                detailscim = idezetSource.Title,
+                contentImg = origImg,
+                isFav = false,
+                forras = $"<b>Forrás</b>: {idezetSource.Forrasszoveg}",
+                type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus))
+            };
+            ContentView = viewModel;
             return;
         }
 
-        SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
-        var origImg = item.Image;
-        item.Image = idezetSource.Img;
-        var viewModel = new ContentItemViewModel(item, true)
+        var ima = await _pageService.GetImadsagEntityByIdAsync(_contentGuid);
+        if (ima == null)
         {
-            datum = $"<b>Dátum</b>: {item.Datum.ToString("yyyy-MM-dd")}",
-            detailscim = idezetSource.Title,
-            contentImg = origImg,
+            await Shell.Current.DisplayAlert(
+                          "Hiba",
+                          "Nincs tartalom",
+                          "Bezárás");
+            return;
+        }
+
+        var viewModelIma = new ContentItemViewModel(new ContentEntity
+        {
+            Cim = ima.Cim,
+            Idezet = ima.Content,
+        }, true)
+        {
+            datum = "",
+            detailscim = ima.Cim,
+            //contentImg = ima.Image,
             isFav = false,
-            forras = $"<b>Forrás</b>: {idezetSource.Forrasszoveg}",
-            type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus))
+            forras = "",
+            type = Activities.ima
         };
-        ContentView = viewModel;
+
+        ContentView = viewModelIma;
     }
 
     [RelayCommand]

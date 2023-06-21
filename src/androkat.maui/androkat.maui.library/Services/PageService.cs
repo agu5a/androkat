@@ -26,8 +26,13 @@ public class PageService : IPageService
 
     public async Task<ContentEntity> GetContentEntityByIdAsync(Guid id)
     {
-        var temp = await _repository.GetElmelkedesContentById(id);
+        var temp = await _repository.GetContentById(id);
         return temp;
+    }
+
+    public async Task<ImadsagEntity> GetImadsagEntityByIdAsync(Guid id)
+    {
+        return await _repository.GetImadsagEntityById(id);
     }
 
     public async Task<int> InsertFavoriteContentAsync(FavoriteContentEntity favoriteContentEntity)
@@ -86,7 +91,7 @@ public class PageService : IPageService
             //"7" => ima
             "8" => await _repository.GetAudioContents(),
             "11" => await _repository.GetBookContents(),
-            _ => await _repository.GetElmelkedesContents(),
+            _ => await _repository.GetContents(),
         };
     }
 

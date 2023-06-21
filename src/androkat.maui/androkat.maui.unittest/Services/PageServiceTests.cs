@@ -42,13 +42,13 @@ public class PageServiceTests
             Cim = "Test Cim",
             Idezet = "Test Idezet"
         };
-        repositoryMock.Setup(repo => repo.GetElmelkedesContentById(It.IsAny<Guid>())).ReturnsAsync(expectedContent).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentById(It.IsAny<Guid>())).ReturnsAsync(expectedContent).Verifiable();
 
         var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
 
         var result = await pageService.GetContentEntityByIdAsync(expectedContent.Nid);
 
-        repositoryMock.Verify(repo => repo.GetElmelkedesContentById(expectedContent.Nid), Times.Once);
+        repositoryMock.Verify(repo => repo.GetContentById(expectedContent.Nid), Times.Once);
         Assert.Equal(expectedContent, result);
     }
 
@@ -152,7 +152,7 @@ public class PageServiceTests
     [InlineData("6", nameof(IRepository.GetHumorContents))]
     [InlineData("8", nameof(IRepository.GetAudioContents))]
     [InlineData("11", nameof(IRepository.GetBookContents))]
-    [InlineData("0", nameof(IRepository.GetElmelkedesContents))]
+    [InlineData("0", nameof(IRepository.GetContents))]
     public async Task Test_GetContentsAsync(string pageTypeId, string methodName)
     {
         var repositoryMock = new Mock<IRepository>();
@@ -165,7 +165,7 @@ public class PageServiceTests
         repositoryMock.Setup(repo => repo.GetHumorContents()).ReturnsAsync(expectedContents).Verifiable();
         repositoryMock.Setup(repo => repo.GetAudioContents()).ReturnsAsync(expectedContents).Verifiable();
         repositoryMock.Setup(repo => repo.GetBookContents()).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetElmelkedesContents()).ReturnsAsync(expectedContents).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContents()).ReturnsAsync(expectedContents).Verifiable();
         var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
 
         var result = await pageService.GetContentsAsync(pageTypeId);
@@ -197,7 +197,7 @@ public class PageServiceTests
                 repositoryMock.Verify(x => x.GetBookContents(), Times.Once);
                 break;
             case "GetElmelkedesContents":
-                repositoryMock.Verify(x => x.GetElmelkedesContents(), Times.Once);
+                repositoryMock.Verify(x => x.GetContents(), Times.Once);
                 break;
         };
 

@@ -32,7 +32,7 @@ public class Repository : IRepository
         }
     }
 
-    public async Task<ContentEntity> GetElmelkedesContentById(Guid id)
+    public async Task<ContentEntity> GetContentById(Guid id)
     {
         try
         {
@@ -46,6 +46,22 @@ public class Repository : IRepository
         }
 
         return new ContentEntity();
+    }
+
+    public async Task<ImadsagEntity> GetImadsagEntityById(Guid id)
+    {
+        try
+        {
+            Init();
+
+            return await conn.Table<ImadsagEntity>().Where(w => w.Nid == id).FirstOrDefaultAsync();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
+        }
+
+        return new ImadsagEntity();
     }
 
     public async Task<int> GetFavoriteCount()
@@ -80,7 +96,7 @@ public class Repository : IRepository
         return new List<FavoriteContentEntity>();
     }
 
-    public async Task<List<ContentEntity>> GetElmelkedesContents()
+    public async Task<List<ContentEntity>> GetContents()
     {
         try
         {

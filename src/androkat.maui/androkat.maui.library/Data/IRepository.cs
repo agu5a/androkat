@@ -10,7 +10,7 @@ public interface IRepository
     Task<int> DeleteContentByNid(Guid nid);
 
     Task<ContentEntity> GetContentsByTypeName(string typeName);
-    Task<ContentEntity> GetElmelkedesContentById(Guid id);
+    Task<ContentEntity> GetContentById(Guid id);
     Task<List<ContentEntity>> GetContentsWithoutBook();
 
     Task<List<ContentEntity>> GetAjanlatokContents();
@@ -18,7 +18,7 @@ public interface IRepository
     Task<List<ContentEntity>> GetBookContents();
     Task<List<ContentEntity>> GetHumorContents();
     Task<List<ContentEntity>> GetMaiszentContents();
-    Task<List<ContentEntity>> GetElmelkedesContents();
+    Task<List<ContentEntity>> GetContents();
     Task<List<ContentEntity>> GetSzentekContents();
     Task<List<ContentEntity>> GetBlogContents();
     Task<List<ContentEntity>> GetNewsContents();
@@ -35,4 +35,5 @@ public interface IRepository
     Task<int> DeleteAllContent();
     Task<int> DeleteAllImadsag();
     Task<int> DeleteAllFavorite();
+    Task<ImadsagEntity> GetImadsagEntityById(Guid id);
 }

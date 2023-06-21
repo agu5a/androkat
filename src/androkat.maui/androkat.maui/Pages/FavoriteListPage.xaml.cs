@@ -8,6 +8,7 @@ namespace androkat.hu.Pages;
 public partial class FavoriteListPage : ContentPage
 {
     private readonly IPageService _pageService;
+    private int _stackCount = 0;
     private FavoriteListViewModel ViewModel => BindingContext as FavoriteListViewModel;
 
     public FavoriteListPage(FavoriteListViewModel viewModel, IPageService pageService)
@@ -24,14 +25,14 @@ public partial class FavoriteListPage : ContentPage
 
     protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
-        await ViewModel.InitializeAsync();
         ViewModel.PageTitle = GetPageTitle();
+        if (_stackCount != 2)
+        {
+            //Nem DetailPage-ről jöttünk viszsa, így üres oldallal indulunk
+            ViewModel.Contents.Clear();
+        }
+        await ViewModel.InitializeAsync();
         base.OnNavigatedTo(args);
-    }
-
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
     }
 
     private string GetPageTitle()
@@ -42,9 +43,15 @@ public partial class FavoriteListPage : ContentPage
             return $"Kedvencek";
     }
 
+    protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
+    {
+        _stackCount = Application.Current.MainPage.Navigation.NavigationStack.Count;
+        base.OnNavigatedFrom(args);
+    }
+
     private async void Button_Clicked(object sender, EventArgs e)
     {
-        var isDelete = await Shell.Current.DisplayAlert("Törlés", "Biztos törlöd?", "Igen", "Nem");
+        var isDelete = await Shell.Current.DisplayAlert("Törlés", "Biztos törlöd az összes kedvencet?", "Igen", "Nem");
         if (isDelete)
         {
             await _pageService.DeleteAllFavorite();
