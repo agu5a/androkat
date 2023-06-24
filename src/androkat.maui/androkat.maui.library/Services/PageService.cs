@@ -1,5 +1,6 @@
 ﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Data;
+using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
 using MonkeyCache.FileStore;
 using System.Net.Http.Json;
@@ -9,17 +10,13 @@ namespace androkat.maui.library.Services;
 
 public class PageService : IPageService
 {
-    private readonly HttpClient httpClient;
-    private readonly IAndrokatService _androkatService;
-    private readonly ISourceData _sourceData;
+    private HttpClient client;
     private bool firstLoad = true;
     private readonly IDownloadService _downloadService;
     private readonly IRepository _repository;
 
-    public PageService(IAndrokatService androkatService, ISourceData sourceData, IDownloadService downloadService, IRepository repository)
+    public PageService(IDownloadService downloadService, IRepository repository)
     {
-        _androkatService = androkatService;
-        _sourceData = sourceData;
         _downloadService = downloadService;
         _repository = repository;
     }
@@ -95,7 +92,9 @@ public class PageService : IPageService
         };
     }
 
+#pragma warning disable S1144 // Unused private types or members should be removed
     private Task<T> TryGetAsync<T>(string path)
+#pragma warning restore S1144 // Unused private types or members should be removed
     {
         if (firstLoad)
         {
@@ -128,7 +127,7 @@ public class PageService : IPageService
         {
             if (string.IsNullOrWhiteSpace(json))
             {
-                var response = await httpClient.GetAsync(path);
+                var response = await GetClient().GetAsync(path);
                 if (response.IsSuccessStatusCode)
                 {
                     responseData = await response.Content.ReadFromJsonAsync<T>();
@@ -148,5 +147,17 @@ public class PageService : IPageService
         }
 
         return responseData;
+    }
+
+    private HttpClient GetClient()
+    {
+        if (client != null)
+            return client;
+
+        client = new HttpClient { BaseAddress = new Uri(ConsValues.ApiUrl) };
+        client.DefaultRequestHeaders.Accept.Clear();
+        client.DefaultRequestHeaders.Add("Accept", "application/json");
+
+        return client;
     }
 }

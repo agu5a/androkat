@@ -302,7 +302,7 @@ public class Repository : IRepository
         {
             Init();
             return await conn.Table<ImadsagEntity>()
-                .Where(w => w.IsHided == false).OrderBy(o => o.Cim).ToListAsync();
+                .Where(w => !w.IsHided).OrderBy(o => o.Cim).ToListAsync();
         }
         catch (Exception ex)
         {

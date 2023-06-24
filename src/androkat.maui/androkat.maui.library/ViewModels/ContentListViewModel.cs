@@ -16,7 +16,9 @@ public partial class ContentListViewModel : ViewModelBase
     public string Id { get; set; }
 
     [ObservableProperty]
+#pragma warning disable S1104 // Fields should not have public accessibility
     public string pageTitle;
+#pragma warning restore S1104 // Fields should not have public accessibility
 
     [ObservableProperty]
     ObservableRangeCollection<List<ContentItemViewModel>> contents;
@@ -37,15 +39,15 @@ public partial class ContentListViewModel : ViewModelBase
 
     private async Task FetchAsync()
     {
-        var contents = await _pageService.GetContentsAsync(Id);
+        var contentsTemp = await _pageService.GetContentsAsync(Id);
 
-        if (contents == null)
+        if (contentsTemp == null)
         {
             await Shell.Current.DisplayAlert("Hiba", "Nincs adat", "Bezárás");
             return;
         }
 
-        var temp = ConvertToViewModels(contents);
+        var temp = ConvertToViewModels(contentsTemp);
         var s = new List<List<ContentItemViewModel>> { temp.ToList() };
         Contents.ReplaceRange(s);
     }
@@ -74,5 +76,5 @@ public partial class ContentListViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    public async Task Subscribe(ContentItemViewModel viewModel) => Task.Run(() => { });
+    public Task Subscribe(ContentItemViewModel viewModel) => Task.Run(() => { });
 }

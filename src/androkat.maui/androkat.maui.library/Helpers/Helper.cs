@@ -12,17 +12,20 @@ internal static class Helper
                 .Replace("&ouml;", "ö").Replace("&Ouml;", "Ö").Replace("&uuml;", "ü").Replace("&Uuml;", "Ü");
     }
 
+
+#pragma warning disable S125 // Sections of code should not be commented out
     /*public Intent shareIntent(string title, string body, IHtml html)
-    {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/html");
-        string separator = "";
-        if (!TextUtils.isEmpty(title)) separator = ": ";
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "AndroKat" + separator + title);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, fromHtml(body, html));
-        return shareIntent;
-    }*/
+        {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/html");
+            string separator = "";
+            if (!TextUtils.isEmpty(title)) separator = ": ";
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "AndroKat" + separator + title);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, fromHtml(body, html));
+            return shareIntent;
+        }*/
 }
+#pragma warning restore S125 // Sections of code should not be commented out
 
 public class DateTimeConverterUsingDateTimeParse : JsonConverter<DateTime>
 {

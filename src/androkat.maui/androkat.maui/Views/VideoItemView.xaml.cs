@@ -1,6 +1,4 @@
-﻿using androkat.maui.library.ViewModels;
-
-namespace androkat.hu.Views;
+﻿namespace androkat.hu.Views;
 
 public partial class VideoItemView
 {
@@ -31,15 +29,14 @@ public partial class VideoItemView
         });
     }
 
+#pragma warning disable S1185 // Overriding members should do more than simply call the same member in the base class
     protected override void OnBindingContextChanged()
     {
         base.OnBindingContextChanged();
 
-        if (BindingContext is not VideoItemViewModel viewModel)
-        {
-            return;
-        }
+        //if (BindingContext is not VideoItemViewModel viewModel)
 
-        //viewModel.InitializeCommand.Execute(null);
+        //viewModel .InitializeCommand .Execute(null)
     }
+#pragma warning restore S1185 // Overriding members should do more than simply call the same member in the base class
 }

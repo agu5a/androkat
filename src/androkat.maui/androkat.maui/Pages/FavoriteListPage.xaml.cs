@@ -18,11 +18,6 @@ public partial class FavoriteListPage : ContentPage
         _pageService = pageService;
     }
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-    }
-
     protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
         ViewModel.PageTitle = GetPageTitle();

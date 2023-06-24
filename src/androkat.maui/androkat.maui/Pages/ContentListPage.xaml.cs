@@ -13,11 +13,6 @@ public partial class ContentListPage : ContentPage
         BindingContext = viewModel;
     }
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-    }
-
     protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
         // Hack: Get the category Id
@@ -30,11 +25,6 @@ public partial class ContentListPage : ContentPage
         }
         await ViewModel.InitializeAsync();
         base.OnNavigatedTo(args);
-    }
-
-    protected override bool OnBackButtonPressed()
-    {
-        return base.OnBackButtonPressed();
     }
 
     protected override void OnNavigatedFrom(NavigatedFromEventArgs args)

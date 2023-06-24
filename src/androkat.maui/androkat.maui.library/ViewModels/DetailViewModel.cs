@@ -15,7 +15,6 @@ public partial class DetailViewModel : ViewModelBase
     private Guid _contentGuid;
     private readonly IPageService _pageService;
     private readonly ISourceData _sourceData;
-    private bool isBusy = false;
     private bool _isIma = false;
 
     public DetailViewModel(IPageService pageService, ISourceData sourceData)
@@ -123,22 +122,22 @@ public partial class DetailViewModel : ViewModelBase
     [RelayCommand]
     async Task StartTextToSpeech()
     {
-        /*if (item.getItemId() == R.id.speak)
-            {
-                string toSpeak = forrasTitle.getText().toString() + ". " + titleTW.getText().toString() + ". " + contentTw.getText().toString();
-                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null, null);
-            }*/
-        /*drawable = menu.findItem(R.id.speak).getIcon();
-                drawable = DrawableCompat.wrap(drawable);
-                DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.secondary));
-                menu.findItem(R.id.speak).setIcon(drawable);*/
+        /* if (item.getItemId() R.id.speak)
+            
+                string toSpeak = forrasTitle.getText().toString() + ". " + titleTW.getText().toString() + ". " + contentTw.getText().toString()
+                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null, null)
+            
+            drawable = menu.findItem(R.id.speak).getIcon()
+                drawable = DrawableCompat.wrap(drawable)
+                DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.secondary))
+                menu.findItem(R.id.speak).setIcon(drawable)*/
 
 
         var title = Regex.Replace(ContentView.ContentEntity.Cim, "<.*?>", String.Empty);
         var idezet = Regex.Replace(ContentView.ContentEntity.Idezet, "<.*?>", String.Empty);
         IEnumerable<Locale> locales = await TextToSpeech.Default.GetLocalesAsync();
 
-        var locale = locales.Where(w => w.Country.ToLower() == "hu" && w.Language.ToLower() == "hu").FirstOrDefault();
+        var locale = locales.FirstOrDefault(w => w.Country.ToLower() == "hu" && w.Language.ToLower() == "hu");
         if (locale == null)
         {
             await Application.Current.MainPage.DisplayAlert("Hiba!", "Nincs magyar nyelv telepítve a felolvasáshoz!", "OK");
@@ -154,7 +153,7 @@ public partial class DetailViewModel : ViewModelBase
             return;
         }
 
-        isBusy = true;
+        /*isBusy true*/
 
         var task = new List<Task>
             {
@@ -173,7 +172,7 @@ public partial class DetailViewModel : ViewModelBase
         else
             task.Add(TextToSpeech.Default.SpeakAsync(idezet, new SpeechOptions { Locale = locale }, cancelToken: _cancellationTokenSource.Token));
 
-        await Task.WhenAll(task).ContinueWith((t) => { isBusy = false; }, TaskScheduler.FromCurrentSynchronizationContext());
+        await Task.WhenAll(task).ContinueWith((t) => { /*isBusy*/ }, TaskScheduler.FromCurrentSynchronizationContext());
     }
 
     public void CancelSpeech()

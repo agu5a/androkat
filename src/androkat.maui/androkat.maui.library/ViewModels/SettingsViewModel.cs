@@ -1,17 +1,12 @@
-﻿using androkat.maui.library.Abstraction;
-using androkat.maui.library.Helpers;
+﻿using androkat.maui.library.Helpers;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace androkat.maui.library.ViewModels;
 
 public partial class SettingsViewModel : ViewModelBase
 {
-    private readonly IPageService _pageService;
-
-    public SettingsViewModel(IPageService pageService)
+    public SettingsViewModel()
     {
-        _pageService = pageService;
-
         isDarkModeEnabled = Settings.Theme == AppTheme.Dark;
     }
 

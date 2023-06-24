@@ -83,7 +83,7 @@ public class DownloadServiceTests
 
         var res = await service.DownloadAll();
 
-        Assert.Equal(res, 42);
+        Assert.Equal(42, res);
     }
 
     [Fact]
@@ -114,7 +114,7 @@ public class DownloadServiceTests
 
         var res = await service.StartUpdate(Activities.fokolare);
 
-        Assert.Equal(res, 0);
+        Assert.Equal(0, res);
     }
 
     [Theory]

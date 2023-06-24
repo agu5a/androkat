@@ -20,10 +20,9 @@ public partial class SettingsPage : ContentPage
 
     private void maxOffline_TextChanged(object sender, TextChangedEventArgs e)
     {
-        if (!string.IsNullOrWhiteSpace(e.NewTextValue) && int.TryParse(e.NewTextValue, out int max))
+        if (!string.IsNullOrWhiteSpace(e.NewTextValue) && int.TryParse(e.NewTextValue, out int max) && max > 15)
         {
-            if (max > 15)
-                Preferences.Default.Set("maxOffline", max.ToString());
+            Preferences.Default.Set("maxOffline", max.ToString());
         }
     }
 
@@ -88,6 +87,7 @@ public partial class SettingsPage : ContentPage
         }
         catch (Exception ex)
         {
+            System.Diagnostics.Debug.WriteLine($"********************************** SettingsPage EXCEPTION! {ex}");
         }
     }
 }

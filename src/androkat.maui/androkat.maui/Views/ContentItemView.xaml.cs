@@ -62,11 +62,13 @@ public partial class ContentItemView
     {
         base.OnBindingContextChanged();
 
+#pragma warning disable S1481 // Unused local variables should be removed
         if (BindingContext is not ContentItemViewModel viewModel)
         {
             return;
         }
+#pragma warning restore S1481 // Unused local variables should be removed
 
-        //viewModel.InitializeCommand.Execute(null);
+        //viewModel.InitializeCommand.Execute(null)
     }
 }

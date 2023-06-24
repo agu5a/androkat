@@ -17,8 +17,9 @@ public class DurationConverter : IValueConverter
                 var duration = TimeSpan.Parse(stringValue);
                 result = $"{duration.TotalMinutes.ToString("N0")} min";
             }
-            finally
+            catch (Exception)
             {
+                // ignored
             }
         }
 
