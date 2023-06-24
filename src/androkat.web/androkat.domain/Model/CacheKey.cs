@@ -2,10 +2,11 @@
 
 public enum CacheKey
 {
-	MainCacheKey,
-BookRadioSysCacheKey,
-	ImaCacheKey,
-	VideoCacheKey,
-VideoResponseCacheKey,
-RadioResponseCacheKey,
+    MainCacheKey,
+    BookRadioSysCacheKey,
+    ImaCacheKey,
+    VideoCacheKey,
+    VideoResponseCacheKey,
+    ContentResponseCacheKey,
+    RadioResponseCacheKey,
 }

@@ -24,6 +24,20 @@ public class ApiServiceCacheDecorate : IApiService
         _cacheService = cacheService;
     }
 
+    public IReadOnlyCollection<ContentResponse> GetContentByTipusAndNid(int tipus, Guid n, MainCache mainCache)
+    {
+        string key = CacheKey.ContentResponseCacheKey + "_" + tipus + "_" + n;
+        var result = GetCache<IReadOnlyCollection<ContentResponse>>(key);
+        if (result is not null)
+            return result;
+
+        mainCache = GetCache(CacheKey.MainCacheKey.ToString(), () => { return _cacheService.MainCacheFillUp(); });
+        result = _apiService.GetContentByTipusAndNid(tipus, n, mainCache);
+        _memoryCache.Set(key, result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
+
+        return result;
+    }
+
     public IReadOnlyCollection<RadioMusorResponse> GetRadioBySource(string s, BookRadioSysCache bookRadioSysCache)
     {
         string key = CacheKey.RadioResponseCacheKey + "_" + s;

@@ -2,6 +2,7 @@
 using androkat.domain.Model;
 using androkat.domain.Model.ContentCache;
 using androkat.domain.Model.WebResponse;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,6 +44,37 @@ public class ApiService : IApiService
             .Select(s => new RadioMusorResponse { Musor = s.Musor }).ToList();
     }
 
+    public IReadOnlyCollection<ContentResponse> GetContentByTipusAndNid(int tipus, Guid n, MainCache mainCache)
+    {
+        var temp = new List<ContentResponse>();
+
+        if (tipus == 58 || tipus == 25)
+        {
+            GetHumorAndAjandek(n, tipus, mainCache, temp);
+        }
+        else
+        {
+            foreach (var item in mainCache.ContentDetailsModels.Where(w => w.Tipus == tipus))
+            {
+                //a user már letöltötte, nem kell újból
+                if (n != Guid.Empty && n == item.Nid)
+                    break;
+
+                temp.Add(new ContentResponse
+                {
+                    Cim = item.Cim,
+                    Datum = item.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss"),
+                    Forras = item.Forras ?? string.Empty,
+                    Idezet = string.IsNullOrEmpty(item.FileUrl) ? item.Idezet : item.FileUrl,
+                    Img = item.Img ?? string.Empty,
+                    Nid = item.Nid,
+                    KulsoLink = string.Empty
+                });
+            }
+        }
+        return temp;
+    }
+
     public string GetVideoForWebPage(string f, int offset, VideoCache videoCache)
     {
         var sb = new StringBuilder();
@@ -73,5 +105,35 @@ public class ApiService : IApiService
         sb.Append("<div class=\"video-container\" ><iframe src=\"" + item.VideoLink.Replace("watch?v=", "embed/") + "\" width =\"310\" height =\"233\" title=\"YouTube video player\" " +
             "frameborder =\"0\" allow=\"accelerometer;\"></iframe></div>");
         sb.Append("</div></div>");
+    }
+
+    private void GetHumorAndAjandek(Guid n, int tipus, MainCache m, List<ContentResponse> temp)
+    {
+        string date = _iClock.Now.ToString("yyyy-MM-dd");
+        var napi = m.ContentDetailsModels.FirstOrDefault(w => w.Tipus == tipus && w.Fulldatum.ToString("yyyy-MM-dd").StartsWith(date));
+        napi ??= m.ContentDetailsModels.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted).FirstOrDefault();
+
+        if (napi is not null)
+        {
+            var downloaded = false;
+
+            //a user már letöltötte, nem kell újból
+            if (n != Guid.Empty && n == napi.Nid)
+                downloaded = true;
+
+            if (!downloaded)
+            {
+                temp.Add(new ContentResponse
+                {
+                    Cim = napi.Cim,
+                    Datum = napi.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss"),
+                    Forras = napi.Forras ?? string.Empty,
+                    Idezet = napi.Idezet,
+                    Img = napi.Img ?? string.Empty,
+                    Nid = napi.Nid,
+                    KulsoLink = string.Empty
+                });
+            }
+        }
     }
 }

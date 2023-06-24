@@ -11,12 +11,12 @@ using Xunit;
 namespace androkat.web.Tests.EndpointsTests;
 
 [Collection("Sequential")]
-public class CreateContentDetailsModelTests : IClassFixture<CustomWebApplicationFactory<WebMarker>>
+public class CreateContentDetailsModelTests : IClassFixture<CustomWebApplicationFactory<IWebMarker>>
 {
 	private readonly HttpClient _client;
     private const string _url = Constants.CreateContentDetailsModelTestsUrl;
 
-	public CreateContentDetailsModelTests(CustomWebApplicationFactory<WebMarker> factory)
+    public CreateContentDetailsModelTests(CustomWebApplicationFactory<IWebMarker> factory)
 	{
 		_client = factory.CreateClient();
         _client.DefaultRequestHeaders.Add("X-API-Key", Constants.XAPIKey);

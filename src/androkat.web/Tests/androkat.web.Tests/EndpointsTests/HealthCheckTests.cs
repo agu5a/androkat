@@ -10,12 +10,12 @@ using Xunit;
 namespace androkat.web.Tests.EndpointsTests;
 
 [Collection("Sequential")]
-public class HealthCheckTests : IClassFixture<CustomWebApplicationFactory<WebMarker>>
+public class HealthCheckTests : IClassFixture<CustomWebApplicationFactory<IWebMarker>>
 {
     private readonly HttpClient _client;
     private const string _url = Constants.HealthCheckTestsUrl;
 
-    public HealthCheckTests(CustomWebApplicationFactory<WebMarker> factory)
+    public HealthCheckTests(CustomWebApplicationFactory<IWebMarker> factory)
     {
         _client = factory.CreateClient();
     }

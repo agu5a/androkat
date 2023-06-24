@@ -25,7 +25,7 @@ public class ApiRepositoryTests : BaseTest
 
 		using (var context = new AndrokatContext(GetDbContextOptions()))
 		{
-			var repo = new ApiRepository(context, logger.Object, clock.Object, mapper);
+            var repo = new ApiRepository(context, clock.Object, mapper);
             var result = repo.UpdateRadioMusor(new domain.Model.RadioMusorModel(Guid.Empty, "Source", string.Empty, string.Empty));
 			result.Should().Be(false);
 			context.RadioMusor.FirstOrDefault(f=> f.Source == "Source").Should().BeNull();
@@ -54,7 +54,7 @@ public class ApiRepositoryTests : BaseTest
 			context.RadioMusor.Add(entity);
 			context.SaveChanges();
 
-			var repo = new ApiRepository(context, logger.Object, clock.Object, mapper);
+            var repo = new ApiRepository(context, clock.Object, mapper);
             var result = repo.UpdateRadioMusor(new domain.Model.RadioMusorModel(Guid.Empty, "Source", "Műsor 2", "2023-01-11"));
 			result.Should().Be(true);
 			var radio = context.RadioMusor.FirstOrDefault(f => f.Source == "Source");
@@ -87,7 +87,7 @@ public class ApiRepositoryTests : BaseTest
 			context.Content.Add(entity);
 			context.SaveChanges();
 
-			var repo = new ApiRepository(context, logger.Object, clock.Object, mapper);
+            var repo = new ApiRepository(context, clock.Object, mapper);
             var result = repo.AddContentDetailsModel(new domain.Model.ContentDetailsModel(nid, DateTime.MinValue, cim, string.Empty, tipus, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
             );
 			result.Should().Be(false);
@@ -118,7 +118,7 @@ public class ApiRepositoryTests : BaseTest
 			context.Content.Add(entity);
 			context.SaveChanges();
 
-			var repo = new ApiRepository(context, logger.Object, clock.Object, mapper);
+            var repo = new ApiRepository(context, clock.Object, mapper);
             var result = repo.AddContentDetailsModel(new domain.Model.ContentDetailsModel(nid, DateTime.MinValue, cim, string.Empty, tipus, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
             );
 			result.Should().Be(true);

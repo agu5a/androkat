@@ -93,7 +93,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
             foreach (var tipus in AndrokatConfiguration.ContentTypeIds())
             {
-                if (!temp.Any(c => c.Tipus == tipus))
+                if (!temp.Exists(c => c.Tipus == tipus))
                 {
                     temp.Add(new AllTodayResult
                     {
