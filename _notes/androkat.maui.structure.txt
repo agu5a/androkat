@@ -1,5 +1,5 @@
 App.cs
- - RegisterRoute ShowDetailPage
+ - RegisterRoute DetailPage
 
  MobileShell.cs
   - FlyoutItems (Pages)
@@ -26,7 +26,7 @@ App.cs
    
    View: ContentItemView (ContentItemViewModel)
     XAML:
-      TapGestureRecognizer Binding: NavigateToDetailCommand (ContentItemViewModel -> GoToAsync ShowDetailPage)
+      TapGestureRecognizer Binding: NavigateToDetailCommand (ContentItemViewModel -> GoToAsync DetailPage)
       Image.Loaded -> Image_Loaded
       Binding: ContentEntity, datum, forras
     Codebehind:
@@ -37,7 +37,7 @@ App.cs
         IsLoading = false;
  
 
- Page: ShowDetailPage   
+ Page: DetailPage   
    XAML: 
     Binding: ContentView
     Button Binding: StartTextToSpeechCommand
@@ -48,7 +48,7 @@ App.cs
     OnAppearing
      ViewModel-> InitializeAsync
    
-   ViewModel: ShowDetailViewModel
+   ViewModel: DetailViewModel
    - InitializeAsync
       PageService.GetContentEntityByIdAsync(contentGuid)
    - ShareContent

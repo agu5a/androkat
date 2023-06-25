@@ -44,11 +44,8 @@ public class DownloadService : IDownloadService
                     if (Enum.TryParse(item.TypeName, true, out Activities activities))
                     {
                         //fokolare-t nem töröljük az érintett hónapban
-                        if (activities == Activities.fokolare)
-                        {
-                            if (IsSameAsToday(item.Datum, "MM"))
-                                continue;
-                        }
+                        if (activities == Activities.fokolare && IsSameAsToday(item.Datum, "MM"))
+                            continue;
 
                         await _repository.DeleteContentByNid(item.Nid);
                         numb--;
@@ -196,7 +193,7 @@ public class DownloadService : IDownloadService
             {
                 foreach (ImadsagResponse imadsag in listSync)
                 {
-                    //TODO törölni, ha lesz fix API
+                    //törölni, ha lesz fix API
                     await _repository.DeleteImadsagByNid(imadsag.Nid);
 
                     if (datum > DateTime.MinValue && datum < imadsag.RecordDate || datum == DateTime.MinValue)
@@ -350,7 +347,7 @@ public class DownloadService : IDownloadService
 
     private async Task<int> DownloadData(string nid, Activities tipusName)
     {
-        //var debug = await conn.Table<ContentEntity>().ToListAsync();
+        //var debug = await conn . Table<ContentEntity>().ToListAsync()
         int tipusId = (int)tipusName;
         string tipus = tipusId.ToString();
 

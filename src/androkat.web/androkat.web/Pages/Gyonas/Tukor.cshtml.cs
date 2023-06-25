@@ -121,6 +121,8 @@ public class TukorModel : PageModel
     [BindProperty] public bool cb104 { get; set; }
     #endregion
 
+
+#pragma warning disable S125 // Sections of code should not be commented out
     /*@for (int i = 0; i < 5; i++)
 {
     <div>
@@ -133,7 +135,7 @@ public class TukorModel : PageModel
             this.GetType().GetRuntimeProperty(dynamicBindProperty)?.SetValue(this, "default value");
         }
 }*/
-
+#pragma warning restore S125 // Sections of code should not be commented out
 
 
     public IActionResult OnPostClear()

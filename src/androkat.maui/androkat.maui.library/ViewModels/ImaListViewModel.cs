@@ -12,7 +12,9 @@ public partial class ImaListViewModel : ViewModelBase
     private readonly IPageService _pageService;
 
     [ObservableProperty]
+#pragma warning disable S1104 // Fields should not have public accessibility
     public string pageTitle;
+#pragma warning restore S1104 // Fields should not have public accessibility
 
     [ObservableProperty]
     ObservableRangeCollection<List<ImaContentViewModel>> contents;
@@ -32,9 +34,9 @@ public partial class ImaListViewModel : ViewModelBase
 
     private async Task FetchAsync()
     {
-        var contents = await _pageService.GetImaContents();
+        var imaContents = await _pageService.GetImaContents();
 
-        if (contents == null)
+        if (imaContents == null)
         {
             await Shell.Current.DisplayAlert(
                "Hiba",
@@ -44,7 +46,7 @@ public partial class ImaListViewModel : ViewModelBase
             return;
         }
 
-        var temp = ConvertToViewModels(contents);
+        var temp = ConvertToViewModels(imaContents);
         var s = new List<List<ImaContentViewModel>> { temp.ToList() };
         Contents.ReplaceRange(s);
     }
@@ -66,5 +68,5 @@ public partial class ImaListViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    public async Task Subscribe(ImaContentViewModel viewModel) => Task.Run(() => { });
+    public Task Subscribe(ImaContentViewModel viewModel) => Task.Run(() => { });
 }

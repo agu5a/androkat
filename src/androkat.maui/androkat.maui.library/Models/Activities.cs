@@ -72,6 +72,7 @@ public static class ActivitiesHelper
         }
         catch (Exception)
         {
+            // ignored
         }
 
         return Activities.noone;

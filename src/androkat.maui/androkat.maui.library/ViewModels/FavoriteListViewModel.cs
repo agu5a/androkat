@@ -16,7 +16,9 @@ public partial class FavoriteListViewModel : ViewModelBase
     int favoriteCount;
 
     [ObservableProperty]
+#pragma warning disable S1104 // Fields should not have public accessibility
     public string pageTitle;
+#pragma warning restore S1104 // Fields should not have public accessibility
 
     [ObservableProperty]
     ObservableRangeCollection<List<FavoriteContentViewModel>> contents;
@@ -38,9 +40,9 @@ public partial class FavoriteListViewModel : ViewModelBase
     private async Task FetchAsync()
     {
         FavoriteCount = await _pageService.GetFavoriteCountAsync();
-        var contents = await _pageService.GetFavoriteContentsAsync();
+        var favContents = await _pageService.GetFavoriteContentsAsync();
 
-        if (contents == null)
+        if (favContents == null)
         {
             await Shell.Current.DisplayAlert(
                 "Hiba",
@@ -50,9 +52,8 @@ public partial class FavoriteListViewModel : ViewModelBase
             return;
         }
 
-        var temp = ConvertToViewModels(contents);
-        var s = new List<List<FavoriteContentViewModel>> { temp.ToList() };
-        Contents.ReplaceRange(s);
+        var temp = ConvertToViewModels(favContents);
+        Contents.ReplaceRange(new List<List<FavoriteContentViewModel>> { temp.ToList() });
     }
 
     private List<FavoriteContentViewModel> ConvertToViewModels(IEnumerable<FavoriteContentEntity> items)
@@ -77,5 +78,5 @@ public partial class FavoriteListViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    public async Task Subscribe(FavoriteContentViewModel viewModel) => Task.Run(() => { });
+    public Task Subscribe(FavoriteContentViewModel viewModel) => Task.Run(() => { });
 }

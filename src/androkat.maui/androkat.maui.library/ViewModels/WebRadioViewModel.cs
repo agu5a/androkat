@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using androkat.maui.library.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
 using MvvmHelpers;
 
 namespace androkat.maui.library.ViewModels;
@@ -22,11 +23,11 @@ public partial class WebRadioViewModel : ViewModelBase
         await Task.Delay(1000);
         var s = new List<WebUrl>
         {
-            new WebUrl("Szent István Rádió", "http://online.szentistvanradio.hu:7000/adas", _browser),
-            new WebUrl("Katolikus Rádió", "http://katolikusradio.hu:9000/live_hi.mp3", _browser),
-            new WebUrl("Vatikáni Rádió", "https://media.vaticannews.va/media/audio/program/1900/ungherese_100623.mp3", _browser),
-            new WebUrl("Ez az a nap Rádió", "https://www.radioking.com/play/ez-az-a-nap-radio", _browser),
-            new WebUrl("Mária Rádió", "http://www.mariaradio.hu:8000/mr", _browser),
+            new WebUrl("Szent István Rádió", ConsValues.Szentistvanradio, _browser),
+            new WebUrl("Katolikus Rádió", ConsValues.Katolikusradio, _browser),
+            new WebUrl("Vatikáni Rádió", ConsValues.Vaticannews, _browser),
+            new WebUrl("Ez az a nap Rádió", ConsValues.EzAzANap, _browser),
+            new WebUrl("Mária Rádió", ConsValues.Mariaradio, _browser),
             new WebUrl("Mária Rádió Szerbia", "", _browser),
             new WebUrl("Mária Rádió Erdély", "", _browser),
             new WebUrl("Mária Rádió Szlovákia", "", _browser),

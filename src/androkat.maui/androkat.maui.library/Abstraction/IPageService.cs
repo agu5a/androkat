@@ -4,11 +4,15 @@ namespace androkat.maui.library.Abstraction;
 
 public interface IPageService
 {
+    Task<int> DeleteAllContentAndIma();
+    Task<int> DeleteAllFavorite();
     Task<int> DownloadAll();
     Task<ContentEntity> GetContentEntityByIdAsync(Guid id);
     Task<List<ContentEntity>> GetContentsAsync(string pageTypeId);
+    Task<int> GetContentsCount();
     Task<List<FavoriteContentEntity>> GetFavoriteContentsAsync();
     Task<int> GetFavoriteCountAsync();
     Task<List<ImadsagEntity>> GetImaContents();
+    Task<ImadsagEntity> GetImadsagEntityByIdAsync(Guid id);
     Task<int> InsertFavoriteContentAsync(FavoriteContentEntity favoriteContentEntity);
 }

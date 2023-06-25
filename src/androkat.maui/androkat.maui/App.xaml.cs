@@ -14,7 +14,7 @@ public partial class App : Application
 
         MainPage = new MobileShell();
 
-        Routing.RegisterRoute(nameof(ShowDetailPage), typeof(ShowDetailPage));
+        Routing.RegisterRoute(nameof(DetailPage), typeof(DetailPage));
     }
 
     Window window;

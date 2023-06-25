@@ -1,12 +1,29 @@
 ﻿namespace androkat.maui.library.Models;
 
-public class ConsValues
+public static class ConsValues
 {
-    public static string oldalSorrend = "oldalSorrend9"; //ha van új menüpont a menüben, akkor emelni kell a verziót!!
-    public static int defMaxOffline = 200;
+    public const string oldalSorrend = "oldalSorrend9"; //ha van új menüpont a menüben, akkor emelni kell a verziót!!
+    public const int defMaxOffline = 200;
+#pragma warning disable S1075 // URIs should not be hardcoded
+    public const string ApiUrl = "http://api.androkat.hu/";
+#pragma warning restore S1075 // URIs should not be hardcoded
+    public const string Szentistvanradio = "http://online.szentistvanradio.hu:7000/adas";
+    public const string Katolikusradio = "http://katolikusradio.hu:9000/live_hi.mp3";
+    public const string Vaticannews = "https://media.vaticannews.va/media/audio/program/1900/ungherese_100623.mp3";
+    public const string EzAzANap = "https://www.radioking.com/play/ez-az-a-nap-radio";
+    public const string Mariaradio = "http://www.mariaradio.hu:8000/mr";
+    public const string Katekizmus = "https://archiv.katolikus.hu/kek/";
+    public const string EBiblia = "http://szentiras.hu/";
+    public const string Zsolozsma = "http://zsolozsma.katolikus.hu/";
+    public const string MiseRend = "http://miserend.hu/";
+    public const string MegszenteltTer = "http://www.szentter.com/";
+    public const string BonumTv = "https://katolikus.tv/elo-adas/";
+    public const string LiturgiaTv = "https://liturgia.tv/";
 
-    public static string[] rssResourceName = new[]
+#pragma warning disable CS0133
+    public static readonly string[] rssResourceName = new[]
             {
+        
                     Activities.barsi.ToString(),
                     Activities.horvath.ToString(),
                     Activities.fokolare.ToString(),
@@ -21,9 +38,11 @@ public class ConsValues
                     Activities.kempis.ToString(),
                     Activities.taize.ToString(),
                     Activities.laciatya.ToString()
-            };
 
-    public static string[] szentekResourceName = new[]
+            };
+#pragma warning restore CS0133
+
+    public static readonly string[] szentekResourceName = new[]
             {
                     Activities.pio.ToString(),
                     Activities.janospal.ToString(),
@@ -37,14 +56,14 @@ public class ConsValues
                     Activities.sienaikatalin.ToString()
             };
 
-    public static string[] rssResourceNewsName = new[]
+    public static readonly string[] rssResourceNewsName = new[]
             {
                     Activities.kurir.ToString(),
                     Activities.bonumtv.ToString(),
                     Activities.keresztenyelet.ToString()
             };
 
-    public static string[] rssResourceAudioName = new[]
+    public static readonly string[] rssResourceAudioName = new[]
             {
                     Activities.prayasyougo.ToString(),
                     Activities.audiopalferi.ToString(),
@@ -54,7 +73,7 @@ public class ConsValues
                     Activities.audionapievangelium.ToString()
             };
 
-    public static string[] rssResourceMagazinName = new[]
+    public static readonly string[] rssResourceMagazinName = new[]
             {
                     Activities.b777.ToString(),
                     Activities.bkatolikusma.ToString(),

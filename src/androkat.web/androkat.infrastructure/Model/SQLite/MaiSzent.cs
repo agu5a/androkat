@@ -23,7 +23,8 @@ public class Maiszent
     {
         get
         {
-            return DateTime.TryParse((Datum == "02-29" ? "2024" : DateTime.UtcNow.ToString("yyyy")) + "-" + Datum, out DateTime date) ? date : DateTime.MinValue;
+            string year = (Datum == "02-29" ? "2024" : DateTime.UtcNow.ToString("yyyy"));
+            return DateTime.TryParse(year + "-" + Datum, out DateTime date) ? date : DateTime.MinValue;
             
         }
     }

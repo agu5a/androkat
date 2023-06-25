@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using androkat.maui.library.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
 using MvvmHelpers;
 
 namespace androkat.maui.library.ViewModels;
@@ -22,13 +23,13 @@ public partial class WebViewModel : ViewModelBase
         await Task.Delay(1000);
         var s = new List<WebUrl>
         {
-            new WebUrl("Katekizmus", "https://archiv.katolikus.hu/kek/", _browser),
-            new WebUrl("E-Biblia", "http://szentiras.hu/", _browser),
-            new WebUrl("Zsolozsma", "http://zsolozsma.katolikus.hu/", _browser),
-            new WebUrl("MiseRend", "http://miserend.hu/", _browser),
-            new WebUrl("Megszentelt tér", "http://www.szentter.com/", _browser),
-            new WebUrl("Bonum TV élő", "https://katolikus.tv/elo-adas/", _browser),
-            new WebUrl("liturgia.tv", "https://liturgia.tv/", _browser)
+            new WebUrl("Katekizmus", ConsValues.Katekizmus, _browser),
+            new WebUrl("E-Biblia", ConsValues.EBiblia, _browser),
+            new WebUrl("Zsolozsma", ConsValues.Zsolozsma, _browser),
+            new WebUrl("MiseRend", ConsValues.MiseRend, _browser),
+            new WebUrl("Megszentelt tér", ConsValues.MegszenteltTer, _browser),
+            new WebUrl("Bonum TV élő", ConsValues.BonumTv, _browser),
+            new WebUrl("liturgia.tv", ConsValues.LiturgiaTv, _browser)
         };
 
         Items.ReplaceRange(s);

@@ -6,7 +6,7 @@ namespace androkat.maui.library.Services;
 
 public class SourceDataMapper : ISourceData
 {
-    private readonly Dictionary<int, SourceData> _sources = new();
+    private readonly Dictionary<int, SourceData> _sources;
 
     public SourceDataMapper()
     {
@@ -30,7 +30,6 @@ public class SourceDataMapper : ISourceData
             using var stream = FileSystem.OpenAppPackageFileAsync("sources.json").Result;
             using var reader = new StreamReader(stream);
 
-            var data = new SourceData();
             var contents = reader.ReadToEnd();
 
             var result = JsonSerializer.Deserialize<SourcesImport>(contents);

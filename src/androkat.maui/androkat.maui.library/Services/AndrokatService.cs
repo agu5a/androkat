@@ -1,5 +1,6 @@
 ﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Helpers;
+using androkat.maui.library.Models;
 using androkat.maui.library.Models.Responses;
 using System.Text.Json;
 
@@ -14,7 +15,7 @@ public class AndrokatService : IAndrokatService
         if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             return new ImaResponse();
 
-        HttpClient client = GetClient();
+        client = GetClient();
 
         var response = await client.GetStringAsync($"v2/ima?date={date.ToString("yyyy-MM-dd")}");
 
@@ -28,7 +29,7 @@ public class AndrokatService : IAndrokatService
         if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             return new List<ContentResponse>();
 
-        HttpClient client = GetClient();
+        client = GetClient();
 
         var response = await client.GetStringAsync($"v3/contents?tipus={tipus}&id={nid}");
 
@@ -42,7 +43,7 @@ public class AndrokatService : IAndrokatService
         if (client != null)
             return client;
 
-        client = new HttpClient { BaseAddress = new Uri("http://api.androkat.hu/") };
+        client = new HttpClient { BaseAddress = new Uri(ConsValues.ApiUrl) };
         client.DefaultRequestHeaders.Accept.Clear();
         client.DefaultRequestHeaders.Add("Accept", "application/json");
 

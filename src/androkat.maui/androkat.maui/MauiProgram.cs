@@ -1,6 +1,7 @@
 ﻿using androkat.hu.Pages;
 using androkat.maui.library.Services;
 using androkat.maui.library.ViewModels;
+using CommunityToolkit.Maui;
 using MonkeyCache.FileStore;
 
 namespace androkat.hu;
@@ -12,6 +13,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
             .ConfigureEssentials()
             .ConfigureServices()
             .ConfigurePages()

@@ -8,6 +8,7 @@ using Microsoft.Maui;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -42,13 +43,13 @@ public class PageServiceTests
             Cim = "Test Cim",
             Idezet = "Test Idezet"
         };
-        repositoryMock.Setup(repo => repo.GetElmelkedesContentById(It.IsAny<Guid>())).ReturnsAsync(expectedContent).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentById(It.IsAny<Guid>())).ReturnsAsync(expectedContent).Verifiable();
 
-        var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
+        var pageService = new PageService(_downloadServiceMock.Object, repositoryMock.Object);
 
         var result = await pageService.GetContentEntityByIdAsync(expectedContent.Nid);
 
-        repositoryMock.Verify(repo => repo.GetElmelkedesContentById(expectedContent.Nid), Times.Once);
+        repositoryMock.Verify(repo => repo.GetContentById(expectedContent.Nid), Times.Once);
         Assert.Equal(expectedContent, result);
     }
 
@@ -61,7 +62,7 @@ public class PageServiceTests
             .ReturnsAsync(5);
 
         var repositoryMock = new Mock<IRepository>();
-        var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
+        var pageService = new PageService(_downloadServiceMock.Object, repositoryMock.Object);
 
         // Act
         var result = await pageService.DownloadAll();
@@ -83,7 +84,7 @@ public class PageServiceTests
         };
         var expectedCount = 1;
         repositoryMock.Setup(repo => repo.InsertFavoriteContent(It.IsAny<FavoriteContentEntity>())).ReturnsAsync(expectedCount).Verifiable();
-        var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
+        var pageService = new PageService(_downloadServiceMock.Object, repositoryMock.Object);
 
         var result = await pageService.InsertFavoriteContentAsync(favoriteContentEntity);
 
@@ -102,7 +103,7 @@ public class PageServiceTests
                 new FavoriteContentEntity {Nid = Guid.NewGuid(), Cim = "Test Cim 3", Idezet = "Test Idezet 3", Image = "Image3.png"}
             };
         repositoryMock.Setup(repo => repo.GetFavoriteContents()).ReturnsAsync(expectedContents).Verifiable();
-        var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
+        var pageService = new PageService(_downloadServiceMock.Object, repositoryMock.Object);
 
         var result = await pageService.GetFavoriteContentsAsync();
 
@@ -121,7 +122,7 @@ public class PageServiceTests
                 new ImadsagEntity {Nid = Guid.NewGuid(), Cim = "Test Cim 3", Content = "Test Content 3", Csoport = 3 }
             };
         repositoryMock.Setup(repo => repo.GetImaContents()).ReturnsAsync(expectedContents).Verifiable();
-        var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
+        var pageService = new PageService(_downloadServiceMock.Object, repositoryMock.Object);
 
         var result = await pageService.GetImaContents();
 
@@ -135,7 +136,7 @@ public class PageServiceTests
         var repositoryMock = new Mock<IRepository>();
         var expectedCount = 5;
         repositoryMock.Setup(repo => repo.GetFavoriteCount()).ReturnsAsync(expectedCount).Verifiable();
-        var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
+        var pageService = new PageService(_downloadServiceMock.Object, repositoryMock.Object);
 
         var result = await pageService.GetFavoriteCountAsync();
 
@@ -152,7 +153,7 @@ public class PageServiceTests
     [InlineData("6", nameof(IRepository.GetHumorContents))]
     [InlineData("8", nameof(IRepository.GetAudioContents))]
     [InlineData("11", nameof(IRepository.GetBookContents))]
-    [InlineData("0", nameof(IRepository.GetElmelkedesContents))]
+    [InlineData("0", nameof(IRepository.GetContents))]
     public async Task Test_GetContentsAsync(string pageTypeId, string methodName)
     {
         var repositoryMock = new Mock<IRepository>();
@@ -165,8 +166,8 @@ public class PageServiceTests
         repositoryMock.Setup(repo => repo.GetHumorContents()).ReturnsAsync(expectedContents).Verifiable();
         repositoryMock.Setup(repo => repo.GetAudioContents()).ReturnsAsync(expectedContents).Verifiable();
         repositoryMock.Setup(repo => repo.GetBookContents()).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetElmelkedesContents()).ReturnsAsync(expectedContents).Verifiable();
-        var pageService = new PageService(_androkatServiceMock.Object, _sourceDataMock.Object, _downloadServiceMock.Object, repositoryMock.Object);
+        repositoryMock.Setup(repo => repo.GetContents()).ReturnsAsync(expectedContents).Verifiable();
+        var pageService = new PageService(_downloadServiceMock.Object, repositoryMock.Object);
 
         var result = await pageService.GetContentsAsync(pageTypeId);
 
@@ -197,11 +198,30 @@ public class PageServiceTests
                 repositoryMock.Verify(x => x.GetBookContents(), Times.Once);
                 break;
             case "GetElmelkedesContents":
-                repositoryMock.Verify(x => x.GetElmelkedesContents(), Times.Once);
+                repositoryMock.Verify(x => x.GetContents(), Times.Once);
                 break;
         };
 
         Assert.IsType<List<ContentEntity>>(result);
         Assert.Equal(expectedContents, result);
+    }
+
+    [Fact]
+    public async Task Should_Delete_All_Content_And_Ima()
+    {
+        // Arrange
+        var repositoryMock = new Mock<IRepository>();
+        repositoryMock.Setup(repo => repo.DeleteAllContent()).ReturnsAsync(5).Verifiable();
+        repositoryMock.Setup(repo => repo.DeleteAllImadsag()).ReturnsAsync(40).Verifiable();
+
+        var pageService = new PageService(_downloadServiceMock.Object, repositoryMock.Object);
+
+        // Act
+        var result = await pageService.DeleteAllContentAndIma();
+
+        // Assert
+        repositoryMock.Verify(x => x.DeleteAllContent(), Times.Once);
+        repositoryMock.Verify(x => x.DeleteAllImadsag(), Times.Once);
+        Assert.Equal(45, result);
     }
 }

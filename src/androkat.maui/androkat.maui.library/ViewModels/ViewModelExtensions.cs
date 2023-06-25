@@ -11,7 +11,7 @@ public static class ViewModelExtensions
         builder.Services.AddSingleton<ContactViewModel>();
         builder.Services.AddSingleton<SettingsViewModel>();
         builder.Services.AddSingleton<ShellViewModel>();
-        builder.Services.AddTransient<ShowDetailViewModel>();
+        builder.Services.AddTransient<DetailViewModel>();
         builder.Services.AddTransient<IgeNaptarViewModel>();
         builder.Services.AddTransient<KeresztutViewModel>();
         builder.Services.AddTransient<VideoListViewModel>();

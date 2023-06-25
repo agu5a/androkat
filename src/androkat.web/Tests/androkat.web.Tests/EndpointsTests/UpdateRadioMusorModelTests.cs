@@ -10,12 +10,12 @@ using Xunit;
 namespace androkat.web.Tests.EndpointsTests;
 
 [Collection("Sequential")]
-public class UpdateRadioMusorModelTests : IClassFixture<CustomWebApplicationFactory<WebMarker>>
+public class UpdateRadioMusorModelTests : IClassFixture<CustomWebApplicationFactory<IWebMarker>>
 {
 	private readonly HttpClient _client;
     private const string _url = Constants.UpdateRadioMusorModelTestsUrl;
 
-	public UpdateRadioMusorModelTests(CustomWebApplicationFactory<WebMarker> factory)
+    public UpdateRadioMusorModelTests(CustomWebApplicationFactory<IWebMarker> factory)
 	{
 		_client = factory.CreateClient();
         _client.DefaultRequestHeaders.Add("X-API-Key", Constants.XAPIKey);

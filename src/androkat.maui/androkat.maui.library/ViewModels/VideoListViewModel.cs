@@ -8,19 +8,19 @@ namespace androkat.maui.library.ViewModels;
 
 public partial class VideoListViewModel : ViewModelBase
 {
-    private readonly IPageService _pageService;
     private IEnumerable<VideoItemViewModel> _contents;
     private readonly IBrowser _browser;
 
     [ObservableProperty]
+#pragma warning disable S1104 // Fields should not have public accessibility
     public string pageTitle;
+#pragma warning restore S1104 // Fields should not have public accessibility
 
     [ObservableProperty]
     ObservableRangeCollection<List<VideoItemViewModel>> contents;
 
-    public VideoListViewModel(IPageService pageService, IBrowser browser)
+    public VideoListViewModel(IBrowser browser)
     {
-        _pageService = pageService;
         Contents = new ObservableRangeCollection<List<VideoItemViewModel>>();
         _browser = browser;
     }
@@ -29,12 +29,12 @@ public partial class VideoListViewModel : ViewModelBase
     {
         //Delay on first load until window loads
         await Task.Delay(1000);
-        await FetchAsync();
+        FetchAsync();
     }
 
-    private async Task FetchAsync()
+    private void FetchAsync()
     {
-        var contents = new List<VideoEntity>
+        var entities = new List<VideoEntity>
         {
             new VideoEntity
             {
@@ -46,19 +46,9 @@ public partial class VideoListViewModel : ViewModelBase
                 Forras = "Androkat",
                 Cim = "Cím"
             }
-        };//await _pageService.GetContentsAsync(Id);
+        };
 
-        if (contents == null)
-        {
-            await Shell.Current.DisplayAlert(
-                "Hiba",
-                "Nincs adat",
-                "Bezárás");
-
-            return;
-        }
-
-        _contents = ConvertToViewModels(contents);
+        _contents = ConvertToViewModels(entities);
         var s = new List<List<VideoItemViewModel>> { _contents.ToList() };
         Contents.ReplaceRange(s);
     }
@@ -79,5 +69,5 @@ public partial class VideoListViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    async Task Subscribe(VideoItemViewModel viewModel) => Task.Run(() => { });
+    public Task Subscribe(VideoItemViewModel viewModel) => Task.Run(() => { });
 }

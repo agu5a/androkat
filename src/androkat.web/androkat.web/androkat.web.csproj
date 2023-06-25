@@ -4,6 +4,7 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<Version>2.58.0</Version>
 		<IsPackable>false</IsPackable>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -16,10 +17,14 @@
 		<PackageReference Include="FastEndpoints" Version="5.12.0" />
 		<PackageReference Include="FastEndpoints.ApiExplorer" Version="2.1.0" />
 		<PackageReference Include="FastEndpoints.Swagger.Swashbuckle" Version="2.1.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.8" />
 		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
 		<PackageReference Include="Serilog.Sinks.Logz.Io" Version="7.2.0" />
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.4.0.72892">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>

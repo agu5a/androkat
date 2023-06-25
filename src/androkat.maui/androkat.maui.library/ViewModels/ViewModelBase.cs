@@ -14,12 +14,6 @@ public partial class ViewModelBase : ObservableObject
     string icon;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsNotBusy))]
-    bool isBusy;
-
-    public bool IsNotBusy => !isBusy;
-
-    [ObservableProperty]
     bool canLoadMore;
 
     [ObservableProperty]

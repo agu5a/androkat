@@ -15,7 +15,7 @@ public partial class VideoItemViewModel : BaseView
     }
 
     [RelayCommand]
-    async Task NavigateToDetail()
+    async Task OpenVideoInBrowser()
     {
         var browserOptions = new BrowserLaunchOptions
         {

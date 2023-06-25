@@ -20,7 +20,7 @@ public class GetVideoByOffsetTests : BaseTest
     [TestCase(51)]
     public void API_GetVideoByOffset_V1_BadRequest(int offset)
     {
-        var apiV1 = new data.Controllers.Api(null, GetMapper());
+        var apiV1 = new data.Controllers.Api(null);
         var resV1 = apiV1.GetVideoByOffset(offset);
         dynamic s = resV1.Result;
         string result = s.Value;
@@ -46,7 +46,7 @@ public class GetVideoByOffsetTests : BaseTest
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, GetIMemoryCache(), cacheService.Object);
 
-        var apiV1 = new data.Controllers.Api(dec, GetMapper());
+        var apiV1 = new data.Controllers.Api(dec);
         ActionResult<List<VideoResponse>> resV1 = apiV1.GetVideoByOffset(0);
         dynamic sV1 = resV1.Result;
 
@@ -72,7 +72,7 @@ public class GetVideoByOffsetTests : BaseTest
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
 
-        var apiV1 = new data.Controllers.Api(dec, GetMapper());
+        var apiV1 = new data.Controllers.Api(dec);
         ActionResult<List<VideoResponse>> resV1 = apiV1.GetVideoByOffset(0);
         dynamic sV1 = resV1.Result;
 
@@ -92,7 +92,7 @@ public class GetVideoByOffsetTests : BaseTest
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
 
-        var apiV1 = new data.Controllers.Api(dec, GetMapper());
+        var apiV1 = new data.Controllers.Api(dec);
         ActionResult<List<VideoResponse>> resV1 = apiV1.GetVideoByOffset(0);
         dynamic sV1 = resV1.Result;
 

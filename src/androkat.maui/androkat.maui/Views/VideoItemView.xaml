@@ -9,7 +9,7 @@
     <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource CardviewbackDark}, Light={StaticResource Cardviewback}}">
         <Grid>
             <Grid.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NavigateToDetailCommand}" />
+                <TapGestureRecognizer Command="{Binding OpenVideoInBrowserCommand}" />
             </Grid.GestureRecognizers>
             <VerticalStackLayout VerticalOptions="FillAndExpand">
                 <Image 

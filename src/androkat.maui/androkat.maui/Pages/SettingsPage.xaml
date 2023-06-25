@@ -9,6 +9,7 @@
     
     x:Class="androkat.hu.Pages.SettingsPage">
 
+    <ScrollView VerticalOptions="FillAndExpand">
     <StackLayout Orientation="Vertical" Padding="15" Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}">
         <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
             <Label
@@ -29,7 +30,7 @@
         </Frame>
         <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
             <HorizontalStackLayout>
-                <Label Text="Téma választás"
+                <Label Text="Éjszakai téma"
                        FontSize="Large"
                        VerticalOptions="Center" 
                        HorizontalOptions="Start"
@@ -41,7 +42,7 @@
         <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
             <HorizontalStackLayout>
                 <Label Text="Max. tárolt offline elem"
-                       FontSize="Large"
+                       FontSize="Small"
                        VerticalOptions="Center" 
                        HorizontalOptions="Start"
                        Margin="0, 0, 20, 0" />
@@ -60,7 +61,32 @@
         <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
             <Button Text="Db" Clicked="Button_Clicked_1"></Button>
         </Frame>
+        <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
+            <Grid                
+                Padding="{OnIdiom Phone=10}"
+                ColumnDefinitions="auto, *"
+                ColumnSpacing="{OnIdiom Phone=15}"
+                RowDefinitions="auto,auto"
+                RowSpacing="{OnIdiom Phone=15}">
+                <Label Text="Offline adattörlés"
+                       Grid.Column="0"
+                       Grid.Row="0"
+                       FontSize="Small"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"
+                       Style="{OnIdiom Default={StaticResource BodyXLLabelStyle},Phone={StaticResource BodyLLabelStyle}}" />
+                <Button x:Name="DbDeleteButton" Text="Törlés" Clicked="Button_Clicked_2" HorizontalOptions="Fill"
+                        Grid.Column="1"
+                        Grid.Row="0">                    
+                </Button>
+                <Label Text="Offline adatbázisból minden korábban tárolt anyag törlése. A legközelebbi szinkronizáláskor az offline adatbázis fel lesz töltve a szerveren található legfrissebb anyagokkal. A Kedvencekben tárolt anyagok maradnak."
+                           LineBreakMode="WordWrap"                                                      
+                           FontSize="Small"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2"
+                           Grid.Row="1"></Label>
+            </Grid>            
+        </Frame>
     </StackLayout>
-
-
+    </ScrollView>
 </ContentPage>

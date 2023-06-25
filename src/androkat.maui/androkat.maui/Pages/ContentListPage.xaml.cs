@@ -5,6 +5,7 @@ namespace androkat.hu.Pages;
 public partial class ContentListPage : ContentPage
 {
     private ContentListViewModel ViewModel => BindingContext as ContentListViewModel;
+    private int _stackCount = 0;
 
     public ContentListPage(ContentListViewModel viewModel)
     {
@@ -12,25 +13,24 @@ public partial class ContentListPage : ContentPage
         BindingContext = viewModel;
     }
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-    }
-
     protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
         // Hack: Get the category Id
         ViewModel.Id = GetCategoryIdFromRoute();
         ViewModel.PageTitle = GetPageTitle(ViewModel.Id);
+        if (_stackCount != 2)
+        {
+            //Nem DetailPage-ről jöttünk viszsa, így üres oldallal indulunk
+            ViewModel.Contents.Clear();
+        }
         await ViewModel.InitializeAsync();
         base.OnNavigatedTo(args);
     }
 
-    protected override void OnDisappearing()
+    protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
     {
-        base.OnDisappearing();
-        //ViewModel.Contents.Clear();
-        //Navigation.RemovePage(this);
+        _stackCount = Application.Current.MainPage.Navigation.NavigationStack.Count;
+        base.OnNavigatedFrom(args);
     }
 
     private static string GetPageTitle(string pageTypeId)
