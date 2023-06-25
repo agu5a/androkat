@@ -37,6 +37,11 @@ public partial class FavoriteListViewModel : ViewModelBase
         await FetchAsync();
     }
 
+    public async Task<List<FavoriteContentEntity>> GetFavContentsAsync()
+    {
+        return await _pageService.GetFavoriteContentsAsync();
+    }
+
     private async Task FetchAsync()
     {
         FavoriteCount = await _pageService.GetFavoriteCountAsync();

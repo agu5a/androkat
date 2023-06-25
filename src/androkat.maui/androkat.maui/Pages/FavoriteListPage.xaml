@@ -32,21 +32,23 @@
                         WidthRequest="44"
                         Margin="0,0,5,0"
                         SemanticProperties.Description="Kedvencek import"
-                        Text="">
+                        Clicked="Button_Clicked_2"
+                        ImageSource="ic_import">
                 </Button>
                 <Button BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
                         SemanticProperties.Description="Kedvencek export"
                         HeightRequest="44"
                         WidthRequest="44"
                         Margin="0,0,5,0"
-                        Text="">                    
+                        Clicked="Button_Clicked_1"
+                        ImageSource="ic_export">                    
                 </Button>
                 <Button BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
                         SemanticProperties.Description="Kedvencek küldése"
                         HeightRequest="44"
                         WidthRequest="44"
                         Margin="0,0,5,0"
-                        Text="">
+                        ImageSource="ic_send_24dp2">
                 </Button>
             </HorizontalStackLayout>
             <Grid Background="{AppThemeBinding Light={StaticResource BackgroundActivity}, Dark={StaticResource BackgroundActivityDark}}">
