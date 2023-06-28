@@ -34,6 +34,8 @@ public static class WebApplicationExtensions
         app.UseProxy();
         app.SetHealthCheckEndpoint();
 
+        app.UseSecurityHeaders(); //adding security headers
+
         var provider = new FileExtensionContentTypeProvider();
         provider.Mappings[".epub"] = "application/epub+zip";
         app.UseStaticFiles(new StaticFileOptions
