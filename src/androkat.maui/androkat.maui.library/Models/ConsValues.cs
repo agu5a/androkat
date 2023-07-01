@@ -2,11 +2,11 @@
 
 public static class ConsValues
 {
+    public const string VERZIO = "version2";
     public const string oldalSorrend = "oldalSorrend9"; //ha van új menüpont a menüben, akkor emelni kell a verziót!!
     public const int defMaxOffline = 200;
 #pragma warning disable S1075 // URIs should not be hardcoded
     public const string ApiUrl = "http://api.androkat.hu/";
-#pragma warning restore S1075 // URIs should not be hardcoded
     public const string Szentistvanradio = "http://online.szentistvanradio.hu:7000/adas";
     public const string Katolikusradio = "http://katolikusradio.hu:9000/live_hi.mp3";
     public const string Vaticannews = "https://media.vaticannews.va/media/audio/program/1900/ungherese_100623.mp3";
@@ -19,8 +19,9 @@ public static class ConsValues
     public const string MegszenteltTer = "http://www.szentter.com/";
     public const string BonumTv = "https://katolikus.tv/elo-adas/";
     public const string LiturgiaTv = "https://liturgia.tv/";
+    public const string AndrokatMarket = "https://play.google.com/store/apps/details?id=hu.AndroKat"; //market://search?q=pname:hu.AndroKat
+#pragma warning restore S1075 // URIs should not be hardcoded
 
-#pragma warning disable CS0133
     public static readonly string[] rssResourceName = new[]
             {
         
@@ -40,7 +41,6 @@ public static class ConsValues
                     Activities.laciatya.ToString()
 
             };
-#pragma warning restore CS0133
 
     public static readonly string[] szentekResourceName = new[]
             {

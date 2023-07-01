@@ -1,4 +1,5 @@
 ﻿using androkat.maui.library.Abstraction;
+using androkat.maui.library.Helpers;
 using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,6 +13,7 @@ public partial class ContentListViewModel : ViewModelBase
 {
     private readonly IPageService _pageService;
     private readonly ISourceData _sourceData;
+    private readonly IAndrokatService _androkatService;
 
     public string Id { get; set; }
 
@@ -23,18 +25,39 @@ public partial class ContentListViewModel : ViewModelBase
     [ObservableProperty]
     ObservableRangeCollection<List<ContentItemViewModel>> contents;
 
-    public ContentListViewModel(IPageService pageService, ISourceData sourceData)
+    public ContentListViewModel(IPageService pageService, ISourceData sourceData, IAndrokatService androkatService)
     {
         _pageService = pageService;
         Contents = new ObservableRangeCollection<List<ContentItemViewModel>>();
         _sourceData = sourceData;
+        _androkatService = androkatService;
     }
 
     public async Task InitializeAsync()
     {
         //Delay on first load until window loads
         await Task.Delay(1000);
+        await CheckNewVersion();
         await FetchAsync();
+    }
+
+    private async Task CheckNewVersion()
+    {
+        if (Settings.LastUpdate < DateTime.Now.AddHours(-1))
+        {
+            _ = await _androkatService.GetServerInfo();
+
+            var newVersion = Preferences.Get("newversion", 0);
+            int curVersion = AppInfo.Version.Major;
+            if (curVersion < newVersion)
+            {
+                var result = await Shell.Current.DisplayAlert("Frissítés", "Új verzió érhető el. Szeretné frissíteni?", "Igen", "Nem");
+                if (result)
+                {
+                    await Browser.OpenAsync(ConsValues.AndrokatMarket);
+                }
+            }
+        }
     }
 
     private async Task FetchAsync()
