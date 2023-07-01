@@ -3,6 +3,7 @@ using androkat.web.Infrastructure;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
@@ -17,6 +18,11 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        options.AddServerHeader = false;
+    });
 
     builder.Host.UseSerilog((hostBuilderContext, loggerConfiguration) =>
     {
