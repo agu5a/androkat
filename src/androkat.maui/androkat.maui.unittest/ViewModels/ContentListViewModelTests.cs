@@ -15,11 +15,13 @@ public class ContentListViewModelTests
 {
     private readonly Mock<IPageService> _pageServiceMock;
     private readonly Mock<ISourceData> _sourceDataMock;
+    private readonly Mock<IAndrokatService> _androkatService;
 
     public ContentListViewModelTests()
     {
         _pageServiceMock = new Mock<IPageService>();
         _sourceDataMock = new Mock<ISourceData>();
+        _androkatService = new Mock<IAndrokatService>();
     }
 
     [Fact]
@@ -47,7 +49,7 @@ public class ContentListViewModelTests
 
         _sourceDataMock.Setup(x => x.GetSourcesFromMemory(It.IsAny<int>())).Returns(idezetSourceMock);
 
-        var viewModel = new ContentListViewModel(_pageServiceMock.Object, _sourceDataMock.Object);
+        var viewModel = new ContentListViewModel(_pageServiceMock.Object, _sourceDataMock.Object, _androkatService.Object);
 
         // Act
         await viewModel.InitializeAsync();
@@ -65,7 +67,7 @@ public class ContentListViewModelTests
     {
         //arrange
         var itemViewModelMock = new ContentItemViewModel(new ContentEntity(), false);
-        var viewModel = new ContentListViewModel(_pageServiceMock.Object, _sourceDataMock.Object);
+        var viewModel = new ContentListViewModel(_pageServiceMock.Object, _sourceDataMock.Object, _androkatService.Object);
 
         //act
         await viewModel.Subscribe(itemViewModelMock);

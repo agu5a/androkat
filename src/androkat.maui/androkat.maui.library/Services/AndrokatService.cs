@@ -10,6 +10,38 @@ public class AndrokatService : IAndrokatService
 {
     HttpClient client;
 
+    public async Task<List<ServerInfoResponse>> GetServerInfo()
+    {
+        if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            return new List<ServerInfoResponse>();
+
+        client = GetClient();
+
+        var response = await client.GetStringAsync("v2/ser");
+
+        var options = new JsonSerializerOptions();
+        options.Converters.Add(new DateTimeConverterUsingDateTimeParse());
+        var result = JsonSerializer.Deserialize<List<ServerInfoResponse>>(response, options);
+
+        foreach (var item in result)
+        {
+            switch (item.Key)
+            {
+                case ConsValues.VERZIO:
+                    Preferences.Set("newversion", int.Parse(item.Value));
+                    break;
+                case "website":
+                case "radio":
+                case "szentgellertkiado":
+                    Preferences.Set(item.Key, item.Value);
+                    break;
+            }
+        }
+
+        Settings.LastUpdate = DateTime.Now;
+        return result;
+    }
+
     public async Task<ImaResponse> GetImadsag(DateTime date)
     {
         if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)

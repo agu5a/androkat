@@ -2,6 +2,8 @@
 
 public static class Settings
 {
+    public static DateTime LastUpdate { get; set; } = DateTime.MinValue;
+
     public static AppTheme Theme
     {
         get
@@ -12,5 +14,5 @@ public static class Settings
             return Enum.Parse<AppTheme>(Preferences.Get(nameof(Theme), Enum.GetName(AppTheme.Light)));
         }
         set => Preferences.Set(nameof(Theme), value.ToString());
-    }   
+    }
 }
