@@ -13,10 +13,10 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
 		<PackageReference Include="MonkeyCache.FileStore" Version="2.0.1" />
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
-		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.4.0.72892">
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.5.0.73987">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>

@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace androkat.infrastructure.Model.SQLite;
@@ -24,7 +25,7 @@ public class Maiszent
         get
         {
             string year = (Datum == "02-29" ? "2024" : DateTime.UtcNow.ToString("yyyy"));
-            return DateTime.TryParse(year + "-" + Datum, out DateTime date) ? date : DateTime.MinValue;
+            return DateTime.TryParse(year + "-" + Datum, CultureInfo.CreateSpecificCulture("hu-HU"), out DateTime date) ? date : DateTime.MinValue;
             
         }
     }

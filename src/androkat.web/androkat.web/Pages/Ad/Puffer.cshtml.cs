@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace androkat.web.Pages.Ad;
 
@@ -108,7 +109,7 @@ public class PufferModel : PageModel
         }
 
         LastTodayResult = _adminRepository.GetLastTodayContentByTipus(TipusId.Value);
-        var newNapiolvaso = new ContentDetailsModel(Guid.Empty, DateTime.Parse(FullDatum + DateTime.Now.ToString(" HH:mm:ss")), 
+        var newNapiolvaso = new ContentDetailsModel(Guid.Empty, DateTime.Parse(FullDatum + DateTime.Now.ToString(" HH:mm:ss"), CultureInfo.CreateSpecificCulture("hu-HU")), 
             Cim, Idezet ?? "", TipusId.Value,
         _iClock.Now.Date, string.Empty, Image ?? "", FileUrl ?? "", Forras ?? "");
 
