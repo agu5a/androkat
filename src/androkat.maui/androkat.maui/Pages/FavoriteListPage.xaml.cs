@@ -55,7 +55,7 @@ public partial class FavoriteListPage : ContentPage
             ViewModel.PageTitle = "Kedvencek";
             await ViewModel.InitializeAsync();
 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            var cancellationTokenSource = new CancellationTokenSource();
             var toast = Toast.Make("Kedvencek adatbázis sikeresen törölve", ToastDuration.Short, 14d);
             await toast.Show(cancellationTokenSource.Token);
         }
@@ -110,7 +110,7 @@ public partial class FavoriteListPage : ContentPage
             string json = System.Text.Json.JsonSerializer.Serialize(list);
             File.WriteAllText(savePath, json);
 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            var cancellationTokenSource = new CancellationTokenSource();
             var toast = Toast.Make("Mentés sikerült", ToastDuration.Short, 14d);
             await toast.Show(cancellationTokenSource.Token);
         }
@@ -131,7 +131,7 @@ public partial class FavoriteListPage : ContentPage
             string fileContent = File.ReadAllText(fileResult.FullPath);
             var o = System.Text.Json.JsonSerializer.Deserialize<List<FavoriteContentEntity>>(fileContent);
 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            var cancellationTokenSource = new CancellationTokenSource();
             var toast = Toast.Make("Olvasás: " + o.Count, ToastDuration.Short, 14d);
             await toast.Show(cancellationTokenSource.Token);
         }

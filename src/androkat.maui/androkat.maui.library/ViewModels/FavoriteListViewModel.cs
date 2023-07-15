@@ -69,19 +69,22 @@ public partial class FavoriteListViewModel : ViewModelBase
             SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
             var origImg = item.Image;
             item.Image = idezetSource.Img;
-            var viewModel = new FavoriteContentViewModel(item, true);
-            viewModel.datum = $"Dátum: {item.Datum.ToString("yyyy-MM-dd")}";
-            viewModel.detailscim = idezetSource.Title;
-            viewModel.contentImg = origImg;
-            viewModel.isFav = false;
-            viewModel.forras = $"Forrás: {idezetSource.Forrasszoveg}";
-            viewModel.type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus));
+            var viewModel = new FavoriteContentViewModel(item)
+            {
+                datum = $"Dátum: {item.Datum:yyyy-MM-dd}",
+                detailscim = idezetSource.Title,
+                contentImg = origImg,
+                isFav = false,
+                forras = $"Forrás: {idezetSource.Forrasszoveg}",
+                type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus))
+            };
             viewmodels.Add(viewModel);
         }
 
         return viewmodels;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
     [RelayCommand]
     public Task Subscribe(FavoriteContentViewModel viewModel) => Task.Run(() => { });
 }

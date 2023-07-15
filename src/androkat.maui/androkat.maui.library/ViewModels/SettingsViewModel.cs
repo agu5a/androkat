@@ -13,11 +13,12 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     bool isDarkModeEnabled;
 
-    partial void OnIsDarkModeEnabledChanged(bool value) => ChangeUserAppTheme(value);
+    partial void OnIsDarkModeEnabledChanged(bool value) => SettingsViewModel.ChangeUserAppTheme(value);
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
     public string AppVersion => AppInfo.VersionString;
 
-    void ChangeUserAppTheme(bool activateDarkMode)
+    static void ChangeUserAppTheme(bool activateDarkMode)
     {
         Settings.Theme = activateDarkMode
             ? AppTheme.Dark

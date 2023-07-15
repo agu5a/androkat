@@ -14,8 +14,8 @@ namespace androkat.maui.library.tests.ViewModels;
 public class FavoriteListViewModelTests
 {
     private readonly FavoriteListViewModel _viewModel;
-    private readonly Mock<IPageService> _pageServiceMock = new Mock<IPageService>();
-    private readonly Mock<ISourceData> _sourceDataMock = new Mock<ISourceData>();
+    private readonly Mock<IPageService> _pageServiceMock = new();
+    private readonly Mock<ISourceData> _sourceDataMock = new();
 
     public FavoriteListViewModelTests()
     {
@@ -70,7 +70,7 @@ public class FavoriteListViewModelTests
     public async Task Subscribe_ShouldDoNothing()
     {
         //arrange
-        var itemViewModelMock = new FavoriteContentViewModel(new FavoriteContentEntity(), false);
+        var itemViewModelMock = new FavoriteContentViewModel(new FavoriteContentEntity());
 
         //act
         await _viewModel.Subscribe(itemViewModelMock);

@@ -49,7 +49,7 @@ public class AndrokatService : IAndrokatService
 
         client = GetClient();
 
-        var response = await client.GetStringAsync($"v2/ima?date={date.ToString("yyyy-MM-dd")}");
+        string response = await client.GetStringAsync($"v2/ima?date={date:yyyy-MM-dd}");
 
         var options = new JsonSerializerOptions();
         options.Converters.Add(new DateTimeConverterUsingDateTimeParse());

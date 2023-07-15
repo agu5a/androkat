@@ -149,7 +149,7 @@ public class DownloadService : IDownloadService
                 return 0;
 
             int result = 0;
-            var latestItem = await HasTodayData(act);
+            var (nid, exists) = await HasTodayData(act);
 
             //a news, blog és book mindig lekérdezve a szerverről az utolsó nid-del
             if (act == Activities.kurir
@@ -160,13 +160,13 @@ public class DownloadService : IDownloadService
                     || act == Activities.jezsuitablog
                     || act == Activities.book)
             {
-                result = await DownloadData(latestItem.nid.ToString(), act);
+                result = await DownloadData(nid.ToString(), act);
             }
             else
             {
                 //csak ha még nincs meg az aznapi
-                if (!latestItem.exists)
-                    result = await DownloadData(latestItem.nid.ToString(), act);
+                if (!exists)
+                    result = await DownloadData(nid.ToString(), act);
             }
 
             return result; // -1: nem érhető el az androkat.hu
@@ -256,11 +256,11 @@ public class DownloadService : IDownloadService
 
     private async Task<(Guid nid, bool exists)> HasTodayData(Activities type)
     {
-        var latestItem = await GetLatestFromLocalDb(type);
+        var (nid, datum) = await GetLatestFromLocalDb(type);
 
         try
         {
-            if (latestItem.datum == DateTime.MinValue)//nincs a db-ben adat
+            if (datum == DateTime.MinValue)//nincs a db-ben adat
                 return (Guid.Empty, false);
 
             bool isHasTodayData = false;
@@ -272,11 +272,11 @@ public class DownloadService : IDownloadService
             }
             else if (type == Activities.maiszent)
             {
-                isHasTodayData = IsSameAsToday(latestItem.datum, "MMdd");
+                isHasTodayData = IsSameAsToday(datum, "MMdd");
             }
             else if (type == Activities.fokolare)
             {
-                isHasTodayData = IsSameAsToday(latestItem.datum, "MM");
+                isHasTodayData = IsSameAsToday(datum, "MM");
             }
             else if (type != Activities.kurir
                     && type != Activities.bonumtv
@@ -285,17 +285,17 @@ public class DownloadService : IDownloadService
                     && type != Activities.bkatolikusma
                     && type != Activities.jezsuitablog
                     && type != Activities.book)
-                isHasTodayData = IsSameAsToday(latestItem.datum, "MM-dd");
+                isHasTodayData = IsSameAsToday(datum, "MM-dd");
 
             if (isHasTodayData)
-                return (latestItem.nid, true);
+                return (nid, true);
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"********************************** HasTodayData EXCEPTION! {ex}");
         }
 
-        return (latestItem.nid, false);
+        return (nid, false);
     }
 
     private async Task<ImaResponse> GetImaFromServer(DateTime date)
@@ -321,12 +321,14 @@ public class DownloadService : IDownloadService
                     var nid = response.Imak[i].Nid;
                     var csoport = response.Imak[i].Csoport;
 
-                    ImadsagResponse imadsag = new();
-                    imadsag.Title = title.Replace("<b>", "").Replace("</b>", "");
-                    imadsag.Content = content;
-                    imadsag.RecordDate = recordDate;
-                    imadsag.Nid = nid;
-                    imadsag.Csoport = csoport;
+                    ImadsagResponse imadsag = new()
+                    {
+                        Title = title.Replace("<b>", "").Replace("</b>", ""),
+                        Content = content,
+                        RecordDate = recordDate,
+                        Nid = nid,
+                        Csoport = csoport
+                    };
                     list.Add(imadsag);
                 }
                 catch (Exception ex)

@@ -18,7 +18,7 @@ public partial class SettingsPage : ContentPage
         _pageService = pageService;
     }
 
-    private void maxOffline_TextChanged(object sender, TextChangedEventArgs e)
+    private void MaxOffline_TextChanged(object sender, TextChangedEventArgs e)
     {
         if (!string.IsNullOrWhiteSpace(e.NewTextValue) && int.TryParse(e.NewTextValue, out int max) && max > 15)
         {
@@ -63,7 +63,7 @@ public partial class SettingsPage : ContentPage
             await DownloadAll();
             await SetDbButton();
 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            var cancellationTokenSource = new CancellationTokenSource();
             var toast = Toast.Make("Offline adatbázis sikeresen törölve.", ToastDuration.Short, 14d);            
             await toast.Show(cancellationTokenSource.Token);
         }

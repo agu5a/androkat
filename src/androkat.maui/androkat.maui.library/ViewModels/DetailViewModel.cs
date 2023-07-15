@@ -11,7 +11,7 @@ namespace androkat.maui.library.ViewModels;
 [QueryProperty(nameof(IsIma), nameof(IsIma))]
 public partial class DetailViewModel : ViewModelBase
 {
-    private CancellationTokenSource _cancellationTokenSource;
+    private readonly CancellationTokenSource _cancellationTokenSource;
     private Guid _contentGuid;
     private readonly IPageService _pageService;
     private readonly ISourceData _sourceData;
@@ -62,9 +62,9 @@ public partial class DetailViewModel : ViewModelBase
             SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
             var origImg = item.Image;
             item.Image = idezetSource.Img;
-            var viewModel = new ContentItemViewModel(item, true)
+            var viewModel = new ContentItemViewModel(item)
             {
-                datum = $"<b>Dátum</b>: {item.Datum.ToString("yyyy-MM-dd")}",
+                datum = $"<b>Dátum</b>: {item.Datum:yyyy-MM-dd}",
                 detailscim = idezetSource.Title,
                 contentImg = origImg,
                 isFav = false,
@@ -89,7 +89,7 @@ public partial class DetailViewModel : ViewModelBase
         {
             Cim = ima.Cim,
             Idezet = ima.Content,
-        }, true)
+        })
         {
             datum = "",
             detailscim = ima.Cim,
@@ -133,8 +133,8 @@ public partial class DetailViewModel : ViewModelBase
                 menu.findItem(R.id.speak).setIcon(drawable)*/
 
 
-        var title = Regex.Replace(ContentView.ContentEntity.Cim, "<.*?>", String.Empty);
-        var idezet = Regex.Replace(ContentView.ContentEntity.Idezet, "<.*?>", String.Empty);
+        var title = TitleRegex().Replace(ContentView.ContentEntity.Cim, String.Empty);
+        var idezet = IdezetRegex().Replace(ContentView.ContentEntity.Idezet, String.Empty);
         IEnumerable<Locale> locales = await TextToSpeech.Default.GetLocalesAsync();
 
         var locale = locales.FirstOrDefault(w => w.Country.ToLower() == "hu" && w.Language.ToLower() == "hu");
@@ -192,4 +192,9 @@ public partial class DetailViewModel : ViewModelBase
             Text = ContentView.ContentEntity.Idezet
         });
     }
+
+    [GeneratedRegex("<.*?>")]
+    private static partial Regex TitleRegex();
+    [GeneratedRegex("<.*?>")]
+    private static partial Regex IdezetRegex();
 }

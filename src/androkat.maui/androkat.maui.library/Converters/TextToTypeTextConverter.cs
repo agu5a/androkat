@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace androkat.maui.library.Converters;
 
-public class TextToTypeTextConverter : IValueConverter
+public partial class TextToTypeTextConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -19,8 +19,11 @@ public class TextToTypeTextConverter : IValueConverter
         throw new NotImplementedException();
     }
 
-    private bool ContainsHTML(string text)
+    private static bool ContainsHTML(string text)
     {
-        return !string.IsNullOrWhiteSpace(text) && Regex.IsMatch(text, "<(.|\n)*?>");
+        return !string.IsNullOrWhiteSpace(text) && HtmlRegex().IsMatch(text);
     }
+
+    [GeneratedRegex("<(.|\n)*?>")]
+    private static partial Regex HtmlRegex();
 }

@@ -14,6 +14,7 @@ public partial class ContentListViewModel : ViewModelBase
     private readonly IPageService _pageService;
     private readonly ISourceData _sourceData;
     private readonly IAndrokatService _androkatService;
+    private readonly IHelperSharedPreferences _helperSharedPreferences;
 
     public string Id { get; set; }
 
@@ -25,12 +26,13 @@ public partial class ContentListViewModel : ViewModelBase
     [ObservableProperty]
     ObservableRangeCollection<List<ContentItemViewModel>> contents;
 
-    public ContentListViewModel(IPageService pageService, ISourceData sourceData, IAndrokatService androkatService)
+    public ContentListViewModel(IPageService pageService, ISourceData sourceData, IAndrokatService androkatService, IHelperSharedPreferences helperSharedPreferences)
     {
         _pageService = pageService;
         Contents = new ObservableRangeCollection<List<ContentItemViewModel>>();
         _sourceData = sourceData;
         _androkatService = androkatService;
+        _helperSharedPreferences = helperSharedPreferences;
     }
 
     public async Task InitializeAsync()
@@ -47,8 +49,8 @@ public partial class ContentListViewModel : ViewModelBase
         {
             _ = await _androkatService.GetServerInfo();
 
-            var newVersion = Preferences.Get("newversion", 0);
-            int curVersion = AppInfo.Version.Major;
+            var newVersion = _helperSharedPreferences.GetSharedPreferencesInt("newversion", 0);
+            int curVersion = _pageService.GetVersion();
             if (curVersion < newVersion)
             {
                 var result = await Shell.Current.DisplayAlert("Frissítés", "Új verzió érhető el. Szeretné frissíteni?", "Igen", "Nem");
@@ -83,9 +85,9 @@ public partial class ContentListViewModel : ViewModelBase
             SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
             var origImg = item.Image;
             item.Image = idezetSource.Img;
-            var viewModel = new ContentItemViewModel(item, true)
+            var viewModel = new ContentItemViewModel(item)
             {
-                datum = $"Dátum: {item.Datum.ToString("yyyy-MM-dd")}",
+                datum = $"Dátum: {item.Datum:yyyy-MM-dd}",
                 detailscim = idezetSource.Title,
                 contentImg = origImg,
                 isFav = false,
@@ -98,6 +100,7 @@ public partial class ContentListViewModel : ViewModelBase
         return viewmodels;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
     [RelayCommand]
     public Task Subscribe(ContentItemViewModel viewModel) => Task.Run(() => { });
 }

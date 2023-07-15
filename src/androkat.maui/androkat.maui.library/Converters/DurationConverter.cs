@@ -14,8 +14,8 @@ public class DurationConverter : IValueConverter
         {
             try
             {
-                var duration = TimeSpan.Parse(stringValue);
-                result = $"{duration.TotalMinutes.ToString("N0")} min";
+                var duration = TimeSpan.Parse(stringValue, CultureInfo.CurrentCulture);
+                result = $"{duration.TotalMinutes:N0} min";
             }
             catch (Exception)
             {

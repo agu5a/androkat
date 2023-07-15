@@ -7,7 +7,7 @@ public partial class FavoriteContentViewModel : BaseView
 {
     public FavoriteContentEntity ContentEntity { get; set; }
 
-    public FavoriteContentViewModel(FavoriteContentEntity contentEntity, bool isSubscribed)
+    public FavoriteContentViewModel(FavoriteContentEntity contentEntity)
     {
         ContentEntity = contentEntity;
     }

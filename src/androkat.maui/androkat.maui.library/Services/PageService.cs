@@ -92,8 +92,15 @@ public class PageService : IPageService
         };
     }
 
+    public int GetVersion()
+    {
+        return AppInfo.Version.Major;
+    }
+
 #pragma warning disable S1144 // Unused private types or members should be removed
+#pragma warning disable IDE0051 // Remove unused private members
     private Task<T> TryGetAsync<T>(string path)
+#pragma warning restore IDE0051 // Remove unused private members
 #pragma warning restore S1144 // Unused private types or members should be removed
     {
         if (firstLoad)

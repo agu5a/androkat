@@ -52,7 +52,7 @@ public class ImaListViewModelTests
     public async Task Subscribe_ShouldDoNothing()
     {
         //arrange
-        var itemViewModelMock = new ImaContentViewModel(new ImadsagEntity(), false);
+        var itemViewModelMock = new ImaContentViewModel(new ImadsagEntity());
         var viewModel = new ImaListViewModel(_pageServiceMock.Object);
 
         //act

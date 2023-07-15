@@ -14,10 +14,10 @@ namespace androkat.maui.unittest.Services;
 
 public class DownloadServiceTests
 {
-    private Mock<IAndrokatService> androkatService;
-    private Mock<IRepository> repository;
-    private Mock<IHelperSharedPreferences> helperSharedPreferences;
-    private Mock<ISourceData> sourceData;
+    private readonly Mock<IAndrokatService> androkatService;
+    private readonly Mock<IRepository> repository;
+    private readonly Mock<IHelperSharedPreferences> helperSharedPreferences;
+    private readonly Mock<ISourceData> sourceData;
 
     public DownloadServiceTests()
     {

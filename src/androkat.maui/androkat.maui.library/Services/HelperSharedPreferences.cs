@@ -42,7 +42,8 @@ internal class HelperSharedPreferences : IHelperSharedPreferences
 
     public int GetSharedPreferencesInt(string key, int _default)
     {
-        throw new NotImplementedException();
+        var preferences = Preferences.Get(key, _default);
+        return preferences;
     }
 
     public int GetTextSize()

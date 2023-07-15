@@ -63,10 +63,12 @@ public partial class ContentItemView
         base.OnBindingContextChanged();
 
 #pragma warning disable S1481 // Unused local variables should be removed
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
         if (BindingContext is not ContentItemViewModel viewModel)
         {
             return;
         }
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
 #pragma warning restore S1481 // Unused local variables should be removed
 
         //viewModel.InitializeCommand.Execute(null)

@@ -7,7 +7,7 @@ public partial class ContentItemViewModel : BaseView
 {
     public ContentEntity ContentEntity { get; set; }
 
-    public ContentItemViewModel(ContentEntity contentEntity, bool isSubscribed)
+    public ContentItemViewModel(ContentEntity contentEntity)
     {
         ContentEntity = contentEntity;
     }

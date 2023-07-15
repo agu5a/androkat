@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using MvvmHelpers;
+using System.Globalization;
 
 namespace androkat.maui.library.ViewModels;
 
@@ -7,8 +8,8 @@ public partial class IgeNaptarViewModel : ViewModelBase
 {
     public IgeNaptarViewModel()
     {
-        MinDate = new DateTime(DateTime.Now.Year, 1, 1);
-        MaxDate = new DateTime(DateTime.Now.Year, 12, 31);
+        MinDate = new DateTime(DateTime.Now.Year, 1, 1, 0, 0, 0, DateTimeKind.Local);
+        MaxDate = new DateTime(DateTime.Now.Year, 12, 31, 0, 0, 0, DateTimeKind.Local);
         SelectedDate = DateTime.Now;
         Contents = new ObservableRangeCollection<IgeNaptarView>();
     }

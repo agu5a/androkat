@@ -7,7 +7,7 @@ public partial class ImaContentViewModel : BaseView
 {
     public ImadsagEntity ContentEntity { get; set; }
 
-    public ImaContentViewModel(ImadsagEntity contentEntity, bool isSubscribed)
+    public ImaContentViewModel(ImadsagEntity contentEntity)
     {
         ContentEntity = contentEntity;
     }

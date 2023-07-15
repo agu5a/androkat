@@ -14,5 +14,6 @@ public interface IPageService
     Task<int> GetFavoriteCountAsync();
     Task<List<ImadsagEntity>> GetImaContents();
     Task<ImadsagEntity> GetImadsagEntityByIdAsync(Guid id);
+    int GetVersion();
     Task<int> InsertFavoriteContentAsync(FavoriteContentEntity favoriteContentEntity);
 }

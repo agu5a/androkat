@@ -17,9 +17,9 @@ namespace androkat.maui.unittest.Services;
 public class PageServiceTests
 {
     private readonly IServiceScopeFactory _factory;
-    private Mock<ISourceData> _sourceDataMock = new Mock<ISourceData>();
-    private Mock<IAndrokatService> _androkatServiceMock = new Mock<IAndrokatService>();
-    private Mock<IDownloadService> _downloadServiceMock = new Mock<IDownloadService>();
+    private readonly Mock<ISourceData> _sourceDataMock = new();
+    private readonly Mock<IAndrokatService> _androkatServiceMock = new();
+    private readonly Mock<IDownloadService> _downloadServiceMock = new();
 
     public PageServiceTests()
     {

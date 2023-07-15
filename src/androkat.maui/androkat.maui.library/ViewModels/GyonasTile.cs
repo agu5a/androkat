@@ -14,24 +14,19 @@ public partial class GyonasTile : ObservableObject
     public string Name { get; }
     public string Icon { get; }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
     [RelayCommand]
     Task Navigate(string page)
     {
-        switch (page)
+        return page switch
         {
-            case "LELKI TÜKÖR":
-                return Shell.Current.DisplayAlert("Hiba", "LELKI TÜKÖR Nincs még kész", "Bezárás");
-            case "GYÓNÁS":
-                return Shell.Current.DisplayAlert("Hiba", "GYÓNÁS Nincs még kész", "Bezárás");
-            case "ELMÉLKEDÉS":
-                return Shell.Current.DisplayAlert("Hiba", "ELMÉLKEDÉS Nincs még kész", "Bezárás");
-            case "IMA":
-                return Shell.Current.DisplayAlert("Hiba", "IMA Nincs még kész", "Bezárás");
-            case "JEGYZET":
-                return Shell.Current.DisplayAlert("Hiba", "JEGYZET Nincs még kész", "Bezárás");
-            default: //TÖRLÉS
-                return Shell.Current.DisplayAlert("Hiba", "TÖRLÉS Nincs még kész", "Bezárás");
-
-        }
+            "LELKI TÜKÖR" => Shell.Current.DisplayAlert("Hiba", "LELKI TÜKÖR Nincs még kész", "Bezárás"),
+            "GYÓNÁS" => Shell.Current.DisplayAlert("Hiba", "GYÓNÁS Nincs még kész", "Bezárás"),
+            "ELMÉLKEDÉS" => Shell.Current.DisplayAlert("Hiba", "ELMÉLKEDÉS Nincs még kész", "Bezárás"),
+            "IMA" => Shell.Current.DisplayAlert("Hiba", "IMA Nincs még kész", "Bezárás"),
+            "JEGYZET" => Shell.Current.DisplayAlert("Hiba", "JEGYZET Nincs még kész", "Bezárás"),
+            //TÖRLÉS
+            _ => Shell.Current.DisplayAlert("Hiba", "TÖRLÉS Nincs még kész", "Bezárás"),
+        };
     }
 }

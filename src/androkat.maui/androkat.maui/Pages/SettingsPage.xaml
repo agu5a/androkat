@@ -51,7 +51,7 @@
                    Keyboard="Numeric"
                    Text="{Binding MaxOffline}"
                    Placeholder="max 1000"
-                   TextChanged="maxOffline_TextChanged"  />
+                   TextChanged="MaxOffline_TextChanged"  />
             </HorizontalStackLayout>
         </Frame>
         <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">

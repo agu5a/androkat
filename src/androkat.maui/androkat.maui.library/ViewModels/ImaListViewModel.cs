@@ -51,22 +51,25 @@ public partial class ImaListViewModel : ViewModelBase
         Contents.ReplaceRange(s);
     }
 
-    private List<ImaContentViewModel> ConvertToViewModels(IEnumerable<ImadsagEntity> items)
+    private static List<ImaContentViewModel> ConvertToViewModels(IEnumerable<ImadsagEntity> items)
     {
         var viewmodels = new List<ImaContentViewModel>();
         foreach (var item in items)
         {
-            var viewModel = new ImaContentViewModel(item, true);
-            viewModel.datum = $"Dátum: {item.Datum.ToString("yyyy-MM-dd")}";
-            viewModel.detailscim = "Imádságok";
-            viewModel.isFav = false;
-            viewModel.type = Activities.ima;
+            var viewModel = new ImaContentViewModel(item)
+            {
+                datum = $"Dátum: {item.Datum:yyyy-MM-dd}",
+                detailscim = "Imádságok",
+                isFav = false,
+                type = Activities.ima
+            };
             viewmodels.Add(viewModel);
         }
 
         return viewmodels;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
     [RelayCommand]
     public Task Subscribe(ImaContentViewModel viewModel) => Task.Run(() => { });
 }
