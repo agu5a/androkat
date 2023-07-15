@@ -12,7 +12,7 @@ namespace androkat.infrastructure.Tests;
 
 public class BaseTest
 {
-    public ContentMetaDataModel GetContentMetaDataModel(Forras? tipusId, string tipusNev = null, string forras = null, 
+    public static ContentMetaDataModel GetContentMetaDataModel(Forras? tipusId, string tipusNev = null, string forras = null, 
         string link = null, string segedlink = null, string image = null)
     {
         return new ContentMetaDataModel(tipusId ?? Forras.pio, tipusNev ?? "", forras ?? "", link ?? "", segedlink ?? "", image ?? "");
@@ -29,7 +29,7 @@ public class BaseTest
 		return clock;
 	}
 
-	public IMemoryCache GetIMemoryCache()
+	public static IMemoryCache GetIMemoryCache()
 	{
 		var services = new ServiceCollection();
 		services.AddMemoryCache();
@@ -38,7 +38,7 @@ public class BaseTest
 		return memoryCache;
 	}
 
-	public DbContextOptions<AndrokatContext> GetDbContextOptions()
+	public static DbContextOptions<AndrokatContext> GetDbContextOptions()
 	{
 		return new DbContextOptionsBuilder<AndrokatContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
 	}

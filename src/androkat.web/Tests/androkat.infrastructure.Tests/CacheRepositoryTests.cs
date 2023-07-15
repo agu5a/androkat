@@ -25,20 +25,18 @@ public class CacheRepositoryTests : BaseTest
 
         var clock = GetToday();
 
-        using (var context = new AndrokatContext(GetDbContextOptions()))
+        using var context = new AndrokatContext(GetDbContextOptions());
+        var entity = new FixContent
         {
-            var entity = new FixContent
-            {
-                Datum = "02-03",
-                Tipus = (int)Forras.humor
-            };
-            context.FixContent.Add(entity);
-            context.SaveChanges();
+            Datum = "02-03",
+            Tipus = (int)Forras.humor
+        };
+        context.FixContent.Add(entity);
+        context.SaveChanges();
 
-            var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
-            var result = repo.GetHumorToCache();
-            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
-        }
+        var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
+        var result = repo.GetHumorToCache();
+        result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
     }
 
     [TestCase((int)Forras.humor)]
@@ -52,27 +50,25 @@ public class CacheRepositoryTests : BaseTest
 
         var clock = GetToday();
 
-        using (var context = new AndrokatContext(GetDbContextOptions()))
+        using var context = new AndrokatContext(GetDbContextOptions());
+        var entity = new FixContent
         {
-            var entity = new FixContent
-            {
-                Datum = "02-03",
-                Tipus = tipus
-            };
-            context.FixContent.Add(entity);
-            context.SaveChanges();
+            Datum = "02-03",
+            Tipus = tipus
+        };
+        context.FixContent.Add(entity);
+        context.SaveChanges();
 
-            var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
-            var result = repo.GetNapiFixToCache();
-            if (tipus == (int)Forras.pio)
-            {
-                result.Count().Should().Be(1);  
-                result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
-            }
-            else
-            {
-                result.Count().Should().Be(0);
-            }
+        var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
+        var result = repo.GetNapiFixToCache();
+        if (tipus == (int)Forras.pio)
+        {
+            result.Count.Should().Be(1);
+            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
+        }
+        else
+        {
+            result.Count.Should().Be(0);
         }
     }
 
@@ -86,21 +82,19 @@ public class CacheRepositoryTests : BaseTest
 
 		var clock = GetToday();
 
-		using (var context = new AndrokatContext(GetDbContextOptions()))
-		{
-			var entity = new FixContent
-			{
-				Datum = "02-03",
-				Tipus = 1000 //invalid tipus
-			};
-			context.FixContent.Add(entity);
-			context.SaveChanges();
+        using var context = new AndrokatContext(GetDbContextOptions());
+        var entity = new FixContent
+        {
+            Datum = "02-03",
+            Tipus = 1000 //invalid tipus
+        };
+        context.FixContent.Add(entity);
+        context.SaveChanges();
 
-			var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
-			var result = repo.GetNapiFixToCache();
-			result.Should().BeEmpty();			
-		}
-	}
+        var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
+        var result = repo.GetNapiFixToCache();
+        result.Should().BeEmpty();
+    }
 
 	[Test]
     public void GetMaiSzentToCache_Ma_Happy()
@@ -112,19 +106,17 @@ public class CacheRepositoryTests : BaseTest
 
         var clock = GetToday();
 
-        using (var context = new AndrokatContext(GetDbContextOptions()))
+        using var context = new AndrokatContext(GetDbContextOptions());
+        var entity = new Maiszent
         {
-            var entity = new Maiszent
-            {
-                Datum = "02-03"
-            };
-            context.MaiSzent.Add(entity);
-            context.SaveChanges();
+            Datum = "02-03"
+        };
+        context.MaiSzent.Add(entity);
+        context.SaveChanges();
 
-            var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
-            var result = repo.GetMaiSzentToCache();
-            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
-        }
+        var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
+        var result = repo.GetMaiSzentToCache();
+        result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
     }
 
     [Test]
@@ -137,19 +129,17 @@ public class CacheRepositoryTests : BaseTest
 
         var clock = GetToday();
 
-        using (var context = new AndrokatContext(GetDbContextOptions()))
+        using var context = new AndrokatContext(GetDbContextOptions());
+        var entity = new Maiszent
         {
-            var entity = new Maiszent
-            {
-                Datum = "02-02"
-            };
-            context.MaiSzent.Add(entity);
-            context.SaveChanges();
+            Datum = "02-02"
+        };
+        context.MaiSzent.Add(entity);
+        context.SaveChanges();
 
-            var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
-            var result = repo.GetMaiSzentToCache();
-            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
-        }
+        var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
+        var result = repo.GetMaiSzentToCache();
+        result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
     }
 
     [Test]
@@ -162,19 +152,17 @@ public class CacheRepositoryTests : BaseTest
 
         var clock = GetToday();
 
-        using (var context = new AndrokatContext(GetDbContextOptions()))
+        using var context = new AndrokatContext(GetDbContextOptions());
+        var entity = new Maiszent
         {
-            var entity = new Maiszent
-            {
-                Datum = "01-31"
-            };
-            context.MaiSzent.Add(entity);
-            context.SaveChanges();
+            Datum = "01-31"
+        };
+        context.MaiSzent.Add(entity);
+        context.SaveChanges();
 
-            var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
-            var result = repo.GetMaiSzentToCache();
-            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
-        }
+        var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
+        var result = repo.GetMaiSzentToCache();
+        result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + entity.Datum);
     }
 
     [Test]
@@ -187,20 +175,18 @@ public class CacheRepositoryTests : BaseTest
 
         var clock = GetToday();
 
-        using (var context = new AndrokatContext(GetDbContextOptions()))
+        using var context = new AndrokatContext(GetDbContextOptions());
+        var entity = new Content
         {
-            var entity = new Content
-            {
-                Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03",
-                Tipus = (int)Forras.audiohorvath
-            };
-            context.Content.Add(entity);
-            context.SaveChanges();
+            Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03",
+            Tipus = (int)Forras.audiohorvath
+        };
+        context.Content.Add(entity);
+        context.SaveChanges();
 
-            var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
-            var result = repo.GetContentDetailsModelToCache();
-            result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-02-03"));
-        }        
+        var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
+        var result = repo.GetContentDetailsModelToCache();
+        result.First().Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-02-03"));
     }
 
 	[Test]
@@ -213,22 +199,20 @@ public class CacheRepositoryTests : BaseTest
 
 		var clock = GetToday();
 
-		using (var context = new AndrokatContext(GetDbContextOptions()))
-		{
-			var entity = new VideoContent
-			{
-				Forras = "Forras",
-				ChannelId = "ChannelId"
-			};
-			context.VideoContent.Add(entity);
-			context.SaveChanges();
+        using var context = new AndrokatContext(GetDbContextOptions());
+        var entity = new VideoContent
+        {
+            Forras = "Forras",
+            ChannelId = "ChannelId"
+        };
+        context.VideoContent.Add(entity);
+        context.SaveChanges();
 
-			var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
-			var result = repo.GetVideoSourceToCache();
-			result.First().ChannelName.Should().Be("Forras");
-			result.First().ChannelId.Should().Be("ChannelId");
-		}
-	}
+        var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
+        var result = repo.GetVideoSourceToCache();
+        result.First().ChannelName.Should().Be("Forras");
+        result.First().ChannelId.Should().Be("ChannelId");
+    }
 
 	[Test]
 	public void GetVideoToCache_Happy()
@@ -240,21 +224,19 @@ public class CacheRepositoryTests : BaseTest
 
 		var clock = GetToday();
 
-		using (var context = new AndrokatContext(GetDbContextOptions()))
-		{
-			var entity = new VideoContent
-			{
-				Forras = "Forras",
-				ChannelId = "ChannelId",
-                Inserted = clock.Object.Now.DateTime
-			};
-			context.VideoContent.Add(entity);
-			context.SaveChanges();
+        using var context = new AndrokatContext(GetDbContextOptions());
+        var entity = new VideoContent
+        {
+            Forras = "Forras",
+            ChannelId = "ChannelId",
+            Inserted = clock.Object.Now.DateTime
+        };
+        context.VideoContent.Add(entity);
+        context.SaveChanges();
 
-			var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
-			var result = repo.GetVideoToCache();
-			result.First().Forras.Should().Be("Forras");
-			result.First().Inserted.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-02-03"));
-		}
-	}
+        var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
+        var result = repo.GetVideoToCache();
+        result.First().Forras.Should().Be("Forras");
+        result.First().Inserted.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-02-03"));
+    }
 }

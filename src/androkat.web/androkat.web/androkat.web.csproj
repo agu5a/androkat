@@ -17,7 +17,7 @@
 		<PackageReference Include="FastEndpoints" Version="5.13.0" />
 		<PackageReference Include="FastEndpoints.ApiExplorer" Version="2.1.0" />
 		<PackageReference Include="FastEndpoints.Swagger.Swashbuckle" Version="2.1.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.9" />
 		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
 		<PackageReference Include="Serilog.Sinks.Logz.Io" Version="7.2.0" />
@@ -25,7 +25,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.19.0" />
+		<PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.20.0" />
 	</ItemGroup>
 
 	<ItemGroup>

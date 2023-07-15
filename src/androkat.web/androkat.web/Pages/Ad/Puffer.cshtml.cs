@@ -162,7 +162,7 @@ public class PufferModel : PageModel
             switch (tipus)
             {
                 case 15: // Napi útra való
-                    FileUrl = string.IsNullOrWhiteSpace(FileUrl) ? $"https://androkat.hu/download/{DateTime.Now.ToString("MM_dd")}.mp3" : FileUrl;
+                    FileUrl = string.IsNullOrWhiteSpace(FileUrl) ? $"https://androkat.hu/download/{DateTime.Now:MM_dd}.mp3" : FileUrl;
                     break;
                 case 38: //barsi audio
                     FileUrl = string.IsNullOrWhiteSpace(FileUrl) ? "https://androkat.hu/download/" : FileUrl;
@@ -193,7 +193,7 @@ public class PufferModel : PageModel
                 Cim = res.Cim;
                 break;
             case (int)domain.Enum.Forras.laciatya:                            
-                Cim = $"{DateTime.Now.ToString("yyyy-MM-dd")} {DayReplace(DateTime.Now.DayOfWeek.ToString())}";
+                Cim = $"{DateTime.Now:yyyy-MM-dd} {DayReplace(DateTime.Now.DayOfWeek.ToString())}";
                 break;
         }
     }

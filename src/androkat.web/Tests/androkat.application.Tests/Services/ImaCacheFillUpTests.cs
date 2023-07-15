@@ -31,7 +31,7 @@ public class ImaCacheFillUpTests : BaseTest
 		var cacheService = new CacheService(cacheRepository.Object, new Mock<ILogger<CacheService>>().Object, clock.Object);
 		var res = cacheService.ImaCacheFillUp();
 
-		Assert.That(res.Imak.Count(), Is.EqualTo(1));
+		Assert.That(res.Imak.Count, Is.EqualTo(1));
 		Assert.That(res.Inserted.ToString("yyyy-MM-dd"), Is.EqualTo("2012-01-03"));
 	}
 

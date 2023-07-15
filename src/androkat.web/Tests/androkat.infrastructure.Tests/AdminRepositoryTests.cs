@@ -82,7 +82,7 @@ public class AdminRepositoryTests : BaseTest
         res.Any(a => !string.IsNullOrWhiteSpace(a)).Should().BeFalse();
     }
 
-    private AndrokatConfiguration GetAndrokatConfiguration()
+    private static AndrokatConfiguration GetAndrokatConfiguration()
     {
         return new AndrokatConfiguration
         {

@@ -27,7 +27,7 @@ public class GyonasPageModelsTests
         //model.OnGet();       
     }
 
-    private (PageContext pageContext, TempDataDictionary tempData, ActionContext actionContext) GetPreStuff()
+    private static (PageContext pageContext, TempDataDictionary tempData, ActionContext actionContext) GetPreStuff()
     {
         var httpContext = new DefaultHttpContext();
         var modelState = new ModelStateDictionary();

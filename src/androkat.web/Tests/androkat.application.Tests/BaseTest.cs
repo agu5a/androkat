@@ -17,7 +17,7 @@ namespace androkat.application.Tests;
 
 public class BaseTest
 {
-	public IOptions<AndrokatConfiguration> GetAndrokatConfiguration()
+	public static IOptions<AndrokatConfiguration> GetAndrokatConfiguration()
 	{
 		var logger = new Mock<ILogger<ContentMetaDataService>>();
 		var service = new ContentMetaDataService(logger.Object);
@@ -31,19 +31,19 @@ public class BaseTest
 		return contentMetaDataModels;
 	}
 
-	public Mock<IClock> GetClock()
+	public static Mock<IClock> GetClock()
 	{
 		var clock = new Mock<IClock>();
 		clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"));
 		return clock;
 	}
 
-	public DbContextOptions<AndrokatContext> GetDbContextOptions()
+	public static DbContextOptions<AndrokatContext> GetDbContextOptions()
 	{
 		return new DbContextOptionsBuilder<AndrokatContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
 	}
 
-	public IMemoryCache GetIMemoryCache()
+	public static IMemoryCache GetIMemoryCache()
 	{
 		var services = new ServiceCollection();
 		services.AddMemoryCache();

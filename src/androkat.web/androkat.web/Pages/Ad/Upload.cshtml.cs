@@ -138,7 +138,7 @@ public class UploadModel : PageModel
         // property associated with this IFormFile. If a display
         // name isn't found, error messages simply won't show
         // a display name.
-        MemberInfo property = typeof(T).GetProperty(formFile.Name.Substring(formFile.Name.IndexOf(".", StringComparison.Ordinal) + 1));
+        MemberInfo property = typeof(T).GetProperty(formFile.Name[(formFile.Name.IndexOf(".", StringComparison.Ordinal) + 1)..]);
         if (property is not null && property.GetCustomAttribute(typeof(DisplayAttribute)) is DisplayAttribute displayAttribute)
             fieldDisplayName = $"{displayAttribute.Name} ";
 
@@ -155,31 +155,29 @@ public class UploadModel : PageModel
 
         try
         {
-            using (var memoryStream = new MemoryStream())
+            using var memoryStream = new MemoryStream();
+            await formFile.CopyToAsync(memoryStream);
+
+            // Check the content length in case the file's only
+            // content was a BOM and the content is actually
+            // empty after removing the BOM.
+            if (memoryStream.Length == 0)
             {
-                await formFile.CopyToAsync(memoryStream);
-
-                // Check the content length in case the file's only
-                // content was a BOM and the content is actually
-                // empty after removing the BOM.
-                if (memoryStream.Length == 0)
-                {
-                    Result = $"{fieldDisplayName}({trustedFileNameForDisplay}) is empty.";
-                    modelState.AddModelError(formFile.Name, $"{fieldDisplayName}({trustedFileNameForDisplay}) is empty.");
-                }
-
-                if (!IsValidFileExtensionAndSignature(formFile.FileName, memoryStream, permittedExtensions))
-                {
-                    Result = $"{fieldDisplayName}({trustedFileNameForDisplay}) file " +
-                        "type isn't permitted or the file's signature doesn't match the file's extension.";
-
-                    modelState.AddModelError(formFile.Name,
-                        $"{fieldDisplayName}({trustedFileNameForDisplay}) file " +
-                        "type isn't permitted or the file's signature doesn't match the file's extension.");
-                }
-                else
-                    return memoryStream.ToArray();
+                Result = $"{fieldDisplayName}({trustedFileNameForDisplay}) is empty.";
+                modelState.AddModelError(formFile.Name, $"{fieldDisplayName}({trustedFileNameForDisplay}) is empty.");
             }
+
+            if (!IsValidFileExtensionAndSignature(formFile.FileName, memoryStream, permittedExtensions))
+            {
+                Result = $"{fieldDisplayName}({trustedFileNameForDisplay}) file " +
+                    "type isn't permitted or the file's signature doesn't match the file's extension.";
+
+                modelState.AddModelError(formFile.Name,
+                    $"{fieldDisplayName}({trustedFileNameForDisplay}) file " +
+                    "type isn't permitted or the file's signature doesn't match the file's extension.");
+            }
+            else
+                return memoryStream.ToArray();
         }
         catch (Exception ex)
         {

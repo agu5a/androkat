@@ -15,8 +15,8 @@ namespace androkat.application.Tests.Services;
 
 public class WarmupServiceTests : BaseTest
 {
-	private Mock<ICacheService> _cacheService = new Mock<ICacheService>();
-	private Mock<ILogger<WarmupService>> logger = new Mock<ILogger<WarmupService>>();
+    private readonly Mock<ICacheService> _cacheService = new();
+    private readonly Mock<ILogger<WarmupService>> logger = new();
 
 	[Test]
 	public void MainCacheFillUp_Happy()

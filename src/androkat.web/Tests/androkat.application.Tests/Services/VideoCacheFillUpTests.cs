@@ -37,7 +37,7 @@ public class VideoCacheFillUpTests : BaseTest
 		var cacheService = new CacheService(cacheRepository.Object, new Mock<ILogger<CacheService>>().Object, clock.Object);
 		var res = cacheService.VideoCacheFillUp();
 
-		Assert.That(res.Video.Count(), Is.EqualTo(2));
+		Assert.That(res.Video.Count, Is.EqualTo(2));
 		res.Video.ElementAt(0).VideoLink.Should().NotContain("embed");
 		res.Video.ElementAt(1).VideoLink.Should().NotContain("embed");
 		Assert.That(res.Inserted.ToString("yyyy-MM-dd"), Is.EqualTo("2012-01-03"));

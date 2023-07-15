@@ -44,10 +44,10 @@ public class BookRadioSysCacheFillUpTests : BaseTest
         var cacheService = new CacheService(cacheRepository.Object, new Mock<ILogger<CacheService>>().Object, clock.Object);
         var res = cacheService.BookRadioSysCacheFillUp();
 
-        Assert.That(res.Books.Count(), Is.EqualTo(1));
-        Assert.That(res.RadioMusor.Count(), Is.EqualTo(1));
+        Assert.That(res.Books.Count, Is.EqualTo(1));
+        Assert.That(res.RadioMusor.Count, Is.EqualTo(1));
         res.RadioMusor.First().Nid.Should().Be(radioNid);
-        Assert.That(res.SystemData.Count(), Is.EqualTo(1));
+        Assert.That(res.SystemData.Count, Is.EqualTo(1));
         Assert.That(res.Inserted.ToString("yyyy-MM-dd"), Is.EqualTo("2012-01-03"));
     }
 

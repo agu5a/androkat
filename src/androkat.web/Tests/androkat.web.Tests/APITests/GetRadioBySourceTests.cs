@@ -22,7 +22,7 @@ public class GetRadioBySourceTests : BaseTest
     [TestCase("wrong_radio")]
     public void API_GetRadioBySource_V1_BadRequest(string s)
     {
-        data.Controllers.Api apiV1 = new data.Controllers.Api(null);
+        data.Controllers.Api apiV1 = new(null);
         var resV1 = apiV1.GetRadioBySource(s);
         dynamic s2 = resV1.Result;
         string result = s2.Value;
@@ -42,7 +42,7 @@ public class GetRadioBySourceTests : BaseTest
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
 
-        data.Controllers.Api apiV1 = new data.Controllers.Api(dec);
+        data.Controllers.Api apiV1 = new(dec);
         ActionResult<IEnumerable<RadioMusorResponse>> resV1 = apiV1.GetRadioBySource("katolikushu");
         dynamic sV1 = resV1.Result;
 
@@ -68,7 +68,7 @@ public class GetRadioBySourceTests : BaseTest
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, memoryCache.Object, null);
 
-        data.Controllers.Api apiV1 = new data.Controllers.Api(dec);
+        data.Controllers.Api apiV1 = new(dec);
         ActionResult<IEnumerable<RadioMusorResponse>> resV1 = apiV1.GetRadioBySource("kat");
         dynamic sV1 = resV1.Result;
 
@@ -94,7 +94,7 @@ public class GetRadioBySourceTests : BaseTest
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
 
-        data.Controllers.Api apiV1 = new data.Controllers.Api(dec);
+        data.Controllers.Api apiV1 = new(dec);
         ActionResult<IEnumerable<RadioMusorResponse>> resV1 = apiV1.GetRadioBySource("katolikushu");
         dynamic sV1 = resV1.Result;
 

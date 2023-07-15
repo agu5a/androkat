@@ -138,7 +138,7 @@ public class BaseTest
         return memoryCache;
     }
 
-    public DbContextOptions<AndrokatContext> GetDbContextOptions()
+    public static DbContextOptions<AndrokatContext> GetDbContextOptions()
     {
         return new DbContextOptionsBuilder<AndrokatContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
     }

@@ -75,6 +75,7 @@ public class TukorModel : PageModel
     }
 
     #region CheckBoxes
+#pragma warning disable IDE1006 // Naming Styles
     [BindProperty] public bool cb11 { get; set; }
     [BindProperty] public bool cb12 { get; set; }
     [BindProperty] public bool cb13 { get; set; }
@@ -119,6 +120,7 @@ public class TukorModel : PageModel
     [BindProperty] public bool cb102 { get; set; }
     [BindProperty] public bool cb103 { get; set; }
     [BindProperty] public bool cb104 { get; set; }
+#pragma warning restore IDE1006 // Naming Styles
     #endregion
 
 
@@ -209,7 +211,7 @@ public class TukorModel : PageModel
     {
         try
         {
-            Dictionary<string, bool> dic = new Dictionary<string, bool>
+            Dictionary<string, bool> dic = new()
             {
                 { "cb11", cb11 },
                 { "cb12", cb12 },

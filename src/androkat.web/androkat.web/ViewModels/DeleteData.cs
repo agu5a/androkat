@@ -2,5 +2,5 @@
 
 public class DeleteData
 {
-	public string nid { get; set; }
+	public string Nid { get; set; }
 }
