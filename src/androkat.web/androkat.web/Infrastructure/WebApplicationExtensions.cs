@@ -21,9 +21,7 @@ public static class WebApplicationExtensions
 
         if (app.Environment.IsDevelopment())
         {
-#pragma warning disable S4507
             app.UseDeveloperExceptionPage();
-#pragma warning restore S4507
         }
         else
         {

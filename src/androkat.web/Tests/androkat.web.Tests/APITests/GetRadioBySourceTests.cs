@@ -20,11 +20,11 @@ public class GetRadioBySourceTests : BaseTest
     [TestCase("")]
     [TestCase(null)]
     [TestCase("wrong_radio")]
-    public void API_GetRadioBySource_V1_BadRequest(string s)
+    public void API_GetRadioBySource_V2_BadRequest(string s)
     {
-        data.Controllers.Api apiV1 = new(null);
-        var resV1 = apiV1.GetRadioBySource(s);
-        dynamic s2 = resV1.Result;
+        var api = new data.Controllers.V2.Api(null, GetMapper());
+        var res = api.GetRadioBySourceV2(s);
+        dynamic s2 = res.Result;
         string result = s2.Value;
         result.Should().Be("Hiba");
     }
@@ -41,12 +41,11 @@ public class GetRadioBySourceTests : BaseTest
 
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
+        var api = new data.Controllers.V2.Api(dec, GetMapper());
+        ActionResult<IEnumerable<RadioMusorResponse>> res = api.GetRadioBySourceV2("katolikushu");
+        dynamic s = res.Result;
 
-        data.Controllers.Api apiV1 = new(dec);
-        ActionResult<IEnumerable<RadioMusorResponse>> resV1 = apiV1.GetRadioBySource("katolikushu");
-        dynamic sV1 = resV1.Result;
-
-        Assert.That(((IEnumerable<RadioMusorResponse>)sV1.Value).First().Musor, Is.EqualTo("musor"));
+        Assert.That(((IEnumerable<RadioMusorResponse>)s.Value).First().Musor, Is.EqualTo("musor"));
     }
 
     [Test]
@@ -67,13 +66,12 @@ public class GetRadioBySourceTests : BaseTest
 
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, memoryCache.Object, null);
+        var api = new data.Controllers.V2.Api(dec, GetMapper());
+        ActionResult<IEnumerable<RadioMusorResponse>> res = api.GetRadioBySourceV2("kat");
+        dynamic s = res.Result;
 
-        data.Controllers.Api apiV1 = new(dec);
-        ActionResult<IEnumerable<RadioMusorResponse>> resV1 = apiV1.GetRadioBySource("kat");
-        dynamic sV1 = resV1.Result;
-
-        Assert.That(sV1.Value, Is.EqualTo("Hiba"));
-        Assert.That(sV1.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+        Assert.That(s.Value, Is.EqualTo("Hiba"));
+        Assert.That(s.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
     }
 
     [Test]
@@ -93,11 +91,10 @@ public class GetRadioBySourceTests : BaseTest
 
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
+        var api = new data.Controllers.V2.Api(dec, GetMapper());
+        ActionResult<IEnumerable<RadioMusorResponse>> res = api.GetRadioBySourceV2("katolikushu");
+        dynamic s = res.Result;
 
-        data.Controllers.Api apiV1 = new(dec);
-        ActionResult<IEnumerable<RadioMusorResponse>> resV1 = apiV1.GetRadioBySource("katolikushu");
-        dynamic sV1 = resV1.Result;
-
-        Assert.That(((IEnumerable<RadioMusorResponse>)sV1.Value).Count, Is.EqualTo(0));
+        Assert.That(((IEnumerable<RadioMusorResponse>)s.Value).Count, Is.EqualTo(0));
     }
 }

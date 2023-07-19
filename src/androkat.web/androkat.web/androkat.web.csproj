@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
-		<Version>2.59.0</Version>
+		<Version>2.61.0</Version>
 		<IsPackable>false</IsPackable>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
@@ -14,7 +14,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="FastEndpoints" Version="5.13.0" />
+		<PackageReference Include="FastEndpoints" Version="5.14.0" />
 		<PackageReference Include="FastEndpoints.ApiExplorer" Version="2.1.0" />
 		<PackageReference Include="FastEndpoints.Swagger.Swashbuckle" Version="2.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.9" />

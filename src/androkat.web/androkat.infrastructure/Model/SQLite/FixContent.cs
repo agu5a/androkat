@@ -38,6 +38,7 @@ public class FixContent
     public int Tipus { get; set; }
 
     [NotMapped]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
     public DateTime Inserted
     {
         get

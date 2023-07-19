@@ -31,6 +31,7 @@ public class Maiszent
     }
 
     [NotMapped]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
     public int Tipus { get { return (int)Forras.maiszent; } }
 
     [DataMember(Name = "cim")]

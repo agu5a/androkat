@@ -15,7 +15,8 @@ namespace androkat.application.Tests.Services;
 public class ContentServiceWithCacheTests : BaseTest
 {
 	[Test]
-	public void GetVideoSource_FromCacheHappy()
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]
+    public void GetVideoSource_FromCacheHappy()
 	{
 		Mock<ICacheRepository> repository = new();
 

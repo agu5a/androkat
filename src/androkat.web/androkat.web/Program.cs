@@ -8,11 +8,9 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
 
-#pragma warning disable S4792
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateBootstrapLogger();
-#pragma warning restore S4792
 
 try
 {

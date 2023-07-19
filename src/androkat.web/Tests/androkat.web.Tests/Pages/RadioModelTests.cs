@@ -14,6 +14,7 @@ public class RadioModelTests : BaseTest
     [TestCase("ChannelId", "ChannelId")]
     [TestCase("", "")]
     [TestCase(null, "")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
     public void RadioModelTest(string actual, string expected)
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();

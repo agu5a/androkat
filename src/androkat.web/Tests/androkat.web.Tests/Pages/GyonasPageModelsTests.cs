@@ -13,6 +13,7 @@ namespace UnitTest.Pages;
 public class GyonasPageModelsTests
 {
     [Test]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]
     public void ImaModelTest()
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();
