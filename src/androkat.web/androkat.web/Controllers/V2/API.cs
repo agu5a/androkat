@@ -2,7 +2,9 @@
 using androkat.domain.Model.WebResponse;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace androkat.data.Controllers.V2;
 
@@ -39,6 +41,20 @@ public class Api : ControllerBase
     }
 
     /// <summary>
+    /// android ima
+    /// </summary>
+    [Route("ima")]
+    [HttpGet]
+    [ProducesResponseType(typeof(ImaResponse), 200)]
+    public ActionResult<ImaResponse> GetImaByDateV2(string date)
+    {
+        if (string.IsNullOrWhiteSpace(date) || !DateTime.TryParse(date, CultureInfo.CreateSpecificCulture("hu-HU"), out _))
+            return BadRequest("Hiba");
+
+        var result = _apiService.GetImaByDate(date, default);
+        return Ok(result);
+    }
+
     /// android radio
     /// </summary>
     [Route("radio")]
@@ -46,7 +62,11 @@ public class Api : ControllerBase
     [ProducesResponseType(200)]
     public ActionResult<IEnumerable<RadioMusorResponse>> GetRadioBySourceV2(string s)
     {
-        if (string.IsNullOrWhiteSpace(s) || (s.ToLower() != "katolikushu" && s.ToLower() != "mariaradio" && s.ToLower() != "szentistvan"))
+        if (string.IsNullOrWhiteSpace(s))
+            return BadRequest("Hiba");
+
+        s = s.ToLower();
+        if (s != "katolikushu" && s != "mariaradio" && s != "szentistvan")
             return BadRequest("Hiba");
 
         var result = _apiService.GetRadioBySource(s, default);

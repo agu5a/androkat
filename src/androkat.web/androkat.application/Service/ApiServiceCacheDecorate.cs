@@ -5,6 +5,7 @@ using androkat.domain.Model.WebResponse;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace androkat.application.Service;
 
@@ -22,6 +23,22 @@ public class ApiServiceCacheDecorate : IApiService
         _apiService = apiService;
         _memoryCache = memoryCache;
         _cacheService = cacheService;
+    }
+
+    public ImaResponse GetImaByDate(string date, ImaCache imaCache)
+    {
+        _ = DateTime.TryParse(date, CultureInfo.CreateSpecificCulture("hu-HU"), out DateTime datum);
+
+        string key = CacheKey.ImaResponseCacheKey + "_" + datum.ToString("yyyy-MM-dd_HH:mm:ss ");
+        var result = GetCache<ImaResponse>(key);
+        if (result is not null)
+            return result;
+
+        imaCache = GetCache(CacheKey.ImaCacheKey.ToString(), () => { return _cacheService.ImaCacheFillUp(); });
+        result = _apiService.GetImaByDate(date, imaCache);
+        _memoryCache.Set(key, result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
+
+        return result;
     }
 
     public IReadOnlyCollection<ContentResponse> GetContentByTipusAndNid(int tipus, Guid n, MainCache mainCache)

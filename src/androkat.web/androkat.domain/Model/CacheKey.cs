@@ -8,5 +8,6 @@ public enum CacheKey
     VideoCacheKey,
     VideoResponseCacheKey,
     ContentResponseCacheKey,
+    ImaResponseCacheKey,
     RadioResponseCacheKey,
 }

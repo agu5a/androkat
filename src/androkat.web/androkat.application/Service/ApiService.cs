@@ -4,6 +4,7 @@ using androkat.domain.Model.ContentCache;
 using androkat.domain.Model.WebResponse;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -35,6 +36,42 @@ public class ApiService : IApiService
         }
 
         return temp.AsReadOnly();
+    }
+
+    public ImaResponse GetImaByDate(string date, ImaCache imaCache)
+    {
+        _ = DateTime.TryParse(date, CultureInfo.CreateSpecificCulture("hu-HU"), out DateTime datum);
+
+        var temp = new ImaResponse
+        {
+            HasMore = false,
+            Imak = new List<ImaDetailsResponse>()
+        };
+
+        var index = 0;
+        foreach (var item in imaCache.Imak.Where(w => w.Datum > datum))
+        {
+            if (index == 10)
+            {
+                temp.HasMore = true;
+                break;
+            }
+
+            if (int.TryParse(item.Csoport, out int cs))
+            {
+                temp.Imak.Add(new ImaDetailsResponse
+                {
+                    Cim = item.Cim,
+                    Csoport = cs,
+                    Leiras = item.Szoveg,
+                    Nid = item.Nid,
+                    Time = item.Datum.ToString("yyyy-MM-dd HH:mm:ss")
+                });
+            }
+
+            index++;
+        }
+        return temp;
     }
 
     public IReadOnlyCollection<RadioMusorResponse> GetRadioBySource(string s, BookRadioSysCache bookRadioSysCache)
