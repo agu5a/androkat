@@ -144,6 +144,50 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return null;
     }
 
+    public IEnumerable<ImgData> GetImgList()
+    {
+        _logger.LogDebug("GetImgList was called");
+
+        try
+        {
+            var res = _ctx.Content.Where(g => g.Img != "" && g.Img != null)
+                .Select(s => new ImgData { Img = s.Img, Cim = s.Cim, Tipus = ((Forras)s.Tipus).ToString() }).ToList();
+
+            if (res is null)
+                return Enumerable.Empty<ImgData>();
+
+            return res;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
+        return Enumerable.Empty<ImgData>();
+    }
+
+    public IEnumerable<FileData> GetAudioList()
+    {
+        _logger.LogDebug("GetAudioList was called");
+
+        try
+        {
+            var res = _ctx.Content.Where(g => g.FileUrl != "" && g.FileUrl != null)
+                .Select(s => new FileData { Path = s.FileUrl, Cim = s.Cim, Tipus = ((Forras)s.Tipus).ToString() }).ToList();
+
+            if (res is null)
+                return Enumerable.Empty<FileData>();
+
+            return res;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
+        return Enumerable.Empty<FileData>();
+    }
+
     public LastTodayResult GetLastTodayContentByTipus(int tipus)
     {
         _logger.LogDebug("{Method} was called, {tipus}", nameof(GetLastTodayContentByTipus), tipus);

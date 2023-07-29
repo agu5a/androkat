@@ -161,10 +161,10 @@ public class PufferModel : PageModel
         if (string.IsNullOrEmpty(FileUrl))
             switch (tipus)
             {
-                case 15: // Napi útra való
+                case (int)domain.Enum.Forras.prayasyougo:
                     FileUrl = string.IsNullOrWhiteSpace(FileUrl) ? $"https://androkat.hu/download/{DateTime.Now:MM_dd}.mp3" : FileUrl;
                     break;
-                case 38: //barsi audio
+                case (int)domain.Enum.Forras.audiobarsi:
                     FileUrl = string.IsNullOrWhiteSpace(FileUrl) ? "https://androkat.hu/download/" : FileUrl;
                     break;
             }
@@ -190,7 +190,7 @@ public class PufferModel : PageModel
         {            
             case (int)domain.Enum.Forras.prayasyougo:
                 var res = _adminRepository.GetLastTodayContentByTipus((int)domain.Enum.Forras.maievangelium);
-                Cim = res.Cim;
+                Cim = res.Cim.Replace(" (Napi Ige)" , "");
                 break;
             case (int)domain.Enum.Forras.laciatya:                            
                 Cim = $"{DateTime.Now:yyyy-MM-dd} {DayReplace(DateTime.Now.DayOfWeek.ToString())}";

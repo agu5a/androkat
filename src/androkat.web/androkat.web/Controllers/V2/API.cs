@@ -55,6 +55,19 @@ public class Api : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// android radio url, verziók, website url
+    /// </summary>
+    [Route("ser")]
+    [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<SystemDataResponse>), 200)]
+    public ActionResult<IEnumerable<SystemDataResponse>> GetSystemDataV2()
+    {
+        IEnumerable<SystemDataResponse> result = _apiService.GetSystemData(default);
+        return Ok(result);
+    }
+
+    /// <summary>
     /// android radio
     /// </summary>
     [Route("radio")]

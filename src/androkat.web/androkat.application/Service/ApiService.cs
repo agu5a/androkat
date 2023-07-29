@@ -74,6 +74,11 @@ public class ApiService : IApiService
         return temp;
     }
 
+    public IReadOnlyCollection<SystemDataResponse> GetSystemData(BookRadioSysCache bookRadioSysCache)
+    {
+        return bookRadioSysCache.SystemData.Select(s => new SystemDataResponse { Key = s.Key, Value = s.Value }).ToList();
+    }
+
     public IReadOnlyCollection<RadioMusorResponse> GetRadioBySource(string s, BookRadioSysCache bookRadioSysCache)
     {
         return bookRadioSysCache.RadioMusor

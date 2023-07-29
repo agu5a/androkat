@@ -69,6 +69,13 @@ public class ApiServiceCacheDecorate : IApiService
         return result;
     }
 
+    public IReadOnlyCollection<SystemDataResponse> GetSystemData(BookRadioSysCache bookRadioSysCache)
+    {
+        bookRadioSysCache = GetCache(CacheKey.BookRadioSysCacheKey.ToString(), () => { return _cacheService.BookRadioSysCacheFillUp(); });
+        var result = _apiService.GetSystemData(bookRadioSysCache);
+        return result;
+    }
+
     public IReadOnlyCollection<VideoResponse> GetVideoByOffset(int offset, VideoCache videoCache)
     {
         string key = CacheKey.VideoResponseCacheKey + "_" + offset;
