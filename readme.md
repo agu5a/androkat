@@ -3,7 +3,7 @@
 
 # AndroKat
 
-Az AndroKat 2012.10.09-én indult el, mint magyar katolikus alkalmazás android operációs rendszerrel működő telefonra.
+Az AndroKat 2012.10.09-én indult el, mint római katolikus irányultságú alkalmazás android operációs rendszerrel működő telefonra.
 
 MOTTÓ
 *"Az istentisztelet, az erkölcsi élet, a hivatalok és funkciók s minden más arra való az Egyházban, hogy ezt az isteni szeretetet viszonozza Istennek, illetve megjelenítse, közvetítse a világ számára." (Barsi Balázs)*
