@@ -229,7 +229,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            return await conn.Table<ContentEntity>().DeleteAsync(d => d.Nid != Guid.Empty);
+            return await conn.Table<ContentEntity>().DeleteAsync(d => d.Nid != Guid.Empty || d.Nid == Guid.Empty);
         }
         catch (Exception ex)
         {
@@ -243,7 +243,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            return await conn.Table<FavoriteContentEntity>().DeleteAsync(d => d.Nid != Guid.Empty);
+            return await conn.Table<FavoriteContentEntity>().DeleteAsync(d => d.Nid != Guid.Empty || d.Nid == Guid.Empty);
         }
         catch (Exception ex)
         {

@@ -89,6 +89,10 @@ public partial class DetailViewModel : ViewModelBase
         {
             Cim = ima.Cim,
             Idezet = ima.Content,
+            Tipus = ((int)Activities.ima).ToString(),
+            Nid = ima.Nid,
+            Datum = ima.Datum,
+            TypeName = Activities.ima.ToString()
         })
         {
             datum = "",

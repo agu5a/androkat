@@ -14,7 +14,6 @@ public partial class ContentListViewModel : ViewModelBase
     private readonly IPageService _pageService;
     private readonly ISourceData _sourceData;
     private readonly IAndrokatService _androkatService;
-    private readonly IHelperSharedPreferences _helperSharedPreferences;
 
     public string Id { get; set; }
 
@@ -26,13 +25,12 @@ public partial class ContentListViewModel : ViewModelBase
     [ObservableProperty]
     ObservableRangeCollection<List<ContentItemViewModel>> contents;
 
-    public ContentListViewModel(IPageService pageService, ISourceData sourceData, IAndrokatService androkatService, IHelperSharedPreferences helperSharedPreferences)
+    public ContentListViewModel(IPageService pageService, ISourceData sourceData, IAndrokatService androkatService)
     {
         _pageService = pageService;
         Contents = new ObservableRangeCollection<List<ContentItemViewModel>>();
         _sourceData = sourceData;
         _androkatService = androkatService;
-        _helperSharedPreferences = helperSharedPreferences;
     }
 
     public async Task InitializeAsync()
@@ -45,20 +43,28 @@ public partial class ContentListViewModel : ViewModelBase
 
     private async Task CheckNewVersion()
     {
-        if (Settings.LastUpdate < DateTime.Now.AddHours(-1))
+        try
         {
-            _ = await _androkatService.GetServerInfo();
-
-            var newVersion = _helperSharedPreferences.GetSharedPreferencesInt("newversion", 0);
-            int curVersion = _pageService.GetVersion();
-            if (curVersion < newVersion)
+            if (Settings.LastUpdate < DateTime.Now.AddHours(-1))
             {
-                var result = await Shell.Current.DisplayAlert("Frissítés", "Új verzió érhető el. Szeretné frissíteni?", "Igen", "Nem");
-                if (result)
+                var serverInfo = await _androkatService.GetServerInfo();
+                var ver = serverInfo.Find(f => f.Key == "versionmaui");
+                var newVersion = int.Parse(ver.Value);
+
+                int curVersion = _pageService.GetVersion();
+                if (curVersion < newVersion)
                 {
-                    await Browser.OpenAsync(ConsValues.AndrokatMarket);
+                    var result = await Shell.Current.DisplayAlert("Frissítés", "Új verzió érhető el. Szeretné frissíteni?", "Igen", "Nem");
+                    if (result)
+                    {
+                        await Browser.OpenAsync(ConsValues.AndrokatMarket);
+                    }
                 }
             }
+        }
+        catch (Exception)
+        {
+            await Shell.Current.DisplayAlert("Hiba", "??", "Bezárás");
         }
     }
 

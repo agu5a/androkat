@@ -94,7 +94,7 @@ public class PageService : IPageService
 
     public int GetVersion()
     {
-        return AppInfo.Version.Major;
+        return AppInfo.Version.Minor;
     }
 
 #pragma warning disable S1144 // Unused private types or members should be removed

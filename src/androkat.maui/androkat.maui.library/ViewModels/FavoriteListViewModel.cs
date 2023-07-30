@@ -57,8 +57,18 @@ public partial class FavoriteListViewModel : ViewModelBase
             return;
         }
 
-        var temp = ConvertToViewModels(favContents);
-        Contents.ReplaceRange(new List<List<FavoriteContentViewModel>> { temp.ToList() });
+        try
+        {
+            var temp = ConvertToViewModels(favContents);
+            Contents.ReplaceRange(new List<List<FavoriteContentViewModel>> { temp.ToList() });
+        }
+        catch (Exception)
+        {
+            await Shell.Current.DisplayAlert(
+                "Hiba",
+                "Hiba történt",
+                "Bezárás");
+        }
     }
 
     private List<FavoriteContentViewModel> ConvertToViewModels(IEnumerable<FavoriteContentEntity> items)
