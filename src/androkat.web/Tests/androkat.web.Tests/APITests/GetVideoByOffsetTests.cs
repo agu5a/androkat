@@ -46,8 +46,8 @@ public class GetVideoByOffsetTests : BaseTest
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, GetIMemoryCache(), cacheService.Object);
 
-        var apiV1 = new data.Controllers.V2.Api(dec, GetMapper());
-        ActionResult<List<VideoResponse>> resV1 = apiV1.GetVideoByOffsetV2(0);
+        var apiV2 = new data.Controllers.V2.Api(dec, GetMapper());
+        ActionResult<List<VideoResponse>> resV1 = apiV2.GetVideoByOffsetV2(0);
         dynamic sV1 = resV1.Result;
 
         var videoResponse = ((IReadOnlyCollection<VideoResponse>)sV1.Value).First();

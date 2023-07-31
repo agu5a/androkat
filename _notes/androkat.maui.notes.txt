@@ -1,3 +1,6 @@
+Extensions:
+https://marketplace.visualstudio.com/items?itemName=MattLaceyLtd.MauiEssentials&ssr=false#overview
+
 
 https://www.nuget.org/packages/Shiny/
 
