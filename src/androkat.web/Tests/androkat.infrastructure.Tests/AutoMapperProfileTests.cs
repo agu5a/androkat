@@ -74,7 +74,7 @@ public class AutoMapperProfileTests
 	}
 
 	[Test]
-	public void Map_Napiolvaso_ContentDetailsModel()
+	public void Map_Content_ContentDetailsModel()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
 		var mapper = config.CreateMapper();
@@ -89,7 +89,7 @@ public class AutoMapperProfileTests
 	}
 
 	[Test]
-	public void Map_ContentDetailsModel_Napiolvaso()
+	public void Map_ContentDetailsModel_Content()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
 		var mapper = config.CreateMapper();

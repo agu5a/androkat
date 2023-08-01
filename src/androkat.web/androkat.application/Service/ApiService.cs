@@ -152,27 +152,27 @@ public class ApiService : IApiService
     private void GetHumorAndAjandek(Guid n, int tipus, MainCache m, List<ContentResponse> temp)
     {
         string date = _iClock.Now.ToString("yyyy-MM-dd");
-        var napi = m.ContentDetailsModels.FirstOrDefault(w => w.Tipus == tipus && w.Fulldatum.ToString("yyyy-MM-dd").StartsWith(date));
-        napi ??= m.ContentDetailsModels.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted).FirstOrDefault();
+        var todayContent = m.ContentDetailsModels.FirstOrDefault(w => w.Tipus == tipus && w.Fulldatum.ToString("yyyy-MM-dd").StartsWith(date));
+        todayContent ??= m.ContentDetailsModels.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted).FirstOrDefault();
 
-        if (napi is not null)
+        if (todayContent is not null)
         {
             var downloaded = false;
 
             //a user már letöltötte, nem kell újból
-            if (n != Guid.Empty && n == napi.Nid)
+            if (n != Guid.Empty && n == todayContent.Nid)
                 downloaded = true;
 
             if (!downloaded)
             {
                 temp.Add(new ContentResponse
                 {
-                    Cim = napi.Cim,
-                    Datum = napi.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss"),
-                    Forras = napi.Forras ?? string.Empty,
-                    Idezet = napi.Idezet,
-                    Img = napi.Img ?? string.Empty,
-                    Nid = napi.Nid,
+                    Cim = todayContent.Cim,
+                    Datum = todayContent.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss"),
+                    Forras = todayContent.Forras ?? string.Empty,
+                    Idezet = todayContent.Idezet,
+                    Img = todayContent.Img ?? string.Empty,
+                    Nid = todayContent.Nid,
                     KulsoLink = string.Empty
                 });
             }

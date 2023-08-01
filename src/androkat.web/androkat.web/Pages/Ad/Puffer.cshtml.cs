@@ -54,7 +54,7 @@ public class PufferModel : PageModel
             if (!string.IsNullOrWhiteSpace(newitem) && newitem == "1")
                 IsNewItem = true;
 
-            var obj = string.IsNullOrWhiteSpace(id) || IsNewItem ? new domain.Model.AdminPage.ContentResult() : _adminRepository.LoadPufferNapiByNid(id);
+            var obj = string.IsNullOrWhiteSpace(id) || IsNewItem ? new domain.Model.AdminPage.ContentResult() : _adminRepository.LoadPufferTodayContentByNid(id);
 
             TipusId = tipus;
             AllTodayContent = _adminRepository.LoadAllTodayResult();
@@ -109,16 +109,16 @@ public class PufferModel : PageModel
         }
 
         LastTodayResult = _adminRepository.GetLastTodayContentByTipus(TipusId.Value);
-        var newNapiolvaso = new ContentDetailsModel(Guid.Empty, DateTime.Parse(FullDatum + DateTime.Now.ToString(" HH:mm:ss"), CultureInfo.CreateSpecificCulture("hu-HU")), 
+        var newContent = new ContentDetailsModel(Guid.Empty, DateTime.Parse(FullDatum + DateTime.Now.ToString(" HH:mm:ss"), CultureInfo.CreateSpecificCulture("hu-HU")), 
             Cim, Idezet ?? "", TipusId.Value,
         _iClock.Now.Date, string.Empty, Image ?? "", FileUrl ?? "", Forras ?? "");
 
-        var res = _adminRepository.InsertContent(newNapiolvaso);
-        Error = res ? "siker" : "vmi rossz volt";
+        var res = _adminRepository.InsertContent(newContent);        
 
         if (IsNewItem)
             return Redirect("/Ad/Puffer");
 
+        Error = res ? "siker" : "vmi rossz volt";
         return Page();
     }
 

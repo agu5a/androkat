@@ -8,7 +8,7 @@ public interface ICacheRepository
 	IReadOnlyCollection<ContentDetailsModel> GetContentDetailsModelToCache();
 	IReadOnlyCollection<ContentDetailsModel> GetHumorToCache();
 	IReadOnlyCollection<ContentDetailsModel> GetMaiSzentToCache();
-	IReadOnlyCollection<ContentDetailsModel> GetNapiFixToCache();
+	IReadOnlyCollection<ContentDetailsModel> GetTodayFixContentToCache();
 	IReadOnlyCollection<ContentDetailsModel> GetHirekBlogokToCache();
 	IReadOnlyCollection<ImaModel> GetImaToCache();
 	IReadOnlyCollection<ContentDetailsModel> GetBooksToCache();

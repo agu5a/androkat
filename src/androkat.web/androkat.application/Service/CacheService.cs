@@ -129,7 +129,7 @@ public partial class CacheService : ICacheService
             var result = new List<ContentDetailsModel>();
             result.AddRange(_cacheRepository.GetHumorToCache());
             result.AddRange(_cacheRepository.GetMaiSzentToCache());
-            result.AddRange(_cacheRepository.GetNapiFixToCache());
+            result.AddRange(_cacheRepository.GetTodayFixContentToCache());
             result.AddRange(_cacheRepository.GetContentDetailsModelToCache());
 
             return new MainCache

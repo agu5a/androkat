@@ -19,7 +19,7 @@ namespace androkat.infrastructure.Tests;
 public class AdminRepositoryTests : BaseTest
 {
     [Test]
-    public void LoadPufferNapiByNid_Happy()
+    public void LoadPufferTodayContentByNid_Happy()
     {
         var clock = new Mock<IClock>();
         clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"));
@@ -32,16 +32,16 @@ public class AdminRepositoryTests : BaseTest
 
         var guid = Guid.NewGuid();
         var _fixture = new Fixture();
-        var napiolvaso2 = _fixture.Create<TempContent>();
-        napiolvaso2.Nid = guid;
-        napiolvaso2.Tipus = 1;
+        var tempContent = _fixture.Create<TempContent>();
+        tempContent.Nid = guid;
+        tempContent.Tipus = 1;
 
-        context.TempContent.Add(napiolvaso2);
+        context.TempContent.Add(tempContent);
         context.SaveChanges();
 
         var repo = new AdminRepository(context, loggerRepo.Object, clock.Object, idezetData, null);
-        var result = repo.LoadPufferNapiByNid(guid.ToString());
-        result.Img.Should().Be(napiolvaso2.Img);
+        var result = repo.LoadPufferTodayContentByNid(guid.ToString());
+        result.Img.Should().Be(tempContent.Img);
     }
 
     [Test]
@@ -58,12 +58,12 @@ public class AdminRepositoryTests : BaseTest
 
         var guid = Guid.NewGuid();
         var _fixture = new Fixture();
-        var napiolvaso2 = _fixture.Create<TempContent>();
-        napiolvaso2.Tipus = 6;
-        napiolvaso2.Fulldatum = DateTime.Now.ToString("yyyy") + "-11-02";
-        napiolvaso2.Nid = guid;
+        var tempContent = _fixture.Create<TempContent>();
+        tempContent.Tipus = 6;
+        tempContent.Fulldatum = DateTime.Now.ToString("yyyy") + "-11-02";
+        tempContent.Nid = guid;
 
-        context.TempContent.Add(napiolvaso2);
+        context.TempContent.Add(tempContent);
         context.SaveChanges();
 
         var repo = new AdminRepository(context, loggerRepo.Object, clock.Object, idezetData, null);

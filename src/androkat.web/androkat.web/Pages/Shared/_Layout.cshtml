@@ -91,7 +91,7 @@
             <img alt="" src="~/images/instagram.png" style="width: 21px;"> <a href="https://www.instagram.com/androkat_app/" rel="noopener" target="_blank">instagram</a>
             <a class="" href="@Html.Raw(GeneralConfiguration.Value.HostUrl)/adatvedelem">Adatvédelem</a>
         </p>
-        <p>® 2012-@(DateTime.Now.ToString("yyyy")) :: Androkat :: Android app weben :: @("verzió: " + Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion)</p>
+        <p>® 2012-@(DateTime.Now.ToString("yyyy")) :: Androkat :: Android app weben :: @("verzió: " + Assembly.GetEntryAssembly().GetName().Version)</p>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js?v=1"></script>

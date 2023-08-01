@@ -42,7 +42,7 @@ public class MainCacheFillUpTests : BaseTest
         {
             new ContentDetailsModel(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
         });
-        cacheRepository.Setup(s => s.GetNapiFixToCache()).Returns(new List<ContentDetailsModel>
+        cacheRepository.Setup(s => s.GetTodayFixContentToCache()).Returns(new List<ContentDetailsModel>
         {
             new ContentDetailsModel(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
         });
@@ -205,7 +205,7 @@ public class MainCacheFillUpTests : BaseTest
     [TestCase(6, "2012-02-02T04:05:06", "2012-01-03T03:05:06", "2012-02-02", "2012-02-02 00:00:00")]
     [TestCase(6, "2012-02-02T04:05:06", "2012-01-03T03:05:06", "2012-02-01", "2012-02-01 00:00:00")]//nincs mai
     [TestCase(6, "2012-01-02T04:05:06", "2011-12-31T03:05:06", "2011-12-31", "2011-12-31 00:00:00")]//tavalyi
-    public void GetNapiElmelkedesByTipusAndNidTest(int tipus, string today, string insertedInDb, string datumInDb, string resultDatum)
+    public void GetContentByTipusAndNidV2Test(int tipus, string today, string insertedInDb, string datumInDb, string resultDatum)
     {
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();
@@ -239,7 +239,7 @@ public class MainCacheFillUpTests : BaseTest
 
     [TestCase(true)]
     [TestCase(false)]
-    public void GetNapiElmelkedesByTipusAndNid_maiIge_Test(bool twoItems)
+    public void GetContentByTipusAndNidV2_MaiIge_Test(bool twoItems)
     {
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
         var mapper = config.CreateMapper();

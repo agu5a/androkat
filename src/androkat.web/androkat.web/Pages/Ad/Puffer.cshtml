@@ -133,9 +133,13 @@
         {
             <h3>Új Anyag</h3>
         }
-        else
+        else if (!string.IsNullOrWhiteSpace(Model.Nid))
         {
             <h3>Aktiválás</h3>
+        }
+        else
+        {
+            <h3>Aktiválás vagy Új Anyag</h3>
         }
     </div>
     <div class="row">
@@ -169,18 +173,14 @@
                 </div>
                 <div class="mb-3">
                     <div>
-                        <span class="bg-success p-2 text-white">
                             @if (Model.IsNewItem)
                             {
-                                @Html.Raw("Új Anyag")
-                                ;
+                            @Html.Raw("<span class='bg-success p-2 text-white'>Új Anyag</span>")
                             }
-                            else
+                        else if (!string.IsNullOrWhiteSpace(Model.Nid))
                             {
-                                @Html.Raw("Aktiválás")
-                                ;
+                            @Html.Raw("<span class='bg-success p-2 text-white'>Aktiválás</span>")
                             }
-                        </span>
                     </div>
                     <div class="mt-3">
                         <span>

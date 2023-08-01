@@ -47,13 +47,13 @@ public class PufferTests : BaseTest
 		using var context = new AndrokatContext(GetDbContextOptions());
 
 		var guid = Guid.NewGuid();
-		var napiolvaso2 = _fixture.Create<TempContent>();
-		napiolvaso2.Tipus = (int)Forras.audiohorvath;
-		napiolvaso2.Cim = "audiohorvathCim";
-		napiolvaso2.Fulldatum = DateTime.Now.ToString("yyyy") + "-02-01";
-		napiolvaso2.Nid = guid;
+		var tempContent = _fixture.Create<TempContent>();
+		tempContent.Tipus = (int)Forras.audiohorvath;
+		tempContent.Cim = "audiohorvathCim";
+		tempContent.Fulldatum = DateTime.Now.ToString("yyyy") + "-02-01";
+		tempContent.Nid = guid;
 
-		context.TempContent.Add(napiolvaso2);
+		context.TempContent.Add(tempContent);
 		context.SaveChanges();
 
 		var repo = new AdminRepository(context, loggerRepo.Object, clock.Object, idezetData, null);

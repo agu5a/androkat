@@ -41,7 +41,7 @@ public class CacheRepositoryTests : BaseTest
 
     [TestCase((int)Forras.humor)]
     [TestCase((int)Forras.pio)]
-    public void GetNapiFixToCache_Happy(int tipus)
+    public void GetTodayFixContentToCache_Happy(int tipus)
     {
         var logger = new Mock<ILogger<CacheRepository>>();
 
@@ -60,7 +60,7 @@ public class CacheRepositoryTests : BaseTest
         context.SaveChanges();
 
         var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
-        var result = repo.GetNapiFixToCache();
+            var result = repo.GetTodayFixContentToCache();
         if (tipus == (int)Forras.pio)
         {
             result.Count.Should().Be(1);
@@ -73,7 +73,7 @@ public class CacheRepositoryTests : BaseTest
     }
 
     [Test]
-	public void GetNapiFixToCache_No_Result()
+	public void GetTodayFixContentToCache_No_Result()
 	{
 		var logger = new Mock<ILogger<CacheRepository>>();
 
@@ -92,7 +92,7 @@ public class CacheRepositoryTests : BaseTest
         context.SaveChanges();
 
         var repo = new CacheRepository(context, logger.Object, clock.Object, mapper);
-        var result = repo.GetNapiFixToCache();
+			var result = repo.GetTodayFixContentToCache();
         result.Should().BeEmpty();
     }
 

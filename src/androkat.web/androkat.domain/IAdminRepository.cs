@@ -8,7 +8,7 @@ namespace androkat.domain;
 public interface IAdminRepository
 {
     IEnumerable<AllTodayResult> LoadAllTodayResult();
-    ContentResult LoadPufferNapiByNid(string nid);
+    ContentResult LoadPufferTodayContentByNid(string nid);
     LastTodayResult GetLastTodayContentByTipus(int tipus);
     bool InsertContent(ContentDetailsModel content);
     bool DeleteTempContentByNid(string nid);

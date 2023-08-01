@@ -124,7 +124,7 @@ public class CacheRepository : BaseRepository, ICacheRepository
         return list.AsReadOnly();
     }
 
-    public IReadOnlyCollection<ContentDetailsModel> GetNapiFixToCache()
+    public IReadOnlyCollection<ContentDetailsModel> GetTodayFixContentToCache()
     {
         var result = new List<ContentDetailsModel>();
 
@@ -136,10 +136,10 @@ public class CacheRepository : BaseRepository, ICacheRepository
 
         var date = _clock.Now.ToString("MM-dd");
 
-        var napiFixek = _ctx.FixContent.AsNoTracking().Where(w => tipusok.Contains(w.Tipus) && w.Datum == date);
-        foreach (var napiFix in napiFixek)
+        var todayFixContents = _ctx.FixContent.AsNoTracking().Where(w => tipusok.Contains(w.Tipus) && w.Datum == date);
+        foreach (var todayFixContent in todayFixContents)
         {
-            result.Add(_mapper.Map<ContentDetailsModel>(napiFix));
+            result.Add(_mapper.Map<ContentDetailsModel>(todayFixContent));
         }
 
         return result.AsReadOnly();

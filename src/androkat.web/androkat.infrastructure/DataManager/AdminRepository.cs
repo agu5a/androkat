@@ -59,7 +59,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public bool InsertContent(ContentDetailsModel content)
     {
-        _logger.LogDebug("InsertNapiOlvaso was called, {cim} {tipus}", content.Cim, content.Tipus);
+        _logger.LogDebug("InsertContent was called, {cim} {tipus}", content.Cim, content.Tipus);
 
         try
         {
@@ -113,9 +113,9 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return temp.OrderBy(o => o.TipusNev).ToList();
     }
 
-    public ContentResult LoadPufferNapiByNid(string nid)
+    public ContentResult LoadPufferTodayContentByNid(string nid)
     {
-        _logger.LogDebug("{method} was called, {nid}", nameof(LoadPufferNapiByNid), nid);
+        _logger.LogDebug("{method} was called, {nid}", nameof(LoadPufferTodayContentByNid), nid);
 
         try
         {
