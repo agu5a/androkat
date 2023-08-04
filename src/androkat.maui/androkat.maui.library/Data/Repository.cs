@@ -445,7 +445,7 @@ public class Repository : IRepository
         {
             Init();
             var res = await conn.Table<ContentEntity>().Where(w => w.Nid == nid && !w.IsRead).ToListAsync();
-            if (res != null && res.Any())
+            if (res != null && res.Count != 0)
             {
                 res[0].IsRead = true;
                 return await conn.UpdateAsync(res[0]);

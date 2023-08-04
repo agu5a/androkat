@@ -32,6 +32,9 @@ public partial class FavoriteListPage : ContentPage
         base.OnNavigatedTo(args);
     }
 
+    private static readonly string[] valueArray = new[] { "application/json" };
+    private static readonly string[] value = new[] { "application/json" };
+
     private string GetPageTitle()
     {
         if (ViewModel.FavoriteCount > 0)
@@ -96,7 +99,7 @@ public partial class FavoriteListPage : ContentPage
             }
         }
 
-        var jsonFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>> { { DevicePlatform.Android, new[] { "application/json" } } });
+        var jsonFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>> { { DevicePlatform.Android, value } });
 
         var fileResult = await FilePicker.PickAsync(new PickOptions
         {
@@ -118,7 +121,7 @@ public partial class FavoriteListPage : ContentPage
 
     private async void Button_Clicked_2(object sender, EventArgs e)
     {
-        var jsonFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>> { { DevicePlatform.Android, new[] { "application/json" } } });
+        var jsonFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>> { { DevicePlatform.Android, valueArray } });
 
         var fileResult = await FilePicker.PickAsync(new PickOptions
         {

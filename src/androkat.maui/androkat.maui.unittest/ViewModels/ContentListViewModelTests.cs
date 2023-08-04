@@ -1,6 +1,7 @@
 ﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
+using androkat.maui.library.Models.Responses;
 using androkat.maui.library.ViewModels;
 using Moq;
 using System;
@@ -39,6 +40,7 @@ public class ContentListViewModelTests
         };
 
         _pageServiceMock.Setup(x => x.GetContentsAsync(It.IsAny<string>())).ReturnsAsync(contents);
+        _pageServiceMock.Setup(x => x.GetVersion()).Returns(1);
 
         var idezetSourceMock = new SourceData
         {
@@ -48,6 +50,15 @@ public class ContentListViewModelTests
         };
 
         _sourceDataMock.Setup(x => x.GetSourcesFromMemory(It.IsAny<int>())).Returns(idezetSourceMock);
+
+        _androkatService.Setup(x => x.GetServerInfo()).ReturnsAsync(new List<ServerInfoResponse>
+        {
+            new ServerInfoResponse
+            {
+                Key = "versionmaui",
+                Value = "1"
+            }
+        });
 
         var viewModel = new ContentListViewModel(_pageServiceMock.Object, _sourceDataMock.Object, _androkatService.Object);
 
