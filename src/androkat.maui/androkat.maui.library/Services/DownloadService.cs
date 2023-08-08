@@ -101,7 +101,7 @@ public class DownloadService : IDownloadService
             Activities.keresztenyelet,
 
             Activities.b777,
-            Activities.bkatolikusma,
+            Activities.bzarandokma,
             Activities.jezsuitablog,
 
             Activities.ignac,
@@ -156,7 +156,7 @@ public class DownloadService : IDownloadService
                     || act == Activities.bonumtv
                     || act == Activities.keresztenyelet
                     || act == Activities.b777
-                    || act == Activities.bkatolikusma
+                    || act == Activities.bzarandokma
                     || act == Activities.jezsuitablog
                     || act == Activities.book)
             {
@@ -282,7 +282,7 @@ public class DownloadService : IDownloadService
                     && type != Activities.bonumtv
                     && type != Activities.keresztenyelet
                     && type != Activities.b777
-                    && type != Activities.bkatolikusma
+                    && type != Activities.bzarandokma
                     && type != Activities.jezsuitablog
                     && type != Activities.book)
                 isHasTodayData = IsSameAsToday(datum, "MM-dd");

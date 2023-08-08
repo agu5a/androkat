@@ -44,7 +44,7 @@ public enum Activities
     book = 46, //group is és typeName is
     taize = 47,//napi olvaso
     prohaszka = 48,//napi olvaso
-    bkatolikusma = 49,//magazin
+    bzarandokma = 49,//magazin
     szentbernat = 50,//napi olvaso
     jezsuitablog = 51,//magazin
 

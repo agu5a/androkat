@@ -76,7 +76,7 @@ public static class ConsValues
     public static readonly string[] rssResourceMagazinName = new[]
             {
                     Activities.b777.ToString(),
-                    Activities.bkatolikusma.ToString(),
+                    Activities.bzarandokma.ToString(),
                     Activities.jezsuitablog.ToString()
             };
 }

@@ -317,11 +317,11 @@
     },
     {
       "id": 49,
-      "title": "Katolikus Ma",
-      "source": "Katolikus Ma",
-      "sourcelink": "https://katolikus.ma",
+      "title": "Zarándok.Ma",
+      "source": "Zarándok.Ma",
+      "sourcelink": "https://zarandok.ma",
       "img": "katolikusma",
-      "group":"group_blog",
+      "group": "group_blog",
       "active": true
     },
     {
