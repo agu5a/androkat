@@ -27,7 +27,7 @@ public class BlogModel : PageModel
 
         int tipus = Source switch
         {
-            "bkatolikusma" => (int)Forras.bkatolikusma,
+            "bzarandokma" => (int)Forras.bzarandokma,
             "b777" => (int)Forras.b777,
             "jezsuitablog" => (int)Forras.jezsuitablog,
             _ => 0,

@@ -298,10 +298,10 @@
   },
   {
     "TipusId": 49,
-    "TipusNev": "Katolikus Ma",
-    "Forras": "Katolikus Ma",
-    "Link": "https://katolikus.ma",
-    "EnumString": "bkatolikusma",
+    "TipusNev": "Zarándok.Ma",
+    "Forras": "Zarándok.Ma",
+    "Link": "https://zarandok.ma",
+    "EnumString": "bzarandokma",
     "Segedlink": null,
     "Image": "images/katolikusma.png"
   },

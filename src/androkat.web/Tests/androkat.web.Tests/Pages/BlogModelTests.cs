@@ -9,7 +9,7 @@ namespace androkat.web.Tests.Pages;
 public class BlogModelTests : BaseTest
 {
     [TestCase("b777", (int)Forras.b777)]
-    [TestCase("bkatolikusma", (int)Forras.bkatolikusma)]
+    [TestCase("bzarandokma", (int)Forras.bzarandokma)]
     [TestCase("jezsuitablog", (int)Forras.jezsuitablog)]
     [TestCase("", (int)Forras.b777)]
     public void BlogModelTest(string source, int tipus)

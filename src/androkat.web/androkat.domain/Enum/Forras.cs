@@ -35,7 +35,7 @@ public enum Forras
     book = 46,
     taize = 47,
     prohaszka = 48,
-    bkatolikusma = 49,
+    bzarandokma = 49,
     szentbernat = 50,
     jezsuitablog = 51,
     szentszalezi = 52,

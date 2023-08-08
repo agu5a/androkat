@@ -38,7 +38,7 @@ public class AndrokatConfiguration
 	{
 		return new List<int> 
 		{
-			(int)Forras.kurir, (int)Forras.bonumtv, (int)Forras.keresztenyelet, (int)Forras.b777, (int)Forras.bkatolikusma, (int)Forras.jezsuitablog
+			(int)Forras.kurir, (int)Forras.bonumtv, (int)Forras.keresztenyelet, (int)Forras.b777, (int)Forras.bzarandokma, (int)Forras.jezsuitablog
 		};
 	}
 }

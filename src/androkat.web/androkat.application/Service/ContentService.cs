@@ -265,7 +265,7 @@ public class ContentService : IContentService
 		if (tipus > 0)
             return res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).ToList();
 
-        var list = new List<int> { (int)Forras.b777, (int)Forras.bkatolikusma, (int)Forras.jezsuitablog };
+        var list = new List<int> { (int)Forras.b777, (int)Forras.bzarandokma, (int)Forras.jezsuitablog };
         return res.Egyeb.Where(w => list.Contains(w.Tipus)).OrderByDescending(o => o.Fulldatum);
 	}
 
