@@ -14,7 +14,7 @@ on:
     - 'readme.md'
 
 env:
-  DOTNET_VERSION: '7.0.x'
+  DOTNET_VERSION: '8.0.x'
   SOLUTION_FILE: './src/androkat.web/androkat.web.sln'
 
 jobs:

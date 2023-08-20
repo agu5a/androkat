@@ -14,7 +14,7 @@ on:
   #  - 'readme.md' 
 
 env:
-  DOTNET_VERSION: '7.0.x'
+  DOTNET_VERSION: '8.0.x'
   SOLUTION_FILE: './src/androkat.maui/androkat.maui.sln'
 
 jobs:
@@ -29,7 +29,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
   
     - name: Setup .NET
-      uses: actions/setup-dotnet@v2
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
