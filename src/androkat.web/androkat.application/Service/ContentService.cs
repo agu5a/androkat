@@ -7,6 +7,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.Json;
 using System.Web;
@@ -174,7 +175,7 @@ public class ContentService : IContentService
 		return res.Imak.FirstOrDefault(w => w.Nid == nid);
 	}
 
-	private IReadOnlyCollection<ContentModel> GetContentDetailsModel(int[] tipusok)
+	private ReadOnlyCollection<ContentModel> GetContentDetailsModel(int[] tipusok)
 	{
 		var list = new List<ContentModel>();
 

@@ -48,7 +48,7 @@ public class FilesModel : PageModel
             string filePath = Path.Combine(_environment.WebRootPath, "images/ajanlatok");
             var files = Directory.GetFiles(filePath).OrderBy(o => o).ToList();
 
-            if (files.Any())
+            if (files.Count != 0)
             {
                 files.ForEach(f =>
                 {
@@ -69,7 +69,7 @@ public class FilesModel : PageModel
             filePath = Path.Combine(_environment.WebRootPath, "download");
             files = Directory.GetFiles(filePath).ToList();
 
-            if (files.Any())
+            if (files.Count != 0)
             {
                 var audioFileNames = new List<FileList>();
                 files.ForEach(f =>

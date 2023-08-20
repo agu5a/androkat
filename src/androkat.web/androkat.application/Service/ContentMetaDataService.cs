@@ -19,7 +19,7 @@ public class ContentMetaDataService : IContentMetaDataService
 
     public IEnumerable<ContentMetaDataModel> GetContentMetaDataList(string path = "./Data/IdezetData.json")
     {
-        using TextReader tr = new StreamReader(path);
+        using var tr = new StreamReader(path);
         var json = tr.ReadToEnd();
         var list = JsonSerializer.Deserialize<List<ContentMetaDataModel>>(json);
 
