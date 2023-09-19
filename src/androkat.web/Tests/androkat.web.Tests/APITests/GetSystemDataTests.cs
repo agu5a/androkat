@@ -21,7 +21,7 @@ public class GetSystemDataTests : BaseTest
         var clock = new Mock<IClock>();
         clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse("2012-02-03T04:05:06"));
 
-        object result = new BookRadioSysCache { SystemData = new List<SystemInfoModel> { new SystemInfoModel(1, "key1", "value1") } };
+        object result = new BookRadioSysCache { SystemData = new List<SystemInfoModel> { new(1, "key1", "value1") } };
         var memoryCache = new Mock<IMemoryCache>();
         memoryCache.Setup(c => c.TryGetValue(It.IsAny<object>(), out result)).Returns(true);
 

@@ -47,9 +47,9 @@ public static class WebApplicationExtensions
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseCors("CorsPolicy");
-        app.MapControllerRoute(name: "default", pattern: "{controller}/{action=Index}");
-        app.MapRazorPages();
         app.UseFastEndpoints();
+        app.MapRazorPages();        
+        app.MapControllerRoute(name: "default", pattern: "{controller}/{action=Index}");
 
         app.Lifetime.ApplicationStopping.Register(() =>
         {

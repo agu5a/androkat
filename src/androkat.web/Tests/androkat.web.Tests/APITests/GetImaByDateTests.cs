@@ -39,7 +39,7 @@ public class GetImaByDateTests : BaseTest
         {
             Imak = new List<ImaModel>
             {
-                new ImaModel(Guid.NewGuid(), now.AddMinutes(1).DateTime, "cim1", "1", "")
+                new(Guid.NewGuid(), now.AddMinutes(1).DateTime, "cim1", "1", "")
             }
         };
         var cache = GetIMemoryCache();
@@ -65,7 +65,7 @@ public class GetImaByDateTests : BaseTest
 
         object result = new ImaCache
         {
-            Imak = new List<ImaModel> { new ImaModel(Guid.NewGuid(), now.AddMinutes(-1).DateTime, "cim1", "", "") }
+            Imak = new List<ImaModel> { new(Guid.NewGuid(), now.AddMinutes(-1).DateTime, "cim1", "", "") }
         };
         var cache = GetIMemoryCache();
 

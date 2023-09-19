@@ -27,7 +27,7 @@ public class WarmupServiceTests : BaseTest
 		{
 			ContentDetailsModels = new List<ContentDetailsModel> 
 			{
-				new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "cim", string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
+				new(Guid.Empty, DateTime.MinValue, "cim", string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
 			},
 			Inserted = DateTime.Now
 		});
@@ -59,7 +59,7 @@ public class WarmupServiceTests : BaseTest
 		{
 			Books = new List<ContentDetailsModel> 
 			{
-				new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "cim", string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
+				new(Guid.Empty, DateTime.MinValue, "cim", string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
             },
 			Inserted = DateTime.Now
 		});
@@ -92,7 +92,7 @@ public class WarmupServiceTests : BaseTest
 		{
 			Imak = new List<ImaModel>
 			{
-				new ImaModel (Guid.NewGuid(), DateTime.MinValue, "cim", "", "")
+				new(Guid.NewGuid(), DateTime.MinValue, "cim", "", "")
 			},
 			Inserted = DateTime.Now
 		});
@@ -123,7 +123,7 @@ public class WarmupServiceTests : BaseTest
 		{
 			Video = new List<VideoModel>
 			{
-				new VideoModel(Guid.NewGuid(), "img", "vlink", "cim", DateTime.Now.ToString("yyyy-MM-dd"), "forras", "cId", DateTime.Now)
+				new(Guid.NewGuid(), "img", "vlink", "cim", DateTime.Now.ToString("yyyy-MM-dd"), "forras", "cId", DateTime.Now)
 			},
 			Inserted = DateTime.Now
 		});

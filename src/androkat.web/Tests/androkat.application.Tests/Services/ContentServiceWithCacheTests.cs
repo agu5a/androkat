@@ -16,7 +16,7 @@ public class ContentServiceWithCacheTests : BaseTest
 {
 	[Test]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]
-    public void GetVideoSource_FromCacheHappy()
+	public void GetVideoSource_FromCacheHappy()
 	{
 		Mock<ICacheRepository> repository = new();
 
@@ -26,7 +26,7 @@ public class ContentServiceWithCacheTests : BaseTest
 
 		var data = new List<VideoSourceModel>
 		{
-			new VideoSourceModel("UCF3mEbdkhZwjQE8reJHm4sg", "")
+			new("UCF3mEbdkhZwjQE8reJHm4sg", "")
 		};
 
 		object result = new VideoCache { Video = new List<VideoModel>(), VideoSource = data };
@@ -54,9 +54,9 @@ public class ContentServiceWithCacheTests : BaseTest
         object emptyResult = new MainCache { ContentDetailsModels = new List<ContentDetailsModel>() };
         var data = new List<ContentDetailsModel>
                 {
-                new ContentDetailsModel(Guid.Parse("281cd115-1289-11ea-8aa1-cbeb38570c35"), now.DateTime, "cim1", "audiofile", 60, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)                        
+                new(Guid.Parse("281cd115-1289-11ea-8aa1-cbeb38570c35"), now.DateTime, "cim1", "audiofile", 60, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)                        
                 ,
-                new ContentDetailsModel(Guid.Parse("181cd115-1289-11ea-8aa1-cbeb38570c35"), now.AddDays(-1).DateTime, "cim2",
+                new(Guid.Parse("181cd115-1289-11ea-8aa1-cbeb38570c35"), now.AddDays(-1).DateTime, "cim2",
                 "idezet", //ezt felül kell írja a FileUrl audio típusnál 
                 60, DateTime.MinValue, string.Empty, string.Empty, "audiofile", string.Empty)                
             };

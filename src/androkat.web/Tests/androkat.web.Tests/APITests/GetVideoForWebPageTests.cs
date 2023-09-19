@@ -36,7 +36,7 @@ public class GetVideoForWebPageTests : BaseTest
         {
             Video = new List<VideoModel>
             {
-                new VideoModel (Guid.Empty, string.Empty, "watch?v=", "cim", string.Empty, string.Empty, string.Empty, DateTime.MinValue)
+                new(Guid.Empty, string.Empty, "watch?v=", "cim", string.Empty, string.Empty, string.Empty, DateTime.MinValue)
             }
         };
         var cache = GetIMemoryCache();

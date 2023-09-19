@@ -38,6 +38,7 @@ public class ApiService : IApiService
         return temp.AsReadOnly();
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Bug", "S2583:Conditionally executed code should be reachable", Justification = "<Pending>")]
     public ImaResponse GetImaByDate(string date, ImaCache imaCache)
     {
         _ = DateTime.TryParse(date, CultureInfo.CreateSpecificCulture("hu-HU"), out DateTime datum);

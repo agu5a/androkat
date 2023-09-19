@@ -24,7 +24,7 @@ public class HanganyagModelTests : BaseTest
         var contentService = new Mock<IContentService>();
         contentService.Setup(s => s.GetAudio()).Returns(new List<AudioModel>
         {
-            new AudioModel(string.Empty, string.Empty, string.Empty, "Idézet", now,
+            new(string.Empty, string.Empty, string.Empty, "Idézet", now,
                 "Audio Cim", (int)Forras.audionapievangelium, GetContentMetaDataModel(image: "Image"))
         });
 
@@ -41,5 +41,5 @@ public class HanganyagModelTests : BaseTest
         model.AudioModels.First().Inserted.Should().Be(now);
         model.AudioModels.First().Tipus.Should().Be((int)Forras.audionapievangelium);
         model.AudioModels.First().MetaDataModel.Image.Should().Be("Image");
-    }    
+    }
 }

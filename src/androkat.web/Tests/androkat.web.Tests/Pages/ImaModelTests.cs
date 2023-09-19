@@ -20,7 +20,7 @@ public class ImaModelTests : BaseTest
         var contentService = new Mock<IContentService>();
         contentService.Setup(s => s.GetImaPage(string.Empty)).Returns(new List<ContentModel>
         {
-            new ContentModel (new ContentDetailsModel(Guid.Empty, DateTime.MinValue, "Ima Cim", string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty), 
+            new(new ContentDetailsModel(Guid.Empty, DateTime.MinValue, "Ima Cim", string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty), 
             default )
         });
 

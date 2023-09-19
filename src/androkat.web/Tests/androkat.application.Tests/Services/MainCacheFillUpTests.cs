@@ -32,23 +32,23 @@ public class MainCacheFillUpTests : BaseTest
         var cacheRepository = new Mock<ICacheRepository>();
         cacheRepository.Setup(s => s.GetHirekBlogokToCache()).Returns(new List<ContentDetailsModel>
         {
-            new ContentDetailsModel(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
+            new(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
         });
         cacheRepository.Setup(s => s.GetHumorToCache()).Returns(new List<ContentDetailsModel>
         {
-            new ContentDetailsModel(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
+            new(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
         });
         cacheRepository.Setup(s => s.GetMaiSzentToCache()).Returns(new List<ContentDetailsModel>
         {
-            new ContentDetailsModel(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
+            new(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
         });
         cacheRepository.Setup(s => s.GetTodayFixContentToCache()).Returns(new List<ContentDetailsModel>
         {
-            new ContentDetailsModel(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
+            new(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
         });
         cacheRepository.Setup(s => s.GetContentDetailsModelToCache()).Returns(new List<ContentDetailsModel>
         {
-            new ContentDetailsModel(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
+            new(Guid.Empty, DateTime.MinValue, string.Empty, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
         });
 
         var cacheService = new CacheService(cacheRepository.Object, new Mock<ILogger<CacheService>>().Object, clock.Object);
@@ -88,36 +88,36 @@ public class MainCacheFillUpTests : BaseTest
         var mock = new Mock<ILogger<CacheRepository>>();
 
         using var context = new AndrokatContext(GetDbContextOptions());
-        var entity = new Content
-        {
-            Tipus = 15,
-            FileUrl = string.Empty,
-            Fulldatum = DateTimeOffset.Parse("2011-12-03T03:05:06").DateTime.ToString("yyyy-MM-dd"),
-            Inserted = DateTimeOffset.Parse("2011-12-03T03:05:06").DateTime
-        };
-        context.Content.Add(entity);
+            var entity = new Content
+            {
+                Tipus = 15,
+                FileUrl = string.Empty,
+                Fulldatum = DateTimeOffset.Parse("2011-12-03T03:05:06").DateTime.ToString("yyyy-MM-dd"),
+                Inserted = DateTimeOffset.Parse("2011-12-03T03:05:06").DateTime
+            };
+            context.Content.Add(entity);
 
-        var entity2 = new Content
-        {
-            Tipus = 15,
-            FileUrl = string.Empty,
-            Fulldatum = DateTimeOffset.Parse("2011-12-04T03:05:06").DateTime.ToString("yyyy-MM-dd"),
-            Inserted = DateTimeOffset.Parse("2011-12-04T03:05:06").DateTime
-        };
-        context.Content.Add(entity2);
-        context.SaveChanges();
+            var entity2 = new Content
+            {
+                Tipus = 15,
+                FileUrl = string.Empty,
+                Fulldatum = DateTimeOffset.Parse("2011-12-04T03:05:06").DateTime.ToString("yyyy-MM-dd"),
+                Inserted = DateTimeOffset.Parse("2011-12-04T03:05:06").DateTime
+            };
+            context.Content.Add(entity2);
+            context.SaveChanges();
 
-        var cache = GetIMemoryCache();
-        var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
-        var repository = new CacheRepository(context, mock.Object, clock.Object, mapper);
-        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, clock.Object);
-        var res = cacheService.MainCacheFillUp();
+            var cache = GetIMemoryCache();
+            var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+            var repository = new CacheRepository(context, mock.Object, clock.Object, mapper);
+            var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, clock.Object);
+            var res = cacheService.MainCacheFillUp();
 
-        var napiutravalo = res.ContentDetailsModels.Where(w => w.Tipus == 15);
+            var napiutravalo = res.ContentDetailsModels.Where(w => w.Tipus == 15);
 
-        Assert.That(napiutravalo.Count(), Is.EqualTo(2));
-        Assert.That(napiutravalo.First().Fulldatum.ToString("yyyy-MM-dd"), Is.EqualTo("2011-12-04"));
-    }
+            Assert.That(napiutravalo.Count(), Is.EqualTo(2));
+            Assert.That(napiutravalo.First().Fulldatum.ToString("yyyy-MM-dd"), Is.EqualTo("2011-12-04"));
+        }
 
     /// <summary>
     /// Content.Where(w => w.tipus == tipus && w.fulldatum.ToString("yyyy-MM-dd") == date)
@@ -134,23 +134,23 @@ public class MainCacheFillUpTests : BaseTest
         var mock = new Mock<ILogger<CacheRepository>>();
 
         using var context = new AndrokatContext(GetDbContextOptions());
-        var entity = new Content
-        {
-            Tipus = 60,
-            FileUrl = string.Empty,
-            Fulldatum = DateTimeOffset.Parse("2012-02-03T03:05:06").DateTime.ToString("yyyy-MM-dd")
-        };
-        context.Content.Add(entity);
-        context.SaveChanges();
+            var entity = new Content
+            {
+                Tipus = 60,
+                FileUrl = string.Empty,
+                Fulldatum = DateTimeOffset.Parse("2012-02-03T03:05:06").DateTime.ToString("yyyy-MM-dd")
+            };
+            context.Content.Add(entity);
+            context.SaveChanges();
 
-        var cache = GetIMemoryCache();
-        var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
-        var repository = new CacheRepository(context, mock.Object, clock.Object, mapper);
-        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, clock.Object);
-        var res = cacheService.MainCacheFillUp();
+            var cache = GetIMemoryCache();
+            var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+            var repository = new CacheRepository(context, mock.Object, clock.Object, mapper);
+            var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, clock.Object);
+            var res = cacheService.MainCacheFillUp();
 
-        Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == 60).Count(), Is.EqualTo(1));
-    }
+            Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == 60).Count(), Is.EqualTo(1));
+        }
 
     [Test]
     public void MainCacheFillUpNoRecord()
@@ -161,14 +161,14 @@ public class MainCacheFillUpTests : BaseTest
         var mock = new Mock<ILogger<CacheRepository>>();
 
         using var context = new AndrokatContext(GetDbContextOptions());
-        var cache = GetIMemoryCache();
-        var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
-        var androkatRepository = new CacheRepository(context, mock.Object, clock.Object, null);
-        var cacheService = new CacheService(androkatRepository, new Mock<ILogger<CacheService>>().Object, clock.Object);
-        var res = cacheService.MainCacheFillUp();
+            var cache = GetIMemoryCache();
+            var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+            var androkatRepository = new CacheRepository(context, mock.Object, clock.Object, null);
+            var cacheService = new CacheService(androkatRepository, new Mock<ILogger<CacheService>>().Object, clock.Object);
+            var res = cacheService.MainCacheFillUp();
 
-        Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == 60).Count(), Is.EqualTo(0));
-    }
+            Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == 60).Count(), Is.EqualTo(0));
+        }
 
     [TestCase(Description = "Where(w => w.tipus == tipus).OrderByDescending(o => o.fulldatum).Take(1)")]
     public void MainCacheFillUpLastSelect()
@@ -182,23 +182,23 @@ public class MainCacheFillUpTests : BaseTest
         var mock = new Mock<ILogger<CacheRepository>>();
 
         using var context = new AndrokatContext(GetDbContextOptions());
-        var entity = new Content
-        {
-            Tipus = 60,
-            FileUrl = string.Empty,
-            Fulldatum = DateTimeOffset.Parse("2012-02-01T03:05:06").DateTime.ToString("yyyy-MM-dd")
-        };
-        context.Content.Add(entity);
-        context.SaveChanges();
+            var entity = new Content
+            {
+                Tipus = 60,
+                FileUrl = string.Empty,
+                Fulldatum = DateTimeOffset.Parse("2012-02-01T03:05:06").DateTime.ToString("yyyy-MM-dd")
+            };
+            context.Content.Add(entity);
+            context.SaveChanges();
 
-        var cache = GetIMemoryCache();
-        var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
-        var repository = new CacheRepository(context, mock.Object, clock.Object, mapper);
-        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, clock.Object);
-        var res = cacheService.MainCacheFillUp();
+            var cache = GetIMemoryCache();
+            var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+            var repository = new CacheRepository(context, mock.Object, clock.Object, mapper);
+            var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, clock.Object);
+            var res = cacheService.MainCacheFillUp();
 
-        Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == 60).Count(), Is.EqualTo(1));
-    }
+            Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == 60).Count(), Is.EqualTo(1));
+        }
 
     [TestCase(7, "2012-02-01T04:05:06", "2012-01-03T03:05:06", "2012-02-01", "2012-02-01 00:00:00")]//fokolare
     [TestCase(7, "2012-02-02T04:05:06", "2012-01-03T03:05:06", "2012-02-01", "2012-02-01 00:00:00")]//fokolare
@@ -216,26 +216,26 @@ public class MainCacheFillUpTests : BaseTest
         var mock = new Mock<ILogger<CacheRepository>>();
 
         using var context = new AndrokatContext(GetDbContextOptions());
-        var entity = new Content
-        {
-            Nid = Guid.NewGuid(),
-            Tipus = tipus,
-            Fulldatum = datumInDb,
-            FileUrl = string.Empty,
-            Inserted = DateTimeOffset.Parse(insertedInDb).DateTime
-        };
-        context.Content.Add(entity);
-        context.SaveChanges();
+            var entity = new Content
+            {
+                Nid = Guid.NewGuid(),
+                Tipus = tipus,
+                Fulldatum = datumInDb,
+                FileUrl = string.Empty,
+                Inserted = DateTimeOffset.Parse(insertedInDb).DateTime
+            };
+            context.Content.Add(entity);
+            context.SaveChanges();
 
-        var cache = GetIMemoryCache();
-        var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
-        var repository = new CacheRepository(context, mock.Object, clock.Object, mapper);
-        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, clock.Object);
-        var res = cacheService.MainCacheFillUp();
+            var cache = GetIMemoryCache();
+            var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+            var repository = new CacheRepository(context, mock.Object, clock.Object, mapper);
+            var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, clock.Object);
+            var res = cacheService.MainCacheFillUp();
 
-        Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == tipus).Count(), Is.EqualTo(1));
-        Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == tipus).First().Fulldatum.ToString("yyyy-MM-dd HH:mm:ss"), Is.EqualTo(resultDatum));
-    }
+            Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == tipus).Count(), Is.EqualTo(1));
+            Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == tipus).First().Fulldatum.ToString("yyyy-MM-dd HH:mm:ss"), Is.EqualTo(resultDatum));
+        }
 
     [TestCase(true)]
     [TestCase(false)]
@@ -250,38 +250,38 @@ public class MainCacheFillUpTests : BaseTest
         var mock = new Mock<ILogger<CacheRepository>>();
 
         using var context = new AndrokatContext(GetDbContextOptions());
-        Content entity2 = null;
-        var entity = new Content
-        {
-            Nid = Guid.NewGuid(),
-            Tipus = 11,
-            Fulldatum = "2012-02-01",
-            FileUrl = string.Empty,
-            Inserted = DateTimeOffset.Parse("2012-01-03T03:05:06").DateTime
-        };
-        context.Content.Add(entity);
-        context.SaveChanges();
-
-        if (twoItems)
-        {
-            entity2 = new Content
+            Content entity2 = null;
+            var entity = new Content
             {
                 Nid = Guid.NewGuid(),
                 Tipus = 11,
-                Fulldatum = "2012-02-02",
+                Fulldatum = "2012-02-01",
                 FileUrl = string.Empty,
                 Inserted = DateTimeOffset.Parse("2012-01-03T03:05:06").DateTime
             };
-            context.Content.Add(entity2);
+            context.Content.Add(entity);
             context.SaveChanges();
+
+            if (twoItems)
+            {
+                entity2 = new Content
+                {
+                    Nid = Guid.NewGuid(),
+                    Tipus = 11,
+                    Fulldatum = "2012-02-02",
+                    FileUrl = string.Empty,
+                    Inserted = DateTimeOffset.Parse("2012-01-03T03:05:06").DateTime
+                };
+                context.Content.Add(entity2);
+                context.SaveChanges();
+            }
+
+            var cache = GetIMemoryCache();
+            var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
+            var repository = new CacheRepository(context, mock.Object, clock.Object, mapper);
+            var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, clock.Object);
+            var res = cacheService.MainCacheFillUp();
+
+            Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == 11).Count(), Is.EqualTo(twoItems ? 2 : 1));
         }
-
-        var cache = GetIMemoryCache();
-        var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
-        var repository = new CacheRepository(context, mock.Object, clock.Object, mapper);
-        var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, clock.Object);
-        var res = cacheService.MainCacheFillUp();
-
-        Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == 11).Count(), Is.EqualTo(twoItems ? 2 : 1));
     }
-}

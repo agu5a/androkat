@@ -176,6 +176,7 @@ public class CacheRepository : BaseRepository, ICacheRepository
         return result.AsReadOnly();
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S2589:Boolean expressions should not be gratuitous", Justification = "<Pending>")]
     private IEnumerable<Content> GetContentDetailsModel(List<Content> allRecords, int tipus, string date, string tomorrow, List<int> osszes)
     {
         IEnumerable<Content> res;

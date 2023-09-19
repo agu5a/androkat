@@ -35,7 +35,7 @@ public class GetRadioBySourceTests : BaseTest
         var clock = new Mock<IClock>();
         clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse("2012-02-03T04:05:06"));
 
-        object result = new List<RadioMusorResponse> { new RadioMusorResponse { Musor = "musor" } };
+        object result = new List<RadioMusorResponse> { new() { Musor = "musor" } };
         var cache = GetIMemoryCache();
         _ = cache.Set("RadioResponseCacheKey_katolikushu", result);
 
@@ -58,7 +58,7 @@ public class GetRadioBySourceTests : BaseTest
         {
             RadioMusor = new List<RadioMusorModel>
             {
-                new RadioMusorModel (Guid.NewGuid(), "katolikushu", "musor", DateTime.Now.ToString("yyyy-MM-dd"))
+                new(Guid.NewGuid(), "katolikushu", "musor", DateTime.Now.ToString("yyyy-MM-dd"))
             }
         };
         var memoryCache = new Mock<IMemoryCache>();

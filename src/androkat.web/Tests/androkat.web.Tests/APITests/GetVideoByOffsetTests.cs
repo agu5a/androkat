@@ -38,7 +38,7 @@ public class GetVideoByOffsetTests : BaseTest
         {
             Video = new List<VideoModel>
             {
-                new VideoModel(Guid.NewGuid(), "img", "vlink", "cim", DateTime.Now.ToString("yyyy-MM-dd"), "forras", "cId", DateTime.Now)
+                new(Guid.NewGuid(), "img", "vlink", "cim", DateTime.Now.ToString("yyyy-MM-dd"), "forras", "cId", DateTime.Now)
             },
             Inserted = DateTime.Now
         }));
@@ -65,7 +65,7 @@ public class GetVideoByOffsetTests : BaseTest
         var clock = new Mock<IClock>();
         clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse("2012-02-03T04:05:06"));
 
-        object result = new List<VideoResponse> { new VideoResponse { Cim = "cim" } };
+        object result = new List<VideoResponse> { new() { Cim = "cim" } };
         var cache = GetIMemoryCache();
         _ = cache.Set("VideoResponseCacheKey_0", result);
 

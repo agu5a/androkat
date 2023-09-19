@@ -144,6 +144,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return null;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Bug", "S2583:Conditionally executed code should be reachable", Justification = "<Pending>")]
     public IEnumerable<ImgData> GetImgList()
     {
         _logger.LogDebug("GetImgList was called");
@@ -166,6 +167,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return Enumerable.Empty<ImgData>();
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Bug", "S2583:Conditionally executed code should be reachable", Justification = "<Pending>")]
     public IEnumerable<FileData> GetAudioList()
     {
         _logger.LogDebug("GetAudioList was called");

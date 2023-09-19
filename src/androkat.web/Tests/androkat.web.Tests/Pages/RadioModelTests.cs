@@ -11,28 +11,28 @@ namespace androkat.web.Tests.Pages;
 
 public class RadioModelTests : BaseTest
 {
-    [TestCase("ChannelId", "ChannelId")]
-    [TestCase("", "")]
-    [TestCase(null, "")]
+	[TestCase("ChannelId", "ChannelId")]
+	[TestCase("", "")]
+	[TestCase(null, "")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
     public void RadioModelTest(string actual, string expected)
-    {
-        var (pageContext, tempData, actionContext) = GetPreStuff();
+	{
+		var (pageContext, tempData, actionContext) = GetPreStuff();
 
-        var contentService = new Mock<IContentService>();
-        contentService.Setup(s => s.GetRadioPage()).Returns(new List<RadioModel>
-        {
-			new RadioModel("name", "")
-        });
+		var contentService = new Mock<IContentService>();
+		contentService.Setup(s => s.GetRadioPage()).Returns(new List<RadioModel>
+		{
+			new("name", "")
+		});
 
-        var model = new web.Pages.RadioModel(contentService.Object)
-        {
-            PageContext = pageContext,
-            TempData = tempData,
-            Url = new UrlHelper(actionContext)
-        };
+		var model = new web.Pages.RadioModel(contentService.Object)
+		{
+			PageContext = pageContext,
+			TempData = tempData,
+			Url = new UrlHelper(actionContext)
+		};
 
-        model.OnGet();
-        model.RadioModels.First().Name.Should().Be("name");
-    }
+		model.OnGet();
+		model.RadioModels.First().Name.Should().Be("name");
+	}
 }

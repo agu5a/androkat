@@ -71,7 +71,7 @@ public class BaseTest
             ));
         contentService.Setup(s => s.GetHumor()).Returns(new List<ContentModel>
         {
-            new ContentModel
+            new
             (
                 new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
                 GetContentMetaDataModel(image: "Image")
@@ -79,7 +79,7 @@ public class BaseTest
         });
         contentService.Setup(s => s.GetHome()).Returns(new List<ContentModel>
         {
-            new ContentModel
+            new
             (
                 new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
                 GetContentMetaDataModel(image: "Image")
@@ -87,7 +87,7 @@ public class BaseTest
         });
         contentService.Setup(s => s.GetAjanlat()).Returns(new List<ContentModel>
         {
-            new ContentModel
+            new
             (
                 new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
                 GetContentMetaDataModel(image: "Image")
@@ -95,7 +95,7 @@ public class BaseTest
         });
         contentService.Setup(s => s.GetSzentek()).Returns(new List<ContentModel>
         {
-            new ContentModel
+            new
             (
                 new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
                 GetContentMetaDataModel(image: "Image")
@@ -103,7 +103,7 @@ public class BaseTest
         });
         contentService.Setup(s => s.GetSzent()).Returns(new List<ContentModel>
         {
-            new ContentModel
+            new
             (
                 new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
                 GetContentMetaDataModel(image : "Image")
@@ -111,7 +111,7 @@ public class BaseTest
         });
         contentService.Setup(s => s.GetHirek(It.IsAny<int>())).Returns(new List<ContentModel>
         {
-            new ContentModel
+            new
             (
                 new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
                 GetContentMetaDataModel(image : "Image")
@@ -119,7 +119,7 @@ public class BaseTest
         });
         contentService.Setup(s => s.GetBlog(It.IsAny<int>())).Returns(new List<ContentModel>
         {
-            new ContentModel
+            new
             (
                 new ContentDetailsModel (Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
                 GetContentMetaDataModel(image : "Image")
