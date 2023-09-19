@@ -32,8 +32,8 @@ public partial class FavoriteListPage : ContentPage
         base.OnNavigatedTo(args);
     }
 
-    private static readonly string[] valueArray = new[] { "application/json" };
-    private static readonly string[] value = new[] { "application/json" };
+    private static readonly string[] valueArray = ["application/json"];
+    private static readonly string[] value = ["application/json"];
 
     private string GetPageTitle()
     {

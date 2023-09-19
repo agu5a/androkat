@@ -31,6 +31,7 @@ public partial class SettingsPage : ContentPage
         await DownloadAll();
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S2589:Boolean expressions should not be gratuitous", Justification = "<Pending>")]
     private async Task DownloadAll()
     {
         var result = await _pageService.DownloadAll();
