@@ -3,14 +3,10 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace androkat.maui.library.ViewModels;
 
-public partial class ContentItemViewModel : BaseView
+public partial class ContentItemViewModel(ContentEntity contentEntity) : BaseView
 {
-    public ContentEntity ContentEntity { get; set; }
-
-    public ContentItemViewModel(ContentEntity contentEntity)
-    {
-        ContentEntity = contentEntity;
-    }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3604:Member initializer values should not be redundant", Justification = "<Pending>")]
+    public ContentEntity ContentEntity { get; set; } = contentEntity;
 
     [RelayCommand]
     Task NavigateToDetail() => Shell.Current.GoToAsync($"DetailPage?Id={ContentEntity.Nid}");

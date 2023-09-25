@@ -6,6 +6,14 @@ namespace androkat.maui.library.Helpers;
 
 internal static class Helper
 {
+    public static JsonSerializerOptions BuildSerializerOptions()
+    {
+        var options = new JsonSerializerOptions();
+        options.Converters.Add(new DateTimeConverterUsingDateTimeParse());
+
+        return options;
+    }
+
     public static string ReplaceUtf8(string text)
     {
         return text.Replace("&#x0151;", "ő").Replace("&#x0150;", "Ő").Replace("&#x0171;", "ű").Replace("&#x0170;", "Ű")

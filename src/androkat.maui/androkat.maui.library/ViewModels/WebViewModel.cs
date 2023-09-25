@@ -10,7 +10,7 @@ public partial class WebViewModel : ViewModelBase
 
     public WebViewModel(IBrowser browser)
     {
-        Items = new ObservableRangeCollection<WebUrl>();
+        Items = [];
         _browser = browser;
     }
 
@@ -23,13 +23,13 @@ public partial class WebViewModel : ViewModelBase
         await Task.Delay(1000);
         var s = new List<WebUrl>
         {
-            new WebUrl("Katekizmus", ConsValues.Katekizmus, _browser),
-            new WebUrl("E-Biblia", ConsValues.EBiblia, _browser),
-            new WebUrl("Zsolozsma", ConsValues.Zsolozsma, _browser),
-            new WebUrl("MiseRend", ConsValues.MiseRend, _browser),
-            new WebUrl("Megszentelt tér", ConsValues.MegszenteltTer, _browser),
-            new WebUrl("Bonum TV élő", ConsValues.BonumTv, _browser),
-            new WebUrl("liturgia.tv", ConsValues.LiturgiaTv, _browser)
+            new("Katekizmus", ConsValues.Katekizmus, _browser),
+            new("E-Biblia", ConsValues.EBiblia, _browser),
+            new("Zsolozsma", ConsValues.Zsolozsma, _browser),
+            new("MiseRend", ConsValues.MiseRend, _browser),
+            new("Megszentelt tér", ConsValues.MegszenteltTer, _browser),
+            new("Bonum TV élő", ConsValues.BonumTv, _browser),
+            new("liturgia.tv", ConsValues.LiturgiaTv, _browser)
         };
 
         Items.ReplaceRange(s);

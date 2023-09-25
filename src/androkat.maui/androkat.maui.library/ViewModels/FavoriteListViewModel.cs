@@ -26,7 +26,7 @@ public partial class FavoriteListViewModel : ViewModelBase
     public FavoriteListViewModel(IPageService pageService, ISourceData sourceData)
     {
         _pageService = pageService;
-        Contents = new ObservableRangeCollection<List<FavoriteContentViewModel>>();
+        Contents = [];
         _sourceData = sourceData;
     }
 

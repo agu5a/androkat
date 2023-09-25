@@ -19,9 +19,7 @@ public class AndrokatService : IAndrokatService
 
         var response = await client.GetStringAsync("v2/ser");
 
-        var options = new JsonSerializerOptions();
-        options.Converters.Add(new DateTimeConverterUsingDateTimeParse());
-        var result = JsonSerializer.Deserialize<List<ServerInfoResponse>>(response, options);
+        var result = JsonSerializer.Deserialize<List<ServerInfoResponse>>(response, Helper.BuildSerializerOptions());
 
         foreach (var item in result)
         {
@@ -51,9 +49,7 @@ public class AndrokatService : IAndrokatService
 
         string response = await client.GetStringAsync($"v2/ima?date={date:yyyy-MM-dd}");
 
-        var options = new JsonSerializerOptions();
-        options.Converters.Add(new DateTimeConverterUsingDateTimeParse());
-        return JsonSerializer.Deserialize<ImaResponse>(response, options);
+        return JsonSerializer.Deserialize<ImaResponse>(response, Helper.BuildSerializerOptions());
     }
 
     public async Task<List<ContentResponse>> GetContents(string tipus, string nid)
@@ -65,9 +61,7 @@ public class AndrokatService : IAndrokatService
 
         var response = await client.GetStringAsync($"v3/contents?tipus={tipus}&id={nid}");
 
-        var options = new JsonSerializerOptions();
-        options.Converters.Add(new DateTimeConverterUsingDateTimeParse());
-        return JsonSerializer.Deserialize<List<ContentResponse>>(response, options);
+        return JsonSerializer.Deserialize<List<ContentResponse>>(response, Helper.BuildSerializerOptions());
     }
 
     private HttpClient GetClient()

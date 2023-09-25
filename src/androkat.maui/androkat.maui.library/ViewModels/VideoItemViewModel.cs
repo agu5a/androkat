@@ -3,16 +3,10 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace androkat.maui.library.ViewModels;
 
-public partial class VideoItemViewModel : BaseView
+public partial class VideoItemViewModel(VideoEntity contentEntity, IBrowser browser) : BaseView
 {
-    public VideoEntity VideoEntity { get; set; }
-    private readonly IBrowser _browser;
-
-    public VideoItemViewModel(VideoEntity contentEntity, IBrowser browser)
-    {
-        VideoEntity = contentEntity;
-        _browser = browser;
-    }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3604:Member initializer values should not be redundant", Justification = "<Pending>")]
+    public VideoEntity VideoEntity { get; set; } = contentEntity;
 
     [RelayCommand]
     async Task OpenVideoInBrowser()
@@ -23,6 +17,6 @@ public partial class VideoItemViewModel : BaseView
             //PreferredToolbarColor = ColorConstants.BrowserNavigationBarBackgroundColor
         };
 
-        await _browser.OpenAsync(VideoEntity.Link, browserOptions);
+        await browser.OpenAsync(VideoEntity.Link, browserOptions);
     }
 }

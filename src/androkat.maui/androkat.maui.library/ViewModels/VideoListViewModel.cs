@@ -21,7 +21,7 @@ public partial class VideoListViewModel : ViewModelBase
 
     public VideoListViewModel(IBrowser browser)
     {
-        Contents = new ObservableRangeCollection<List<VideoItemViewModel>>();
+        Contents = [];
         _browser = browser;
     }
 
@@ -36,7 +36,7 @@ public partial class VideoListViewModel : ViewModelBase
     {
         var entities = new List<VideoEntity>
         {
-            new VideoEntity
+            new()
             {
                 Image = "https://img.youtube.com/vi/zxRr7YN02eY/hqdefault.jpg",
                 Nid = Guid.NewGuid(),

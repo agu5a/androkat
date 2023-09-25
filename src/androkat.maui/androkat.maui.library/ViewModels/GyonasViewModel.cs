@@ -7,7 +7,7 @@ public partial class GyonasViewModel : ViewModelBase
 {
     public GyonasViewModel()
     {
-        Items = new ObservableRangeCollection<GyonasTile>();
+        Items = [];
     }
 
     [ObservableProperty]
@@ -19,12 +19,12 @@ public partial class GyonasViewModel : ViewModelBase
         await Task.Delay(1000);
         var s = new List<GyonasTile>
         {
-            new GyonasTile("ELMÉLKEDÉS", "icon"),
-            new GyonasTile("IMA", "icon"),
-            new GyonasTile("LELKI TÜKÖR", "icon"),
-            new GyonasTile("JEGYZET", "icon"),
-            new GyonasTile("GYÓNÁS", "icon"),
-            new GyonasTile("TÖRLÉS", "icon")
+            new("ELMÉLKEDÉS", "icon"),
+            new("IMA", "icon"),
+            new("LELKI TÜKÖR", "icon"),
+            new("JEGYZET", "icon"),
+            new("GYÓNÁS", "icon"),
+            new("TÖRLÉS", "icon")
         };
 
         Items.ReplaceRange(s);

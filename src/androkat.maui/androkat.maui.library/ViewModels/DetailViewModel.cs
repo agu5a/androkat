@@ -9,20 +9,12 @@ namespace androkat.maui.library.ViewModels;
 
 [QueryProperty(nameof(Id), nameof(Id))]
 [QueryProperty(nameof(IsIma), nameof(IsIma))]
-public partial class DetailViewModel : ViewModelBase
+public partial class DetailViewModel(IPageService _pageService, ISourceData _sourceData) : ViewModelBase
 {
-    private readonly CancellationTokenSource _cancellationTokenSource;
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3604:Member initializer values should not be redundant", Justification = "<Pending>")]
+    private readonly CancellationTokenSource _cancellationTokenSource = new();
     private Guid _contentGuid;
-    private readonly IPageService _pageService;
-    private readonly ISourceData _sourceData;
     private bool _isIma = false;
-
-    public DetailViewModel(IPageService pageService, ISourceData sourceData)
-    {
-        _cancellationTokenSource = new CancellationTokenSource();
-        _pageService = pageService;
-        _sourceData = sourceData;
-    }
 
     public string Id { get; set; }
     public string IsIma { get; set; }
@@ -141,7 +133,7 @@ public partial class DetailViewModel : ViewModelBase
         var idezet = IdezetRegex().Replace(ContentView.ContentEntity.Idezet, String.Empty);
         IEnumerable<Locale> locales = await TextToSpeech.Default.GetLocalesAsync();
 
-        var locale = locales.FirstOrDefault(w => w.Country.ToLower() == "hu" && w.Language.ToLower() == "hu");
+        var locale = locales.FirstOrDefault(w => w.Country.Equals("hu", StringComparison.CurrentCultureIgnoreCase) && w.Language.Equals("hu", StringComparison.CurrentCultureIgnoreCase));
         if (locale == null)
         {
             await Application.Current.MainPage.DisplayAlert("Hiba!", "Nincs magyar nyelv telepítve a felolvasáshoz!", "OK");

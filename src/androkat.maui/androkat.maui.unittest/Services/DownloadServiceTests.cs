@@ -32,7 +32,7 @@ public class DownloadServiceTests
     {
         androkatService.Setup(s => s.GetContents(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<ContentResponse>
         {
-            new ContentResponse{
+            new() {
                 Nid = Guid.NewGuid(),
                 Cim = "cim",
                 Idezet = "idezet",
@@ -46,8 +46,7 @@ public class DownloadServiceTests
             HasMore = true,
             Imak = new List<ImadsagResponse>
             {
-                new ImadsagResponse
-                {
+                new() {
                     RecordDate = DateTime.Now.AddDays(-1),
                     Content = "Content",
                     Title = "Title",
@@ -60,8 +59,7 @@ public class DownloadServiceTests
             HasMore = false,
             Imak = new List<ImadsagResponse>
             {
-                new ImadsagResponse
-                {
+                new() {
                     RecordDate = DateTime.Now.AddDays(-1),
                     Content = "Content",
                     Title = "Title",
@@ -72,7 +70,7 @@ public class DownloadServiceTests
         });
 
         repository.Setup(s => s.GetContentsByTypeName(It.IsAny<string>())).ReturnsAsync(default(ContentEntity));
-        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentEntity> { new ContentEntity { } });
+        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentEntity> { new() { } });
 
         helperSharedPreferences.Setup(s => s.GetSharedPreferencesBoolean(It.IsAny<string>(), It.IsAny<bool>())).Returns(true);
 
@@ -91,7 +89,7 @@ public class DownloadServiceTests
     {
         androkatService.Setup(s => s.GetContents(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<ContentResponse>
         {
-            new ContentResponse{
+            new() {
                 Nid = Guid.NewGuid(),
                 Cim = "cim",
                 Idezet = "idezet",
@@ -142,7 +140,7 @@ public class DownloadServiceTests
     {
         androkatService.Setup(s => s.GetContents(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<ContentResponse>
         {
-            new ContentResponse{
+            new() {
                 Nid = Guid.NewGuid(),
                 Cim = "cim",
                 Idezet = "idezet",

@@ -25,8 +25,7 @@ public class ImaListViewModelTests
         //Arrange
         var contents = new List<ImadsagEntity>
         {
-            new ImadsagEntity
-            {
+            new() {
                 GroupName = "GroupName",
                 Content = "Content",
                 Datum = new DateTime(2022, 10, 10)

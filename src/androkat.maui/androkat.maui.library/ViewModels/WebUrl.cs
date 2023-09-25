@@ -3,19 +3,12 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace androkat.maui.library.ViewModels;
 
-public partial class WebUrl : ObservableObject
+public partial class WebUrl(string name, string url, IBrowser browser) : ObservableObject
 {
-    private readonly IBrowser _browser;
-
-    public WebUrl(string name, string url, IBrowser browser)
-    {
-        Name = name;
-        Url = url;
-        _browser = browser;
-    }
-
-    public string Name { get; }
-    public string Url { get; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3604:Member initializer values should not be redundant", Justification = "<Pending>")]
+    public string Name { get; } = name;
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3604:Member initializer values should not be redundant", Justification = "<Pending>")]
+    public string Url { get; } = url;
 
     [RelayCommand]
     async Task NavigateToWeb()
@@ -26,6 +19,6 @@ public partial class WebUrl : ObservableObject
             //PreferredToolbarColor = ColorConstants.BrowserNavigationBarBackgroundColor
         };
 
-        await _browser.OpenAsync(Url, browserOptions);
+        await browser.OpenAsync(Url, browserOptions);
     }
 }

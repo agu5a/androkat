@@ -22,28 +22,28 @@ public static class ConsValues
     public const string AndrokatMarket = "https://play.google.com/store/apps/details?id=hu.AndroKat"; //market://search?q=pname:hu.AndroKat
 #pragma warning restore S1075 // URIs should not be hardcoded
 
-    public static readonly string[] rssResourceName = new[]
-            {
-        
+    public static readonly string[] rssResourceName =
+            [
+
                     Activities.barsi.ToString(),
-                    Activities.horvath.ToString(),
-                    Activities.fokolare.ToString(),
-                    Activities.maievangelium.ToString(),
-                    Activities.papaitwitter.ToString(),
-                    Activities.advent.ToString(),
-                    Activities.nagybojt.ToString(),
-                    Activities.bojte.ToString(),
-                    Activities.regnum.ToString(),
-                    Activities.prohaszka.ToString(),
-                    Activities.szeretetujsag.ToString(),
-                    Activities.kempis.ToString(),
-                    Activities.taize.ToString(),
-                    Activities.laciatya.ToString()
+                Activities.horvath.ToString(),
+                Activities.fokolare.ToString(),
+                Activities.maievangelium.ToString(),
+                Activities.papaitwitter.ToString(),
+                Activities.advent.ToString(),
+                Activities.nagybojt.ToString(),
+                Activities.bojte.ToString(),
+                Activities.regnum.ToString(),
+                Activities.prohaszka.ToString(),
+                Activities.szeretetujsag.ToString(),
+                Activities.kempis.ToString(),
+                Activities.taize.ToString(),
+                Activities.laciatya.ToString()
 
-            };
+            ];
 
-    public static readonly string[] szentekResourceName = new[]
-            {
+    public static readonly string[] szentekResourceName =
+            [
                     Activities.pio.ToString(),
                     Activities.janospal.ToString(),
                     Activities.sztjanos.ToString(),
@@ -54,29 +54,29 @@ public static class ConsValues
                     Activities.szentbernat.ToString(),
                     Activities.szentszalezi.ToString(),
                     Activities.sienaikatalin.ToString()
-            };
+            ];
 
-    public static readonly string[] rssResourceNewsName = new[]
-            {
+    public static readonly string[] rssResourceNewsName =
+            [
                     Activities.kurir.ToString(),
                     Activities.bonumtv.ToString(),
                     Activities.keresztenyelet.ToString()
-            };
+            ];
 
-    public static readonly string[] rssResourceAudioName = new[]
-            {
+    public static readonly string[] rssResourceAudioName =
+            [
                     Activities.prayasyougo.ToString(),
                     Activities.audiopalferi.ToString(),
                     Activities.audiobarsi.ToString(),
                     Activities.audiohorvath.ToString(),
                     Activities.audiotaize.ToString(),
                     Activities.audionapievangelium.ToString()
-            };
+            ];
 
-    public static readonly string[] rssResourceMagazinName = new[]
-            {
+    public static readonly string[] rssResourceMagazinName =
+            [
                     Activities.b777.ToString(),
                     Activities.bzarandokma.ToString(),
                     Activities.jezsuitablog.ToString()
-            };
+            ];
 }

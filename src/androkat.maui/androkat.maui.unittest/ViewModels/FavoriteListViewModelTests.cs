@@ -34,7 +34,7 @@ public class FavoriteListViewModelTests
     public async Task InitializeAsync_ShouldPopulateContents()
     {
         //arrange
-        IEnumerable<FavoriteContentEntity> favorites = new List<FavoriteContentEntity>() { new FavoriteContentEntity() { Nid = Guid.NewGuid(), Idezet = "Idezet", Tipus = "1" } };
+        IEnumerable<FavoriteContentEntity> favorites = new List<FavoriteContentEntity>() { new() { Nid = Guid.NewGuid(), Idezet = "Idezet", Tipus = "1" } };
         _pageServiceMock.Setup(p => p.GetFavoriteCountAsync()).ReturnsAsync(favorites.Count);
         _pageServiceMock.Setup(p => p.GetFavoriteContentsAsync()).ReturnsAsync(favorites.ToList());
 

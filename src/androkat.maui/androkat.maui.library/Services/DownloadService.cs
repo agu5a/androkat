@@ -7,22 +7,9 @@ using androkat.maui.library.Models.Responses;
 
 namespace androkat.maui.library.Services;
 
-public class DownloadService : IDownloadService
+public class DownloadService(IAndrokatService _androkatService, IRepository _repository,
+    IHelperSharedPreferences _helperSharedPreferences, ISourceData _sourceData) : IDownloadService
 {
-    private readonly IRepository _repository;
-    private readonly IAndrokatService _androkatService;
-    private readonly IHelperSharedPreferences _helperSharedPreferences;
-    private readonly ISourceData _sourceData;
-
-    public DownloadService(IAndrokatService androkatService, IRepository repository,
-        IHelperSharedPreferences helperSharedPreferences, ISourceData sourceData)
-    {
-        _repository = repository;
-        _androkatService = androkatService;
-        _helperSharedPreferences = helperSharedPreferences;
-        _sourceData = sourceData;
-    }
-
     private async Task DeleteOldItems()
     {
         if (!int.TryParse(_helperSharedPreferences.GetSharedPreferencesstring("maxOffline", ConsValues.defMaxOffline.ToString()), out int max))
@@ -301,7 +288,7 @@ public class DownloadService : IDownloadService
     private async Task<ImaResponse> GetImaFromServer(DateTime date)
     {
         var result = new ImaResponse();
-        List<ImadsagResponse> list = new();
+        List<ImadsagResponse> list = [];
         result.Imak = list;
         result.HasMore = false;
 

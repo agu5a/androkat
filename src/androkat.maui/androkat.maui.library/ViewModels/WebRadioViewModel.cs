@@ -10,7 +10,7 @@ public partial class WebRadioViewModel : ViewModelBase
 
     public WebRadioViewModel(IBrowser browser)
     {
-        Items = new ObservableRangeCollection<WebUrl>();
+        Items = [];
         _browser = browser;
     }
 
@@ -23,15 +23,15 @@ public partial class WebRadioViewModel : ViewModelBase
         await Task.Delay(1000);
         var s = new List<WebUrl>
         {
-            new WebUrl("Szent István Rádió", ConsValues.Szentistvanradio, _browser),
-            new WebUrl("Katolikus Rádió", ConsValues.Katolikusradio, _browser),
-            new WebUrl("Vatikáni Rádió", ConsValues.Vaticannews, _browser),
-            new WebUrl("Ez az a nap Rádió", ConsValues.EzAzANap, _browser),
-            new WebUrl("Mária Rádió", ConsValues.Mariaradio, _browser),
-            new WebUrl("Mária Rádió Szerbia", "", _browser),
-            new WebUrl("Mária Rádió Erdély", "", _browser),
-            new WebUrl("Mária Rádió Szlovákia", "", _browser),
-            new WebUrl("Sola Rádió", "", _browser)
+            new("Szent István Rádió", ConsValues.Szentistvanradio, _browser),
+            new("Katolikus Rádió", ConsValues.Katolikusradio, _browser),
+            new("Vatikáni Rádió", ConsValues.Vaticannews, _browser),
+            new("Ez az a nap Rádió", ConsValues.EzAzANap, _browser),
+            new("Mária Rádió", ConsValues.Mariaradio, _browser),
+            new("Mária Rádió Szerbia", "", _browser),
+            new("Mária Rádió Erdély", "", _browser),
+            new("Mária Rádió Szlovákia", "", _browser),
+            new("Sola Rádió", "", _browser)
         };
 
         Items.ReplaceRange(s);

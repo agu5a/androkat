@@ -28,7 +28,7 @@ public partial class ContentListViewModel : ViewModelBase
     public ContentListViewModel(IPageService pageService, ISourceData sourceData, IAndrokatService androkatService)
     {
         _pageService = pageService;
-        Contents = new ObservableRangeCollection<List<ContentItemViewModel>>();
+        Contents = [];
         _sourceData = sourceData;
         _androkatService = androkatService;
     }

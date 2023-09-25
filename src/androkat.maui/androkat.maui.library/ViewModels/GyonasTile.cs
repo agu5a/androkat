@@ -3,16 +3,12 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace androkat.maui.library.ViewModels;
 
-public partial class GyonasTile : ObservableObject
+public partial class GyonasTile(string name, string icon) : ObservableObject
 {
-    public GyonasTile(string name, string icon)
-    {
-        Name = name;
-        Icon = icon;
-    }
-
-    public string Name { get; }
-    public string Icon { get; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3604:Member initializer values should not be redundant", Justification = "<Pending>")]
+    public string Name { get; } = name;
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3604:Member initializer values should not be redundant", Justification = "<Pending>")]
+    public string Icon { get; } = icon;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
     [RelayCommand]

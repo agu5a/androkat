@@ -8,87 +8,80 @@ using System.Text.Json;
 
 namespace androkat.maui.library.Services;
 
-public class PageService : IPageService
+public class PageService(IDownloadService downloadService, IRepository repository) : IPageService
 {
     private HttpClient client;
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3604:Member initializer values should not be redundant", Justification = "<Pending>")]
     private bool firstLoad = true;
-    private readonly IDownloadService _downloadService;
-    private readonly IRepository _repository;
-
-    public PageService(IDownloadService downloadService, IRepository repository)
-    {
-        _downloadService = downloadService;
-        _repository = repository;
-    }
 
     public async Task<ContentEntity> GetContentEntityByIdAsync(Guid id)
     {
-        var temp = await _repository.GetContentById(id);
+        var temp = await repository.GetContentById(id);
         return temp;
     }
 
     public async Task<ImadsagEntity> GetImadsagEntityByIdAsync(Guid id)
     {
-        return await _repository.GetImadsagEntityById(id);
+        return await repository.GetImadsagEntityById(id);
     }
 
     public async Task<int> InsertFavoriteContentAsync(FavoriteContentEntity favoriteContentEntity)
     {
-        var temp = await _repository.InsertFavoriteContent(favoriteContentEntity);
+        var temp = await repository.InsertFavoriteContent(favoriteContentEntity);
         return temp;
     }
 
     public async Task<int> DownloadAll()
     {
-        return await _downloadService.DownloadAll();
+        return await downloadService.DownloadAll();
     }
 
     public async Task<List<FavoriteContentEntity>> GetFavoriteContentsAsync()
     {
-        return await _repository.GetFavoriteContents();
+        return await repository.GetFavoriteContents();
     }
 
     public async Task<int> GetContentsCount()
     {
-        return await _repository.GetContentsCount();
+        return await repository.GetContentsCount();
     }
 
     public async Task<int> DeleteAllContentAndIma()
     {
-        var res = await _repository.DeleteAllContent();
-        res += await _repository.DeleteAllImadsag();
+        var res = await repository.DeleteAllContent();
+        res += await repository.DeleteAllImadsag();
         return res;
     }
 
     public async Task<int> DeleteAllFavorite()
     {
-        return await _repository.DeleteAllFavorite();
+        return await repository.DeleteAllFavorite();
     }
 
     public async Task<List<ImadsagEntity>> GetImaContents()
     {
-        return await _repository.GetImaContents();
+        return await repository.GetImaContents();
     }
 
     public async Task<int> GetFavoriteCountAsync()
     {
-        return await _repository.GetFavoriteCount();
+        return await repository.GetFavoriteCount();
     }
 
     public async Task<List<ContentEntity>> GetContentsAsync(string pageTypeId)
     {
         return pageTypeId switch
         {
-            "1" => await _repository.GetAjanlatokContents(),
-            "2" => await _repository.GetMaiszentContents(),
-            "3" => await _repository.GetSzentekContents(),
-            "4" => await _repository.GetNewsContents(),
-            "5" => await _repository.GetBlogContents(),
-            "6" => await _repository.GetHumorContents(),
+            "1" => await repository.GetAjanlatokContents(),
+            "2" => await repository.GetMaiszentContents(),
+            "3" => await repository.GetSzentekContents(),
+            "4" => await repository.GetNewsContents(),
+            "5" => await repository.GetBlogContents(),
+            "6" => await repository.GetHumorContents(),
             //"7" => ima
-            "8" => await _repository.GetAudioContents(),
-            "11" => await _repository.GetBookContents(),
-            _ => await _repository.GetContents(),
+            "8" => await repository.GetAudioContents(),
+            "11" => await repository.GetBookContents(),
+            _ => await repository.GetContents(),
         };
     }
 

@@ -98,9 +98,9 @@ public class PageServiceTests
         var repositoryMock = new Mock<IRepository>();
         var expectedContents = new List<FavoriteContentEntity>
             {
-                new FavoriteContentEntity {Nid = Guid.NewGuid(), Cim = "Test Cim 1", Idezet = "Test Idezet 1", Image = "Image1.png"},
-                new FavoriteContentEntity {Nid = Guid.NewGuid(), Cim = "Test Cim 2", Idezet = "Test Idezet 2", Image = "Image2.png"},
-                new FavoriteContentEntity {Nid = Guid.NewGuid(), Cim = "Test Cim 3", Idezet = "Test Idezet 3", Image = "Image3.png"}
+                new() {Nid = Guid.NewGuid(), Cim = "Test Cim 1", Idezet = "Test Idezet 1", Image = "Image1.png"},
+                new() {Nid = Guid.NewGuid(), Cim = "Test Cim 2", Idezet = "Test Idezet 2", Image = "Image2.png"},
+                new() {Nid = Guid.NewGuid(), Cim = "Test Cim 3", Idezet = "Test Idezet 3", Image = "Image3.png"}
             };
         repositoryMock.Setup(repo => repo.GetFavoriteContents()).ReturnsAsync(expectedContents).Verifiable();
         var pageService = new PageService(_downloadServiceMock.Object, repositoryMock.Object);
@@ -117,9 +117,9 @@ public class PageServiceTests
         var repositoryMock = new Mock<IRepository>();
         var expectedContents = new List<ImadsagEntity>
             {
-                new ImadsagEntity {Nid = Guid.NewGuid(), Cim = "Test Cim 1", Content = "Test Content 1", Csoport = 1 },
-                new ImadsagEntity {Nid = Guid.NewGuid(), Cim = "Test Cim 2", Content = "Test Content 2", Csoport = 2 },
-                new ImadsagEntity {Nid = Guid.NewGuid(), Cim = "Test Cim 3", Content = "Test Content 3", Csoport = 3 }
+                new() {Nid = Guid.NewGuid(), Cim = "Test Cim 1", Content = "Test Content 1", Csoport = 1 },
+                new() {Nid = Guid.NewGuid(), Cim = "Test Cim 2", Content = "Test Content 2", Csoport = 2 },
+                new() {Nid = Guid.NewGuid(), Cim = "Test Cim 3", Content = "Test Content 3", Csoport = 3 }
             };
         repositoryMock.Setup(repo => repo.GetImaContents()).ReturnsAsync(expectedContents).Verifiable();
         var pageService = new PageService(_downloadServiceMock.Object, repositoryMock.Object);

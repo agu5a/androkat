@@ -22,7 +22,7 @@ public partial class ImaListViewModel : ViewModelBase
     public ImaListViewModel(IPageService pageService)
     {
         _pageService = pageService;
-        Contents = new ObservableRangeCollection<List<ImaContentViewModel>>();
+        Contents = [];
     }
 
     public async Task InitializeAsync()

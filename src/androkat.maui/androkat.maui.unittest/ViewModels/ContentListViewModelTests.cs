@@ -31,8 +31,7 @@ public class ContentListViewModelTests
         // Arrange
         var contents = new List<ContentEntity>
         {
-            new ContentEntity
-            {
+            new() {
                 Tipus = "1",
                 Image = "SomeImage",
                 Datum = new DateTime(2022, 10, 10)
@@ -53,8 +52,7 @@ public class ContentListViewModelTests
 
         _androkatService.Setup(x => x.GetServerInfo()).ReturnsAsync(new List<ServerInfoResponse>
         {
-            new ServerInfoResponse
-            {
+            new() {
                 Key = "versionmaui",
                 Value = "1"
             }
