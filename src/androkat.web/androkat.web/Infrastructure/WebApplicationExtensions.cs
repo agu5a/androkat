@@ -29,6 +29,7 @@ public static class WebApplicationExtensions
             app.UseStatusCodePagesWithReExecute("/Error/{0}");
         }
 
+        app.UseRateLimiter();
         app.UseProxy();
         app.SetHealthCheckEndpoint();
 

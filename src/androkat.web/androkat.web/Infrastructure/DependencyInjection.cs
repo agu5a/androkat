@@ -8,10 +8,13 @@ using androkat.web.Service;
 using FastEndpoints;
 using FastEndpoints.ApiExplorer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
+using System.Threading.RateLimiting;
 
 namespace androkat.web.Infrastructure;
 
@@ -43,6 +46,22 @@ public static class DependencyInjection
                 builder.WithOrigins("https://androkat.hu").AllowAnyHeader().AllowAnyMethod();
             });
         });
+
+        builder.Services.AddRateLimiter(options =>
+        {
+            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+            options.AddPolicy("fixed-by-ip", httpContext => 
+                RateLimitPartition.GetFixedWindowLimiter
+                (
+                    partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
+                    factory: _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 30,
+                        Window = TimeSpan.FromMinutes(1)
+                    }
+                    ));
+        });
+
         builder.Services.AddControllers()
             .AddRazorRuntimeCompilation().AddJsonOptions(options =>
             {
