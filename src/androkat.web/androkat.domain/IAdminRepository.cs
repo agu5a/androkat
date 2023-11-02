@@ -12,6 +12,7 @@ public interface IAdminRepository
     LastTodayResult GetLastTodayContentByTipus(int tipus);
     bool InsertContent(ContentDetailsModel content);
     bool DeleteTempContentByNid(string nid);
+    List<AllUserResult> GetUsers();
     IEnumerable<ImgData> GetImgList();
     IEnumerable<FileData> GetAudioList();
 }

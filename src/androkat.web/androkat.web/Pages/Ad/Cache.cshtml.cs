@@ -75,6 +75,6 @@ public class CacheModel : PageModel
             _logger.LogError(ex, "Exception: ");
         }
 
-        return res.OrderBy(o => o.Key).ToList();
+        return [.. res.OrderBy(o => o.Key)];
     }
 }

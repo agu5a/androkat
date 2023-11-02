@@ -1,0 +1,29 @@
+﻿@page
+@using androkat.web.Pages.Ad
+@model UsersModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@section meta_extra {    
+}
+
+@section scripts {
+}
+
+<div class="container">
+    <div class="mb-2">
+        <table class="table table-striped table-bordered caption-top">
+            <caption>Felhasználók</caption>
+            <tr>
+                <th>email</th>
+                <th>lastlogin</th>
+            </tr>
+            @{
+                foreach (var item in Model.AllUserResult)
+                {
+                    @Html.Raw("<tr><td>" + item.Email + "</td><td>" + item.LastLogin + "</td></tr>")
+                    ;
+                }
+            }
+        </table>
+    </div>
+</div>

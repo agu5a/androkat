@@ -32,9 +32,9 @@ public class ContentService : IContentService
 
 	public IReadOnlyCollection<ContentModel> GetHome()
 	{
-		var result = GetContentDetailsModel(new int[]
-		{
-			(int)Forras.advent,
+        var result = GetContentDetailsModel(
+        [
+            (int)Forras.advent,
 			(int)Forras.maievangelium,
 			(int)Forras.horvath,
 			(int)Forras.nagybojt,
@@ -48,21 +48,21 @@ public class ContentService : IContentService
 			(int)Forras.kempis,
 			(int)Forras.taize,
 			(int)Forras.szeretetujsag
-		});
+		]);
 		return result;
 	}
 
 	public IReadOnlyCollection<ContentModel> GetAjanlat()
 	{
-		var result = GetContentDetailsModel(new int[] { (int)Forras.ajanlatweb });
+        var result = GetContentDetailsModel([(int)Forras.ajanlatweb]);
 		return result;
 	}
 
 	public IReadOnlyCollection<ContentModel> GetSzentek()
 	{
-		var result = GetContentDetailsModel(new int[]
-		{
-			(int)Forras.vianney,
+		var result = GetContentDetailsModel(
+        [
+            (int)Forras.vianney,
 			(int)Forras.pio,
 			(int)Forras.janospal,
 			(int)Forras.szentbernat,
@@ -72,7 +72,7 @@ public class ContentService : IContentService
 			(int)Forras.ignac,
 			(int)Forras.szentszalezi,
 			(int)Forras.sienaikatalin
-		});
+		]);
 		return result;
 	}
 
@@ -122,7 +122,7 @@ public class ContentService : IContentService
 
 	public IReadOnlyCollection<ContentModel> GetSzent()
 	{
-		return GetContentDetailsModel(new int[] { (int)Forras.maiszent });
+		return GetContentDetailsModel([(int)Forras.maiszent]);
 	}
 
 	public IReadOnlyCollection<ContentModel> GetHirek(int tipus)
@@ -203,7 +203,7 @@ public class ContentService : IContentService
 	private List<AudioModel> GetAudioViewModel(int tipus)
 	{
 		var list = new List<AudioModel>();
-		var contents = Get(new int[] { tipus });
+		var contents = Get([tipus]);
 
 		contents.ToList().ForEach(f =>
 		{
@@ -233,7 +233,7 @@ public class ContentService : IContentService
 
 		var ra = res.SystemData.FirstOrDefault(w => w.Key == "radio");
 		if (ra is null)
-			return new Dictionary<string, string>();
+			return [];
 
 		return JsonSerializer.Deserialize<Dictionary<string, string>>(ra.Value);
 	}

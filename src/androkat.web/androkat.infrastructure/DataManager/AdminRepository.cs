@@ -34,6 +34,17 @@ public class AdminRepository : BaseRepository, IAdminRepository
         _androkatConfiguration = androkatConfiguration;
     }
 
+    public List<AllUserResult> GetUsers()
+    {
+        var res = new List<AllUserResult>();
+        var items = _ctx.Admin.ToList();
+        foreach (var item in items)
+        {
+            res.Add(new AllUserResult { Email = item.Email, LastLogin = item.LastLogin.ToString("yyyy-MM-dd HH:mm:ss") });
+        }
+        return res;
+    }
+
     public bool DeleteTempContentByNid(string nid)
     {
         _logger.LogDebug("{Method} was called, {nid}", nameof(DeleteTempContentByNid), nid);

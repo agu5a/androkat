@@ -27,10 +27,10 @@ public class FilesModel : PageModel
     }
 
     [BindProperty]
-    public List<FileList> FileNames { get; set; } = new List<FileList>();
+    public List<FileList> FileNames { get; set; } = [];
 
     [BindProperty]
-    public List<FileList> AudioFileNames { get; set; } = new List<FileList>();
+    public List<FileList> AudioFileNames { get; set; } = [];
 
     [BindProperty(SupportsGet = true)]
     public string FileName { get; set; }
@@ -67,7 +67,7 @@ public class FilesModel : PageModel
 
             var filePaths = _adminRepository.GetAudioList();
             filePath = Path.Combine(_environment.WebRootPath, "download");
-            files = Directory.GetFiles(filePath).ToList();
+            files = [.. Directory.GetFiles(filePath)];
 
             if (files.Count != 0)
             {

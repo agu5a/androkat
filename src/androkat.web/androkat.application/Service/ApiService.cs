@@ -46,7 +46,7 @@ public class ApiService : IApiService
         var temp = new ImaResponse
         {
             HasMore = false,
-            Imak = new List<ImaDetailsResponse>()
+            Imak = []
         };
 
         var index = 0;

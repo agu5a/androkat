@@ -24,6 +24,7 @@ public class LogoutModel : PageModel
     {
         try
         {
+            _logger.LogInformation("Logout RemoteIpAddress {IP}", Request.HttpContext.Connection.RemoteIpAddress?.ToString());
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
         catch (Exception ex)

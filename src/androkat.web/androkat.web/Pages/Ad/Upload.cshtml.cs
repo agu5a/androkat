@@ -22,7 +22,7 @@ namespace androkat.web.Pages.Ad;
 public class UploadModel : PageModel
 {
     private readonly ILogger<UploadModel> _logger;
-    private readonly string[] _permittedExtensions = { ".m4a", ".jpeg", ".jpg", ".mp3", ".png" };
+    private readonly string[] _permittedExtensions = [".m4a", ".jpeg", ".jpg", ".mp3", ".png"];
 
     public UploadModel(ILogger<UploadModel> logger)
     {
@@ -138,7 +138,7 @@ public class UploadModel : PageModel
         // property associated with this IFormFile. If a display
         // name isn't found, error messages simply won't show
         // a display name.
-        MemberInfo property = typeof(T).GetProperty(formFile.Name[(formFile.Name.IndexOf(".", StringComparison.Ordinal) + 1)..]);
+        MemberInfo property = typeof(T).GetProperty(formFile.Name[(formFile.Name.IndexOf('.') + 1)..]);
         if (property is not null && property.GetCustomAttribute(typeof(DisplayAttribute)) is DisplayAttribute displayAttribute)
             fieldDisplayName = $"{displayAttribute.Name} ";
 
@@ -150,7 +150,7 @@ public class UploadModel : PageModel
         {
             Result = $"{fieldDisplayName}({trustedFileNameForDisplay}) is empty.";
             modelState.AddModelError(formFile.Name, $"{fieldDisplayName}({trustedFileNameForDisplay}) is empty.");
-            return Array.Empty<byte>();
+            return [];
         }
 
         try
@@ -185,7 +185,7 @@ public class UploadModel : PageModel
             modelState.AddModelError(formFile.Name, $"{fieldDisplayName}({trustedFileNameForDisplay}) upload failed. Error: {ex.HResult}");
         }
 
-        return Array.Empty<byte>();
+        return [];
     }
 
     private static bool IsValidFileExtensionAndSignature(string fileName, Stream data, string[] permittedExtensions)
