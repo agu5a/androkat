@@ -30,8 +30,8 @@ public class DownloadServiceTests
     [Fact]
     public async Task DownloadAll_All_Return_Test()
     {
-        androkatService.Setup(s => s.GetContents(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<ContentResponse>
-        {
+        androkatService.Setup(s => s.GetContents(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(
+        [
             new() {
                 Nid = Guid.NewGuid(),
                 Cim = "cim",
@@ -39,13 +39,13 @@ public class DownloadServiceTests
                 Image = "img",
                 KulsoLink = string.Empty,
                 Datum = DateTime.Now.AddDays(-1)}
-        });
+        ]);
 
         androkatService.SetupSequence(s => s.GetImadsag(It.IsAny<DateTime>())).ReturnsAsync(new ImaResponse
         {
             HasMore = true,
-            Imak = new List<ImadsagResponse>
-            {
+            Imak =
+            [
                 new() {
                     RecordDate = DateTime.Now.AddDays(-1),
                     Content = "Content",
@@ -53,12 +53,12 @@ public class DownloadServiceTests
                     Csoport = 1,
                     Nid = Guid.NewGuid()
                 }
-            }
+            ]
         }).ReturnsAsync(new ImaResponse
         {
             HasMore = false,
-            Imak = new List<ImadsagResponse>
-            {
+            Imak =
+            [
                 new() {
                     RecordDate = DateTime.Now.AddDays(-1),
                     Content = "Content",
@@ -66,11 +66,11 @@ public class DownloadServiceTests
                     Csoport = 1,
                     Nid = Guid.NewGuid()
                 }
-            }
+            ]
         });
 
         repository.Setup(s => s.GetContentsByTypeName(It.IsAny<string>())).ReturnsAsync(default(ContentEntity));
-        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentEntity> { new() { } });
+        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync([new() { }]);
 
         helperSharedPreferences.Setup(s => s.GetSharedPreferencesBoolean(It.IsAny<string>(), It.IsAny<bool>())).Returns(true);
 
@@ -87,8 +87,8 @@ public class DownloadServiceTests
     [Fact]
     public async Task StartUpdate_Fokolare_Already_Exists()
     {
-        androkatService.Setup(s => s.GetContents(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<ContentResponse>
-        {
+        androkatService.Setup(s => s.GetContents(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(
+        [
             new() {
                 Nid = Guid.NewGuid(),
                 Cim = "cim",
@@ -96,12 +96,12 @@ public class DownloadServiceTests
                 Image = "img",
                 KulsoLink = string.Empty,
                 Datum = DateTime.Now.AddDays(1)}
-        });
+        ]);
 
         repository.Setup(s => s.GetContentsByTypeName(It.IsNotIn<string>(Activities.fokolare.ToString()))).ReturnsAsync(default(ContentEntity));
         repository.Setup(s => s.GetContentsByTypeName(It.IsIn<string>(Activities.fokolare.ToString())))
             .ReturnsAsync(GetContentEntity("7", Activities.fokolare.ToString()));
-        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentEntity> { });
+        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync([]);
 
         helperSharedPreferences.Setup(s => s.GetSharedPreferencesBoolean(It.IsAny<string>(), It.IsAny<bool>())).Returns(true);
 
@@ -138,8 +138,8 @@ public class DownloadServiceTests
     [InlineData(Activities.sienaikatalin, 0)]
     public async Task StartUpdate_User_Dont_Download_Based_On_SharedPreferences(Activities activities, int expected)
     {
-        androkatService.Setup(s => s.GetContents(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new List<ContentResponse>
-        {
+        androkatService.Setup(s => s.GetContents(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(
+        [
             new() {
                 Nid = Guid.NewGuid(),
                 Cim = "cim",
@@ -147,10 +147,10 @@ public class DownloadServiceTests
                 Image = "img",
                 KulsoLink = string.Empty,
                 Datum = DateTime.Now.AddDays(1)}
-        });
+        ]);
 
         repository.Setup(s => s.GetContentsByTypeName(It.IsAny<string>())).ReturnsAsync(default(ContentEntity));
-        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync(new List<ContentEntity> { });
+        repository.Setup(s => s.GetContentsWithoutBook()).ReturnsAsync([]);
 
         helperSharedPreferences.Setup(s => s.GetSharedPreferencesBoolean(It.IsNotIn<string>(Activities.maiszent.ToString(),
             Activities.ajanlatweb.ToString(), Activities.humor.ToString()), true)).Returns(false);

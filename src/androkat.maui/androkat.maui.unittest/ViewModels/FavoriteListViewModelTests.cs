@@ -55,7 +55,7 @@ public class FavoriteListViewModelTests
         _pageServiceMock.Setup(p => p.GetFavoriteCountAsync()).ThrowsAsync(new Exception("test"));
 
         //act
-        await Assert.ThrowsAsync<Exception>(async () => await _viewModel.InitializeAsync());
+        await Assert.ThrowsAsync<Exception>(() => _viewModel.InitializeAsync());
 
         //assert
         _pageServiceMock.Verify(p => p.GetFavoriteContentsAsync(), Times.Never);

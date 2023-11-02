@@ -13,7 +13,7 @@ public class AndrokatService : IAndrokatService
     public async Task<List<ServerInfoResponse>> GetServerInfo()
     {
         if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            return new List<ServerInfoResponse>();
+            return [];
 
         client = GetClient();
 
@@ -55,7 +55,7 @@ public class AndrokatService : IAndrokatService
     public async Task<List<ContentResponse>> GetContents(string tipus, string nid)
     {
         if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            return new List<ContentResponse>();
+            return [];
 
         client = GetClient();
 

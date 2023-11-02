@@ -93,7 +93,7 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<FavoriteContentEntity>();
+        return [];
     }
 
     public async Task<List<ContentEntity>> GetContents()
@@ -110,7 +110,7 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentEntity>();
+        return [];
     }
 
     public async Task<int> InsertContent(ContentEntity entity)
@@ -293,7 +293,7 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentEntity>();
+        return [];
     }
 
     public async Task<List<ImadsagEntity>> GetImaContents()
@@ -309,7 +309,7 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ImadsagEntity>();
+        return [];
     }
 
     public async Task<List<ContentEntity>> GetAudioContents()
@@ -325,7 +325,7 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentEntity>();
+        return [];
     }
 
     public async Task<List<ContentEntity>> GetBookContents()
@@ -341,7 +341,7 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentEntity>();
+        return [];
     }
 
     public async Task<List<ContentEntity>> GetHumorContents()
@@ -356,7 +356,7 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentEntity>();
+        return [];
     }
 
     public async Task<List<ContentEntity>> GetMaiszentContents()
@@ -372,7 +372,7 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentEntity>();
+        return [];
     }
 
     public async Task<List<ContentEntity>> GetSzentekContents()
@@ -389,7 +389,7 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentEntity>();
+        return [];
     }
 
     public async Task<List<ContentEntity>> GetBlogContents()
@@ -404,7 +404,7 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentEntity>();
+        return [];
     }
 
     public async Task<List<ContentEntity>> GetNewsContents()
@@ -419,7 +419,7 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentEntity>();
+        return [];
     }
 
     public async Task<List<ContentEntity>> GetContentsWithoutBook()
@@ -436,7 +436,7 @@ public class Repository : IRepository
             System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
         }
 
-        return new List<ContentEntity>();
+        return [];
     }
 
     public async Task<int> SetContentAsReadById(Guid nid)

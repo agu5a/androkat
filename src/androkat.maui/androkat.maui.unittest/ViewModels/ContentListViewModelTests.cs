@@ -50,13 +50,13 @@ public class ContentListViewModelTests
 
         _sourceDataMock.Setup(x => x.GetSourcesFromMemory(It.IsAny<int>())).Returns(idezetSourceMock);
 
-        _androkatService.Setup(x => x.GetServerInfo()).ReturnsAsync(new List<ServerInfoResponse>
-        {
+        _androkatService.Setup(x => x.GetServerInfo()).ReturnsAsync(
+        [
             new() {
                 Key = "versionmaui",
                 Value = "1"
             }
-        });
+        ]);
 
         var viewModel = new ContentListViewModel(_pageServiceMock.Object, _sourceDataMock.Object, _androkatService.Object);
 

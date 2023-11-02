@@ -40,6 +40,6 @@ public class SourceDataMapper : ISourceData
             System.Diagnostics.Debug.WriteLine($"********************************** GetFromSources EXCEPTION! {ex}");
         }
 
-        return new Dictionary<int, SourceData>();
+        return [];
     }
 }

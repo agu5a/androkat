@@ -51,11 +51,11 @@
 
 
 	<ItemGroup>
-		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.10.0.77988">
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.12.0.78982">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.0-preview.7.8842" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.0-rc.2.9511" />
 	</ItemGroup>
 
 	<ItemGroup>
