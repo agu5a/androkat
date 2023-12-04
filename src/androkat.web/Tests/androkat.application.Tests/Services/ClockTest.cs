@@ -1,17 +1,18 @@
 ﻿using androkat.application.Service;
-using NUnit.Framework;
+using FluentAssertions;
 using System;
+using Xunit;
 
 namespace androkat.application.Tests.Services;
 
 public class ClockTest
 {
-    [Test]
+    [Fact]
     public void DeleteOldRowsTest()
     {
         var context = new Clock();
         var res = context.Now;
 
-        Assert.IsTrue(res <= DateTimeOffset.UtcNow.AddHours(2));
+        (res <= DateTimeOffset.UtcNow.AddHours(2)).Should().BeTrue();
     }
 }
