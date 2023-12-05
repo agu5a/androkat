@@ -1,5 +1,5 @@
 ﻿using androkat.application.Interfaces;
-using androkat.domain.Model;
+using androkat.domain.Enum;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;

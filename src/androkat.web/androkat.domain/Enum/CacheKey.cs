@@ -1,4 +1,4 @@
-﻿namespace androkat.domain.Model;
+﻿namespace androkat.domain.Enum;
 
 public enum CacheKey
 {

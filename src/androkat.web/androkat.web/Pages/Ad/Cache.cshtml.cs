@@ -1,4 +1,4 @@
-using androkat.domain.Model;
+using androkat.domain.Enum;
 using androkat.domain.Model.AdminPage;
 using androkat.domain.Model.ContentCache;
 using Microsoft.AspNetCore.Authorization;

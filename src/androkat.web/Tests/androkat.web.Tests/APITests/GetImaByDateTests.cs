@@ -1,4 +1,5 @@
 ﻿using androkat.application.Service;
+using androkat.domain.Enum;
 using androkat.domain.Model;
 using androkat.domain.Model.ContentCache;
 using androkat.domain.Model.WebResponse;

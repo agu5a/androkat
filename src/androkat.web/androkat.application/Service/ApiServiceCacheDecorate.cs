@@ -1,5 +1,5 @@
 ﻿using androkat.application.Interfaces;
-using androkat.domain.Model;
+using androkat.domain.Enum;
 using androkat.domain.Model.ContentCache;
 using androkat.domain.Model.WebResponse;
 using Microsoft.Extensions.Caching.Memory;
