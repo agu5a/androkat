@@ -18,14 +18,14 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using NUnit.Framework;
 using System;
+using Xunit;
 
 namespace androkat.web.Tests.Pages.Admin;
 
 public class PufferTests : BaseTest
 {
-	[Test]
+	[Fact]
 	public void OnGet_With_Data_Test()
 	{
 		var _fixture = new Fixture();
