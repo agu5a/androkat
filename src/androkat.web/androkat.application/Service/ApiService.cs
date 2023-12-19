@@ -1,4 +1,6 @@
 ﻿using androkat.application.Interfaces;
+using androkat.domain.Configuration;
+using androkat.domain.Enum;
 using androkat.domain.Model;
 using androkat.domain.Model.ContentCache;
 using androkat.domain.Model.WebResponse;
@@ -87,6 +89,31 @@ public class ApiService : IApiService
             .Select(s => new RadioMusorResponse { Musor = s.Musor }).ToList();
     }
 
+    public IReadOnlyCollection<ContentResponse> GetContentByTipusAndId(int tipus, Guid id, BookRadioSysCache bookRadioSysCache, MainCache mainCache)
+    {
+        if (AndrokatConfiguration.BlogNewsContentTypeIds().Contains(tipus) || tipus == (int)Forras.book)
+        {
+            return GetEgyebOlvasnivaloByForrasAndNid(tipus, id, bookRadioSysCache, mainCache);
+        }
+
+        return GetContentByTipusAndNid(tipus, id, mainCache);
+    }
+
+    public IReadOnlyCollection<ContentResponse> GetEgyebOlvasnivaloByForrasAndNid(int tipus, Guid n, BookRadioSysCache bookRadioSysCache, MainCache mainCache)
+    {
+        var temp = new List<ContentResponse>();
+
+        if (tipus == (int)Forras.book) //epub
+        {
+            GetBooks(n, temp, bookRadioSysCache);
+        }
+        else
+        {
+            GetEgyeb(tipus, n, temp, mainCache);
+        }
+        return temp;
+    }
+
     public IReadOnlyCollection<ContentResponse> GetContentByTipusAndNid(int tipus, Guid n, MainCache mainCache)
     {
         var temp = new List<ContentResponse>();
@@ -148,6 +175,44 @@ public class ApiService : IApiService
         sb.Append("<div class=\"video-container\" ><iframe src=\"" + item.VideoLink.Replace("watch?v=", "embed/") + "\" width =\"310\" height =\"233\" title=\"YouTube video player\" " +
             "frameborder =\"0\" allow=\"accelerometer;\"></iframe></div>");
         sb.Append("</div></div>");
+    }
+
+    private static void GetEgyeb(int tipus, Guid n, List<ContentResponse> temp, MainCache mainCache)
+    {
+        foreach (var item in mainCache.Egyeb.Where(w => w.Tipus == tipus))
+        {
+            //a user már letöltötte, nem kell újból
+            if (n != Guid.Empty && n == item.Nid)
+                break;
+
+            temp.Add(new ContentResponse
+            {
+                Nid = item.Nid,
+                Cim = item.Cim,
+                Datum = item.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss"),
+                Idezet = item.Idezet,
+                KulsoLink = item.KulsoLink ?? string.Empty
+            });
+        }
+    }
+
+    private static void GetBooks(Guid n, List<ContentResponse> temp, BookRadioSysCache bookRadioSysCache)
+    {
+        foreach (var item in bookRadioSysCache.Books)
+        {
+            //a user már letöltötte, nem kell újból
+            if (n != Guid.Empty && n == item.Nid)
+                break;
+
+            temp.Add(new ContentResponse
+            {
+                Nid = item.Nid,
+                Cim = item.Cim,
+                Datum = item.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss"),
+                Idezet = string.IsNullOrEmpty(item.FileUrl) ? item.Idezet : item.FileUrl,
+                KulsoLink = item.KulsoLink ?? string.Empty
+            });
+        }
     }
 
     private void GetHumorAndAjandek(Guid n, int tipus, MainCache m, List<ContentResponse> temp)
