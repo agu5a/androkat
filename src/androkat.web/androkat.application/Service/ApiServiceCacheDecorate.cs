@@ -1,4 +1,5 @@
 ﻿using androkat.application.Interfaces;
+using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.domain.Model.ContentCache;
 using androkat.domain.Model.WebResponse;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace androkat.application.Service;
 
@@ -23,6 +25,31 @@ public class ApiServiceCacheDecorate : IApiService
         _apiService = apiService;
         _memoryCache = memoryCache;
         _cacheService = cacheService;
+    }
+
+    public IReadOnlyCollection<ContentResponse> GetContentByTipusAndId(int tipus, Guid id, BookRadioSysCache bookRadioSysCache, MainCache mainCache)
+    {
+        if (AndrokatConfiguration.BlogNewsContentTypeIds().Contains(tipus) || tipus == (int)Forras.book)
+        {
+            return GetEgyebOlvasnivaloByForrasAndNid(tipus, id, bookRadioSysCache, mainCache);
+        }
+
+        return GetContentByTipusAndNid(tipus, id, mainCache);
+    }
+
+    public IReadOnlyCollection<ContentResponse> GetEgyebOlvasnivaloByForrasAndNid(int tipus, Guid n, BookRadioSysCache bookRadioSysCache, MainCache mainCache)
+    {
+        string key = CacheKey.EgyebOlvasnivaloResponseCacheKey + "_" + tipus + "_" + n;
+        var result = GetCache<IReadOnlyCollection<ContentResponse>>(key);
+        if (result is not null)
+            return result;
+
+        bookRadioSysCache = GetCache(CacheKey.BookRadioSysCacheKey.ToString(), () => { return _cacheService.BookRadioSysCacheFillUp(); });
+        mainCache = GetCache(CacheKey.MainCacheKey.ToString(), () => { return _cacheService.MainCacheFillUp(); });
+        result = _apiService.GetEgyebOlvasnivaloByForrasAndNid(tipus, n, bookRadioSysCache, mainCache);
+        _memoryCache.Set(key, result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
+
+        return result;
     }
 
     public ImaResponse GetImaByDate(string date, ImaCache imaCache)

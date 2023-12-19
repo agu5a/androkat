@@ -10,4 +10,5 @@ public enum CacheKey
     ContentResponseCacheKey,
     ImaResponseCacheKey,
     RadioResponseCacheKey,
+    EgyebOlvasnivaloResponseCacheKey
 }
