@@ -1,11 +1,13 @@
 ﻿using androkat.application.Interfaces;
 using androkat.domain.Model.WebResponse;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System;
 using System.Collections.Generic;
 
 namespace androkat.web.Controllers.V3;
 
+[EnableRateLimiting("fixed-by-ip")]
 [Route("v3")]
 [ApiController]
 public class Api : ControllerBase

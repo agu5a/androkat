@@ -2,12 +2,14 @@
 using androkat.domain.Model.WebResponse;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 
 namespace androkat.data.Controllers.V2;
 
+[EnableRateLimiting("fixed-by-ip")]
 [Route("v2")]
 [ApiController]
 public class Api : ControllerBase
