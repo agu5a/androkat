@@ -11,6 +11,9 @@ MOTTÓ
 ## Wiki oldal
 https://github.com/agu5a/androkat/wiki
 
+## <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" width="64"/> Licenses for Open Source Development
+Örömhír, hogy az AndroKat fejlesztését a Jetbrains támogatja a [Licenses for Open Source Development](https://www.jetbrains.com/community/opensource/#support) keretében.
+
 #### AndroKat alkalmazás a Google Play-en
 [play.google.com](https://play.google.com/store/apps/details?id=hu.AndroKat)
 
