@@ -18,10 +18,10 @@ public class Content
     public string Fulldatum { get; set; } //"yyyy-MM-dd HH:mm:ss"
 
     [DataMember(Name = "cim")]
-    public string Cim { get; set; }
+    public string Cim { get; set; } = string.Empty;
 
     [DataMember(Name = "idezet")]
-    public string Idezet { get; set; }
+    public string Idezet { get; set; } = string.Empty;
 
     [DataMember(Name = "tipus")]
     public int Tipus { get; set; }
@@ -42,5 +42,5 @@ public class Content
     public string Forras { get; set; }
 
     [DataMember(Name = "kulsolink")]
-    public string KulsoLink { get; set; }
+    public string KulsoLink { get; set; } = string.Empty;
 }

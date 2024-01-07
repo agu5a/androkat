@@ -1,13 +1,12 @@
-﻿using androkat.application.Interfaces;
-using androkat.domain.Model.WebResponse;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using androkat.application.Interfaces;
+using androkat.domain.Model.WebResponse;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
-namespace androkat.data.Controllers.V2;
+namespace androkat.web.Controllers.V2;
 
 [EnableRateLimiting("fixed-by-ip")]
 [Route("v2")]
@@ -15,16 +14,10 @@ namespace androkat.data.Controllers.V2;
 public class Api : ControllerBase
 {
     private readonly IApiService _apiService;
-#pragma warning disable S4487 // Unread "private" fields should be removed
-#pragma warning disable IDE0052 // Remove unread private members
-    private readonly IMapper _mapper;
-#pragma warning restore IDE0052 // Remove unread private members
-#pragma warning restore S4487 // Unread "private" fields should be removed
 
-    public Api(IApiService apiService, IMapper mapper)
+    public Api(IApiService apiService)
     {
         _apiService = apiService;
-        _mapper = mapper;
     }
 
     /// <summary>
@@ -35,7 +28,7 @@ public class Api : ControllerBase
     [ProducesResponseType(200)]
     public ActionResult<List<VideoResponse>> GetVideoByOffsetV2(int offset)
     {
-        if (offset < 0 || offset > 50)
+        if (offset is < 0 or > 50)
             return BadRequest("Hiba");
 
         var result = _apiService.GetVideoByOffset(offset, default);
@@ -96,10 +89,10 @@ public class Api : ControllerBase
     [ProducesResponseType(200)]
     public ActionResult<string> GetVideoForWebPage([FromForm] string f, [FromForm] int offset)
     {
-        if (offset < 0 || offset > 50)
+        if (offset is < 0 or > 50)
             return BadRequest("Hiba");
 
-        if (!string.IsNullOrWhiteSpace(f) && (f.Length > 30 || f.Length < 20))
+        if (!string.IsNullOrWhiteSpace(f) && f.Length is > 30 or < 20)
             return BadRequest("Hiba");
 
         var sb = _apiService.GetVideoForWebPage(f, offset, default);

@@ -14,22 +14,22 @@ public class VideoContent
     public Guid Nid { get; set; }
 
     [DataMember(Name = "img")]
-    public string Img { get; set; }
+    public string Img { get; set; } = string.Empty;
 
     [DataMember(Name = "videolink")]
-    public string VideoLink { get; set; }
+    public string VideoLink { get; set; } = string.Empty;
 
     [DataMember(Name = "cim")]
-    public string Cim { get; set; }
+    public string Cim { get; set; } = string.Empty;
 
     [DataMember(Name = "date")]
-    public string Date { get; set; } //"yyyy-MM-dd"
+    public string Date { get; set; }  = string.Empty; //"yyyy-MM-dd"
 
     [DataMember(Name = "forras")]
-    public string Forras { get; set; }
+    public string Forras { get; set; } = string.Empty;
 
     [DataMember(Name = "channelId")]
-    public string ChannelId { get; set; }
+    public string ChannelId { get; set; } = string.Empty;
 
     [DataMember(Name = "inserted")]
     public DateTime Inserted { get; set; } //"yyyy-MM-dd HH:mm:ss"

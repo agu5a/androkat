@@ -84,7 +84,7 @@ public class AutoMapperProfileTests
 			Fulldatum = "2022-12-15 01:02:03"
 		});
 
-		result.Cim.Should().BeNull();
+		result.Cim.Should().BeEmpty();
 		result.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss").Should().Be("2022-12-15 01:02:03");
 	}
 
@@ -110,7 +110,7 @@ public class AutoMapperProfileTests
 			Datum = "12-15"
 		});
 
-		result.Cim.Should().BeNull();
+		result.Cim.Should().BeEmpty();
 		result.FileUrl.Should().BeNull();
 		result.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss").Should().Be(DateTime.Now.ToString("yyyy-") + "12-15 00:00:00");
 	}
@@ -126,7 +126,7 @@ public class AutoMapperProfileTests
 			Datum = "12-15"
 		});
 
-		result.Cim.Should().BeNull();
+		result.Cim.Should().BeEmpty();
 		result.FileUrl.Should().BeNull();
 		result.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss").Should().Be(DateTime.Now.ToString("yyyy-") + "12-15 00:00:00");
 	}

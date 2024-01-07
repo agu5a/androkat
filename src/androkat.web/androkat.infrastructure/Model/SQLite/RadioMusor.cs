@@ -14,11 +14,11 @@ public class RadioMusor
     public Guid Nid { get; set; }
 
     [DataMember(Name = "source")]
-    public string Source { get; set; }
+    public string Source { get; set; } = string.Empty;
 
     [DataMember(Name = "musor")]
-    public string Musor { get; set; }
+    public string Musor { get; set; } = string.Empty;
 
     [DataMember(Name = "inserted")]
-    public string Inserted { get; set; } //"yyyy-MM-dd HH:mm:ss"
+    public string Inserted { get; set; } = string.Empty; //"yyyy-MM-dd HH:mm:ss"
 }

@@ -11,6 +11,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using androkat.web.Controllers.V2;
 
 namespace androkat.web.Tests.APITests;
 
@@ -28,7 +29,7 @@ public class GetSystemDataTests : BaseTest
 
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, memoryCache.Object, null);
-        var api = new data.Controllers.V2.Api(dec, GetMapper());
+        var api = new Api(dec);
         ActionResult<IEnumerable<SystemDataResponse>> res = api.GetSystemDataV2();
         dynamic s = res.Result;
 
@@ -53,7 +54,7 @@ public class GetSystemDataTests : BaseTest
 
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
-        var api = new data.Controllers.V2.Api(dec, GetMapper());
+        var api = new Api(dec);
         ActionResult<IEnumerable<SystemDataResponse>> res = api.GetSystemDataV2();
         dynamic s = res.Result;
 

@@ -18,7 +18,7 @@ namespace androkat.web.Pages.Ad;
 //https://github.com/dotnet/AspNetCore.Docs/blob/main/aspnetcore/mvc/models/file-uploads/samples/3.x/SampleApp/Pages/BufferedSingleFileUploadPhysical.cshtml.cs
 //https://docs.microsoft.com/en-us/aspnet/core/mvc/models/file-uploads?view=aspnetcore-6.0#upload-small-files-with-buffered-model-binding-to-physical-storage
 
-//[Authorize()]
+//[Authorize]
 public class UploadModel : PageModel
 {
     private readonly ILogger<UploadModel> _logger;
@@ -49,8 +49,10 @@ public class UploadModel : PageModel
         }
 
         //yt5s.com - igazi fájl név (128 kbps).mp3
-        Result = FileNameReplace.ToLower().Replace(" ", "_").Replace("ő", "o").Replace("ö", "o").Replace("ó", "o").Replace("ü", "u").Replace("ű", "u").Replace("ú", "u")
-            .Replace("í", "i").Replace("é", "e").Replace("á", "a").Replace("yt5s.com_-_", "").Replace("_(128_kbps)", "");
+        Result = FileNameReplace.ToLower().Replace(" ", "_").Replace("ő", "o").Replace("ö", "o").Replace("ó", "o")
+            .Replace("ü", "u").Replace("ű", "u").Replace("ú", "u")
+            .Replace("í", "i").Replace("é", "e").Replace("á", "a").Replace("yt5s.com_-_", "")
+            .Replace("_(128_kbps)", "");
         return Page();
     }
 
@@ -64,7 +66,9 @@ public class UploadModel : PageModel
                 return Page();
             }
 
-            var formFileContent = await ProcessFormFile<BufferedSingleFileUploadPhysical>(FileUpload2.FormFile, ModelState, _permittedExtensions);
+            var formFileContent =
+                await ProcessFormFile<BufferedSingleFileUploadPhysical>(FileUpload2.FormFile, ModelState,
+                    _permittedExtensions);
 
             if (formFileContent.Length == 0)
             {
@@ -76,10 +80,8 @@ public class UploadModel : PageModel
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
             var filePath = Path.Combine(pathToSave, Path.GetFileName(FileUpload2.FormFile.FileName));
 
-            using (var fileStream = System.IO.File.Create(filePath))
-            {
-                await fileStream.WriteAsync(formFileContent);
-            }
+            await using var fileStream = System.IO.File.Create(filePath);
+            await fileStream.WriteAsync(formFileContent);
 
             Result = $"size: {FileUpload2.FormFile.Length} filePath: {filePath}";
         }
@@ -102,7 +104,9 @@ public class UploadModel : PageModel
                 return Page();
             }
 
-            var formFileContent = await ProcessFormFile<BufferedSingleFileUploadPhysical>(FileUpload1.FormFile, ModelState, _permittedExtensions);
+            var formFileContent =
+                await ProcessFormFile<BufferedSingleFileUploadPhysical>(FileUpload1.FormFile, ModelState,
+                    _permittedExtensions);
 
             if (formFileContent.Length == 0)
             {
@@ -114,10 +118,8 @@ public class UploadModel : PageModel
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
             var filePath = Path.Combine(pathToSave, Path.GetFileName(FileUpload1.FormFile.FileName));
 
-            using (var fileStream = System.IO.File.Create(filePath))
-            {
-                await fileStream.WriteAsync(formFileContent);
-            }
+            await using var fileStream = System.IO.File.Create(filePath);
+            await fileStream.WriteAsync(formFileContent);
 
             Result = $"size: {FileUpload1.FormFile.Length} filePath: {filePath}";
         }
@@ -130,7 +132,8 @@ public class UploadModel : PageModel
         return Page();
     }
 
-    private async Task<byte[]> ProcessFormFile<T>(IFormFile formFile, ModelStateDictionary modelState, string[] permittedExtensions)
+    private async Task<byte[]> ProcessFormFile<T>(IFormFile formFile, ModelStateDictionary modelState,
+        string[] permittedExtensions)
     {
         var fieldDisplayName = string.Empty;
 
@@ -139,7 +142,7 @@ public class UploadModel : PageModel
         // name isn't found, error messages simply won't show
         // a display name.
         MemberInfo property = typeof(T).GetProperty(formFile.Name[(formFile.Name.IndexOf('.') + 1)..]);
-        if (property is not null && property.GetCustomAttribute(typeof(DisplayAttribute)) is DisplayAttribute displayAttribute)
+        if (property?.GetCustomAttribute(typeof(DisplayAttribute)) is DisplayAttribute displayAttribute)
             fieldDisplayName = $"{displayAttribute.Name} ";
 
         // Don't trust the file name sent by the client. To display the file name, HTML-encode the value.
@@ -182,7 +185,8 @@ public class UploadModel : PageModel
         catch (Exception ex)
         {
             Result = $"{fieldDisplayName}({trustedFileNameForDisplay}) upload failed. Error: {ex.HResult}";
-            modelState.AddModelError(formFile.Name, $"{fieldDisplayName}({trustedFileNameForDisplay}) upload failed. Error: {ex.HResult}");
+            modelState.AddModelError(formFile.Name,
+                $"{fieldDisplayName}({trustedFileNameForDisplay}) upload failed. Error: {ex.HResult}");
         }
 
         return [];
@@ -195,9 +199,6 @@ public class UploadModel : PageModel
 
         var ext = Path.GetExtension(fileName).ToLowerInvariant();
 
-        if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
-            return false;
-
-        return true;
+        return !string.IsNullOrEmpty(ext) && permittedExtensions.Contains(ext);
     }
 }

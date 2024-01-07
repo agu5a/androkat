@@ -10,6 +10,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using androkat.web.Controllers.V2;
 
 namespace androkat.web.Tests.APITests;
 
@@ -21,7 +22,7 @@ public class GetVideoForWebPageTests : BaseTest
     [TestCase("UCRn003-qzC5GOQVPyJSkgnA1111111", 50)] //more than 30
     public void API_GetVideoForWebPage_V2_BadRequest(string f, int offset)
     {
-        var apiV2 = new data.Controllers.V2.Api(null, GetMapper());
+        var apiV2 = new Api(null);
         var resV1 = apiV2.GetVideoForWebPage(f, offset);
         dynamic s = resV1.Result;
         string result = s.Value;
@@ -45,7 +46,7 @@ public class GetVideoForWebPageTests : BaseTest
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
 
-        var apiV2 = new data.Controllers.V2.Api(dec, GetMapper());
+        var apiV2 = new Api(dec);
         ActionResult<string> resV1 = apiV2.GetVideoForWebPage("", 0);
         dynamic sV1 = resV1.Result;
 
@@ -65,7 +66,7 @@ public class GetVideoForWebPageTests : BaseTest
 
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, memoryCache.Object, null);
-        var apiV2 = new data.Controllers.V2.Api(dec, GetMapper());
+        var apiV2 = new Api(dec);
         Assert.Throws<ArgumentNullException>(() => apiV2.GetVideoForWebPage("", 0));
     }
 }

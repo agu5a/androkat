@@ -1,5 +1,4 @@
 ﻿@page "{nid}"
-@using androkat.infrastructure.Model;
 @using androkat.web.Pages.Ima;
 @model DetailsModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
@@ -19,8 +18,7 @@
         
         @foreach (var item in Model.ImaCsoportok)
         {
-            var css = "";
-            css = (!string.IsNullOrWhiteSpace(Model.ImaModel.Csoport) && Model.ImaModel.Csoport == item.Value) ? "class=\"bg-success text-white p-1\"" : "";
+            var css = !string.IsNullOrWhiteSpace(Model.ImaModel.Csoport) && Model.ImaModel.Csoport == item.Value ? "class=\"bg-success text-white p-1\"" : "";
             <a href="/ima/@(item.Value)" @Html.Raw(css)>@(item.Key)</a> @("||")            
         }
     </div>

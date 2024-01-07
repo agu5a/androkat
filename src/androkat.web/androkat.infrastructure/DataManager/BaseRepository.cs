@@ -5,14 +5,14 @@ namespace androkat.infrastructure.DataManager;
 
 public class BaseRepository
 {
-    protected readonly AndrokatContext _ctx;
-    protected readonly IClock _clock;
-    protected readonly IMapper _mapper;
+    protected readonly AndrokatContext Ctx;
+    protected readonly IClock Clock;
+    protected readonly IMapper Mapper;
 
-    public BaseRepository(AndrokatContext ctx, IClock clock, IMapper mapper)
+    protected BaseRepository(AndrokatContext ctx, IClock clock, IMapper mapper)
     {
-        _ctx = ctx;
-        _clock = clock;
-        _mapper = mapper;
+        Ctx = ctx;
+        Clock = clock;
+        Mapper = mapper;
     }
 }

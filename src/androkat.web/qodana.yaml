@@ -1,0 +1,59 @@
+#-------------------------------------------------------------------------------#
+#               Qodana analysis is configured by qodana.yaml file               #
+#             https://www.jetbrains.com/help/qodana/qodana-yaml.html            #
+#-------------------------------------------------------------------------------#
+version: "1.0"
+
+#Specify IDE code to run analysis without container (Applied in CI/CD pipeline)
+ide: QDNET
+
+#Specify inspection profile for code analysis
+profile:
+  name: qodana.starter
+
+#Enable inspections
+#include:
+#  - name: <SomeEnabledInspectionId>
+
+#Disable inspections
+#exclude:
+#  - name: <SomeDisabledInspectionId>
+#    paths:
+#      - <path/where/not/run/inspection>
+
+#Execute shell command before Qodana execution (Applied in CI/CD pipeline)
+#bootstrap: sh ./prepare-qodana.sh
+
+#Install IDE plugins before Qodana execution (Applied in CI/CD pipeline)
+#plugins:
+#  - id: <plugin.id> #(plugin id can be found at https://plugins.jetbrains.com)
+exclude:
+  - name: EntityFramework.ModelValidation.UnlimitedStringLength
+  - name: UnusedAutoPropertyAccessor.Global
+  - name: RegExpUnexpectedAnchor
+  - name: RegExpUnnecessaryNonCapturingGroup
+    paths:
+      - androkat.web\wwwroot\lib\jquery-validation\dist
+  - name: AutoPropertyCanBeMadeGetOnly.Global
+  - name: PropertyCanBeMadeInitOnly.Global
+  - name: ConvertToPrimaryConstructor
+  - name: HttpUrlsUsage
+  - name: SuggestBaseTypeForParameter
+    paths:
+      - androkat.application\Service\ApiService.cs
+      - androkat.infrastructure\DataManager\AdminRepository.cs
+      - androkat.infrastructure\DataManager\CacheRepository.cs
+  - name: ReturnTypeCanBeEnumerable.Local
+    paths:
+      - androkat.application\Service\ContentService.cs
+      - androkat.infrastructure\DataManager\AdminRepository.cs
+  - name: LoopCanBeConvertedToQuery
+    paths:
+      - androkat.application\Service\ApiService.cs
+      - androkat.application\Service\ContentService.cs
+  - name: UseVerbatimString
+    paths:
+      - androkat.application\Service\CacheService.cs
+  - name: ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+    paths:
+      - androkat.infrastructure\DataManager\AdminRepository.cs

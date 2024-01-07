@@ -9,11 +9,11 @@ using System;
 
 namespace androkat.web.Pages.Ad;
 
-//[Authorize()]
+//[Authorize]
 public class VideoModel : PageModel
 {
-    protected readonly ILogger<VideoModel> _logger;
-    protected readonly AndrokatContext _ctx;
+    private readonly ILogger<VideoModel> _logger;
+    private readonly AndrokatContext _ctx;
 
     [BindProperty]
     public VideoData VideoPageData { get; set; }
@@ -44,7 +44,7 @@ public class VideoModel : PageModel
                 Inserted = DateTime.Now
             });
             _ctx.SaveChanges();
-            VideoPageData = new VideoData { Error = "sikerült" };
+            VideoPageData = new VideoData { Error = "sikerï¿½lt" };
         }
         catch (Exception ex)
         {

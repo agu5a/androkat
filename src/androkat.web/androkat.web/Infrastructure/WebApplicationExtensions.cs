@@ -1,6 +1,5 @@
 ﻿using FastEndpoints;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -17,7 +16,7 @@ public static class WebApplicationExtensions
     {
         var app = builder.Build();
 
-        Log.Information("androkat.web version: " + Assembly.GetEntryAssembly().GetName().Version);
+        Log.Information("androkat.web version: " + Assembly.GetEntryAssembly()!.GetName().Version);
 
         if (app.Environment.IsDevelopment())
         {
@@ -35,8 +34,13 @@ public static class WebApplicationExtensions
 
         app.UseSecurityHeaders(); //adding security headers
 
-        var provider = new FileExtensionContentTypeProvider();
-        provider.Mappings[".epub"] = "application/epub+zip";
+        var provider = new FileExtensionContentTypeProvider
+        {
+            Mappings =
+            {
+                [".epub"] = "application/epub+zip"
+            }
+        };
         app.UseStaticFiles(new StaticFileOptions
         {
             ContentTypeProvider = provider
@@ -49,13 +53,10 @@ public static class WebApplicationExtensions
         app.UseAuthorization();
         app.UseCors("CorsPolicy");
         app.UseFastEndpoints();
-        app.MapRazorPages();        
+        app.MapRazorPages();
         app.MapControllerRoute(name: "default", pattern: "{controller}/{action=Index}");
 
-        app.Lifetime.ApplicationStopping.Register(() =>
-        {
-            Log.Information(Environment.StackTrace);
-        });
+        app.Lifetime.ApplicationStopping.Register(() => { Log.Information(Environment.StackTrace); });
 
         return app;
     }

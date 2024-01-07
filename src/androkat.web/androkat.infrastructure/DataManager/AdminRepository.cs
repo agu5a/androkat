@@ -13,7 +13,6 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
@@ -36,13 +35,18 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public List<AllUserResult> GetUsers()
     {
-        var res = new List<AllUserResult>();
-        var items = _ctx.Admin.ToList();
-        foreach (var item in items)
-        {
-            res.Add(new AllUserResult { Email = item.Email, LastLogin = item.LastLogin.ToString("yyyy-MM-dd HH:mm:ss") });
-        }
-        return res;
+        var items = Ctx.Admin.ToList();
+        return items.Select(item => new AllUserResult { Email = item.Email, LastLogin = item.LastLogin.ToString("yyyy-MM-dd HH:mm:ss") }).ToList();
+    }
+
+    public bool LogInUser(string email)
+    {
+        return false;
+    }
+
+    public bool DeleteRadio(string nid)
+    {
+        return false;
     }
 
     public bool DeleteTempContentByNid(string nid)
@@ -52,11 +56,11 @@ public class AdminRepository : BaseRepository, IAdminRepository
         try
         {
             var guid = Guid.Parse(nid);
-            var res = _ctx.TempContent.FirstOrDefault(f => f.Nid == guid);
+            var res = Ctx.TempContent.FirstOrDefault(f => f.Nid == guid);
             if (res is not null)
             {
-                _ctx.TempContent.Remove(res);
-                _ctx.SaveChanges();
+                Ctx.TempContent.Remove(res);
+                Ctx.SaveChanges();
                 return true;
             }
         }
@@ -68,6 +72,21 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return false;
     }
 
+    public bool DeleteIma(string nid)
+    {
+        return false;
+    }
+
+    public bool DeleteContent(string nid)
+    {
+        return false;
+    }
+
+    public bool InsertIma(ImaModel imaModel)
+    {
+        return false;
+    }
+
     public bool InsertContent(ContentDetailsModel content)
     {
         _logger.LogDebug("InsertContent was called, {cim} {tipus}", content.Cim, content.Tipus);
@@ -76,14 +95,39 @@ public class AdminRepository : BaseRepository, IAdminRepository
         {
             var temp = new ContentDetailsModel(Guid.NewGuid(), content.Fulldatum, content.Cim, content.Idezet.Replace("\n", " ").Replace("\r", " "), content.Tipus,
                 content.Inserted, content.KulsoLink, content.Img, content.FileUrl, content.Forras);
-            _ctx.Content.Add(_mapper.Map<Content>(temp));
-            _ctx.SaveChanges();
+            Ctx.Content.Add(Mapper.Map<Content>(temp));
+            Ctx.SaveChanges();
             return true;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Exception: ");
         }
+        return false;
+    }
+
+    public bool InsertError(ErrorRequest content)
+    {
+        return false;
+    }
+
+    public bool UpdateContent(ContentDetailsModel content)
+    {
+        return false;
+    }
+
+    public bool UpdateMaiSzent(MaiSzentModel maiszent)
+    {
+        return false;
+    }
+
+    public bool UpdateIma(ImaModel imaModel)
+    {
+        return false;
+    }
+
+    public bool UpdateRadio(RadioMusorModel radioMusorModel)
+    {
         return false;
     }
 
@@ -94,7 +138,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
         try
         {
-            temp.AddRange(_ctx.TempContent.Select(s => new AllTodayResult
+            temp.AddRange(Ctx.TempContent.Select(s => new AllTodayResult
             {
                 Tipus = s.Tipus,
                 TipusNev = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(s.Tipus).TipusNev,
@@ -131,7 +175,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         try
         {
             var guid = Guid.Parse(nid);
-            var res = _ctx.TempContent.FirstOrDefault(g => g.Nid == guid);
+            var res = Ctx.TempContent.FirstOrDefault(g => g.Nid == guid);
 
             if (res is not null)
                 return new ContentResult
@@ -155,18 +199,14 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return null;
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Bug", "S2583:Conditionally executed code should be reachable", Justification = "<Pending>")]
     public IEnumerable<ImgData> GetImgList()
     {
         _logger.LogDebug("GetImgList was called");
 
         try
         {
-            var res = _ctx.Content.Where(g => g.Img != "" && g.Img != null)
+            var res = Ctx.Content.Where(g => g.Img != "" && g.Img != null)
                 .Select(s => new ImgData { Img = s.Img, Cim = s.Cim, Tipus = ((Forras)s.Tipus).ToString() }).ToList();
-
-            if (res is null)
-                return Enumerable.Empty<ImgData>();
 
             return res;
         }
@@ -178,18 +218,14 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return Enumerable.Empty<ImgData>();
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Bug", "S2583:Conditionally executed code should be reachable", Justification = "<Pending>")]
     public IEnumerable<FileData> GetAudioList()
     {
         _logger.LogDebug("GetAudioList was called");
 
         try
         {
-            var res = _ctx.Content.Where(g => g.FileUrl != "" && g.FileUrl != null)
+            var res = Ctx.Content.Where(g => g.FileUrl != "" && g.FileUrl != null)
                 .Select(s => new FileData { Path = s.FileUrl, Cim = s.Cim, Tipus = ((Forras)s.Tipus).ToString() }).ToList();
-
-            if (res is null)
-                return Enumerable.Empty<FileData>();
 
             return res;
         }
@@ -207,34 +243,34 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
         try
         {
-            var date = _clock.Now.ToString("yyyy-MM-dd");
-            var hoNap = _clock.Now.ToString("MM-dd");
+            var date = Clock.Now.ToString("yyyy-MM-dd");
+            var hoNap = Clock.Now.ToString("MM-dd");
             if (tipus == 7)
             {
-                date = _clock.Now.ToString("yyyy-MM-01");
-                hoNap = _clock.Now.ToString("MM-01");
+                date = Clock.Now.ToString("yyyy-MM-01");
+                hoNap = Clock.Now.ToString("MM-01");
             }
 
             ContentDetailsModel res = null;
 
             if (!AndrokatConfiguration.FixContentTypeIds().Contains(tipus))
             {
-                var firstByDateAndTipus = _ctx.Content.FirstOrDefault(g => g.Tipus == tipus && g.Fulldatum.StartsWith(date));
+                var firstByDateAndTipus = Ctx.Content.FirstOrDefault(g => g.Tipus == tipus && g.Fulldatum.StartsWith(date));
                 if (firstByDateAndTipus is not null)
-                    res = _mapper.Map<ContentDetailsModel>(firstByDateAndTipus);
+                    res = Mapper.Map<ContentDetailsModel>(firstByDateAndTipus);
             }
             else
             {
-                var fix = _ctx.FixContent.FirstOrDefault(g => g.Tipus == tipus && g.Datum == hoNap);
+                var fix = Ctx.FixContent.FirstOrDefault(g => g.Tipus == tipus && g.Datum == hoNap);
                 if (fix is not null)
-                    res = _mapper.Map<ContentDetailsModel>(fix);
+                    res = Mapper.Map<ContentDetailsModel>(fix);
             }
 
             if (res is null)
             {
-                var firstByTipus = _ctx.Content.Where(g => g.Tipus == tipus).OrderByDescending(o => o.Fulldatum).FirstOrDefault();
+                var firstByTipus = Ctx.Content.Where(g => g.Tipus == tipus).OrderByDescending(o => o.Fulldatum).FirstOrDefault();
                 if (firstByTipus is not null)
-                    res = _mapper.Map<ContentDetailsModel>(firstByTipus);
+                    res = Mapper.Map<ContentDetailsModel>(firstByTipus);
             }
 
             if (res is null)
@@ -259,5 +295,78 @@ public class AdminRepository : BaseRepository, IAdminRepository
         }
 
         return new LastTodayResult();
+    }
+
+    public IEnumerable<AllRecordResult> GetAllContentByTipus(int tipus)
+    {
+        return new List<AllRecordResult>();
+    }
+
+    public Dictionary<int, string> GetAllContentTipusFromDb()
+    {
+        _logger.LogDebug("{name} was called", nameof(GetAllContentTipusFromDb));
+
+        var tipusok = new Dictionary<int, string>();
+        return tipusok;
+    }
+
+    public IEnumerable<AllRecordResult> GetAllMaiSzentByMonthResult(string date)
+    {
+        return new List<AllRecordResult>();
+    }
+
+    public IEnumerable<AllRecordResult> GetAllImaByCsoportResult(string csoport)
+    {
+        return new List<AllRecordResult>();
+    }
+
+    public IEnumerable<AllRecordResult> GetAllRadioResult()
+    {
+        return new List<AllRecordResult>();
+    }
+
+    public RadioResult LoadRadioByNid(string nid)
+    {
+        return null;
+    }
+
+    public ContentResult LoadImaByNid(string nid)
+    {
+        return null;
+    }
+
+    public ContentResult LoadMaiSzentByNid(string nid)
+    {
+        return null;
+    }
+
+    public ContentResult LoadTodayContentByNid(string nid)
+    {
+        return null;
+    }
+
+    public AdminAResult GetAdminAResult(bool isAdvent, bool isNagyBojt)
+    {
+        return new AdminAResult();
+    }
+
+    public AdminBResult GetAdminBResult()
+    {
+        return new AdminBResult();
+    }
+
+    public AdminResult GetAdminResult()
+    {
+        return new AdminResult();
+    }
+
+    public List<SystemInfoData> GetIsAdventAndNagybojt()
+    {
+        return [.. Ctx.SystemInfo.Where(w => w.Key == Constants.IsAdvent || w.Key == Constants.IsNagyBojt).AsNoTracking().Select(s => new SystemInfoData
+        {
+            Key = s.Key,
+            Value = s.Value,
+            Id = s.Id
+        })];
     }
 }

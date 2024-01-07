@@ -25,12 +25,12 @@ public class HirekModel : PageModel
     {
         ViewData["source"] = Source;
 
-        int tipus = Source switch
+        var tipus = Source switch
         {
             "keresztenyelet" => (int)Forras.keresztenyelet,
             "kurir" => (int)Forras.kurir,
             "bonumtv" => (int)Forras.bonumtv,
-            _ => 0,
+            _ => 0
         };
 
         ContentModels = _contentService.GetHirek(tipus);

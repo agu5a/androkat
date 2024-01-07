@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace androkat.web.Pages.Ad;
 
-//[Authorize()]
+//[Authorize]
 public class FilesModel : PageModel
 {
     private readonly IWebHostEnvironment _environment;
@@ -45,15 +45,15 @@ public class FilesModel : PageModel
             }
 
             var res = _adminRepository.GetImgList();
-            string filePath = Path.Combine(_environment.WebRootPath, "images/ajanlatok");
+            var filePath = Path.Combine(_environment.WebRootPath, "images/ajanlatok");
             var files = Directory.GetFiles(filePath).OrderBy(o => o).ToList();
 
             if (files.Count != 0)
             {
                 files.ForEach(f =>
                 {
-                    string fileName = f.Replace(filePath, string.Empty).Replace("/", string.Empty).Replace("\\", string.Empty);
-                    ImgData imgData = res.FirstOrDefault(f => f.Img == fileName);
+                    var fileName = f.Replace(filePath, string.Empty).Replace("/", string.Empty).Replace("\\", string.Empty);
+                    var imgData = res.FirstOrDefault(i => i.Img == fileName);
                     FileNames.Add(new FileList
                     {
                         FullFileName = f,
@@ -74,8 +74,8 @@ public class FilesModel : PageModel
                 var audioFileNames = new List<FileList>();
                 files.ForEach(f =>
                 {
-                    string fileName = f.Replace(filePath, string.Empty).Replace("/", string.Empty).Replace("\\", string.Empty);
-                    FileData fileData = filePaths.FirstOrDefault(f => f.Path.Contains(fileName));
+                    var fileName = f.Replace(filePath, string.Empty).Replace("/", string.Empty).Replace("\\", string.Empty);
+                    var fileData = filePaths.FirstOrDefault(d => d.Path.Contains(fileName));
                     audioFileNames.Add(new FileList
                     {
                         FullFileName = f,

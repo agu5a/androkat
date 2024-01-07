@@ -17,11 +17,11 @@ public class ImaContent
     public DateTime Datum { get; set; } //"yyyy-MM-dd HH:mm:ss"
 
     [DataMember(Name = "cim")]
-    public string Cim { get; set; }
+    public string Cim { get; set; } = string.Empty;
 
     [DataMember(Name = "csoport")]
-    public string Csoport { get; set; }
+    public string Csoport { get; set; } = string.Empty;
 
     [DataMember(Name = "szoveg")]
-    public string Szoveg { get; set; }
+    public string Szoveg { get; set; } = string.Empty;
 }

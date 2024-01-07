@@ -10,7 +10,7 @@
     <link href="~/css/admin.css" rel="stylesheet">
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
-    @RenderSection("meta_extra", false)
+    @await RenderSectionAsync("meta_extra", false)
 </head>
 <body>
     <div class="container">
@@ -76,6 +76,6 @@
     <script>
         $('#navbarmain').dynamicMenu({ homePage: '/ad/index' });
     </script>
-    @RenderSection("scripts", false)
+    @await RenderSectionAsync("scripts", false)
 </body>
 </html>

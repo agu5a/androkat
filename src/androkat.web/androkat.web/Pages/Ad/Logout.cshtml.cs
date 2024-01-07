@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace androkat.web.Pages.Ad;
 
-//[Authorize()]
+//[Authorize]
 [BindProperties]
 public class LogoutModel : PageModel
 {

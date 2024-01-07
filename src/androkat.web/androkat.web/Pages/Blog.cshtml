@@ -1,5 +1,4 @@
 @page "{source?}"
-@using androkat.infrastructure.Model;
 @using androkat.web.Pages
 @using androkat.domain.Enum;
 @model BlogModel
@@ -14,8 +13,7 @@
         }
         @foreach (var item in forrasok) 
         {
-            var css = "";
-            css = (!string.IsNullOrWhiteSpace(ViewData["source"]?.ToString()) && ViewData["source"].ToString() == item.Value) ? "class=\"bg-success text-white p-1\"" : "";
+            var css = !string.IsNullOrWhiteSpace(ViewData["source"]?.ToString()) && ViewData["source"].ToString() == item.Value ? "class=\"bg-success text-white p-1\"" : "";
             <a href="/blog/@(item.Value)" @Html.Raw(css)>@(item.Key)</a> @("||")
         }
     </div>
@@ -36,10 +34,10 @@
             <div class="card h-100"><div class="card-body">
                     <img data-src="~/@(p.MetaData.Image)" class="mr-2 rounded" style="float: left;margin-right:8px;margin-bottom:8px;" 
                     src="~/@(p.MetaData.Image)" data-holder-rendered="true" alt="@(p.MetaData.TipusNev)">
-                    @Html.Raw("<h5>" + @p.ContentDetails.Cim + "</h5>")
+                    @Html.Raw("<h5>" + p.ContentDetails.Cim + "</h5>")
                     <p>
 
-                        @if (p.MetaData.TipusId != Forras.jezsuitablog && !string.IsNullOrWhiteSpace(@p.ContentDetails.KulsoLink)) {
+                        @if (p.MetaData.TipusId != Forras.jezsuitablog && !string.IsNullOrWhiteSpace(p.ContentDetails.KulsoLink)) {
                             @if (p.MetaData.TipusId == Forras.b777) {
                                 var pieces = p.ContentDetails.Idezet.Split(' ');
                                 var textIndex = 0;

@@ -14,9 +14,6 @@ public class ApiKeyValidator : IApiKeyValidator
 
     public bool IsValid(string apiKey)
     {
-        if (_validApiKey != apiKey)
-            return false;
-
-        return true;
+        return _validApiKey == apiKey;
     }
 }

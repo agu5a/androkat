@@ -6,7 +6,4 @@ namespace androkat.web.Pages;
 [ExcludeFromCodeCoverage]
 public class AdatvedelemModel : PageModel
 {
-    public AdatvedelemModel()
-    {
-    }
 }

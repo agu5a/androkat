@@ -3,7 +3,6 @@ using androkat.domain;
 using androkat.domain.Configuration;
 using androkat.domain.Model;
 using androkat.domain.Model.AdminPage;
-using androkat.infrastructure.Model.SQLite;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,7 +14,7 @@ using System.Globalization;
 
 namespace androkat.web.Pages.Ad;
 
-//[Authorize()]
+//[Authorize]
 [BindProperties]
 public class PufferModel : PageModel
 {
@@ -140,7 +139,11 @@ public class PufferModel : PageModel
 
     private void SetForras(int tipus)
     {
-        if (string.IsNullOrEmpty(Forras))
+        if (!string.IsNullOrEmpty(Forras))
+        {
+            return;
+        }
+        
             switch (tipus)
             {
                 case 24: //szeretet újság
@@ -158,16 +161,17 @@ public class PufferModel : PageModel
 
     private void SetFileUrl(int tipus)
     {
-        if (string.IsNullOrEmpty(FileUrl))
-            switch (tipus)
+        if (!string.IsNullOrEmpty(FileUrl))
             {
-                case (int)domain.Enum.Forras.prayasyougo:
-                    FileUrl = string.IsNullOrWhiteSpace(FileUrl) ? $"https://androkat.hu/download/{DateTime.Now:MM_dd}.mp3" : FileUrl;
-                    break;
-                case (int)domain.Enum.Forras.audiobarsi:
-                    FileUrl = string.IsNullOrWhiteSpace(FileUrl) ? "https://androkat.hu/download/" : FileUrl;
-                    break;
+            return;
             }
+
+        FileUrl = tipus switch
+        {
+            (int)domain.Enum.Forras.prayasyougo => string.IsNullOrWhiteSpace(FileUrl) ? $"https://androkat.hu/download/{DateTime.Now:MM_dd}.mp3" : FileUrl,
+            (int)domain.Enum.Forras.audiobarsi => string.IsNullOrWhiteSpace(FileUrl) ? "https://androkat.hu/download/" : FileUrl,
+            _ => FileUrl
+        };
     }
 
     private void SetIdezet(int tipus)

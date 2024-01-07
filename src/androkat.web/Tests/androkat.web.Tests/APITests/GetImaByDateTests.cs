@@ -11,6 +11,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using androkat.web.Controllers.V2;
 
 namespace androkat.web.Tests.APITests;
 
@@ -22,7 +23,7 @@ public class GetImaByDateTests : BaseTest
     [TestCase("2022-0-02 10:20:20")] //wrong date, less 1 char
     public void API_GetImaByDate_V2_BadRequest(string date)
     {
-        var api = new data.Controllers.V2.Api(null, GetMapper());
+        var api = new Api(null);
         var res = api.GetImaByDateV2(date);
         dynamic s = res.Result;
         string result = s.Value;
@@ -49,7 +50,7 @@ public class GetImaByDateTests : BaseTest
 
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
-        var api = new data.Controllers.V2.Api(dec, GetMapper());
+        var api = new Api(dec);
         ActionResult<ImaResponse> res = api.GetImaByDateV2(now.ToString("yyyy-MM-dd HH:mm:dd"));
         dynamic s = res.Result;
 
@@ -74,7 +75,7 @@ public class GetImaByDateTests : BaseTest
 
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
-        var api = new data.Controllers.V2.Api(dec, GetMapper());
+        var api = new Api(dec);
         ActionResult<ImaResponse> res = api.GetImaByDateV2(now.ToString("yyyy-MM-dd HH:mm:dd"));
         dynamic s = res.Result;
 

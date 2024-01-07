@@ -13,6 +13,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using androkat.web.Controllers.V2;
 
 namespace androkat.web.Tests.APITests;
 
@@ -23,7 +24,7 @@ public class GetRadioBySourceTests : BaseTest
     [TestCase("wrong_radio")]
     public void API_GetRadioBySource_V2_BadRequest(string s)
     {
-        var api = new data.Controllers.V2.Api(null, GetMapper());
+        var api = new Api(null);
         var res = api.GetRadioBySourceV2(s);
         dynamic s2 = res.Result;
         string result = s2.Value;
@@ -42,7 +43,7 @@ public class GetRadioBySourceTests : BaseTest
 
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
-        var api = new data.Controllers.V2.Api(dec, GetMapper());
+        var api = new Api(dec);
         ActionResult<IEnumerable<RadioMusorResponse>> res = api.GetRadioBySourceV2("katolikushu");
         dynamic s = res.Result;
 
@@ -67,8 +68,8 @@ public class GetRadioBySourceTests : BaseTest
 
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, memoryCache.Object, null);
-        var api = new data.Controllers.V2.Api(dec, GetMapper());
-        ActionResult<IEnumerable<RadioMusorResponse>> res = api.GetRadioBySourceV2("kat");
+        var api = new Api(dec);
+        var res = api.GetRadioBySourceV2("kat");
         dynamic s = res.Result;
 
         Assert.That(s.Value, Is.EqualTo("Hiba"));
@@ -92,8 +93,8 @@ public class GetRadioBySourceTests : BaseTest
 
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
-        var api = new data.Controllers.V2.Api(dec, GetMapper());
-        ActionResult<IEnumerable<RadioMusorResponse>> res = api.GetRadioBySourceV2("katolikushu");
+        var api = new Api(dec);
+        var res = api.GetRadioBySourceV2("katolikushu");
         dynamic s = res.Result;
 
         Assert.That(((IEnumerable<RadioMusorResponse>)s.Value).Count, Is.EqualTo(0));

@@ -13,8 +13,8 @@ public class SystemInfo
     public int Id { get; set; }
 
     [DataMember(Name = "key")]
-    public string Key { get; set; }
+    public string Key { get; set; } = string.Empty;
 
     [DataMember(Name = "value")]
-    public string Value { get; set; }
+    public string Value { get; set; } = string.Empty;
 }

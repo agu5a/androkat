@@ -10,59 +10,59 @@ namespace androkat.web.Pages.Gyonas;
 
 public static class Parancs
 {
-    public const string p11 = "Áldoztam-e halálos bûn állapotában?";
-    public const string p12 = "Elmulasztottam-e imádkozni mindennap?";
-    public const string p13 = "Hazudtam gyónásban, elhallgattam súlyos bûnt?";
-    public const string p14 = "Hittem babonában, horoszkópban és egyéb divatos dolgokban?";
-    public const string p15 = "Nem igyekszem szeretni Istent teljes szívembõl?";
+    public const string p11 = "ï¿½ldoztam-e halï¿½los bï¿½n ï¿½llapotï¿½ban?";
+    public const string p12 = "Elmulasztottam-e imï¿½dkozni mindennap?";
+    public const string p13 = "Hazudtam gyï¿½nï¿½sban, elhallgattam sï¿½lyos bï¿½nt?";
+    public const string p14 = "Hittem babonï¿½ban, horoszkï¿½pban ï¿½s egyï¿½b divatos dolgokban?";
+    public const string p15 = "Nem igyekszem szeretni Istent teljes szï¿½vembï¿½l?";
 
-    public const string p21 = "Esküdöztem fölöslegesen?";
-    public const string p22 = "Káromkodtam? Isten és a szentek nevét ejtettem-e ki átkozódó, csúnya  szavak kíséretében?";
-    public const string p23 = "Szoktam-e emlegetni Isten, szentek nevét fölöslegesen, tiszteletlenül?";
-    public const string p24 = "Zúgolódtam-e Isten ellen? Voltam-e kishitû vagy vakmerõ?";
-    public const string p25 = "Viccelõdtem szent dolgokról? Nem bánom, ha másoktól hallom?";
+    public const string p21 = "Eskï¿½dï¿½ztem fï¿½lï¿½slegesen?";
+    public const string p22 = "Kï¿½romkodtam? Isten ï¿½s a szentek nevï¿½t ejtettem-e ki ï¿½tkozï¿½dï¿½, csï¿½nya  szavak kï¿½sï¿½retï¿½ben?";
+    public const string p23 = "Szoktam-e emlegetni Isten, szentek nevï¿½t fï¿½lï¿½slegesen, tiszteletlenï¿½l?";
+    public const string p24 = "Zï¿½golï¿½dtam-e Isten ellen? Voltam-e kishitï¿½ vagy vakmerï¿½?";
+    public const string p25 = "Viccelï¿½dtem szent dolgokrï¿½l? Nem bï¿½nom, ha mï¿½soktï¿½l hallom?";
 
-    public const string p31 = "Vasárnap, ünnepnap mulasztottam-e szentmisét? (Hanyagságból? Hányszor?)";
-    public const string p32 = "Szentmisén Isten és az ott levõk iránt nem szeretettel és figyelemmel vettem részt?";
-    public const string p33 = "Nem pihenésre, ünneplésre és a családdal való együttlétre fordítottam-e a vasárnapokat, ünnepeket?";
-    public const string p34 = "Vasárnap, ünnepnap valós ok nélkül dolgoztam-e?";
-    public const string p35 = "Nem tartom a kötelezõ és más böjtöket? Nem törekszem azt lelkivé tenni, vagy csak muszájból végzem?";
+    public const string p31 = "Vasï¿½rnap, ï¿½nnepnap mulasztottam-e szentmisï¿½t? (Hanyagsï¿½gbï¿½l? Hï¿½nyszor?)";
+    public const string p32 = "Szentmisï¿½n Isten ï¿½s az ott levï¿½k irï¿½nt nem szeretettel ï¿½s figyelemmel vettem rï¿½szt?";
+    public const string p33 = "Nem pihenï¿½sre, ï¿½nneplï¿½sre ï¿½s a csalï¿½ddal valï¿½ egyï¿½ttlï¿½tre fordï¿½tottam-e a vasï¿½rnapokat, ï¿½nnepeket?";
+    public const string p34 = "Vasï¿½rnap, ï¿½nnepnap valï¿½s ok nï¿½lkï¿½l dolgoztam-e?";
+    public const string p35 = "Nem tartom a kï¿½telezï¿½ ï¿½s mï¿½s bï¿½jtï¿½ket? Nem tï¿½rekszem azt lelkivï¿½ tenni, vagy csak muszï¿½jbï¿½l vï¿½gzem?";
 
-    public const string p41 = "Nem tisztelem szüleimet? Nem vagyok engedelmes? Nem próbálok örömet szerezni nekik?";
-    public const string p42 = "Nem tisztelem az idõsebbeket, vezetõimet, tanáraimat stb.?";
-    public const string p43 = "Szeretetet, kötelességet tagadtam-e meg házastársammal, gyerekeimmel szemben?";
-    public const string p44 = "Jó keresztény módjára nem mutatok példát családomnak?";
+    public const string p41 = "Nem tisztelem szï¿½leimet? Nem vagyok engedelmes? Nem prï¿½bï¿½lok ï¿½rï¿½met szerezni nekik?";
+    public const string p42 = "Nem tisztelem az idï¿½sebbeket, vezetï¿½imet, tanï¿½raimat stb.?";
+    public const string p43 = "Szeretetet, kï¿½telessï¿½get tagadtam-e meg hï¿½zastï¿½rsammal, gyerekeimmel szemben?";
+    public const string p44 = "Jï¿½ keresztï¿½ny mï¿½djï¿½ra nem mutatok pï¿½ldï¿½t csalï¿½domnak?";
 
-    public const string p51 = "Szoktam-e verekedni, durváskodni, gúnyolódni? Másoknak fájdalmat okozni?";
-    public const string p52 = "Nem vigyázok egészségemre? (Nem kerülöm a dohányzást, alkoholt és a drogot stb.?)";
-    public const string p53 = "Csábítottam, bátorítottam-e mást bûnre?";
-    public const string p54 = "Közlekedésben nem felelõsen veszek részt?";
+    public const string p51 = "Szoktam-e verekedni, durvï¿½skodni, gï¿½nyolï¿½dni? Mï¿½soknak fï¿½jdalmat okozni?";
+    public const string p52 = "Nem vigyï¿½zok egï¿½szsï¿½gemre? (Nem kerï¿½lï¿½m a dohï¿½nyzï¿½st, alkoholt ï¿½s a drogot stb.?)";
+    public const string p53 = "Csï¿½bï¿½tottam, bï¿½torï¿½tottam-e mï¿½st bï¿½nre?";
+    public const string p54 = "Kï¿½zlekedï¿½sben nem felelï¿½sen veszek rï¿½szt?";
 
-    public const string p61 = "Ruházkodásomban nem vagyok körültekintõ másokra és az alkalomra?";
-    public const string p62 = "Nem tisztelek másokat, testüket? Önzõ vágyaim céljára használom õket?";
-    public const string p63 = "Nem kerülöm az alkalmakat és gondolatokat, ami bûnbeesésre buzdít másokkal és magammal szemben?";
-    public const string p64 = "Beszédemben, viselkedésemben nem kerülöm a szemérmetlen dolgokat?";
+    public const string p61 = "Ruhï¿½zkodï¿½somban nem vagyok kï¿½rï¿½ltekintï¿½ mï¿½sokra ï¿½s az alkalomra?";
+    public const string p62 = "Nem tisztelek mï¿½sokat, testï¿½ket? ï¿½nzï¿½ vï¿½gyaim cï¿½ljï¿½ra hasznï¿½lom ï¿½ket?";
+    public const string p63 = "Nem kerï¿½lï¿½m az alkalmakat ï¿½s gondolatokat, ami bï¿½nbeesï¿½sre buzdï¿½t mï¿½sokkal ï¿½s magammal szemben?";
+    public const string p64 = "Beszï¿½demben, viselkedï¿½semben nem kerï¿½lï¿½m a szemï¿½rmetlen dolgokat?";
 
-    public const string p71 = "Vettem-e el olyat, ami nem az enyém? (Nem adtam vissza még?)";
-    public const string p72 = "Nem vigyáztam magam és mások holmijára?";
-    public const string p73 = "Megtartottam-e szándékosan azt amit kölcsön kaptam? Adósságaimat nem fizettem vissza?";
-    public const string p74 = "Nem becsülettel használom idõmet tanulásban, munkában?";
-    public const string p75 = "Nem keresem az alkalmat, hogy megosszam javaimat a rászorulókkal?";
+    public const string p71 = "Vettem-e el olyat, ami nem az enyï¿½m? (Nem adtam vissza mï¿½g?)";
+    public const string p72 = "Nem vigyï¿½ztam magam ï¿½s mï¿½sok holmijï¿½ra?";
+    public const string p73 = "Megtartottam-e szï¿½ndï¿½kosan azt amit kï¿½lcsï¿½n kaptam? Adï¿½ssï¿½gaimat nem fizettem vissza?";
+    public const string p74 = "Nem becsï¿½lettel hasznï¿½lom idï¿½met tanulï¿½sban, munkï¿½ban?";
+    public const string p75 = "Nem keresem az alkalmat, hogy megosszam javaimat a rï¿½szorulï¿½kkal?";
 
-    public const string p81 = "Hazudtam, hogy másról rosszat gondoljanak, vagy bajba kerüljön?";
-    public const string p82 = "Hazudtam, hogy elkerüljek jogos büntetést, következményeket?";
-    public const string p83 = "Nem kerülöm a pletykákat, nem védem meg mások becsületét?";
-    public const string p84 = "Túl kritikus, negatív vagy könyörtelen vagyok másokkal szemben?";
-    public const string p85 = "Tovább adom-e a rám bízott bizalmas titkokat?";
+    public const string p81 = "Hazudtam, hogy mï¿½srï¿½l rosszat gondoljanak, vagy bajba kerï¿½ljï¿½n?";
+    public const string p82 = "Hazudtam, hogy elkerï¿½ljek jogos bï¿½ntetï¿½st, kï¿½vetkezmï¿½nyeket?";
+    public const string p83 = "Nem kerï¿½lï¿½m a pletykï¿½kat, nem vï¿½dem meg mï¿½sok becsï¿½letï¿½t?";
+    public const string p84 = "Tï¿½l kritikus, negatï¿½v vagy kï¿½nyï¿½rtelen vagyok mï¿½sokkal szemben?";
+    public const string p85 = "Tovï¿½bb adom-e a rï¿½m bï¿½zott bizalmas titkokat?";
 
-    public const string p91 = "Nem imádkozom, hogy le tudjam gyõzni a kísértéseket, bûnös gondolatokat?";
-    public const string p92 = "Hagyom a fantáziálásom, gondolataim eluralkodjanak rajtam?";
-    public const string p93 = "Nem tisztelem házastársamat, nem tudom õt elfogadni minden testi-lelki tulajdonságát? Összehasonlítgattom õt másokkal?";
+    public const string p91 = "Nem imï¿½dkozom, hogy le tudjam gyï¿½zni a kï¿½sï¿½rtï¿½seket, bï¿½nï¿½s gondolatokat?";
+    public const string p92 = "Hagyom a fantï¿½ziï¿½lï¿½som, gondolataim eluralkodjanak rajtam?";
+    public const string p93 = "Nem tisztelem hï¿½zastï¿½rsamat, nem tudom ï¿½t elfogadni minden testi-lelki tulajdonsï¿½gï¿½t? ï¿½sszehasonlï¿½tgattom ï¿½t mï¿½sokkal?";
 
-    public const string p101 = "Önzõ vagyok? Irigykedtem-e (más értékeire, tehetségére stb.)?";
-    public const string p102 = "Hálátlan vagyok Istennel szemben? Elégedetlen azzal szemben, amit kaptam tõle?";
-    public const string p103 = "Nem bízok Isten gondviselésében? Aggódom testi-lelki szükségleteimért?";
-    public const string p104 = "Isten helyett a világ dolgai, az anyagi javak életem fõ céljai?";
+    public const string p101 = "ï¿½nzï¿½ vagyok? Irigykedtem-e (mï¿½s ï¿½rtï¿½keire, tehetsï¿½gï¿½re stb.)?";
+    public const string p102 = "Hï¿½lï¿½tlan vagyok Istennel szemben? Elï¿½gedetlen azzal szemben, amit kaptam tï¿½le?";
+    public const string p103 = "Nem bï¿½zok Isten gondviselï¿½sï¿½ben? Aggï¿½dom testi-lelki szï¿½ksï¿½gleteimï¿½rt?";
+    public const string p104 = "Isten helyett a vilï¿½g dolgai, az anyagi javak ï¿½letem fï¿½ cï¿½ljai?";
 }
 
 public class TukorModel : PageModel
@@ -151,8 +151,11 @@ public class TukorModel : PageModel
         try
         {
             var conf = HttpContext.Session.GetString("conf");
-            if (!string.IsNullOrWhiteSpace(conf))
+            if (string.IsNullOrWhiteSpace(conf))
             {
+                return;
+            }
+            
                 var dic = JsonSerializer.Deserialize<Dictionary<string, bool>>(conf);
                 cb11 = dic["cb11"];
                 cb12 = dic["cb12"];
@@ -200,7 +203,6 @@ public class TukorModel : PageModel
                 cb103 = dic["cb103"];
                 cb104 = dic["cb104"];
             }
-        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Exception: ");

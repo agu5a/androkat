@@ -40,7 +40,7 @@ public class DetailsModel : PageModel
             return Redirect("/Error");
 
         var result = _contentService.GetContentDetailsModelByNid(guid, Type);
-        if (result is null || result.MetaData is null)
+        if (result?.MetaData is null)
 			return Redirect("/Error");
 
 		ShareUrl = $"https://androkat.hu/details/{Nid}/{Type}";

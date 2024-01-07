@@ -14,7 +14,7 @@ public class Admin
     public int Id { get; set; }
 
     [DataMember(Name = "email")]
-    public string Email { get; set; }
+    public string Email { get; set; } = string.Empty;
 
     [DataMember(Name = "lastlogin")]
     public DateTime LastLogin { get; set; } //"yyyy-MM-dd HH:mm:ss"

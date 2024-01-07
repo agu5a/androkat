@@ -41,7 +41,7 @@ public class ErrorModelTests : BaseTest
 
 		model.OnGet(null);
 
-        logger.VerifyLogging("Error:  /blabla RequestId: ", LogLevel.Error, Times.Once());
+        logger.VerifyLogging("Error:  /blabla RequestId: (null)", LogLevel.Error, Times.Once());
     }
 
     [Test]

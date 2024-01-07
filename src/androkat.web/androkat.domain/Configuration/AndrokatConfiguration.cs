@@ -11,7 +11,7 @@ public class AndrokatConfiguration
 
     public ContentMetaDataModel GetContentMetaDataModelByTipus(int tipus)
     {
-        Forras forras = (Forras)tipus;
+        var forras = (Forras)tipus;
         return ContentMetaDataList.FirstOrDefault(f => f.TipusId == forras);
     }
 

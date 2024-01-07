@@ -26,17 +26,15 @@ namespace androkat.web.Infrastructure;
 [ExcludeFromCodeCoverage]
 public static class InfrastructureExtensions
 {
-    public static IServiceCollection SetDatabase(this IServiceCollection services)
+    public static void SetDatabase(this IServiceCollection services)
     {
         services.AddDbContext<AndrokatContext>(options =>
         {
-            options.UseSqlite($"Data Source=./Data/androkat.db");
-        }, ServiceLifetime.Scoped);
-
-        return services;
+            options.UseSqlite("Data Source=./Data/androkat.db");
+        });
     }
 
-    public static IServiceCollection SetServices(this IServiceCollection services)
+    public static void SetServices(this IServiceCollection services)
     {
         services.AddScoped<IClock, Clock>();
         services.AddScoped<ICacheRepository, CacheRepository>();
@@ -45,18 +43,14 @@ public static class InfrastructureExtensions
         services.AddScoped<IApiRepository, ApiRepository>();
         services.AddScoped<IPartnerRepository, PartnerRepository>();
         services.AddHostedService<Warmup>();
-
-        return services;
     }
 
-    public static IServiceCollection SetAutoMapper(this IServiceCollection services)
+    public static void SetAutoMapper(this IServiceCollection services)
     {
         services.AddAutoMapper(typeof(AutoMapperProfile));
-
-        return services;
     }
 
-    public static IServiceCollection SetSession(this IServiceCollection services)
+    public static void SetSession(this IServiceCollection services)
     {
         services.AddSession(options =>
         {
@@ -65,29 +59,23 @@ public static class InfrastructureExtensions
             options.Cookie.HttpOnly = true;
             options.Cookie.IsEssential = true;
         });
-
-        return services;
     }
 
-    public static WebApplication UseProxy(this WebApplication app)
+    public static void UseProxy(this WebApplication app)
     {
         var forwardedHeadersOptions = new ForwardedHeadersOptions
         {
-            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
         };
         app.UseForwardedHeaders(forwardedHeadersOptions);
-
-        return app;
     }
 
-    public static IServiceCollection SetCaching(this IServiceCollection services)
+    public static void SetCaching(this IServiceCollection services)
     {
         services.AddMemoryCache();
-
-        return services;
     }
 
-    public static IServiceCollection SetAuthentication(this IServiceCollection services, ConfigurationManager configurationManager)
+    public static void SetAuthentication(this IServiceCollection services, ConfigurationManager configurationManager)
     {
         services.AddAuthentication(options =>
         {
@@ -96,11 +84,9 @@ public static class InfrastructureExtensions
         })
         .AddCookie().AddGoogle(googleOptions =>
         {
-            googleOptions.ClientId = configurationManager["GoogleClientId"];
-            googleOptions.ClientSecret = configurationManager["GoogleClientSecret"];
+            googleOptions.ClientId = configurationManager["GoogleClientId"]!;
+            googleOptions.ClientSecret = configurationManager["GoogleClientSecret"]!;
         });
-
-        return services;
     }
 
     public static void SetHealthCheckEndpoint(this WebApplication app)

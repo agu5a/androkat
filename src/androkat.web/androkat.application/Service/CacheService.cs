@@ -13,7 +13,7 @@ public partial class CacheService : ICacheService
 {
     private readonly ICacheRepository _cacheRepository;
     private readonly ILogger<CacheService> _logger;
-    protected readonly IClock _clock;
+    private readonly IClock _clock;
 
     [GeneratedRegex("https:\\/\\/www.youtube.com\\/embed\\/([A-Za-z0-9-_]*)", RegexOptions.IgnoreCase, "en-US")]
     private static partial Regex YoutubeRegex();

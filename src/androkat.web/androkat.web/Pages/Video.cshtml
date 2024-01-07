@@ -1,5 +1,4 @@
 @page "{f?}"
-@using androkat.infrastructure.Model;
 @using androkat.web.Pages
 @model VideoModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
@@ -10,8 +9,7 @@
         
         @foreach (var p in Model.VideoSourceModels)
         {
-            var css = "";
-            css = (!string.IsNullOrWhiteSpace(ViewData["source"].ToString()) && ViewData["source"].ToString() == p.ChannelId) ? "class=\"bg-success text-white p-1\"" : "";
+            var css = !string.IsNullOrWhiteSpace(ViewData["source"]!.ToString()) && ViewData["source"]!.ToString() == p.ChannelId ? "class=\"bg-success text-white p-1\"" : "";
             <a href="/video/?f=@(p.ChannelId)" @Html.Raw(css)>@(p.ChannelName)</a> @("||")
         } 
     </div>

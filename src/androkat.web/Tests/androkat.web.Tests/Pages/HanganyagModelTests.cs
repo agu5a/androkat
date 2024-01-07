@@ -36,10 +36,11 @@ public class HanganyagModelTests : BaseTest
         };
 
         model.OnGet();
-        model.AudioModels.First().Cim.Should().Be("Audio Cim");
-        model.AudioModels.First().Idezet.Should().Be("Idézet");
-        model.AudioModels.First().Inserted.Should().Be(now);
-        model.AudioModels.First().Tipus.Should().Be((int)Forras.audionapievangelium);
-        model.AudioModels.First().MetaDataModel.Image.Should().Be("Image");
+        var audio = model.AudioModels.First();
+        audio.Cim.Should().Be("Audio Cim");
+        audio.Idezet.Should().Be("Idézet");
+        audio.Inserted.Should().Be(now);
+        audio.Tipus.Should().Be((int)Forras.audionapievangelium);
+        audio.MetaDataModel.Image.Should().Be("Image");
     }
 }

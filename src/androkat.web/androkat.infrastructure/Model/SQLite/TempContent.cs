@@ -18,10 +18,10 @@ public class TempContent
     public string Fulldatum { get; set; }
 
     [DataMember(Name = "cim")]
-    public string Cim { get; set; }
+    public string Cim { get; set; } = string.Empty;
 
     [DataMember(Name = "idezet")]
-    public string Idezet { get; set; }
+    public string Idezet { get; set; } = string.Empty;
 
     [DataMember(Name = "tipus")]
     public int Tipus { get; set; }

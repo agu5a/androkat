@@ -21,7 +21,7 @@ public class AuthService : IAuthService
 
     public bool IsAuthenticated(string email)
     {
-        Claim claim = ((ClaimsIdentity)_context.HttpContext.User.Identity).Claims
+        var claim = ((ClaimsIdentity)_context.HttpContext!.User.Identity!).Claims
                .FirstOrDefault(s => s.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress");
 
         if (string.IsNullOrEmpty(claim?.Value))
@@ -30,12 +30,12 @@ public class AuthService : IAuthService
             return false;
         }
 
-        if (claim.Value != email)
+        if (claim.Value == email)
         {
-            _logger.LogError("Exception: wrong auth email {email}", claim.Value);
-            return false;
+            return true;
         }
 
-        return true;
+        _logger.LogError("Exception: wrong auth email {email}", claim.Value);
+        return false;
     }
 }

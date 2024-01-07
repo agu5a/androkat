@@ -41,9 +41,9 @@ public static class DependencyInjection
 
         builder.Services.AddCors(options =>
         {
-            options.AddPolicy("CorsPolicy", builder =>
+            options.AddPolicy("CorsPolicy", o =>
             {
-                builder.WithOrigins("https://androkat.hu").AllowAnyHeader().AllowAnyMethod();
+                o.WithOrigins("https://androkat.hu").AllowAnyHeader().AllowAnyMethod();
             });
         });
 

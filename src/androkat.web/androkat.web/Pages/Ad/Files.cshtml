@@ -42,7 +42,7 @@
             {
                 <tr>
                     <td>
-                        @Html.Raw(string.IsNullOrWhiteSpace(p.Cim) ? "<span class='delete' style='color:blue' id='" + @p.FullFileName + "'>törlés</span>" : "")
+                        @Html.Raw(string.IsNullOrWhiteSpace(p.Cim) ? "<span class='delete' style='color:blue' id='" + p.FullFileName + "'>törlés</span>" : "")
                     </td>
                     <td>
                         <a href="/images/ajanlatok/@p.FileName" target="_blank">@p.FileName</a>
@@ -76,7 +76,7 @@
             {
                 <tr>
                     <td>
-                        @Html.Raw(string.IsNullOrWhiteSpace(p.Cim) ? "<span class='delete' style='color:blue' id='" + @p.FullFileName + "'>törlés</span>" : "")
+                        @Html.Raw(string.IsNullOrWhiteSpace(p.Cim) ? "<span class='delete' style='color:blue' id='" + p.FullFileName + "'>törlés</span>" : "")
                     </td>
                     <td>
                         <a href="/download/@p.FileName" target="_blank">@p.FileName</a>

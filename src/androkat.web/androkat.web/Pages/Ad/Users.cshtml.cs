@@ -3,12 +3,11 @@ using androkat.domain.Model.AdminPage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 
 namespace androkat.web.Pages.Ad;
 
-[Authorize()]
+[Authorize]
 [BindProperties]
 public class UsersModel : PageModel
 {

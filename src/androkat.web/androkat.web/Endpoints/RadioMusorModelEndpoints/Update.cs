@@ -45,12 +45,10 @@ public class Update : Endpoint<RadioMusorModelRequest, RadioMusorModelResponse>
 
 	private async Task UpdateRadioMusor(RadioMusorModelRequest request, CancellationToken ct)
 	{
-		RadioMusorModelResponse response;
-
 		try
 		{
-			bool result = _apiRepository.UpdateRadioMusor(new domain.Model.RadioMusorModel(Guid.Empty, request.Source, request.Musor, request.Inserted));
-			response = new RadioMusorModelResponse(result);
+			var result = _apiRepository.UpdateRadioMusor(new domain.Model.RadioMusorModel(Guid.Empty, request.Source, request.Musor, request.Inserted));
+			var response = new RadioMusorModelResponse(result);
 
 			await SendAsync(response, result ? StatusCodes.Status200OK : StatusCodes.Status409Conflict, ct);
 		}

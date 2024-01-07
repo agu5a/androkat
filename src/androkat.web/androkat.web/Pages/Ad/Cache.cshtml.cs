@@ -13,7 +13,7 @@ using System.Reflection;
 
 namespace androkat.web.Pages.Ad;
 
-//[Authorize()]
+//[Authorize]
 public class CacheModel : PageModel
 {
     private readonly IMemoryCache _memoryCache;
@@ -61,9 +61,9 @@ public class CacheModel : PageModel
 
         try
         {
-            var coherentState = typeof(MemoryCache).GetField("_coherentState", BindingFlags.NonPublic | BindingFlags.Instance);
-            var coherentStateValue = coherentState.GetValue(_memoryCache);
-            var entriesCollection = coherentStateValue.GetType().GetProperty("EntriesCollection", BindingFlags.NonPublic | BindingFlags.Instance);
+            var coherentState = typeof(MemoryCache).GetField("_coherentState", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            var coherentStateValue = coherentState.GetValue(_memoryCache)!;
+            var entriesCollection = coherentStateValue.GetType().GetProperty("EntriesCollection", BindingFlags.NonPublic | BindingFlags.Instance)!;
 
             if (entriesCollection.GetValue(coherentStateValue) is not ICollection entriesCollectionValue)
             {
@@ -72,33 +72,33 @@ public class CacheModel : PageModel
 
             foreach (var item in entriesCollectionValue)
             {
-                var methodInfo = item.GetType().GetProperty("Key");
+                var methodInfo = item.GetType().GetProperty("Key")!;
 
-                var val = methodInfo.GetValue(item).ToString();
+                var val = methodInfo.GetValue(item)!.ToString();
 
                 if (val == CacheKey.MainCacheKey.ToString())
                 {
                     _ = _memoryCache.TryGetValue(CacheKey.MainCacheKey.ToString(), out var result);
-                    res.Add(new AllCachedResult { Key = CacheKey.MainCacheKey.ToString(), Inserted = ((MainCache)result).Inserted.ToString("yyyy-MM-dd HH:mm:ss") });
+                    res.Add(new AllCachedResult { Key = CacheKey.MainCacheKey.ToString(), Inserted = ((MainCache)result!).Inserted.ToString("yyyy-MM-dd HH:mm:ss") });
                 }
                 else if (val == CacheKey.BookRadioSysCacheKey.ToString())
                 {
                     _ = _memoryCache.TryGetValue(CacheKey.BookRadioSysCacheKey.ToString(), out var result);
-                    res.Add(new AllCachedResult { Key = CacheKey.BookRadioSysCacheKey.ToString(), Inserted = ((BookRadioSysCache)result).Inserted.ToString("yyyy-MM-dd HH:mm:ss") });
+                    res.Add(new AllCachedResult { Key = CacheKey.BookRadioSysCacheKey.ToString(), Inserted = ((BookRadioSysCache)result!).Inserted.ToString("yyyy-MM-dd HH:mm:ss") });
                 }
                 else if (val == CacheKey.ImaCacheKey.ToString())
                 {
                     _ = _memoryCache.TryGetValue(CacheKey.ImaCacheKey.ToString(), out var result);
-                    res.Add(new AllCachedResult { Key = CacheKey.ImaCacheKey.ToString(), Inserted = ((ImaCache)result).Inserted.ToString("yyyy-MM-dd HH:mm:ss") });
+                    res.Add(new AllCachedResult { Key = CacheKey.ImaCacheKey.ToString(), Inserted = ((ImaCache)result!).Inserted.ToString("yyyy-MM-dd HH:mm:ss") });
                 }
                 else if (val == CacheKey.VideoCacheKey.ToString())
                 {
                     _ = _memoryCache.TryGetValue(CacheKey.VideoCacheKey.ToString(), out var result);
-                res.Add(new AllCachedResult { Key = CacheKey.VideoCacheKey.ToString(), Inserted = ((VideoCache)result).Inserted.ToString("yyyy-MM-dd HH:mm:ss") });
+                    res.Add(new AllCachedResult { Key = CacheKey.VideoCacheKey.ToString(), Inserted = ((VideoCache)result!).Inserted.ToString("yyyy-MM-dd HH:mm:ss") });
                 }
                 else
                 {
-                    res.Add(new AllCachedResult { Key = val.ToString() });
+                    res.Add(new AllCachedResult { Key = val });
                 }
             }
 

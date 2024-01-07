@@ -11,47 +11,104 @@ namespace androkat.infrastructure.DataManager;
 
 public class ApiRepository : BaseRepository, IApiRepository
 {
-	public ApiRepository(AndrokatContext ctx, 
-		IClock clock,
-		IMapper mapper) : base(ctx, clock, mapper)
-	{
-	}
-
-	public bool UpdateRadioMusor(RadioMusorModel radioMusorModel)
-	{
-		var old = _ctx.RadioMusor.FirstOrDefault(w => w.Source == radioMusorModel.Source);
-        if (old is not null)
-		{
-			old.Inserted = radioMusorModel.Inserted;
-			old.Musor = radioMusorModel.Musor;
-			_ctx.SaveChanges();
-			return true;
-		}
-
-		return false;
-	}
-
-	public bool AddContentDetailsModel(ContentDetailsModel contentDetailsModel)
-	{
-		var exist = _ctx.Content.FirstOrDefault(w => w.Tipus == contentDetailsModel.Tipus
-		&& (w.Cim.Contains(contentDetailsModel.Cim) || w.Nid == contentDetailsModel.Nid));
-        if (exist is not null)
-			return false;
-
-		_ctx.Content.Add(_mapper.Map<Content>(contentDetailsModel));
-		_ctx.SaveChanges();
-		return true;
-	}
-
-public bool AddTempContent(ContentDetailsModel contentDetailsModel)
+    public ApiRepository(AndrokatContext ctx,
+        IClock clock,
+        IMapper mapper) : base(ctx, clock, mapper)
     {
-        var exist = _ctx.TempContent.FirstOrDefault(w => w.Tipus == contentDetailsModel.Tipus
+    }
+
+    public void DeleteContentDetailsByNid(Guid nid)
+    {
+        var res = Ctx.Content.FirstOrDefault(f => f.Nid == nid);
+        if (res is null)
+            return;
+
+        Ctx.Content.Remove(res);
+        Ctx.SaveChanges();
+    }
+
+    public bool UpdateRadioMusor(RadioMusorModel radioMusorModel)
+    {
+        var old = Ctx.RadioMusor.FirstOrDefault(w => w.Source == radioMusorModel.Source);
+        if (old is null)
+        {
+            return false;
+        }
+
+        old.Inserted = radioMusorModel.Inserted;
+        old.Musor = radioMusorModel.Musor;
+        Ctx.SaveChanges();
+        return true;
+
+    }
+
+    public void UpdateRadioSystemInfo(string value)
+    {
+        Ctx.SystemInfo.First(w => w.Key == "radio").Value = value;
+        Ctx.SaveChanges();
+    }
+
+    public IEnumerable<SystemInfoModel> GetSystemInfoModels()
+    {
+        var res = Ctx.SystemInfo.AsQueryable();
+        return Mapper.Map<IEnumerable<SystemInfoModel>>(res);
+    }
+
+    public bool AddContentDetailsModel(ContentDetailsModel contentDetailsModel)
+    {
+        var exist = Ctx.Content.FirstOrDefault(w => w.Tipus == contentDetailsModel.Tipus
+        && (w.Cim.Contains(contentDetailsModel.Cim) || w.Nid == contentDetailsModel.Nid));
+        if (exist is not null)
+            return false;
+
+        Ctx.Content.Add(Mapper.Map<Content>(contentDetailsModel));
+        Ctx.SaveChanges();
+        return true;
+    }
+
+    public IEnumerable<ContentDetailsModel> GetContentDetailsModels()
+    {
+        var res = Ctx.Content.AsQueryable();
+        return Mapper.Map<IEnumerable<ContentDetailsModel>>(res);
+    }
+
+    public bool AddTempContent(ContentDetailsModel contentDetailsModel)
+    {
+        var exist = Ctx.TempContent.FirstOrDefault(w => w.Tipus == contentDetailsModel.Tipus
        && (w.Cim.Contains(contentDetailsModel.Cim) || w.Nid == contentDetailsModel.Nid));
         if (exist is not null)
             return false;
 
-        _ctx.TempContent.Add(_mapper.Map<TempContent>(contentDetailsModel));
-        _ctx.SaveChanges();
+        Ctx.TempContent.Add(Mapper.Map<TempContent>(contentDetailsModel));
+        Ctx.SaveChanges();
         return true;
+    }
+
+    public bool AddVideo(VideoModel videoModel)
+    {
+        var exist = Ctx.VideoContent.FirstOrDefault(w => w.VideoLink == videoModel.VideoLink);
+        if (exist is not null)
+            return false;
+
+        Ctx.VideoContent.Add(Mapper.Map<VideoContent>(videoModel));
+        Ctx.SaveChanges();
+
+        return true;
+    }
+
+    public void DeleteVideoByNid(Guid nid)
+    {
+        var res = Ctx.VideoContent.FirstOrDefault(f => f.Nid == nid);
+        if (res is null)
+            return;
+
+        Ctx.VideoContent.Remove(res);
+        Ctx.SaveChanges();
+    }
+
+    public IEnumerable<VideoModel> GetVideoModels()
+    {
+        var res = Ctx.VideoContent.AsQueryable();
+        return Mapper.Map<IEnumerable<VideoModel>>(res);
     }
 }

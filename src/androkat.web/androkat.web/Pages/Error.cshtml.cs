@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -26,24 +25,23 @@ public class ErrorModel : PageModel
         HandleStatusCodeLessCase();
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S2589:Boolean expressions should not be gratuitous", Justification = "<Pending>")]
     private void HandleStatusCodeLessCase()
     {
         try
         {
             var exceptionMessage = string.Empty;
-            string requestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+            var requestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
 
             var exceptionHandlerPathFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
 
             if (exceptionHandlerPathFeature?.Error is FileNotFoundException)
-                exceptionMessage = $"The file was not found.";
+                exceptionMessage = "The file was not found.";
 
             if (!string.IsNullOrWhiteSpace(exceptionHandlerPathFeature?.Path))
-                exceptionMessage += $" {exceptionHandlerPathFeature?.Path}";
+                exceptionMessage += $" {exceptionHandlerPathFeature.Path}";
 
             if (!string.IsNullOrWhiteSpace(exceptionMessage))
-                _logger.LogError("Error: {exceptionMessage} RequestId: {requestId}", exceptionMessage, requestId ?? string.Empty);
+                _logger.LogError("Error: {exceptionMessage} RequestId: {requestId}", exceptionMessage, requestId);
         }
         catch (Exception ex)
         {
@@ -57,14 +55,17 @@ public class ErrorModel : PageModel
         {
             var statusCodeReExecuteFeature = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
 
-            if (statusCode != 404 && !string.IsNullOrWhiteSpace(statusCodeReExecuteFeature?.OriginalPath) && !statusCodeReExecuteFeature.OriginalPath.Contains("/sys/"))
+            if (statusCode == 404 || string.IsNullOrWhiteSpace(statusCodeReExecuteFeature?.OriginalPath) ||
+                statusCodeReExecuteFeature.OriginalPath.Contains("/sys/"))
             {
+                return;
+            }
+            
                 var httpRequestFeature = HttpContext.Features.Get<IHttpRequestFeature>();
                 _logger.LogError("Error - Path: {OriginalPath}, Query: {OriginalQueryString}, Code: {statusCode}, Method: {Method}, Scheme: {Scheme}, Protocol: {Protocol}",
                     statusCodeReExecuteFeature.OriginalPath, statusCodeReExecuteFeature.OriginalQueryString, statusCode, httpRequestFeature.Method,
                     httpRequestFeature.Scheme, httpRequestFeature.Protocol);
             }
-        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Exception: error");

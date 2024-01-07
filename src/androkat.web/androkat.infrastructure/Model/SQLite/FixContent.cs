@@ -23,27 +23,21 @@ public class FixContent
     {
         get
         {
-            string year = Datum == "02-29" ? "2024" : DateTime.UtcNow.ToString("yyyy");
-            return DateTime.TryParse(year + "-" + Datum, CultureInfo.CreateSpecificCulture("hu-HU"), out DateTime date) ? date : DateTime.MinValue;
+            var year = Datum == "02-29" ? "2024" : DateTime.UtcNow.ToString("yyyy");
+            return DateTime.TryParse(year + "-" + Datum, CultureInfo.CreateSpecificCulture("hu-HU"), out var date) ? date : DateTime.MinValue;
         }
     }
 
     [DataMember(Name = "cim")]
-    public string Cim { get; set; }
+    public string Cim { get; set; } = string.Empty;
 
     [DataMember(Name = "idezet")]
-    public string Idezet { get; set; }
+    public string Idezet { get; set; } = string.Empty;
 
     [DataMember(Name = "tipus")]
     public int Tipus { get; set; }
 
     [NotMapped]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
-    public DateTime Inserted
-    {
-        get
-        {
-            return DateTime.UtcNow;
-        }
-    }
+    public DateTime Inserted => DateTime.UtcNow;
 }

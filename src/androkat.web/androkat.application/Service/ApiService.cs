@@ -43,7 +43,7 @@ public class ApiService : IApiService
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Bug", "S2583:Conditionally executed code should be reachable", Justification = "<Pending>")]
     public ImaResponse GetImaByDate(string date, ImaCache imaCache)
     {
-        _ = DateTime.TryParse(date, CultureInfo.CreateSpecificCulture("hu-HU"), out DateTime datum);
+        _ = DateTime.TryParse(date, CultureInfo.CreateSpecificCulture("hu-HU"), out var datum);
 
         var temp = new ImaResponse
         {
@@ -60,7 +60,7 @@ public class ApiService : IApiService
                 break;
             }
 
-            if (int.TryParse(item.Csoport, out int cs))
+            if (int.TryParse(item.Csoport, out var cs))
             {
                 temp.Imak.Add(new ImaDetailsResponse
                 {
@@ -86,7 +86,7 @@ public class ApiService : IApiService
     {
         return bookRadioSysCache.RadioMusor
             .Where(w => w.Source == s)
-            .Select(s => new RadioMusorResponse { Musor = s.Musor }).ToList();
+            .Select(m => new RadioMusorResponse { Musor = m.Musor }).ToList();
     }
 
     public IReadOnlyCollection<ContentResponse> GetContentByTipusAndId(int tipus, Guid id, BookRadioSysCache bookRadioSysCache, MainCache mainCache)
@@ -118,7 +118,7 @@ public class ApiService : IApiService
     {
         var temp = new List<ContentResponse>();
 
-        if (tipus == 58 || tipus == 25)
+        if (tipus is 58 or 25)
         {
             GetHumorAndAjandek(n, tipus, mainCache, temp);
         }
@@ -217,20 +217,23 @@ public class ApiService : IApiService
 
     private void GetHumorAndAjandek(Guid n, int tipus, MainCache m, List<ContentResponse> temp)
     {
-        string date = _iClock.Now.ToString("yyyy-MM-dd");
+        var date = _iClock.Now.ToString("yyyy-MM-dd");
         var todayContent = m.ContentDetailsModels.FirstOrDefault(w => w.Tipus == tipus && w.Fulldatum.ToString("yyyy-MM-dd").StartsWith(date));
-        todayContent ??= m.ContentDetailsModels.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted).FirstOrDefault();
+        todayContent ??= m.ContentDetailsModels.Where(w => w.Tipus == tipus).MaxBy(o => o.Inserted);
 
-        if (todayContent is not null)
+        if (todayContent is null)
         {
-            var downloaded = false;
+            return;
+        }
 
-            //a user már letöltötte, nem kell újból
-            if (n != Guid.Empty && n == todayContent.Nid)
-                downloaded = true;
+        var downloaded = n != Guid.Empty && n == todayContent.Nid;
 
-            if (!downloaded)
+        //a user már letöltötte, nem kell újból
+        if (downloaded)
             {
+            return;
+        }
+        
                 temp.Add(new ContentResponse
                 {
                     Cim = todayContent.Cim,
@@ -243,5 +246,3 @@ public class ApiService : IApiService
                 });
             }
         }
-    }
-}

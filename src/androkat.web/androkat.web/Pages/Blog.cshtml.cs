@@ -25,12 +25,12 @@ public class BlogModel : PageModel
     {
         ViewData["source"] = Source;
 
-        int tipus = Source switch
+        var tipus = Source switch
         {
             "bzarandokma" => (int)Forras.bzarandokma,
             "b777" => (int)Forras.b777,
             "jezsuitablog" => (int)Forras.jezsuitablog,
-            _ => 0,
+            _ => 0
         };
 
         ContentModels = _contentService.GetBlog(tipus);

@@ -10,7 +10,7 @@
         <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
 		<script src="~/lib/jquery/dist/jquery.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
-		@RenderSection("meta_extra", false)		
+		@await RenderSectionAsync("meta_extra", false)
 	</head>
 <body>
 <main role="main">
@@ -20,6 +20,6 @@
 	</footer>	
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js?v=1"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	@RenderSection("scripts", false)
+    @await RenderSectionAsync("scripts", false)
 </body>
 </html>

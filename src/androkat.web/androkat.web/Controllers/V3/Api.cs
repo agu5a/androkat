@@ -24,7 +24,7 @@ public class Api : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<ContentResponse>), 200)]
     public ActionResult<IEnumerable<ContentResponse>> GetContentsByTipusAndId(int tipus, string id)
     {
-        if (tipus < 1 || tipus > 100)
+        if (tipus is < 1 or > 100)
             return BadRequest("Hiba");
 
         var guid = Guid.Empty;

@@ -12,6 +12,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using androkat.web.Controllers.V2;
 
 namespace androkat.web.Tests.APITests;
 
@@ -21,7 +22,7 @@ public class GetVideoByOffsetTests : BaseTest
     [TestCase(51)]
     public void API_GetVideoByOffset_V2_BadRequest(int offset)
     {
-        var api = new data.Controllers.V2.Api(null, GetMapper());
+        var api = new Api(null);
         var res = api.GetVideoByOffsetV2(offset);
         dynamic s = res.Result;
         string result = s.Value;
@@ -47,7 +48,7 @@ public class GetVideoByOffsetTests : BaseTest
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, GetIMemoryCache(), cacheService.Object);
 
-        var apiV2 = new data.Controllers.V2.Api(dec, GetMapper());
+        var apiV2 = new Api(dec);
         ActionResult<List<VideoResponse>> resV1 = apiV2.GetVideoByOffsetV2(0);
         dynamic sV1 = resV1.Result;
 
@@ -73,7 +74,7 @@ public class GetVideoByOffsetTests : BaseTest
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
 
-        var api = new data.Controllers.V2.Api(dec, GetMapper());
+        var api = new Api(dec);
         ActionResult<List<VideoResponse>> res = api.GetVideoByOffsetV2(0);
         dynamic s = res.Result;
 
@@ -93,7 +94,7 @@ public class GetVideoByOffsetTests : BaseTest
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
 
-        var api = new data.Controllers.V2.Api(dec, GetMapper());
+        var api = new Api(dec);
         ActionResult<List<VideoResponse>> res = api.GetVideoByOffsetV2(0);
         dynamic s = res.Result;
 

@@ -1,6 +1,5 @@
 ﻿@page
 @using androkat.web.Pages.Ad
-@using androkat.domain.Enum;
 @model PufferModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
@@ -201,7 +200,7 @@
                             @Html.Raw("<div class='mb-1'>[" + Model.LastTodayResult.FullDatum + "] -  " + Model.LastTodayResult.Cim + "</div>")
                         }
 
-                        @if (Model.TipusId is not null && (Model.TipusId == 6 || Model.TipusId == 15 || Model.TipusId == 28 || Model.TipusId == 38 || Model.TipusId == 39 || Model.TipusId == 46 || Model.TipusId == 60))
+                        @if (Model.TipusId is not null && Model.TipusId is 6 or 15 or 28 or 38 or 39 or 46 or 60)
                         {
                             <div class="mb-1">                                
                                 <strong>Idézet</strong>: <a href="@Model.LastTodayResult.Idezet" target="_blank">@Model.LastTodayResult.Idezet</a>

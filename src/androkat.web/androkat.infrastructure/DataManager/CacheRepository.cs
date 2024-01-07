@@ -26,99 +26,99 @@ public class CacheRepository : BaseRepository, ICacheRepository
 
     public IReadOnlyCollection<ImaModel> GetImaToCache()
     {
-        var res = _ctx.ImaContent.AsNoTracking().OrderBy(o => o.Datum);
-        return _mapper.Map<IReadOnlyCollection<ImaModel>>(res);
+        var res = Ctx.ImaContent.AsNoTracking().OrderBy(o => o.Datum);
+        return Mapper.Map<IReadOnlyCollection<ImaModel>>(res);
     }
 
     public IReadOnlyCollection<ContentDetailsModel> GetBooksToCache()
     {
-        var res = _ctx.Content.AsNoTracking().Where(w => w.Tipus == 46).OrderByDescending(o => o.Inserted);
-        return _mapper.Map<IReadOnlyCollection<ContentDetailsModel>>(res);
+        var res = Ctx.Content.AsNoTracking().Where(w => w.Tipus == 46).OrderByDescending(o => o.Inserted);
+        return Mapper.Map<IReadOnlyCollection<ContentDetailsModel>>(res);
     }
 
     public IReadOnlyCollection<RadioMusorModel> GetRadioToCache()
     {
-        var res = _ctx.RadioMusor.AsNoTracking();
-        return _mapper.Map<IReadOnlyCollection<RadioMusorModel>>(res);
+        var res = Ctx.RadioMusor.AsNoTracking();
+        return Mapper.Map<IReadOnlyCollection<RadioMusorModel>>(res);
     }
 
     public IReadOnlyCollection<VideoSourceModel> GetVideoSourceToCache()
     {
-        var res = _ctx.VideoContent.AsNoTracking().GroupBy(p => new { p.Forras, p.ChannelId })
+        var res = Ctx.VideoContent.AsNoTracking().GroupBy(p => new { p.Forras, p.ChannelId })
                 .Select(s => new VideoSource { ChannelName = s.Key.Forras, ChannelId = s.Key.ChannelId });
-        return _mapper.Map<IReadOnlyCollection<VideoSourceModel>>(res);
+        return Mapper.Map<IReadOnlyCollection<VideoSourceModel>>(res);
     }
 
     public IReadOnlyCollection<VideoModel> GetVideoToCache()
     {
-        var res = _ctx.VideoContent.AsNoTracking().OrderByDescending(o => o.Date).ThenByDescending(t => t.Inserted);
-        return _mapper.Map<IReadOnlyCollection<VideoModel>>(res);
+        var res = Ctx.VideoContent.AsNoTracking().OrderByDescending(o => o.Date).ThenByDescending(t => t.Inserted);
+        return Mapper.Map<IReadOnlyCollection<VideoModel>>(res);
     }
 
     public IReadOnlyCollection<SystemInfoModel> GetSystemInfoToCache()
     {
-        var res = _ctx.SystemInfo.AsNoTracking().Where(w => w.Key != "version");
-        return _mapper.Map<IReadOnlyCollection<SystemInfoModel>>(res);
+        var res = Ctx.SystemInfo.AsNoTracking().Where(w => w.Key != "version");
+        return Mapper.Map<IReadOnlyCollection<SystemInfoModel>>(res);
     }
 
     public IReadOnlyCollection<ContentDetailsModel> GetHirekBlogokToCache()
     {
-        var res = _ctx.Content.Where(w => AndrokatConfiguration.BlogNewsContentTypeIds().Contains(w.Tipus)).AsNoTracking()
+        var res = Ctx.Content.Where(w => AndrokatConfiguration.BlogNewsContentTypeIds().Contains(w.Tipus)).AsNoTracking()
             .OrderByDescending(o => o.Fulldatum);
-        return _mapper.Map<IReadOnlyCollection<ContentDetailsModel>>(res);
+        return Mapper.Map<IReadOnlyCollection<ContentDetailsModel>>(res);
     }
 
     public IReadOnlyCollection<ContentDetailsModel> GetHumorToCache()
     {
         var list = new List<ContentDetailsModel>();
 
-        var month = _clock.Now.ToString("MM");
-        var rows = _ctx.FixContent.AsNoTracking().AsEnumerable()
-            .Where(w => w.Tipus == (int)Forras.humor && w.Datum.StartsWith($"{month}-") && w.Fulldatum < _clock.Now.DateTime)
+        var month = Clock.Now.ToString("MM");
+        var rows = Ctx.FixContent.AsNoTracking().AsEnumerable()
+            .Where(w => w.Tipus == (int)Forras.humor && w.Datum.StartsWith($"{month}-") && w.Fulldatum < Clock.Now.DateTime)
             .OrderByDescending(o => o.Datum).ToList();
 
         rows.ForEach(w =>
         {
-            list.Add(_mapper.Map<ContentDetailsModel>(w));
+            list.Add(Mapper.Map<ContentDetailsModel>(w));
         });
 
-        return _mapper.Map<IReadOnlyCollection<ContentDetailsModel>>(list);
+        return Mapper.Map<IReadOnlyCollection<ContentDetailsModel>>(list);
     }
 
     public IReadOnlyCollection<ContentDetailsModel> GetMaiSzentToCache()
     {
         var list = new List<ContentDetailsModel>();
-        var hoNap = _clock.Now.ToString("MM-dd");
-        var month = _clock.Now.ToString("MM");
+        var hoNap = Clock.Now.ToString("MM-dd");
+        var month = Clock.Now.ToString("MM");
 
-        var rows = _ctx.MaiSzent.AsNoTracking().Where(w => w.Datum == hoNap);
+        var rows = Ctx.MaiSzent.AsNoTracking().Where(w => w.Datum == hoNap);
         if (!rows.Any())
         {
             _logger.LogDebug("{name}: nincs mai szent mai napra", nameof(GetMaiSzentToCache));
 
-            var rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
-            .Where(w => w.Datum.StartsWith($"{month}-") && w.Fulldatum < _clock.Now)
-            .OrderByDescending(o => o.Datum).Take(1);
+            var rows2 = Ctx.MaiSzent.AsNoTracking().AsEnumerable()
+            .Where(w => w.Datum.StartsWith($"{month}-") && w.Fulldatum < Clock.Now)
+            .OrderByDescending(o => o.Datum).Take(1)!.ToList();
 
-            if (!rows2.Any())
+            if (rows2.Count == 0)
             {
                 _logger.LogDebug("{name}: nincs mai szent az aktuális hónapra", nameof(GetMaiSzentToCache));
 
-                var prevmonth = _clock.Now.AddMonths(-1).ToString("MM");
-                rows2 = _ctx.MaiSzent.AsNoTracking().AsEnumerable()
+                var prevmonth = Clock.Now.AddMonths(-1).ToString("MM");
+                rows2 = Ctx.MaiSzent.AsNoTracking().AsEnumerable()
                     .Where(w => w.Datum.StartsWith($"{prevmonth}-"))
-                    .OrderByDescending(o => o.Datum).Take(1);
+                    .OrderByDescending(o => o.Datum).Take(1).ToList();
             }
 
-            rows2.ToList().ForEach(row =>
+            rows2.ForEach(row =>
             {
-                list.Add(_mapper.Map<ContentDetailsModel>(row));
+                list.Add(Mapper.Map<ContentDetailsModel>(row));
             });
         }
         else
             rows.ToList().ForEach(row =>
             {
-                list.Add(_mapper.Map<ContentDetailsModel>(row));
+                list.Add(Mapper.Map<ContentDetailsModel>(row));
             });
 
         return list.AsReadOnly();
@@ -134,12 +134,12 @@ public class CacheRepository : BaseRepository, ICacheRepository
             tipusok.Add(f);
         });
 
-        var date = _clock.Now.ToString("MM-dd");
+        var date = Clock.Now.ToString("MM-dd");
 
-        var todayFixContents = _ctx.FixContent.AsNoTracking().Where(w => tipusok.Contains(w.Tipus) && w.Datum == date);
+        var todayFixContents = Ctx.FixContent.AsNoTracking().Where(w => tipusok.Contains(w.Tipus) && w.Datum == date);
         foreach (var todayFixContent in todayFixContents)
         {
-            result.Add(_mapper.Map<ContentDetailsModel>(todayFixContent));
+            result.Add(Mapper.Map<ContentDetailsModel>(todayFixContent));
         }
 
         return result.AsReadOnly();
@@ -149,7 +149,7 @@ public class CacheRepository : BaseRepository, ICacheRepository
     {
         var result = new List<ContentDetailsModel>();
 
-        var allRecords = _ctx.Content.AsNoTracking().ToList();
+        var allRecords = Ctx.Content.AsNoTracking().ToList();
 
         //ezekből az összes elérhető kell, nem csak az adott napi
         var osszes = new List<int>
@@ -160,39 +160,38 @@ public class CacheRepository : BaseRepository, ICacheRepository
             (int)Forras.prayasyougo
         };
 
-        var tomorrow = _clock.Now.AddDays(1).ToString("yyyy-MM-dd");
+        var tomorrow = Clock.Now.AddDays(1).ToString("yyyy-MM-dd");
 
         foreach (var tipus in AndrokatConfiguration.ContentTypeIds())
         {
-            var date = _clock.Now.ToString("yyyy-MM-dd");
+            var date = Clock.Now.ToString("yyyy-MM-dd");
 
             if (tipus == (int)Forras.fokolare)
-                date = _clock.Now.ToString("yyyy-MM") + "-01";
+                date = Clock.Now.ToString("yyyy-MM") + "-01";
 
             var res = GetContentDetailsModel(allRecords, tipus, date, tomorrow, osszes);
-            result.AddRange(_mapper.Map<List<ContentDetailsModel>>(res));
+            result.AddRange(Mapper.Map<List<ContentDetailsModel>>(res));
         }
 
         return result.AsReadOnly();
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S2589:Boolean expressions should not be gratuitous", Justification = "<Pending>")]
-    private IEnumerable<Content> GetContentDetailsModel(List<Content> allRecords, int tipus, string date, string tomorrow, List<int> osszes)
+    private List<Content> GetContentDetailsModel(IReadOnlyCollection<Content> allRecords, int tipus, string date, string tomorrow, List<int> osszes)
     {
-        IEnumerable<Content> res;
+        List<Content> res;
         if (tipus == (int)Forras.maievangelium) //szombaton már megjelenik a vasárnapi is
-            res = allRecords.Where(w => w.Tipus == tipus && (w.Fulldatum.StartsWith(date) || w.Fulldatum.StartsWith(tomorrow))).OrderByDescending(o => o.Inserted);
+            res = allRecords.Where(w => w.Tipus == tipus && (w.Fulldatum.StartsWith(date) || w.Fulldatum.StartsWith(tomorrow))).OrderByDescending(o => o.Inserted).ToList();
         else if (osszes.Contains(tipus)) //ajanlo és néhány hanganyagból a weboldalon látszik mindegyik 
-            res = allRecords.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted);
+            res = allRecords.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted).ToList();
         else
-            res = allRecords.Where(w => w.Tipus == tipus && w.Fulldatum.StartsWith(date)).OrderByDescending(o => o.Inserted);
+            res = allRecords.Where(w => w.Tipus == tipus && w.Fulldatum.StartsWith(date)).OrderByDescending(o => o.Inserted).ToList();
 
-        if (res is null || !res.Any())
+        if (res!.Count == 0)
         {
             _logger.LogDebug("{name}: nincs mai, akkor egy a korábbiakból, ha van. tipus {tipus} date {date}", nameof(GetContentDetailsModel), tipus, date);
-            res = allRecords.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted).Take(1);
+            res = allRecords.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted).Take(1).ToList();
         }
 
-        return res;
+        return res!;
     }
 }

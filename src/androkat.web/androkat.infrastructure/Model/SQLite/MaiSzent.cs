@@ -24,21 +24,20 @@ public class Maiszent
     {
         get
         {
-            string year = (Datum == "02-29" ? "2024" : DateTime.UtcNow.ToString("yyyy"));
-            return DateTime.TryParse(year + "-" + Datum, CultureInfo.CreateSpecificCulture("hu-HU"), out DateTime date) ? date : DateTime.MinValue;
-            
+            var year = Datum == "02-29" ? "2024" : DateTime.UtcNow.ToString("yyyy");
+            return DateTime.TryParse(year + "-" + Datum, CultureInfo.CreateSpecificCulture("hu-HU"), out var date) ? date : DateTime.MinValue;
         }
     }
 
     [NotMapped]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
-    public int Tipus { get { return (int)Forras.maiszent; } }
+    public int Tipus => (int)Forras.maiszent;
 
     [DataMember(Name = "cim")]
-    public string Cim { get; set; }
+    public string Cim { get; set; } = string.Empty;
 
     [DataMember(Name = "idezet")]
-    public string Idezet { get; set; }
+    public string Idezet { get; set; } = string.Empty;
 
     [DataMember(Name = "inserted")]
     public DateTime Inserted { get; set; } //"yyyy-MM-dd HH:mm:ss"
