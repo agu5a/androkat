@@ -53,7 +53,7 @@ public static class DependencyInjection
             options.AddPolicy("fixed-by-ip", httpContext => 
                 RateLimitPartition.GetFixedWindowLimiter
                 (
-                    partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
+                    partitionKey: httpContext.Request.Headers["X-Forwarded-For"].ToString(), //Connection.RemoteIpAddress?.ToString()
                     factory: _ => new FixedWindowRateLimiterOptions
                     {
                         PermitLimit = 40,

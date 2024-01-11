@@ -1,0 +1,236 @@
+@androkat.web_HostAddress = http://localhost:5000
+
+GET {{androkat.web_HostAddress}}/v2/ima?date=1970-01-01%2001%3A00%3A00
+
+###
+
+GET {{androkat.web_HostAddress}}/v2/ima?date=2023-03-19%2000%3A00%3A00
+
+###
+
+GET {{androkat.web_HostAddress}}/v2/ima?date=2023-03-20%2000%3A00%3A00
+
+###
+
+GET {{androkat.web_HostAddress}}/v2/radio?s=katolikushu
+
+###
+GET {{androkat.web_HostAddress}}/v2/radio?s=mariaradio
+
+###
+
+GET {{androkat.web_HostAddress}}/v2/radio?s=szentistvan
+
+###
+
+GET {{androkat.web_HostAddress}}/v2/ser
+
+###
+
+GET {{androkat.web_HostAddress}}/v2/video?offset=0
+
+###
+
+GET {{androkat.web_HostAddress}}/v2/video?offset=5
+
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=10&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=10&id=817b0154-8a9b-4573-8b8c-6a9d00085338
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=11&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=11&id=80f04bbc-d1cf-494e-bc54-f89e7cedfe72
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=12&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=12&id=766c864c-f58a-42c7-8cd4-ee379a422d02
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=13&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=13&id=a4e30729-84fb-456a-8cbf-108362e3e0ec
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=14&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=14&id=c885f36d-b9f8-4527-b6db-971f2b837bf0
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=15&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=15&id=886b178a-c6fb-4898-8d7f-1743ef160a68
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=16&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=16&id=12fe8280-3217-4618-846a-2715277a297f
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=17&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=17&id=6f20be98-4842-4207-833c-ed04197a4290
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=18&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=18&id=4c259316-91eb-4546-b7c4-2c6745614eda
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=19&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=19&id=5f21b367-9bf1-481d-94ab-6bd257517fa0
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=2&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=2&id=244591d8-6aa2-491d-9520-a0d93c2e7309
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=20&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=20&id=16b260af-9e24-4097-aaab-0de2f6924177
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=21&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=21&id=24364852-051a-45fa-b092-cb569bb6b3c4
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=24&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=24&id=f830747b-3596-4b96-852d-3876e91c4266
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=25&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=25&id=26d54636-c44f-4bb5-91fc-735bcf7d157d
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=28&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=28&id=0157af4a-85b8-446e-89af-efa4b296159f
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=29&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=29&id=5fac5996-7d93-4816-9308-7c534407b4a6
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=3&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=3&id=62f662d1-1289-11ea-8aa1-cbeb38570c35
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=38&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=38&id=6a8e3d4e-1756-4254-9e57-7fdccb8c8aa2
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=39&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=39&id=d0b8f106-d3ae-4d1a-81e8-40b756ccd459
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=4&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=4&id=62f74376-1289-11ea-8aa1-cbeb38570c35
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=42&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=42&id=62f8f0f7-1289-11ea-8aa1-cbeb38570c35
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=43&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=43&id=68499979-0a38-40f0-8bcd-3ff3c3ab69da
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=45&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=45&id=96e42928-c3b6-4ee6-a2e7-3a7f640f4697
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=46&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=46&id=62f95581-1289-11ea-8aa1-cbeb38570c35
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=47&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=47&id=ac053b79-60a1-4e64-8949-e06c33429adf
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=48&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=48&id=62f988f6-1289-11ea-8aa1-cbeb38570c35
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=49&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=49&id=1bd0a25d-a1d3-4522-be01-f85e0aaeb689
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=5&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=5&id=62f80cc8-1289-11ea-8aa1-cbeb38570c35
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=50&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=50&id=a916207b-c139-4412-a529-6b5f34037b1d
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=51&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=51&id=43817361-9a67-47a2-8c07-b34f322247d9
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=52&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=52&id=3a101609-1d60-49bc-9593-2007f283397e
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=57&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=57&id=424a4ee8-2c50-45b9-9a45-3823f25cc123
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=58&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=58&id=3a62c5e5-a978-4b8c-965a-2f4ca571b46f
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=6&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=6&id=3d51b82a-103d-4e4e-aeb1-70ffa720b116
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=60&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=60&id=0d49f8b8-a38d-406f-9449-fd4d743cd4f1
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=61&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=61&id=65346bd2-5fcd-4fd3-9db1-d9da89c4cb76
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=7&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=7&id=11f7dc00-29eb-45c0-b16a-0aecc9a04512
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=8&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=8&id=612dcd70-059e-4100-af78-9080ef995c8d
+###
+
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=9&id=
+###
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=9&id=061bab72-b38d-4628-8d81-c4867aaf6bb6
+###
