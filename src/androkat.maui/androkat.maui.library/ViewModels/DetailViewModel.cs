@@ -11,8 +11,6 @@ namespace androkat.maui.library.ViewModels;
 [QueryProperty(nameof(IsIma), nameof(IsIma))]
 public partial class DetailViewModel(IPageService _pageService, ISourceData _sourceData) : ViewModelBase
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3604:Member initializer values should not be redundant", Justification = "<Pending>")]
-    private readonly CancellationTokenSource _cancellationTokenSource = new();
     private Guid _contentGuid;
     private bool _isIma = false;
 
@@ -192,5 +190,5 @@ public partial class DetailViewModel(IPageService _pageService, ISourceData _sou
     [GeneratedRegex("<.*?>")]
     private static partial Regex TitleRegex();
     [GeneratedRegex("<.*?>")]
-    private static partial Regex IdezetRegex();
+    private static partial Regex IdezetRegex();      
 }

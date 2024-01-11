@@ -64,7 +64,7 @@ public partial class SettingsPage : ContentPage
             await DownloadAll();
             await SetDbButton();
 
-            var cancellationTokenSource = new CancellationTokenSource();
+            using var cancellationTokenSource = new CancellationTokenSource();
             var toast = Toast.Make("Offline adatbázis sikeresen törölve.", ToastDuration.Short, 14d);            
             await toast.Show(cancellationTokenSource.Token);
         }
