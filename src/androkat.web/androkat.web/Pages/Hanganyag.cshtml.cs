@@ -19,6 +19,6 @@ public class HanganyagModel : PageModel
 
     public void OnGet()
     {
-        AudioModels = _contentService.GetAudio().OrderBy(o => o.Tipus).ToList();
+        AudioModels = [.. _contentService.GetAudio().OrderBy(o => o.Tipus)];
     }
 }

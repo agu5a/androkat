@@ -165,7 +165,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
             _logger.LogError(ex, "Exception: ");
         }
 
-        return temp.OrderBy(o => o.TipusNev).ToList();
+        return [.. temp.OrderBy(o => o.TipusNev)];
     }
 
     public ContentResult LoadPufferTodayContentByNid(string nid)
@@ -215,7 +215,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
             _logger.LogError(ex, "Exception: ");
         }
 
-        return Enumerable.Empty<ImgData>();
+        return [];
     }
 
     public IEnumerable<FileData> GetAudioList()
@@ -234,7 +234,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
             _logger.LogError(ex, "Exception: ");
         }
 
-        return Enumerable.Empty<FileData>();
+        return [];
     }
 
     public LastTodayResult GetLastTodayContentByTipus(int tipus)
@@ -299,7 +299,13 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public IEnumerable<AllRecordResult> GetAllContentByTipus(int tipus)
     {
-        return new List<AllRecordResult>();
+        _logger.LogDebug("{name} was called, {tipus}", nameof(GetAllContentByTipus), tipus);
+
+        var res = Ctx.Content
+            .Where(g => g.Tipus == tipus).Select(s => new AllRecordResult { Nid = s.Nid, Datum = s.Fulldatum })
+            .OrderBy(o => o.Datum).ToList();
+
+        return res;
     }
 
     public Dictionary<int, string> GetAllContentTipusFromDb()
@@ -307,41 +313,166 @@ public class AdminRepository : BaseRepository, IAdminRepository
         _logger.LogDebug("{name} was called", nameof(GetAllContentTipusFromDb));
 
         var tipusok = new Dictionary<int, string>();
+        Ctx.Content.GroupBy(p => p.Tipus).Select(g =>
+            new { tipus = g.Key, count = g.Count() }).ToList().ForEach(w =>
+            {
+                var tipus = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(w.tipus);
+                tipusok.Add(w.tipus, tipus.TipusNev);
+            });
+
         return tipusok;
     }
 
     public IEnumerable<AllRecordResult> GetAllMaiSzentByMonthResult(string date)
     {
-        return new List<AllRecordResult>();
+        _logger.LogDebug("GetAllMaiSzentByMonthResult was called, {date}", date);
+
+        var res = Ctx.MaiSzent
+            .Where(g => g.Datum.StartsWith(date)).Select(s => new AllRecordResult { Nid = s.Nid, Datum = s.Datum })
+            .OrderBy(o => o.Datum).ToList();
+
+        return res;
     }
 
     public IEnumerable<AllRecordResult> GetAllImaByCsoportResult(string csoport)
     {
-        return new List<AllRecordResult>();
+        _logger.LogDebug("GetAllImaByCsoportResult was called, {csoport}", csoport);
+
+        var res = Ctx.ImaContent
+            .Where(g => g.Csoport == csoport).Select(s => new AllRecordResult { Nid = s.Nid, Csoport = s.Cim })
+            .OrderBy(o => o.Csoport).ToList();
+
+        return res;
     }
 
     public IEnumerable<AllRecordResult> GetAllRadioResult()
     {
-        return new List<AllRecordResult>();
+        _logger.LogDebug("GetAllRadioResult was called");
+
+        var res = Ctx.RadioMusor
+            .Select(s => new AllRecordResult { Nid = s.Nid, Csoport = s.Source })
+            .OrderBy(o => o.Csoport).ToList();
+
+        return res;
     }
 
     public RadioResult LoadRadioByNid(string nid)
     {
+        _logger.LogDebug("LoadRadioByNid was called, {nid}", nid);
+
+        try
+        {
+            var guid = Guid.Parse(nid);
+            var res = Ctx.RadioMusor.FirstOrDefault(f => f.Nid == guid);
+            if (res is not null)
+            {
+                return new RadioResult
+                {
+                    Musor = res.Musor,
+                    Source = res.Source,
+                    Nid = res.Nid.ToString(),
+                    Inserted = res.Inserted
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
         return null;
     }
 
     public ContentResult LoadImaByNid(string nid)
     {
+        _logger.LogDebug("LoadImaByNid was called, {nid}", nid);
+
+        try
+        {
+            var guid = Guid.Parse(nid);
+            var res = Ctx.ImaContent.FirstOrDefault(f => f.Nid == guid);
+            if (res is not null)
+            {
+                return new ContentResult
+                {
+                    Cim = res.Cim,
+                    FullDatum = res.Datum.ToString("yyyy-MM-dd HH:mm:ss"),
+                    Idezet = res.Szoveg,
+                    Img = "",
+                    Nid = res.Nid.ToString(),
+                    Def = "",
+                    Inserted = res.Datum.ToString("yyyy-MM-dd HH:mm:ss")
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
         return null;
     }
 
     public ContentResult LoadMaiSzentByNid(string nid)
     {
+        _logger.LogDebug("LoadMaiSzentByNid was called, {nid}", nid);
+
+        try
+        {
+            var guid = Guid.Parse(nid);
+            var res = Ctx.MaiSzent.FirstOrDefault(f => f.Nid == guid);
+            if (res is not null)
+            {
+                return new ContentResult
+                {
+                    Cim = res.Cim,
+                    FullDatum = res.Datum,
+                    Idezet = res.Idezet,
+                    Img = res.Img,
+                    Nid = res.Nid.ToString(),
+                    Def = _androkatConfiguration.Value.GetContentMetaDataModelByTipus((int)Forras.maiszent).TipusNev,
+                    Inserted = res.Inserted.ToString("yyyy-MM-dd HH:mm:ss")
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
         return null;
     }
 
     public ContentResult LoadTodayContentByNid(string nid)
     {
+        _logger.LogDebug("LoadTodayContentByNid was called, {nid}", nid);
+
+        try
+        {
+            var guid = Guid.Parse(nid);
+            var res = Ctx.Content.FirstOrDefault(f => f.Nid == guid);
+            if (res is not null)
+            {
+                return new ContentResult
+                {
+                    Cim = res.Cim,
+                    Forras = res.Forras,
+                    Idezet = res.Idezet,
+                    FileUrl = res.FileUrl,
+                    Img = res.Img,
+                    Nid = res.Nid.ToString(),
+                    Def = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(res.Tipus).TipusNev,
+                    Tipus = res.Tipus,
+                    FullDatum = res.Fulldatum,
+                    Inserted = res.Inserted.ToString("yyyy-MM-dd HH:mm:ss")
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
         return null;
     }
 

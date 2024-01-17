@@ -53,7 +53,7 @@ public class PartnerRepository : IPartnerRepository
         {
             _logger.LogError(ex, "Exception: GetTempContentByTipus is failed {tipus}", tipus);
         }
-        return Enumerable.Empty<ContentDetailsModel>();
+        return [];
     }
 
     public bool InsertTempContent(ContentDetailsModel contentDetailsModel)

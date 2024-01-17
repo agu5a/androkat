@@ -25,6 +25,6 @@ public class ContentMetaDataService : IContentMetaDataService
 
         _logger.LogInformation("{Name} GetContentMetaDataList has been finished. Count: {count}", nameof(ContentMetaDataService), list.Count);
 
-        return list.OrderBy(o => o.TipusNev).ToList();
+        return [.. list.OrderBy(o => o.TipusNev)];
     }
 }

@@ -42,6 +42,6 @@ public class ContentServiceTests : BaseTest
         var result = service.GetAudio();
 
         // Assert
-        Assert.True(result.Count == 2);
+        Assert.Equal(2, result.Count);
     }
 }

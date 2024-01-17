@@ -247,7 +247,7 @@ public class ContentService : IContentService
         var res = GetCache(CacheKey.MainCacheKey.ToString(), () => _cacheService.MainCacheFillUp());
 
         if (tipus > 0)
-            return res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).ToList();
+            return [.. res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum)];
 
         var list = new List<int> { (int)Forras.bonumtv, (int)Forras.kurir, (int)Forras.keresztenyelet };
         return res.Egyeb.Where(w => list.Contains(w.Tipus)).OrderByDescending(o => o.Fulldatum);
@@ -258,7 +258,7 @@ public class ContentService : IContentService
         var res = GetCache(CacheKey.MainCacheKey.ToString(), () => _cacheService.MainCacheFillUp());
 
         if (tipus > 0)
-            return res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).ToList();
+            return [.. res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum)];
 
         var list = new List<int> { (int)Forras.b777, (int)Forras.bzarandokma, (int)Forras.jezsuitablog };
         return res.Egyeb.Where(w => list.Contains(w.Tipus)).OrderByDescending(o => o.Fulldatum);
