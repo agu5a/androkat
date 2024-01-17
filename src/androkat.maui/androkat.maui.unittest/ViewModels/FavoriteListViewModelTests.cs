@@ -34,7 +34,7 @@ public class FavoriteListViewModelTests
     public async Task InitializeAsync_ShouldPopulateContents()
     {
         //arrange
-        IEnumerable<FavoriteContentEntity> favorites = new List<FavoriteContentEntity>() { new() { Nid = Guid.NewGuid(), Idezet = "Idezet", Tipus = "1" } };
+        IEnumerable<FavoriteContentEntity> favorites = [new() { Nid = Guid.NewGuid(), Idezet = "Idezet", Tipus = "1" }];
         _pageServiceMock.Setup(p => p.GetFavoriteCountAsync()).ReturnsAsync(favorites.Count);
         _pageServiceMock.Setup(p => p.GetFavoriteContentsAsync()).ReturnsAsync(favorites.ToList());
 
@@ -45,7 +45,8 @@ public class FavoriteListViewModelTests
         Assert.Equal(favorites.Count(), _viewModel.FavoriteCount);
         Assert.NotNull(_viewModel.Contents);
         Assert.NotEmpty(_viewModel.Contents);
-        Assert.Collection(_viewModel.Contents[0], item => Assert.Equal("Idezet", item.ContentEntity.Idezet));
+        Assert.Single(_viewModel.Contents);
+        Assert.Equal("Idezet", _viewModel.Contents[0].First().ContentEntity.Idezet);
     }
 
     [Fact]

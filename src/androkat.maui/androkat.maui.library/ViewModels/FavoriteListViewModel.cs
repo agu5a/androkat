@@ -60,7 +60,7 @@ public partial class FavoriteListViewModel : ViewModelBase
         try
         {
             var temp = ConvertToViewModels(favContents);
-            Contents.ReplaceRange(new List<List<FavoriteContentViewModel>> { temp.ToList() });
+            Contents.ReplaceRange([[.. temp]]);
         }
         catch (Exception)
         {
