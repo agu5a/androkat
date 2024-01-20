@@ -45,7 +45,7 @@ public class ApiService : IApiService
     {
         _ = DateTime.TryParse(date, CultureInfo.CreateSpecificCulture("hu-HU"), out var datum);
 
-        var temp = new ImaResponse
+        var response = new ImaResponse
         {
             HasMore = false,
             Imak = []
@@ -56,13 +56,13 @@ public class ApiService : IApiService
         {
             if (index == 10)
             {
-                temp.HasMore = true;
+                response.HasMore = true;
                 break;
             }
 
             if (int.TryParse(item.Csoport, out var cs))
             {
-                temp.Imak.Add(new ImaDetailsResponse
+                response.Imak.Add(new ImaDetailsResponse
                 {
                     Cim = item.Cim,
                     Csoport = cs,
@@ -74,7 +74,7 @@ public class ApiService : IApiService
 
             index++;
         }
-        return temp;
+        return response;
     }
 
     public IReadOnlyCollection<SystemDataResponse> GetSystemData(BookRadioSysCache bookRadioSysCache)

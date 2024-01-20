@@ -1,13 +1,16 @@
 using androkat.application.Interfaces;
 using androkat.application.Service;
+using androkat.domain;
 using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.domain.Model;
+using androkat.domain.Model.WebResponse;
 using androkat.infrastructure.DataManager;
 using androkat.infrastructure.Mapper;
 using androkat.infrastructure.Model.SQLite;
 using AutoMapper;
 using FluentAssertions;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -20,6 +23,47 @@ namespace androkat.application.Tests.Services;
 
 public class CronServiceTests : BaseTest
 {
+    [Fact]
+    public void Start_Throw_Exception()
+    {
+        var logger = new Mock<ILogger<CronService>>();
+
+        var apiRepository = new Mock<IApiRepository>();
+        apiRepository.Setup(s => s.GetContentDetailsModels()).Throws(new Exception("Hiba"));
+
+        var service = new CronService(apiRepository.Object, GetClock().Object, logger.Object, GetIMemoryCache());
+
+        // Assert
+        Action act = () => service.Start();
+        act.Should().NotThrow();
+    }
+
+    [Fact]
+    public void DeleteCaches_Throw_Exception()
+    {
+        //memoryCache is null
+        var service = new CronService(new Mock<IApiRepository>().Object, GetClock().Object, new Mock<ILogger<CronService>>().Object, default);
+
+        Action act = () => service.DeleteCaches();
+        act.Should().NotThrow();
+    }
+
+    [Fact]
+    public void DeleteCaches_Happy()
+    {
+        var expectedContentResponse = new List<ContentResponse> { new() };
+        var key = CacheKey.EgyebOlvasnivaloResponseCacheKey + "_0_" + Guid.NewGuid();
+        var logger = new Mock<ILogger<CronService>>();
+
+        var cache = GetIMemoryCache();
+        _ = cache.Set(key, expectedContentResponse);
+
+        var service = new CronService(new Mock<IApiRepository>().Object, GetClock().Object, logger.Object, GetIMemoryCache());
+        service.DeleteCaches();
+
+        cache.Get(key).Should().Be(expectedContentResponse);
+    }
+
     [Fact]
     public void DeleteOldRowsTest()
     {

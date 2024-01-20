@@ -41,11 +41,49 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public bool LogInUser(string email)
     {
+        _logger.LogDebug("LogInUser was called, email: {email}", email);
+        try
+        {
+            var res = Ctx.Admin.FirstOrDefault(f => f.Email == email);
+            if (res is not null)
+            {
+                res.LastLogin = Clock.Now.DateTime;
+                Ctx.SaveChanges();
+            }
+            else
+            {
+                Ctx.Admin.Add(new Admin { Email = email, LastLogin = Clock.Now.DateTime });
+                Ctx.SaveChanges();
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: LogInUser is failed {email}", email);
+        }
         return false;
     }
 
     public bool DeleteRadio(string nid)
     {
+        _logger.LogDebug("DeleteRadio was called, {nid}", nid);
+
+        try
+        {
+            var guid = Guid.Parse(nid);
+            var res = Ctx.RadioMusor.FirstOrDefault(f => f.Nid == guid);
+            if (res is not null)
+            {
+                Ctx.RadioMusor.Remove(res);
+                Ctx.SaveChanges();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
         return false;
     }
 
@@ -74,16 +112,64 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public bool DeleteIma(string nid)
     {
+        _logger.LogDebug("DeleteIma was called, {nid}", nid);
+
+        try
+        {
+            var guid = Guid.Parse(nid);
+            var res = Ctx.ImaContent.FirstOrDefault(f => f.Nid == guid);
+            if (res is not null)
+            {
+                Ctx.ImaContent.Remove(res);
+                Ctx.SaveChanges();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
         return false;
     }
 
     public bool DeleteContent(string nid)
     {
+        _logger.LogDebug("DeleteContent was called, {nid}", nid);
+
+        try
+        {
+            var guid = Guid.Parse(nid);
+            var res = Ctx.Content.FirstOrDefault(f => f.Nid == guid);
+            if (res is not null)
+            {
+                Ctx.Content.Remove(res);
+                Ctx.SaveChanges();
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
         return false;
     }
 
     public bool InsertIma(ImaModel imaModel)
     {
+        _logger.LogDebug("InsertIma was called, {nid}", imaModel.Nid);
+
+        try
+        {
+            Ctx.ImaContent.Add(Mapper.Map<ImaContent>(imaModel));
+            Ctx.SaveChanges();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
         return false;
     }
 
@@ -108,26 +194,128 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public bool InsertError(ErrorRequest content)
     {
+        _logger.LogWarning("InsertError was called: {error}", content.Error);
+
+        try
+        {
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
         return false;
     }
 
     public bool UpdateContent(ContentDetailsModel content)
     {
+        _logger.LogDebug("UpdateContent was called, {nid}", content.Nid);
+
+        try
+        {
+            var idezet = content.Idezet.Replace("\n", " ").Replace("\r", " ");
+
+            var res = Ctx.Content.FirstOrDefault(f => f.Nid == content.Nid);
+            if (res is null)
+                return false;
+
+            res.Idezet = idezet;
+            res.FileUrl = content.FileUrl;
+            res.Img = content.Img;
+            res.Cim = content.Cim;
+            res.Forras = content.Forras;
+            res.Fulldatum = content.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss");
+            res.Inserted = content.Inserted;
+            Ctx.SaveChanges();
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
         return false;
     }
 
     public bool UpdateMaiSzent(MaiSzentModel maiszent)
     {
+        _logger.LogDebug("UpdateMaiSzent was called, {nid}", maiszent.Nid);
+
+        try
+        {
+            maiszent.Idezet = maiszent.Idezet.Replace("\n", " ").Replace("\r", " ");
+
+            var res = Ctx.MaiSzent.FirstOrDefault(f => f.Nid == maiszent.Nid);
+            if (res is null)
+                return false;
+
+            res.Idezet = maiszent.Idezet;
+            res.Img = maiszent.Img;
+            res.Cim = maiszent.Cim;
+            res.Datum = maiszent.Datum;
+            res.Inserted = maiszent.Inserted;
+            Ctx.SaveChanges();
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
         return false;
     }
 
     public bool UpdateIma(ImaModel imaModel)
     {
+        _logger.LogDebug("UpdateIma was called, {nid}", imaModel.Nid);
+
+        try
+        {
+            var szoveg = imaModel.Szoveg.Replace("\n", " ").Replace("\r", " ");
+
+            var res = Ctx.ImaContent.FirstOrDefault(f => f.Nid == imaModel.Nid);
+            if (res is null)
+                return false;
+
+            res.Szoveg = szoveg;
+            res.Cim = imaModel.Cim;
+            res.Datum = imaModel.Datum;
+            res.Csoport = imaModel.Csoport;
+            Ctx.SaveChanges();
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
         return false;
     }
 
     public bool UpdateRadio(RadioMusorModel radioMusorModel)
     {
+        _logger.LogDebug("UpdateRadio was called, {nid}", radioMusorModel.Nid);
+
+        try
+        {
+            var res = Ctx.RadioMusor.FirstOrDefault(f => f.Nid == radioMusorModel.Nid);
+            if (res is null)
+                return false;
+
+            res.Musor = radioMusorModel.Musor;
+            res.Inserted = radioMusorModel.Inserted;
+            Ctx.SaveChanges();
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
         return false;
     }
 
@@ -478,17 +666,319 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public AdminAResult GetAdminAResult(bool isAdvent, bool isNagyBojt)
     {
-        return new AdminAResult();
+        _logger.LogDebug("GetAdminAResult was called");
+
+        var result = new AdminAResult();
+
+        try
+        {
+            var date = Clock.Now.ToString("yyyy-MM-dd");
+            var hoNap = Clock.Now.ToString("MM-dd");
+
+            var focolareDate = Clock.Now.ToString("yyyy-MM-01");
+
+            var res = new List<ContentDetailsModel>();
+            Ctx.Content.Where(w => w.Fulldatum.StartsWith(date) || w.Tipus == 7 && w.Fulldatum.StartsWith(focolareDate)).OrderBy(o => o.Tipus).ToList()
+                .ForEach(f => res.Add(Mapper.Map<ContentDetailsModel>(f)));
+
+            var fix = Ctx.FixContent.Where(w => w.Datum == hoNap).OrderBy(o => o.Tipus).ToList();
+            fix.ForEach(f => { res.Add(Mapper.Map<ContentDetailsModel>(f)); });
+
+            var maiszent = Ctx.MaiSzent.Where(w => w.Datum == hoNap).ToList();
+            maiszent.ForEach(f =>
+            {
+                res.Add(Mapper.Map<ContentDetailsModel>(f));
+            });
+
+            var maiAnyagok = new List<int>();
+            var maiAnyagokHtml = GetMaiAnyagok(res, maiAnyagok, "<strong>Mai anyagok</strong><br>");
+
+            var osszesTipus = new List<int>();
+            osszesTipus.AddRange(AndrokatConfiguration.ContentTypeIds());
+            osszesTipus.AddRange(AndrokatConfiguration.FixContentTypeIds());
+
+            if (!isAdvent)
+                osszesTipus.Remove((int)Forras.advent);
+            if (!isNagyBojt)
+                osszesTipus.Remove((int)Forras.nagybojt);
+
+            var maiHianyzok = osszesTipus.Except(maiAnyagok.OrderBy(o => o)).ToList();
+
+            var hianyzokHtml = GetMaiHianyzok(date, focolareDate, maiHianyzok);
+
+            result.MaiAnyagok = hianyzokHtml + maiAnyagokHtml;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
+        return result;
+    }
+
+    private List<ContentDetailsModel> GetActualMaiSzent()
+    {
+        var list = new List<ContentDetailsModel>();
+        var hoNap = Clock.Now.ToString("MM-dd");
+        var month = Clock.Now.ToString("MM");
+
+        var rows = Ctx.MaiSzent.AsNoTracking().Where(w => w.Datum == hoNap);
+        if (!rows.Any())
+        {
+            var rows2 = Ctx.MaiSzent.AsNoTracking().AsEnumerable()
+            .Where(w => w.Datum.StartsWith($"{month}-") && w.Fulldatum < Clock.Now)
+            .OrderByDescending(o => o.Datum).Take(1)!.ToList();
+
+            if (rows2.Count == 0)
+            {
+                var prevmonth = Clock.Now.AddMonths(-1).ToString("MM");
+                //nincs az új hónap első napján anyag
+                rows2 = Ctx.MaiSzent.AsNoTracking().AsEnumerable()
+                    .Where(w => w.Datum.StartsWith($"{prevmonth}-") && w.Fulldatum < Clock.Now)
+                    .OrderByDescending(o => o.Datum).Take(1).ToList();
+            }
+
+            rows2.ForEach(row =>
+            {
+                list.Add(Mapper.Map<ContentDetailsModel>(row));
+            });
+        }
+        else
+            rows.ToList().ForEach(row =>
+            {
+                list.Add(Mapper.Map<ContentDetailsModel>(row));
+            });
+
+        return list;
+    }
+
+    private string GetMaiHianyzok(string date, string focolareDate, List<int> list)
+    {
+        var sb = new StringBuilder();
+        sb.Append("<strong>Ma hiányzó anyagok</strong><br>");
+
+        if (list.Contains((int)Forras.maiszent))
+        {
+            var szent = GetActualMaiSzent().FirstOrDefault();
+            if (szent is not null)
+            {
+                var data = _androkatConfiguration.Value.GetContentMetaDataModelByTipus((int)Forras.maiszent);
+                sb.Append(" " + (int)Forras.maiszent + " - <a href='" + data.Link + "' target='_blank'>" + data.TipusNev + "</a><br>");
+                sb.Append("[" + szent.Fulldatum + "] - " + szent.Cim + "<br><br>");
+            }
+        }
+
+        foreach (var item in list.Where(w => w != (int)Forras.maiszent).OrderBy(o => o))
+        {
+            var data = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item);
+
+            sb.Append(" " + item + " - <a href='" + data.Link + "' target='_blank'>" + data.TipusNev + "</a><br>");
+
+            var result = GetHianyzokAdatai(date, focolareDate, item);
+            if (!string.IsNullOrWhiteSpace(result))
+                sb.Append(result + "<br><br>");
+        }
+
+        return sb.ToString();
+    }
+
+    private string GetHianyzokAdatai(string date, string focolareDate, int item)
+    {
+        var datum = item == 7 ? focolareDate : date;
+        var res2 = Ctx.Content.FirstOrDefault(w => w.Tipus == item && w.Fulldatum.StartsWith(datum));
+
+        //ezek nem mindig naponta jelennek meg, igy visszaadjuk a legutobbit, ha van                
+        res2 ??= Ctx.Content.Where(w => w.Tipus == item).OrderByDescending(o => o.Inserted).FirstOrDefault();
+        if (res2 is null)
+            return "";
+
+        var res = "[" + res2.Fulldatum + "] - " + res2.Cim;
+        if (item != 6 && item != 15 && item != 28 && item != 38 && item != 39 && item != 60) 
+            return res;
+        
+        if (string.IsNullOrWhiteSpace(res2.FileUrl))
+            res += "<br><a href='" + res2.Idezet + "'>" + res2.Idezet + "</a>";
+        else
+            res += "<br><a href='" + res2.FileUrl + "'>" + res2.FileUrl + "</a>";
+
+        return res;
+    }
+
+    private string GetMaiAnyagok(IEnumerable<ContentDetailsModel> res, List<int> list1, string resString1)
+    {
+        var sb = new StringBuilder();
+        sb.Append(resString1);
+        foreach (var item in res.OrderBy(o => o.Tipus))
+        {
+            if (list1.Contains(item.Tipus))
+                continue;
+
+            var data = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus);
+            sb.Append(" " + item.Tipus + " - <a href='" + data.Link + "' target='_blank'>" + data.TipusNev + "</a><br>");
+
+            sb.Append("[" + item.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss") + "] - " + item.Cim + "<br>");
+            if (item.Tipus is 6 or 15 or 28 or 38 or 39 or 60)
+            {
+                if (string.IsNullOrWhiteSpace(item.FileUrl))
+                    sb.Append("<a href='" + item.Idezet + "'>" + item.Idezet + "</a><br>");
+                else
+                    sb.Append("<a href='" + item.FileUrl + "'>" + item.FileUrl + "</a><br>");
+            }
+
+            sb.Append("<br>");
+
+            list1.Add(item.Tipus);
+        }
+
+        return sb.ToString();
     }
 
     public AdminBResult GetAdminBResult()
     {
-        return new AdminBResult();
+        _logger.LogDebug("GetAdminBResult was called");
+
+        var adminResult = new AdminBResult();
+
+        try
+        {
+            var today = Clock.Now.DateTime.ToString("MM-dd");
+            var res = Ctx.RadioMusor.Count(w => w.Inserted.Contains(today));
+            adminResult.Radio = res == 3 ? "radio: OK" : "radio: <span style='color:red;'>NOT OK</span> #: " + res;
+
+            Ctx.RadioMusor.ToList().ForEach(w =>
+            {
+                adminResult.RadioList += w.Source + " (" + w.Inserted + ")<br>";
+            });
+
+            //törölni to do
+            var isAdvent = Ctx.SystemInfo.FirstOrDefault(w => w.Key == Constants.IsAdvent);
+            if (isAdvent is null)
+            {
+                Ctx.SystemInfo.Add(new SystemInfo { Key = Constants.IsAdvent, Value = "true" });
+                Ctx.SystemInfo.Add(new SystemInfo { Key = Constants.IsNagyBojt, Value = "false" });
+                Ctx.SaveChanges();
+            }
+
+            var vatikan = Ctx.SystemInfo.Where(w => w.Key == "radio").Select(s => s.Value).First();
+            var radios = JsonSerializer.Deserialize<Dictionary<string, string>>(vatikan!)!;
+
+            var sb = new StringBuilder();
+            foreach (var item in radios)
+            {
+                if (item.Key == "vatikan")
+                {
+                    sb.Append(item.Key + " (" + item.Value + ")");
+                }
+            }
+            adminResult.RadioList += sb.ToString();
+
+            var countOfTipusok = new Dictionary<int, string>();
+            Ctx.Content.GroupBy(p => p.Tipus).Select(g =>
+            new { tipus = g.Key, count = g.Count() }).ToList().ForEach(w =>
+            {
+                var tipus = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(w.tipus);
+                countOfTipusok.Add(w.tipus, " " + tipus.TipusNev + " #: " + w.count + "<br>");
+            });
+            Ctx.FixContent.GroupBy(p => p.Tipus).Select(g =>
+            new { tipus = g.Key, count = g.Count() }).ToList().ForEach(w =>
+            {
+                var tipus = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(w.tipus);
+                countOfTipusok.Add(w.tipus, " " + tipus.TipusNev + " #: " + w.count + "<br>");
+            });
+            var szent = Ctx.MaiSzent.Count();
+            var szenttipus = _androkatConfiguration.Value.GetContentMetaDataModelByTipus((int)Forras.maiszent);
+            countOfTipusok.Add((int)Forras.maiszent, " " + szenttipus.TipusNev + " #: " + szent + "<br>");
+
+            countOfTipusok = countOfTipusok.OrderBy(o => o.Key).ToDictionary(t => t.Key, t => t.Value);
+            var sbCount = new StringBuilder();
+            foreach (var item in countOfTipusok)
+            {
+                sbCount.Append(item.Key + item.Value);
+            }
+            adminResult.CountOfTipusok = sbCount.ToString();
+
+            var sysRes = Ctx.SystemInfo.ToList();
+
+            if (sysRes.Count == 0)
+                return adminResult;
+
+            adminResult.SysTable = GetSysTable(sysRes);
+
+            return adminResult;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
+        return adminResult;
+    }
+
+    private static string GetSysTable(List<SystemInfo> sysRes)
+    {
+        var sys = new StringBuilder();
+        foreach (var value in sysRes)
+        {
+            if (value.Key is "website" or "radio")
+            {
+                var web = JsonSerializer.Deserialize<Dictionary<string, string>>(value.Value)!;
+                sys.Append("[" + value.Id + "] - " + value.Key);
+
+                foreach (var item in web.Select(item => item.Value))
+                {
+                    sys.Append("<br>&nbsp;&nbsp;&nbsp;<a href=" + item + " target=\"_blank\">" + item + "</a>");
+                }
+                sys.Append("'<br>");
+            }
+            else
+                sys.Append("[" + value.Id + "] - " + value.Key + " - " + value.Value + "<br>");
+        }
+
+        return sys.ToString();
     }
 
     public AdminResult GetAdminResult()
     {
-        return new AdminResult();
+        _logger.LogDebug("GetAdminResult was called");
+
+        var adminResult = new AdminResult();
+
+        try
+        {
+            var today = Clock.Now.DateTime.ToString("yyyy-MM-dd");
+
+            var list = new List<int>
+            {
+                (int)Forras.keresztenyelet,
+                (int)Forras.kurir,
+                (int)Forras.bonumtv
+            };
+
+            var res = Ctx.Content.Count(w => list.Contains(w.Tipus) && w.Fulldatum.Contains(today));
+            adminResult.Header += res == 0 ? "news: <span style='color:red;'>NOT OK</span> #: " + res + " | " : "";
+
+            list =
+            [
+                (int)Forras.bzarandokma,
+                (int)Forras.b777,
+                (int)Forras.jezsuitablog
+            ];
+
+            res = Ctx.Content.Count(w => list.Contains(w.Tipus) && w.Fulldatum.Contains(today));
+            adminResult.Header += res == 0 ? " | blog: <span style='color:red;'>NOT OK</span> #: " + res + " | " : "";
+
+            res = Ctx.VideoContent.Count();
+            adminResult.Header += "video: #: " + res + " | ";
+
+            res = Ctx.ImaContent.Count();
+            adminResult.Header += "ima: #: " + res + " | ";
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
+        return adminResult;
     }
 
     public List<SystemInfoData> GetIsAdventAndNagybojt()

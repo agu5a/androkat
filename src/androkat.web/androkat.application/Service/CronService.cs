@@ -73,7 +73,10 @@ public class CronService : ICronService
             if (_memoryCache is MemoryCache memoryCache)
             {
                 memoryCache.Compact(1.0);//remove 100% cache content
+                return;
             }
+
+            throw new InvalidOperationException("Failed to run DeleteCaches");
         }
         catch (Exception ex)
         {
