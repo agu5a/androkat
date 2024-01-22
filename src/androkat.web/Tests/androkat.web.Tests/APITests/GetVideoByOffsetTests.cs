@@ -36,11 +36,12 @@ public class GetVideoByOffsetTests : BaseTest
         clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse("2012-02-03T04:05:06"));
 
         var cacheService = new Mock<ICacheService>();
+        string date = DateTime.Now.ToString("yyyy-MM-dd");
         cacheService.Setup(s => s.VideoCacheFillUp()).Returns((new VideoCache
         {
             Video = new List<VideoModel>
             {
-                new(Guid.NewGuid(), "img", "vlink", "cim", DateTime.Now.ToString("yyyy-MM-dd"), "forras", "cId", DateTime.Now)
+                new(Guid.NewGuid(), "img", "vlink", "cim", date, "forras", "cId", DateTime.Now)
             },
             Inserted = DateTime.Now
         }));
@@ -56,6 +57,7 @@ public class GetVideoByOffsetTests : BaseTest
         Assert.That(videoResponse.Cim, Is.EqualTo("cim"));
         Assert.That(videoResponse.VideoLink, Is.EqualTo("vlink"));
         Assert.That(videoResponse.Img, Is.EqualTo("img"));
+        Assert.That(videoResponse.Date, Is.EqualTo(date));
         Assert.That(videoResponse.Forras, Is.EqualTo("forras"));
         Assert.That(videoResponse.ChannelId, Is.EqualTo("cId"));
         Assert.That(videoResponse.ChannelId, Is.EqualTo("cId"));

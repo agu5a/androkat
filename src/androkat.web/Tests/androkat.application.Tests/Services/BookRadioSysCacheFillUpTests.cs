@@ -38,7 +38,7 @@ public class BookRadioSysCacheFillUpTests : BaseTest
         }); 
         cacheRepository.Setup(s => s.GetSystemInfoToCache()).Returns(new List<SystemInfoModel>
         {
-            new(default, default, default)
+            new(1, default, default)
         });
 
         var cacheService = new CacheService(cacheRepository.Object, new Mock<ILogger<CacheService>>().Object, clock.Object);
@@ -48,6 +48,7 @@ public class BookRadioSysCacheFillUpTests : BaseTest
         Assert.That(res.RadioMusor.Count, Is.EqualTo(1));
         res.RadioMusor.First().Nid.Should().Be(radioNid);
         Assert.That(res.SystemData.Count, Is.EqualTo(1));
+        Assert.That(res.SystemData.First().Id, Is.EqualTo(1));
         Assert.That(res.Inserted.ToString("yyyy-MM-dd"), Is.EqualTo("2012-01-03"));
     }
 

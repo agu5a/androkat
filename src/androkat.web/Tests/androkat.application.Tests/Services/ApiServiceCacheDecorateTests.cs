@@ -4,10 +4,12 @@ using androkat.domain.Enum;
 using androkat.domain.Model;
 using androkat.domain.Model.ContentCache;
 using androkat.domain.Model.WebResponse;
+using FluentAssertions;
 using Microsoft.Extensions.Caching.Memory;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace androkat.application.Tests;
@@ -98,7 +100,16 @@ public class ApiServiceCacheDecorateTests : BaseTest
         var id = Guid.NewGuid();
         var bookRadioSysCache = new BookRadioSysCache();
         var mainCache = new MainCache();
-        var expectedContentResponse = new List<ContentResponse> { new() };
+        var expectedContentResponse = new List<ContentResponse> 
+        {
+            new()
+            {
+                Nid = id,
+                Img = "img",
+                Datum = "2022-01-01 01:01:01",
+                Forras = "forras"
+            }
+        };
 
         var cache = GetIMemoryCache();
 
@@ -111,6 +122,10 @@ public class ApiServiceCacheDecorateTests : BaseTest
 
         // Assert
         Assert.NotNull(result);
+        result.First().Nid.Should().Be(id);
+        result.First().Img.Should().Be("img");
+        result.First().Datum.Should().Be("2022-01-01 01:01:01");
+        result.First().Forras.Should().Be("forras");
     }
 
     [Fact]
@@ -166,10 +181,20 @@ public class ApiServiceCacheDecorateTests : BaseTest
         // Arrange
         var date = "2022-01-01 01:01:01";
         var imaCache = new ImaCache() { Imak = new List<ImaModel>(), Inserted = DateTime.Now };
+        var nid = Guid.NewGuid();
         var expectedImaResponse = new ImaResponse
         {
             HasMore = false,
-            Imak = new List<ImaDetailsResponse> { new() }
+            Imak = new List<ImaDetailsResponse> 
+            {
+                new()
+                {
+                    Nid = nid,
+                    Csoport = 1,
+                    Leiras = "leiras",
+                    Time = "2022-01-01 01:01:01"
+                }
+            }
         };
 
         var cache = GetIMemoryCache();
@@ -183,6 +208,11 @@ public class ApiServiceCacheDecorateTests : BaseTest
 
         // Assert
         Assert.NotNull(result);
+        result.HasMore.Should().BeFalse();
+        result.Imak.First().Nid.Should().Be(nid);
+        result.Imak.First().Csoport.Should().Be(1);
+        result.Imak.First().Leiras.Should().Be("leiras");
+        result.Imak.First().Time.Should().Be("2022-01-01 01:01:01");
     }
 
     [Fact]

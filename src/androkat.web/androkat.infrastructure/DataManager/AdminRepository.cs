@@ -376,6 +376,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
                     Nid = res.Nid.ToString(),
                     Def = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(res.Tipus).TipusNev,
                     FileUrl = res.FileUrl,
+                    Inserted = res.Inserted.ToString("yyyy-MM-dd HH:mm:ss"),
                     Tipus = res.Tipus
                 };
         }

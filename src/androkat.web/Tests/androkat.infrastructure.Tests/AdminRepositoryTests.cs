@@ -2,6 +2,7 @@
 using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.domain.Model;
+using androkat.domain.Model.WebResponse;
 using androkat.infrastructure.DataManager;
 using androkat.infrastructure.Model.SQLite;
 using AutoFixture;
@@ -35,6 +36,7 @@ public class AdminRepositoryTests : BaseTest
         var tempContent = _fixture.Create<TempContent>();
         tempContent.Nid = guid;
         tempContent.Tipus = 1;
+        tempContent.Inserted = DateTime.Now;
 
         context.TempContent.Add(tempContent);
         context.SaveChanges();
@@ -42,6 +44,24 @@ public class AdminRepositoryTests : BaseTest
         var repo = new AdminRepository(context, loggerRepo.Object, clock.Object, idezetData, null);
         var result = repo.LoadPufferTodayContentByNid(guid.ToString());
         result.Img.Should().Be(tempContent.Img);
+        result.Inserted.Should().Contain(tempContent.Inserted.ToString("yyyy-MM-dd"));
+    }
+
+    [Test]
+    public void InsertError_Happy()
+    {
+        var clock = new Mock<IClock>();
+        clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"));
+
+        var loggerRepo = new Mock<ILogger<AdminRepository>>();
+
+        var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { GetContentMetaDataModel(Forras.mello) } });
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var repo = new AdminRepository(context, loggerRepo.Object, clock.Object, idezetData, null);
+        var result = repo.InsertError(new ErrorRequest { Error = "hiba"});
+        result.Should().BeTrue();
     }
 
     [Test]

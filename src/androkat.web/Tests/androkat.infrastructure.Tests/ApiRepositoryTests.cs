@@ -41,12 +41,13 @@ public class ApiRepositoryTests : BaseTest
 		var clock = GetToday();
 
         using var context = new AndrokatContext(GetDbContextOptions());
+        Guid nid = Guid.NewGuid();
         var entity = new RadioMusor
         {
             Source = "Source",
             Inserted = "2023-01-10",
             Musor = "Műsor",
-            Nid = Guid.NewGuid()
+            Nid = nid
         };
         context.RadioMusor.Add(entity);
         context.SaveChanges();
@@ -57,6 +58,7 @@ public class ApiRepositoryTests : BaseTest
         var radio = context.RadioMusor.FirstOrDefault(f => f.Source == "Source");
         radio.Musor.Should().Be("Műsor 2");
         radio.Inserted.Should().Be("2023-01-11");
+        radio.Nid.Should().Be(nid);
     }
 
 	[TestCase(1, "cím1", "9E0BFF6C-619D-4A2A-884B-7A36F6E7C15B", 1, "cím1", "AA4E35F9-0875-49E9-8A19-67AD429BE747")]

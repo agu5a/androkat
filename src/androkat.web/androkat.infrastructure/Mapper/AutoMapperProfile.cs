@@ -1,6 +1,5 @@
 ﻿using androkat.domain.Model;
 using androkat.domain.Model.AdminPage;
-using androkat.domain.Model.WebResponse;
 using androkat.infrastructure.Model.SQLite;
 using AutoMapper;
 using System;
@@ -42,10 +41,5 @@ CreateMap<SystemInfo, SystemInfoModel>().ReverseMap();
             .ForMember(x => x.FileUrl, y => y.MapFrom(z => string.Empty))
             .ForMember(x => x.Forras, y => y.MapFrom(z => string.Empty))
             .ForMember(x => x.KulsoLink, y => y.MapFrom(z => string.Empty));
-
-        CreateMap<ContentResponse, EgyebOlvasnivaloResponse>()
-            .ForMember(x => x.KulsoLink, y => y.MapFrom(z => z.KulsoLink))
-            .ForMember(x => x.Time, y => y.MapFrom(z => z.Datum))
-            .ForMember(x => x.Leiras, y => y.MapFrom(z => z.Idezet));
     }
 }
