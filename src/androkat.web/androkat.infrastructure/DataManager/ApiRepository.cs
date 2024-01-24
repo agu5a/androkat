@@ -17,14 +17,15 @@ public class ApiRepository : BaseRepository, IApiRepository
     {
     }
 
-    public void DeleteContentDetailsByNid(Guid nid)
+    public bool DeleteContentDetailsByNid(Guid nid)
     {
         var res = Ctx.Content.FirstOrDefault(f => f.Nid == nid);
         if (res is null)
-            return;
+            return false;
 
         Ctx.Content.Remove(res);
         Ctx.SaveChanges();
+        return true;
     }
 
     public bool UpdateRadioMusor(RadioMusorModel radioMusorModel)
@@ -42,10 +43,16 @@ public class ApiRepository : BaseRepository, IApiRepository
 
     }
 
-    public void UpdateRadioSystemInfo(string value)
+    public bool UpdateRadioSystemInfo(string value)
+    {
+        if (Ctx.SystemInfo.FirstOrDefault(w => w.Key == "radio") is not null)
     {
         Ctx.SystemInfo.First(w => w.Key == "radio").Value = value;
         Ctx.SaveChanges();
+            return true;
+        }
+
+        return false;
     }
 
     public IEnumerable<SystemInfoModel> GetSystemInfoModels()
@@ -96,14 +103,15 @@ public class ApiRepository : BaseRepository, IApiRepository
         return true;
     }
 
-    public void DeleteVideoByNid(Guid nid)
+    public bool DeleteVideoByNid(Guid nid)
     {
         var res = Ctx.VideoContent.FirstOrDefault(f => f.Nid == nid);
         if (res is null)
-            return;
+            return false;
 
         Ctx.VideoContent.Remove(res);
         Ctx.SaveChanges();
+        return true;
     }
 
     public IEnumerable<VideoModel> GetVideoModels()

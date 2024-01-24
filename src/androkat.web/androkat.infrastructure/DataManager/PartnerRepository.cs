@@ -61,6 +61,11 @@ public class PartnerRepository : IPartnerRepository
         _logger.LogDebug("InsertTempContent was called, nid: {nid}", contentDetailsModel.Nid);
         try
         {
+            var res = _ctx.TempContent.Find(contentDetailsModel.Nid);
+            if (res is not null)
+            {
+                return false;
+            }
             _ctx.TempContent.Add(_mapper.Map<TempContent>(contentDetailsModel));
             _ctx.SaveChanges();
             return true;
@@ -101,7 +106,7 @@ public class PartnerRepository : IPartnerRepository
         try
         {
             var guid = Guid.Parse(nid);
-            var res = _ctx.TempContent.FirstOrDefault(w => w.Nid == guid);
+            var res = _ctx.TempContent.Find(guid);
             if (res is not null)
             {
                 _ctx.TempContent.Remove(res);

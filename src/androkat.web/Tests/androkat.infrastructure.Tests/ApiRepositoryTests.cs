@@ -1,4 +1,5 @@
-﻿using androkat.infrastructure.DataManager;
+﻿using androkat.domain.Model;
+using androkat.infrastructure.DataManager;
 using androkat.infrastructure.Mapper;
 using androkat.infrastructure.Model.SQLite;
 using AutoMapper;
@@ -14,6 +15,127 @@ namespace androkat.infrastructure.Tests;
 public class ApiRepositoryTests : BaseTest
 {
 	[Test]
+    public void GetSystemInfoModels_Exist()
+    {
+        var logger = new Mock<ILogger<ApiRepository>>();
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+        var clock = GetToday();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        context.SystemInfo.Add(new SystemInfo { Id = 0, Key = "key", Value = "value" });
+        context.SaveChanges();
+
+        var repo = new ApiRepository(context, clock.Object, mapper);
+
+        var result = repo.GetSystemInfoModels();
+        result.First().Key.Should().Be("key");
+        result.Count().Should().Be(1);
+    }
+
+    [Test]
+    public void AddVideo_Exist()
+    {
+        Guid nid = Guid.NewGuid();
+        var logger = new Mock<ILogger<ApiRepository>>();
+
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var clock = GetToday();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        context.VideoContent.Add(new VideoContent { Nid = nid, VideoLink = "videoLink" });
+        context.SaveChanges();
+
+        var repo = new ApiRepository(context, clock.Object, mapper);
+
+        var model = new VideoModel(nid, "kép", "videoLink", "cím", "2023-01-10", "forras", "channelId", clock.Object.Now.DateTime);
+
+        var result = repo.AddVideo(model);
+        result.Should().Be(false);
+        context.VideoContent.Count().Should().Be(1);
+    }
+
+    [Test]
+    public void AddVideo_NotFound()
+    {
+        Guid nid = Guid.NewGuid();
+        var logger = new Mock<ILogger<ApiRepository>>();
+
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var clock = GetToday();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        var repo = new ApiRepository(context, clock.Object, mapper);
+
+        var model = new VideoModel(nid, "kép", "videoLink", "cím", "2023-01-10", "forras", "channelId", clock.Object.Now.DateTime);
+
+        var result = repo.AddVideo(model);
+        result.Should().Be(true);
+        context.VideoContent.Count().Should().Be(1);
+    }
+
+    [Test]
+    public void DeleteVideoByNid_NotFound()
+    {
+        Guid nid = Guid.NewGuid();
+        var logger = new Mock<ILogger<ApiRepository>>();
+
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var clock = GetToday();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        context.VideoContent.Add(new VideoContent { Nid = Guid.NewGuid() });
+        context.SaveChanges();
+
+        var repo = new ApiRepository(context, clock.Object, mapper);
+        var result = repo.DeleteVideoByNid(nid);
+        result.Should().Be(false);
+        context.VideoContent.Count().Should().Be(1);
+    }
+
+    [Test]
+    public void UpdateRadioSystemInfo_Exist()
+    {
+        var logger = new Mock<ILogger<ApiRepository>>();
+
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var clock = GetToday();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        context.SystemInfo.Add(new SystemInfo { Id = 0, Key = "radio", Value = "value" });
+        context.SaveChanges();
+
+        var repo = new ApiRepository(context, clock.Object, mapper);
+        var result = repo.UpdateRadioSystemInfo("newvalue");
+        result.Should().Be(true);
+        context.SystemInfo.FirstOrDefault(f => f.Key == "radio").Value.Should().Be("newvalue");
+    }
+
+    [Test]
+    public void UpdateRadioSystemInfo_NotFound()
+    {
+        var logger = new Mock<ILogger<ApiRepository>>();
+
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var clock = GetToday();
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        var repo = new ApiRepository(context, clock.Object, mapper);
+        var result = repo.UpdateRadioSystemInfo("newvalue");
+        result.Should().Be(false);
+    }
+
+    [Test]
 	public void UpdateRadioMusor_NotFound()
 	{
 		var logger = new Mock<ILogger<ApiRepository>>();

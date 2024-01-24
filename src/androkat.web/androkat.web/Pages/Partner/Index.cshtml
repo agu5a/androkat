@@ -1,0 +1,201 @@
+﻿@page
+@using androkat.web.Pages.Partner
+@model IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@section meta_extra {
+	<script type="text/javascript">
+		function ShowMsg(msg) {
+			$("#dialogtext").html(msg);
+			$('#dialog').dialog({ modal: true, title: "Hát..." });
+		}
+
+                const regexStyle = /style="[^"]*"/g;
+                const regexClass = /class="[^"]*"/g;
+
+		$(document).ready(function () {
+			const editor = SUNEDITOR.create('idezet', {
+				tagsBlacklist: "(span|h1|h2|h3|h4|h5|h6|style|class)",
+                                pasteTagsBlacklist: "(span|h1|h2|h3|h4|h5|h6|style|class)",
+				display: 'block',
+				width: '100%',
+				height: 'auto',
+				popupDisplay: 'full',
+				charCounter: true,
+				defaultStyle: "font-size:16px;",
+				toolbarWidth: "600px",
+				buttonList: [
+					['undo', 'redo'], ['formatBlock'], ['paragraphStyle'],
+					['bold', 'italic'],
+					['removeFormat'],
+					['align', 'horizontalRule', 'list'],
+					['link'], ['fullScreen', 'showBlocks']
+				]
+			});
+
+			$('#submit').on('click', function () {
+				if ($('#datum').val().length < 5) {
+					ShowMsg('Hiányzik a dátum! Pl. 09-15');
+					return;
+				}
+				if ($('#cim').val().length < 5) {
+					ShowMsg('Hiányzik a cím! Min. 5 karakter');
+					return;
+				}
+				if ($('.se-wrapper-wysiwyg').html().length < 20) {
+					ShowMsg('Hiányzik az idézet! Min. 20 karakter');
+					return;
+				}
+
+				var updialog = $("#updialog").dialog({ dialogClass: "no-close", autoOpen: false, closeOnEscape: false, resizable: false });
+				updialog.dialog("open");
+				$('#progress').show();
+
+				var tmp = { 'tipus': @(Model.Tipus), 'datum': $('#datum').val(), 'cim': $('#cim').val(), 'idezet': $('.se-wrapper-wysiwyg').html() };
+				$.ajax({
+					type: "POST",
+					url: '/partner/ad',
+					contentType: "application/x-www-form-urlencoded",
+					dataType: "json",
+					data: tmp,
+					success: function (json) {
+
+						$('#progress').hide();
+						$("#updialog").dialog("close");
+
+						if (!json)
+							alert('Hiba történt');
+						else
+							window.location.href = "/partner?tipus=@(Model.Tipus)";
+					},
+					error: function (xmlHttpRequest) {
+						$('#progress').hide();
+						$("#updialog").dialog("close");
+						ShowMsg(xmlHttpRequest.responseText);
+					}
+				});
+			});
+
+			$('.torles').on('click', function () {
+				var r = confirm("Biztos törlöd?");
+				if (r == true) {
+					var updialog = $("#updialog").dialog({ dialogClass: "no-close", autoOpen: false, closeOnEscape: false, resizable: false });
+					updialog.dialog("open");
+					$('#progress').show();
+
+					$.ajax({
+						type: "POST",
+						url: '/partner/delete',
+						contentType: "application/x-www-form-urlencoded",
+						data: { 'nid': $(this).attr('nid') },
+						dataType: "json",
+						success: function (json) {
+
+							$('#progress').hide();
+							$("#updialog").dialog("close");
+
+							if (!json)
+								alert('Hiba történt');
+							else
+								window.location.href = "/partner?tipus=@(Model.Tipus)";
+						},
+						error: function (xmlHttpRequest) {
+							$('#progress').hide();
+							$("#updialog").dialog("close");
+							ShowMsg(xmlHttpRequest.responseText);
+						}
+					});
+				}
+
+				return false;
+			});
+
+			$('.copy').on('click', function () {
+				var tmp = '&nid=' + $(this).attr('nid');
+				window.location.href = "/partner?tipus=@(Model.Tipus)" + tmp;
+				return false;
+			});
+		});
+	</script>
+}
+	@section scripts {
+}
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarmain" aria-controls="navbarmain"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarmain">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item @(Model.Tipus == 58 ? "active" : "")">
+					<a class="nav-link" href="/partner?tipus=58">AJÁNDÉKOZZ KÖNYVET @Html.Raw(Model.Tipus == 58 ? "<span class=\"sr-only\" (current)</span>" : "")</a>
+				</li>
+			<li class="nav-item @(Model.Tipus == 24 ? " active" : "")">
+				<a class="nav-link" href="/partner?tipus=24">Szeretet-újság @Html.Raw(Model.Tipus == 24 ? "<span class=\"sr-only\" (current)</span>" : "")</a>
+			</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/partner/logout">Kilépés</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<main role="main">
+		<div class="container-fluid">
+			<div class="row" style="margin: 60px 0 0 20px;">
+				<h3>
+					<span class="label label-success">@(Model.Szoveg)</span>
+			</h3>
+			<div class="w-100 d-none d-md-block"></div>
+			<div>
+				<label>dátum:</label> (pl: 09-15)
+			</div>
+			<div class="w-100 d-none d-md-block"></div>
+			<div style="margin-bottom: 15px;">
+				<input type="text" class="form-control" name="datum" id="datum" style="width: 80px;" value="@(Model.Datum)" />
+			</div>
+			<div class="w-100 d-none d-md-block"></div>
+			<div>
+				<label>cím:</label>
+			</div>
+			<div class="w-100 d-none d-md-block"></div>
+			<div style="margin-bottom: 15px;">
+				<input type="text" class="form-control" name="cim" id="cim" style="width: 400px;" value="@(Model.Cim)" />
+			</div>
+			<div class="w-100 d-none d-md-block"></div>
+			<div>
+				<label>idézet:</label>
+			</div>
+			<div class="w-100 d-none d-md-block"></div>
+			<div style="margin-bottom: 15px;">
+				<textarea name="idezet" class="form-control" id="idezet" rows="20" cols="100">@(Model.Idezet)</textarea>
+			</div>
+			<div class="w-100 d-none d-md-block"></div>
+			<div style="margin-bottom: 15px;">
+				<button type="button" class="btn btn-lg btn-primary" id="submit">
+					mehet
+				</button>
+			</div>
+			<div class="w-100 d-none d-md-block"></div>
+			<div>
+				<strong>Feltöltve már:</strong>
+			</div>
+			<div class="w-100 d-none d-md-block"></div>
+			<div id="list">
+				@foreach (var p in Model.Items)
+				{
+					@Html.Raw("["+p.Fulldatum + "] ") @(p.Cim.Length > 101 ? p.Cim.Substring(0, 100) : p.Cim)
+					@Html.Raw(" :: (Feltöltve: "+p.Inserted + ") ")
+					@Html.Raw(":: <span nid='" + p.Nid + "' class='copy' style='text-decoration: underline;color: #337ab7;'>MÁSOLÁS</span> ")
+					@Html.Raw(":: <span nid='"+p.Nid + "' class='torles' style='text-decoration: underline;color: #337ab7;'>TÖRLÉS</span><br>")
+				}
+			</div>
+		</div>
+		<div class="row">
+			<div style="margin: 25px 0 0 20px;">
+				<p>® 2012-@(DateTime.Now.ToString("yyyy")) :: Androkat :: Android app weben</p>
+			</div>
+		</div>
+	</div>
+</main>
+<div id="dialog"><div id="dialogtext"></div></div>
+<div id="updialog" title="Feltöltés"><img id="progress" src="~/images/CircularProgressAnimation.gif" style="display: none; margin-left: 60px;" /></div>

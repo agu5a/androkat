@@ -65,6 +65,41 @@ public class AdminRepositoryTests : BaseTest
     }
 
     [Test]
+    public void LogInUser_Happy()
+    {
+        var loggerRepo = new Mock<ILogger<AdminRepository>>();
+
+        var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { GetContentMetaDataModel(Forras.mello) } });
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var repo = new AdminRepository(context, loggerRepo.Object, GetToday().Object, idezetData, null);
+        var result = repo.LogInUser("aa@aa.hu");
+
+        result.Should().BeTrue();
+        context.Admin.FirstOrDefault().Email.Should().Be("aa@aa.hu");
+        context.Admin.FirstOrDefault().LastLogin.ToString("yyyy-MM-ddTHH:mm:ss").Should().Be(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06");
+    }
+
+    [Test]
+    public void LogInUser_Exists_Happy()
+    {
+        var loggerRepo = new Mock<ILogger<AdminRepository>>();
+
+        var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { GetContentMetaDataModel(Forras.mello) } });
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        context.Admin.Add(new Admin { Email = "aa@aa.hu", Id = 1, LastLogin = GetToday().Object.Now.AddHours(-1).DateTime });
+        context.SaveChanges();
+
+        var repo = new AdminRepository(context, loggerRepo.Object, GetToday().Object, idezetData, null);
+        var result = repo.LogInUser("aa@aa.hu");
+
+        result.Should().BeTrue();
+        context.Admin.FirstOrDefault().LastLogin.ToString("yyyy-MM-ddTHH:mm:ss").Should().Be(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06");
+    }
+
+    [Test]
     public void LoadAllTodayResult_Happy()
     {
         var clock = new Mock<IClock>();
