@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +19,10 @@ namespace androkat.web.Tests.APITests;
 
 public class GetRadioBySourceTests : BaseTest
 {
-    [TestCase("")]
-    [TestCase(null)]
-    [TestCase("wrong_radio")]
+    [Theory]
+    [InlineData("")]
+    [InlineData(null)]
+    [InlineData("wrong_radio")]
     public void API_GetRadioBySource_V2_BadRequest(string s)
     {
         var api = new Api(null);
@@ -31,7 +32,7 @@ public class GetRadioBySourceTests : BaseTest
         result.Should().Be("Hiba");
     }
 
-    [Test]
+    [Fact]
     public void API_GetRadioBySource_V1_V2()
     {
         var clock = new Mock<IClock>();
@@ -47,10 +48,10 @@ public class GetRadioBySourceTests : BaseTest
         ActionResult<IEnumerable<RadioMusorResponse>> res = api.GetRadioBySourceV2("katolikushu");
         dynamic s = res.Result;
 
-        Assert.That(((IEnumerable<RadioMusorResponse>)s.Value).First().Musor, Is.EqualTo("musor"));
+        ((IEnumerable<RadioMusorResponse>)s.Value).First().Musor.Should().Be("musor");
     }
 
-    [Test]
+    [Fact]
     public void API_GetRadioBySource_V1_V2_wrong_input()
     {
         var clock = new Mock<IClock>();
@@ -72,11 +73,11 @@ public class GetRadioBySourceTests : BaseTest
         var res = api.GetRadioBySourceV2("kat");
         dynamic s = res.Result;
 
-        Assert.That(s.Value, Is.EqualTo("Hiba"));
-        Assert.That(s.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+        (s.Value as string).Should().Be("Hiba");
+        (s.StatusCode as int?).Should().Be(StatusCodes.Status400BadRequest);
     }
 
-    [Test]
+    [Fact]
     public void API_GetRadioBySource_V1_V2_Zero()
     {
         var clock = new Mock<IClock>();
@@ -97,6 +98,6 @@ public class GetRadioBySourceTests : BaseTest
         var res = api.GetRadioBySourceV2("katolikushu");
         dynamic s = res.Result;
 
-        Assert.That(((IEnumerable<RadioMusorResponse>)s.Value).Count, Is.EqualTo(0));
+        ((IEnumerable<RadioMusorResponse>)s.Value).Count().Should().Be(0);
     }
 }

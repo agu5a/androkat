@@ -3,14 +3,14 @@ using androkat.domain.Enum;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
-using NUnit.Framework;
 using System.Linq;
+using Xunit;
 
 namespace androkat.application.Tests.Services;
 
 public class ContentMetaDataServiceTests
 {
-    [Test]
+    [Fact]
     public void GetContentMetaDataList()
     {
         var logger = new Mock<ILogger<ContentMetaDataService>>();

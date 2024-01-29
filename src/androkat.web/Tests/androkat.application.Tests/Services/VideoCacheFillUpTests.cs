@@ -7,7 +7,7 @@ using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace androkat.application.Tests.Services;
 
 public class VideoCacheFillUpTests : BaseTest
 {
-	[Test]
+	[Fact]
 	public void VideoCacheFillUp_Happy_test()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
@@ -37,13 +37,13 @@ public class VideoCacheFillUpTests : BaseTest
 		var cacheService = new CacheService(cacheRepository.Object, new Mock<ILogger<CacheService>>().Object, clock.Object);
 		var res = cacheService.VideoCacheFillUp();
 
-		Assert.That(res.Video.Count, Is.EqualTo(2));
+		res.Video.Count.Should().Be(2);
 		res.Video.ElementAt(0).VideoLink.Should().NotContain("embed");
 		res.Video.ElementAt(1).VideoLink.Should().NotContain("embed");
-		Assert.That(res.Inserted.ToString("yyyy-MM-dd"), Is.EqualTo("2012-01-03"));
+		res.Inserted.ToString("yyyy-MM-dd").Should().Be("2012-01-03");
 	}
 
-	[Test]
+	[Fact]
 	public void VideoCacheFillUp_Throws_Exception()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());

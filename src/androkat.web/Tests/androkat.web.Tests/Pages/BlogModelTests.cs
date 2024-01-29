@@ -1,17 +1,18 @@
 ﻿using androkat.domain.Enum;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Routing;
-using NUnit.Framework;
+using Xunit;
 using System.Linq;
 
 namespace androkat.web.Tests.Pages;
 
 public class BlogModelTests : BaseTest
 {
-    [TestCase("b777", (int)Forras.b777)]
-    [TestCase("bzarandokma", (int)Forras.bzarandokma)]
-    [TestCase("jezsuitablog", (int)Forras.jezsuitablog)]
-    [TestCase("", (int)Forras.b777)]
+    [Theory]
+    [InlineData("b777", (int)Forras.b777)]
+    [InlineData("bzarandokma", (int)Forras.bzarandokma)]
+    [InlineData("jezsuitablog", (int)Forras.jezsuitablog)]
+    [InlineData("", (int)Forras.b777)]
     public void BlogModelTest(string source, int tipus)
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();

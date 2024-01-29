@@ -3,7 +3,7 @@ using androkat.domain.Model;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,9 +11,10 @@ namespace androkat.web.Tests.Pages;
 
 public class VideoModelTests : BaseTest
 {
-    [TestCase("ChannelId", "ChannelId")]
-    [TestCase("", "")]
-    [TestCase(null, "")]
+    [Theory]
+    [InlineData("ChannelId", "ChannelId")]
+    [InlineData("", "")]
+    [InlineData(null, "")]
     public void VideoModelTest(string actual, string expected)
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();

@@ -10,7 +10,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace androkat.infrastructure.Tests;
 
 public class AdminRepositoryTests : BaseTest
 {
-    [Test]
+    [Fact]
     public void LoadPufferTodayContentByNid_Happy()
     {
         var clock = new Mock<IClock>();
@@ -47,7 +47,7 @@ public class AdminRepositoryTests : BaseTest
         result.Inserted.Should().Contain(tempContent.Inserted.ToString("yyyy-MM-dd"));
     }
 
-    [Test]
+    [Fact]
     public void InsertError_Happy()
     {
         var clock = new Mock<IClock>();
@@ -64,7 +64,7 @@ public class AdminRepositoryTests : BaseTest
         result.Should().BeTrue();
     }
 
-    [Test]
+    [Fact]
     public void LogInUser_Happy()
     {
         var loggerRepo = new Mock<ILogger<AdminRepository>>();
@@ -81,7 +81,7 @@ public class AdminRepositoryTests : BaseTest
         context.Admin.FirstOrDefault().LastLogin.ToString("yyyy-MM-ddTHH:mm:ss").Should().Be(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06");
     }
 
-    [Test]
+    [Fact]
     public void LogInUser_Exists_Happy()
     {
         var loggerRepo = new Mock<ILogger<AdminRepository>>();
@@ -99,7 +99,7 @@ public class AdminRepositoryTests : BaseTest
         context.Admin.FirstOrDefault().LastLogin.ToString("yyyy-MM-ddTHH:mm:ss").Should().Be(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06");
     }
 
-    [Test]
+    [Fact]
     public void LoadAllTodayResult_Happy()
     {
         var clock = new Mock<IClock>();

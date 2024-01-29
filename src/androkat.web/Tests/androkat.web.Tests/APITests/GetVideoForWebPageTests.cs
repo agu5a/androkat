@@ -7,7 +7,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using androkat.web.Controllers.V2;
@@ -16,10 +16,11 @@ namespace androkat.web.Tests.APITests;
 
 public class GetVideoForWebPageTests : BaseTest
 {
-    [TestCase("UCRn003-qzC5GOQVPyJSkgnA", -1)]
-    [TestCase("UCRn003-qzC5GOQVPyJSkgnA", 51)]
-    [TestCase("UCRn003-qzC5GOQVPyJ", 1)] //less than 20
-    [TestCase("UCRn003-qzC5GOQVPyJSkgnA1111111", 50)] //more than 30
+    [Theory]
+    [InlineData("UCRn003-qzC5GOQVPyJSkgnA", -1)]
+    [InlineData("UCRn003-qzC5GOQVPyJSkgnA", 51)]
+    [InlineData("UCRn003-qzC5GOQVPyJ", 1)] //less than 20
+    [InlineData("UCRn003-qzC5GOQVPyJSkgnA1111111", 50)] //more than 30
     public void API_GetVideoForWebPage_V2_BadRequest(string f, int offset)
     {
         var apiV2 = new Api(null);
@@ -29,7 +30,7 @@ public class GetVideoForWebPageTests : BaseTest
         result.Should().Be("Hiba");
     }
 
-    [Test]
+    [Fact]
     public void API_GetVideoForWebPage_V2()
     {
         var clock = new Mock<IClock>();
@@ -50,11 +51,11 @@ public class GetVideoForWebPageTests : BaseTest
         ActionResult<string> resV1 = apiV2.GetVideoForWebPage("", 0);
         dynamic sV1 = resV1.Result;
 
-        var actual = sV1.Value.ToString();
-        Assert.That(actual, Is.EqualTo("<div class='col mb-1'><div class=\"videoBox p-3 border bg-light\" style=\"border-radius: 0.25rem;\"><h5><a href=\"watch?v=\" target =\"_blank\">cim</a></h5><div><strong>Forrás</strong>: </div><div></div><div class=\"video-container\" ><iframe src=\"embed/\" width =\"310\" height =\"233\" title=\"YouTube video player\" frameborder =\"0\" allow=\"accelerometer;\"></iframe></div></div></div>"));
+        string actual = sV1.Value.ToString();
+        actual.Should().Be("<div class='col mb-1'><div class=\"videoBox p-3 border bg-light\" style=\"border-radius: 0.25rem;\"><h5><a href=\"watch?v=\" target =\"_blank\">cim</a></h5><div><strong>Forrás</strong>: </div><div></div><div class=\"video-container\" ><iframe src=\"embed/\" width =\"310\" height =\"233\" title=\"YouTube video player\" frameborder =\"0\" allow=\"accelerometer;\"></iframe></div></div></div>");
     }
 
-    [Test]
+    [Fact]
     public void API_GetVideoForWebPage_V2_Exception()
     {
         var clock = new Mock<IClock>();

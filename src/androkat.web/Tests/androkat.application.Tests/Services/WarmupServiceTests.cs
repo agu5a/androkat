@@ -7,7 +7,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ public class WarmupServiceTests : BaseTest
     private readonly Mock<ICacheService> _cacheService = new();
     private readonly Mock<ILogger<WarmupService>> logger = new();
 
-	[Test]
+	[Fact]
 	public void MainCacheFillUp_Happy()
 	{
 		var cache = GetIMemoryCache();
@@ -39,7 +39,7 @@ public class WarmupServiceTests : BaseTest
 		obj.ContentDetailsModels.First().Cim.Should().Be("cim");
 	}
 
-	[Test]
+	[Fact]
 	public void MainCacheFillUp_Exception()
 	{
 		var cache = GetIMemoryCache();
@@ -51,7 +51,7 @@ public class WarmupServiceTests : BaseTest
 		act.Should().NotThrow<Exception>();
 	}
 
-	[Test]
+	[Fact]
 	public void BookRadioSysCache_Happy()
 	{
 		var cache = GetIMemoryCache();
@@ -71,7 +71,7 @@ public class WarmupServiceTests : BaseTest
 		obj.Books.First().Cim.Should().Be("cim");
 	}
 
-	[Test]
+	[Fact]
 	public void BookRadioSysCacheFillUp_Exception()
 	{
 		var cache = GetIMemoryCache();
@@ -84,7 +84,7 @@ public class WarmupServiceTests : BaseTest
 	}
 
 
-	[Test]
+	[Fact]
 	public void ImaCacheFillUp_Happy()
 	{
 		var cache = GetIMemoryCache();
@@ -104,7 +104,7 @@ public class WarmupServiceTests : BaseTest
 		obj.Imak.First().Cim.Should().Be("cim");
 	}
 
-	[Test]
+	[Fact]
 	public void ImaCacheFillUp_Exception()
 	{
 		var cache = GetIMemoryCache();
@@ -116,7 +116,7 @@ public class WarmupServiceTests : BaseTest
 		act.Should().NotThrow<Exception>();
 	}
 
-	[Test]
+	[Fact]
 	public void VideoCacheFillUp_Happy()
 	{
 		var cache = GetIMemoryCache();
@@ -135,7 +135,7 @@ public class WarmupServiceTests : BaseTest
 		obj.Video.First().Cim.Should().Be("cim");
 	}
 
-	[Test]
+	[Fact]
 	public void VideoCacheFillUp_Exception()
 	{
 		var cache = GetIMemoryCache();

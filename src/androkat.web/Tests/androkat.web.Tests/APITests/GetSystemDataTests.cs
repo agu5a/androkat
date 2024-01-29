@@ -7,17 +7,18 @@ using androkat.domain.Model.WebResponse;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using androkat.web.Controllers.V2;
+using FluentAssertions;
 
 namespace androkat.web.Tests.APITests;
 
 public class GetSystemDataTests : BaseTest
 {
-    [Test]
+    [Fact]
     public void API_GetSystemData_V2()
     {
         var clock = new Mock<IClock>();
@@ -33,11 +34,11 @@ public class GetSystemDataTests : BaseTest
         ActionResult<IEnumerable<SystemDataResponse>> res = api.GetSystemDataV2();
         dynamic s = res.Result;
 
-        Assert.That(((IEnumerable<SystemDataResponse>)s.Value).First().Key, Is.EqualTo("key1"));
-        Assert.That(((IEnumerable<SystemDataResponse>)s.Value).First().Value, Is.EqualTo("value1"));
+        ((IEnumerable<SystemDataResponse>)s.Value).First().Key.Should().Be("key1");
+        ((IEnumerable<SystemDataResponse>)s.Value).First().Value.Should().Be("value1");
     }
 
-    [Test]
+    [Fact]
     public void API_GetSystemData_V2_Zero()
     {
         var clock = new Mock<IClock>();
@@ -58,6 +59,6 @@ public class GetSystemDataTests : BaseTest
         ActionResult<IEnumerable<SystemDataResponse>> res = api.GetSystemDataV2();
         dynamic s = res.Result;
 
-        Assert.That(((IEnumerable<SystemDataResponse>)s.Value).Count, Is.EqualTo(0));
+        ((IEnumerable<SystemDataResponse>)s.Value).Count().Should().Be(0);
     }
 }

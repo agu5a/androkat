@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
 namespace UnitTest.Pages;
 
 public class GyonasPageModelsTests
 {
-    [Test]
+    [Fact]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]
     public void ImaModelTest()
     {

@@ -7,7 +7,7 @@ using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace androkat.application.Tests.Services;
 
 public class ImaCacheFillUpTests : BaseTest
 {
-	[Test]
+	[Fact]
 	public void ImaCacheFillUp_Happy_test()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
@@ -31,11 +31,11 @@ public class ImaCacheFillUpTests : BaseTest
 		var cacheService = new CacheService(cacheRepository.Object, new Mock<ILogger<CacheService>>().Object, clock.Object);
 		var res = cacheService.ImaCacheFillUp();
 
-		Assert.That(res.Imak.Count, Is.EqualTo(1));
-		Assert.That(res.Inserted.ToString("yyyy-MM-dd"), Is.EqualTo("2012-01-03"));
+		res.Imak.Count.Should().Be(1);
+		res.Inserted.ToString("yyyy-MM-dd").Should().Be("2012-01-03");
 	}
 
-	[Test]
+	[Fact]
 	public void ImaCacheFillUp_Throws_Exception()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());

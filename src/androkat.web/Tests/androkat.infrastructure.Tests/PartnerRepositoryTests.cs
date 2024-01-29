@@ -7,7 +7,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using MockQueryable.Moq;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace androkat.infrastructure.Tests;
 
 public class PartnerRepositoryTests : BaseTest
 {
-    [Test]
+    [Fact]
     public void GetTempContentByNid_Returns_Null()
     {
         var logger = new Mock<ILogger<PartnerRepository>>();
@@ -32,7 +32,7 @@ public class PartnerRepositoryTests : BaseTest
         result.Should().BeNull();
     }
 
-    [Test]
+    [Fact]
     public void GetTempContentByTipus_Returns_Empty()
     {
         var logger = new Mock<ILogger<PartnerRepository>>();
@@ -48,7 +48,7 @@ public class PartnerRepositoryTests : BaseTest
         result.Should().BeEmpty();
     }
 
-    [Test]
+    [Fact]
     public void InsertTempContent_Returns_True()
     {
         var logger = new Mock<ILogger<PartnerRepository>>();
@@ -66,7 +66,7 @@ public class PartnerRepositoryTests : BaseTest
         context.TempContent.FirstOrDefault(f => f.Tipus == 6).Should().NotBeNull();
     }
 
-    [Test]
+    [Fact]
     public void InsertTempContent_Returns_False()
     {
         var logger = new Mock<ILogger<PartnerRepository>>();
@@ -88,7 +88,7 @@ public class PartnerRepositoryTests : BaseTest
         result.Should().BeFalse();
     }
 
-    [Test]
+    [Fact]
     public void DeleteTempContentByNid_Returns_True()
     {
         var logger = new Mock<ILogger<PartnerRepository>>();
@@ -110,7 +110,7 @@ public class PartnerRepositoryTests : BaseTest
         context.TempContent.FirstOrDefault(f => f.Tipus == 6).Should().BeNull();
     }
 
-    [Test]
+    [Fact]
     public void DeleteTempContentByNid_NotExists()
     {
         var logger = new Mock<ILogger<PartnerRepository>>();
@@ -133,7 +133,7 @@ public class PartnerRepositoryTests : BaseTest
         result.Should().BeFalse();
     }
 
-    [Test]
+    [Fact]
     public void LogInUser_Returns_False()
     {
         var logger = new Mock<ILogger<PartnerRepository>>();
@@ -152,7 +152,7 @@ public class PartnerRepositoryTests : BaseTest
         context.Admin.FirstOrDefault().LastLogin.ToString("yyyy-MM-ddTHH:mm:ss").Should().Be(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06");
     }
 
-    [Test]
+    [Fact]
     public void LogInUser_Returns_True()
     {
         var logger = new Mock<ILogger<PartnerRepository>>();

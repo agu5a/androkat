@@ -5,7 +5,7 @@ using androkat.web.Pages;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace androkat.web.Tests.Pages;
 
 public class HanganyagModelTests : BaseTest
 {
-    [Test]
+    [Fact]
     public void HanganyagModelTest()
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();

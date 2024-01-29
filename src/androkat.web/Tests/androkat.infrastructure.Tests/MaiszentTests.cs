@@ -1,13 +1,13 @@
 ﻿using androkat.infrastructure.Model.SQLite;
 using FluentAssertions;
-using NUnit.Framework;
+using Xunit;
 using System;
 
 namespace androkat.infrastructure.Tests;
 
 public class MaiszentTests
 {
-    [Test]
+    [Fact]
     public void Maiszent_Happy()
     {
         var model = new Maiszent
@@ -17,7 +17,7 @@ public class MaiszentTests
         model.Fulldatum.ToString("yyyy-MM-dd").Should().Be(DateTime.Now.ToString("yyyy-") + model.Datum);
     }
 
-    [Test]
+    [Fact]
     public void Maiszent_2023_And_02_29_Happy()
     {
         var model = new Maiszent

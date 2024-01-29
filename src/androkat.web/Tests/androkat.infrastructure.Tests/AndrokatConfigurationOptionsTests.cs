@@ -6,7 +6,7 @@ using androkat.infrastructure.Configuration;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,7 +14,7 @@ namespace androkat.infrastructure.Tests;
 
 public class AndrokatConfigurationOptionsTests : BaseTest
 {
-    [Test]
+    [Fact]
     public void Configure()
     {
         var logger = new Mock<ILogger<AndrokatConfigurationOptions>>();

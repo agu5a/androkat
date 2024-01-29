@@ -5,7 +5,7 @@ using androkat.domain.Model.ContentCache;
 using FluentAssertions;
 using Microsoft.Extensions.Caching.Memory;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace androkat.application.Tests.Services;
 
 public class ContentServiceWithCacheTests : BaseTest
 {
-	[Test]
+	[Fact]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]
 	public void GetVideoSource_FromCacheHappy()
 	{
@@ -42,7 +42,7 @@ public class ContentServiceWithCacheTests : BaseTest
 		videoPage.Count.Should().Be(1);
 	}
 
-    [Test]
+    [Fact]
     public void GetAudio_Happy()
     {
         Mock<ICacheRepository> repository = new();

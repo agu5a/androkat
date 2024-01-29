@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Logging;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System.IO;
 using System.Linq;
 
@@ -15,7 +15,7 @@ namespace androkat.web.Tests.Pages;
 
 public class ErrorModelTests : BaseTest
 {
-	[Test]
+	[Fact]
 	public void ErrorModelTest_GeneralException()
 	{		
 		var logger = new Mock<ILogger<ErrorModel>>();
@@ -44,7 +44,7 @@ public class ErrorModelTests : BaseTest
         logger.VerifyLogging("Error:  /blabla RequestId: (null)", LogLevel.Error, Times.Once());
     }
 
-    [Test]
+    [Fact]
     public void ErrorModelTest_FileNotFoundException()
     {
         var logger = new Mock<ILogger<ErrorModel>>();
@@ -74,7 +74,7 @@ public class ErrorModelTests : BaseTest
         logger.VerifyLogging("Error: The file was not found. /blabla RequestId: 1000", LogLevel.Error, Times.Once());
     }
 
-    [Test]
+    [Fact]
     public void ErrorModelTest_Error_500()
     {
         var logger = new Mock<ILogger<ErrorModel>>();

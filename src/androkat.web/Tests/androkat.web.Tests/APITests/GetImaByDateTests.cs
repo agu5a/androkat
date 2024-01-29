@@ -7,7 +7,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +17,11 @@ namespace androkat.web.Tests.APITests;
 
 public class GetImaByDateTests : BaseTest
 {
-    [TestCase("")]
-    [TestCase(null)]
-    [TestCase("20011-01-01")] //wrong date, plus char
-    [TestCase("2022-0-02 10:20:20")] //wrong date, less 1 char
+    [Theory]
+    [InlineData("")]
+    [InlineData(null)]
+    [InlineData("20011-01-01")] //wrong date, plus char
+    [InlineData("2022-0-02 10:20:20")] //wrong date, less 1 char
     public void API_GetImaByDate_V2_BadRequest(string date)
     {
         var api = new Api(null);
@@ -30,7 +31,7 @@ public class GetImaByDateTests : BaseTest
         result.Should().Be("Hiba");
     }
 
-    [Test]
+    [Fact]
     public void API_GetImaByDate_V2()
     {
         var now = DateTimeOffset.Parse("2012-02-03T04:05:06");
@@ -54,11 +55,11 @@ public class GetImaByDateTests : BaseTest
         ActionResult<ImaResponse> res = api.GetImaByDateV2(now.ToString("yyyy-MM-dd HH:mm:dd"));
         dynamic s = res.Result;
 
-        Assert.That(((ImaResponse)s.Value).Imak.First().Cim, Is.EqualTo("cim1"));
-        Assert.That(((ImaResponse)s.Value).Imak.Count, Is.EqualTo(1));
+        ((ImaResponse)s.Value).Imak.First().Cim.Should().Be("cim1");
+        ((ImaResponse)s.Value).Imak.Count.Should().Be(1);
     }
 
-    [Test]
+    [Fact]
     public void API_GetImaByDate_V2_No_Result()
     {
         var now = DateTimeOffset.Parse("2012-02-03T04:05:06");
@@ -79,6 +80,6 @@ public class GetImaByDateTests : BaseTest
         ActionResult<ImaResponse> res = api.GetImaByDateV2(now.ToString("yyyy-MM-dd HH:mm:dd"));
         dynamic s = res.Result;
 
-        Assert.That(((ImaResponse)s.Value).Imak.Count, Is.EqualTo(0));
+        ((ImaResponse)s.Value).Imak.Count.Should().Be(0);
     }
 }

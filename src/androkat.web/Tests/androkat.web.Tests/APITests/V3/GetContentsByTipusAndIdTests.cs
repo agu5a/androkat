@@ -11,7 +11,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +25,11 @@ public class GetContentsByTipusAndIdTests : BaseTest
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
     }
 
-    [TestCase(1, "x281cd115128911ea8aa1cbeb38570c35")] //wrong guid, plus char
-    [TestCase(1, "81cd115-1289-11ea-8aa1-cbeb38570c35")] //wrong guid, less 1 char
-    [TestCase((int)Forras.book, "x281cd115128911ea8aa1cbeb38570c35")] //wrong guid, plus char
-    [TestCase((int)Forras.b777, "81cd115-1289-11ea-8aa1-cbeb38570c35")] //wrong guid, less 1 char
+    [Theory]
+    [InlineData(1, "x281cd115128911ea8aa1cbeb38570c35")] //wrong guid, plus char
+    [InlineData(1, "81cd115-1289-11ea-8aa1-cbeb38570c35")] //wrong guid, less 1 char
+    [InlineData((int)Forras.book, "x281cd115128911ea8aa1cbeb38570c35")] //wrong guid, plus char
+    [InlineData((int)Forras.b777, "81cd115-1289-11ea-8aa1-cbeb38570c35")] //wrong guid, less 1 char
     public void API_GetContentsByTipusAndId_BadRequest(int tipus, string id)
     {
         var apiV3 = new Api(null);
@@ -38,10 +39,11 @@ public class GetContentsByTipusAndIdTests : BaseTest
         result.Should().Be("Hiba");
     }
 
-    [TestCase((int)Forras.book, "")]
-    [TestCase((int)Forras.b777, "")]
-    [TestCase((int)Forras.book, "281cd115-1289-11ea-8aa1-cbeb38570c35")]
-    [TestCase((int)Forras.b777, "281cd115-1289-11ea-8aa1-cbeb38570c35")]
+    [Theory]
+    [InlineData((int)Forras.book, "")]
+    [InlineData((int)Forras.b777, "")]
+    [InlineData((int)Forras.book, "281cd115-1289-11ea-8aa1-cbeb38570c35")]
+    [InlineData((int)Forras.b777, "281cd115-1289-11ea-8aa1-cbeb38570c35")]
     public void API_GetEgyebOlvasnivaloByForrasAndNid_Book(int tipus, string id)
     {
         var now = DateTimeOffset.Parse("2012-02-03T04:05:06");
@@ -79,16 +81,16 @@ public class GetContentsByTipusAndIdTests : BaseTest
 
         if (string.IsNullOrWhiteSpace(id))
         {
-            Assert.That(((IEnumerable<ContentResponse>)s.Value).First().Cim, Is.EqualTo("cim1"));
-            Assert.That(((IEnumerable<ContentResponse>)s.Value).First().KulsoLink, Is.Empty);
-            Assert.That(((IEnumerable<ContentResponse>)s.Value).ElementAt(1).Cim, Is.EqualTo("cim2"));
-            Assert.That(((IEnumerable<ContentResponse>)s.Value).Count(), Is.EqualTo(2));
+            ((IEnumerable<ContentResponse>)s.Value).First().Cim.Should().Be("cim1");
+            ((IEnumerable<ContentResponse>)s.Value).First().KulsoLink.Should().BeEmpty();
+            ((IEnumerable<ContentResponse>)s.Value).ElementAt(1).Cim.Should().Be("cim2");
+            ((IEnumerable<ContentResponse>)s.Value).Count().Should().Be(2);
         }
         else
-            Assert.That(((IEnumerable<ContentResponse>)s.Value).Count(), Is.EqualTo(0));
+            ((IEnumerable<ContentResponse>)s.Value).Count().Should().Be(0);
     }
 
-    [Test]
+    [Fact]
     public void API_GetEgyebOlvasnivaloByForrasAndNid_Book_V1_V2_Zero()
     {
         var now = DateTimeOffset.Parse("2012-02-03T04:05:06");
@@ -106,10 +108,10 @@ public class GetContentsByTipusAndIdTests : BaseTest
         var apiV3 = new Api(dec);
         ActionResult<IEnumerable<ContentResponse>> res = apiV3.GetContentsByTipusAndId((int)Forras.book, null);
         dynamic s = res.Result;
-        Assert.That(((IEnumerable<ContentResponse>)s.Value).Count, Is.EqualTo(0));
+        ((IEnumerable<ContentResponse>)s.Value).Count().Should().Be(0);
     }
 
-    [Test]
+    [Fact]
     public void API_GetEgyebOlvasnivaloByForrasAndNid_B777_V1_V2_Zero()
     {
         var now = DateTimeOffset.Parse("2012-02-03T04:05:06");
@@ -127,17 +129,18 @@ public class GetContentsByTipusAndIdTests : BaseTest
         var apiV3 = new Api(dec);
         ActionResult<IEnumerable<ContentResponse>> res = apiV3.GetContentsByTipusAndId((int)Forras.b777, null);
         dynamic s = res.Result;
-        Assert.That(((IEnumerable<ContentResponse>)s.Value).Count, Is.EqualTo(0));
+        ((IEnumerable<ContentResponse>)s.Value).Count().Should().Be(0);
     }
 
-    [TestCase((int)Forras.ajanlatweb, "")]
-    [TestCase((int)Forras.humor, "")]
-    [TestCase((int)Forras.maiszent, "")]
-    [TestCase(2, "")]
-    [TestCase((int)Forras.ajanlatweb, "281cd115-1289-11ea-8aa1-cbeb38570c35")]
-    [TestCase((int)Forras.humor, "281cd115-1289-11ea-8aa1-cbeb38570c35")]
-    [TestCase(2, "281cd115-1289-11ea-8aa1-cbeb38570c35")]
-    [TestCase((int)Forras.audiotaize, "")]
+    [Theory]
+    [InlineData((int)Forras.ajanlatweb, "")]
+    [InlineData((int)Forras.humor, "")]
+    [InlineData((int)Forras.maiszent, "")]
+    [InlineData(2, "")]
+    [InlineData((int)Forras.ajanlatweb, "281cd115-1289-11ea-8aa1-cbeb38570c35")]
+    [InlineData((int)Forras.humor, "281cd115-1289-11ea-8aa1-cbeb38570c35")]
+    [InlineData(2, "281cd115-1289-11ea-8aa1-cbeb38570c35")]
+    [InlineData((int)Forras.audiotaize, "")]
     public void API_GetContentByTipusAndNidV2(int tipus, string nid)
     {
         var now = DateTimeOffset.Parse("2012-02-03T04:05:06");
@@ -168,11 +171,11 @@ public class GetContentsByTipusAndIdTests : BaseTest
 
         if (string.IsNullOrWhiteSpace(nid))
         {
-            Assert.That(((IEnumerable<ContentResponse>)s.Value).First().Cim, Is.EqualTo("cim1"));
-            Assert.That(((IEnumerable<ContentResponse>)s.Value).Count, Is.EqualTo(tipus == 2 || tipus == (int)Forras.audiotaize || tipus == (int)Forras.maiszent ? 2 : 1));
+            ((IEnumerable<ContentResponse>)s.Value).First().Cim.Should().Be("cim1");
+            ((IEnumerable<ContentResponse>)s.Value).Count().Should().Be(tipus == 2 || tipus == (int)Forras.audiotaize || tipus == (int)Forras.maiszent ? 2 : 1);
         }
         else
-            Assert.That(((IEnumerable<ContentResponse>)s.Value).Count, Is.EqualTo(0));
+            ((IEnumerable<ContentResponse>)s.Value).Count().Should().Be(0);
 
         if (tipus == (int)Forras.audiotaize)
         {
@@ -181,7 +184,8 @@ public class GetContentsByTipusAndIdTests : BaseTest
         }
     }
 
-    [TestCase(28)]
+    [Theory]
+    [InlineData(28)]
     public void API_GetContentsByTipusAndId_Zero(int f)
     {
         var now = DateTimeOffset.Parse("2012-02-03T04:05:06");
@@ -198,11 +202,12 @@ public class GetContentsByTipusAndIdTests : BaseTest
         var apiV3 = new Api(dec);
         ActionResult<IEnumerable<ContentResponse>> res = apiV3.GetContentsByTipusAndId(f, null);
         dynamic s = res.Result;
-        Assert.That(((IEnumerable<ContentResponse>)s.Value).Count, Is.EqualTo(0));
+        ((IEnumerable<ContentResponse>)s.Value).Count().Should().Be(0);
     }
 
-    [TestCase(28, "281cd115-1289-11ea-8aa1-cbeb38570c35")]
-    [TestCase(28, "")]
+    [Theory]
+    [InlineData(28, "281cd115-1289-11ea-8aa1-cbeb38570c35")]
+    [InlineData(28, "")]
     public void API_GetContentsByTipusAndId(int f, string nid)
     {
         var now = DateTimeOffset.Parse("2012-02-03T04:05:06");
@@ -235,13 +240,13 @@ public class GetContentsByTipusAndIdTests : BaseTest
 
         if (string.IsNullOrWhiteSpace(nid))
         {
-            Assert.That(((IEnumerable<ContentResponse>)s.Value).First().Cim, Is.EqualTo("cim1"));
-            Assert.That(((IEnumerable<ContentResponse>)s.Value).First().Idezet, Is.EqualTo("https://valami"));
-            Assert.That(((IEnumerable<ContentResponse>)s.Value).Count(), Is.EqualTo(2));
+            ((IEnumerable<ContentResponse>)s.Value).First().Cim.Should().Be("cim1");
+            ((IEnumerable<ContentResponse>)s.Value).First().Idezet.Should().Be("https://valami");
+            ((IEnumerable<ContentResponse>)s.Value).Count().Should().Be(2);
         }
         else
         {
-            Assert.That(((IEnumerable<ContentResponse>)s.Value).Count(), Is.EqualTo(0));
+            ((IEnumerable<ContentResponse>)s.Value).Count().Should().Be(0);
         }
     }
 }

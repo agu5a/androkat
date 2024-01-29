@@ -3,14 +3,14 @@ using androkat.infrastructure.Mapper;
 using androkat.infrastructure.Model.SQLite;
 using AutoMapper;
 using FluentAssertions;
-using NUnit.Framework;
+using Xunit;
 using System;
 
 namespace androkat.infrastructure.Tests;
 
 public class AutoMapperProfileTests
 {
-	[Test]
+	[Fact]
 	public void Map_Video_VideoModel()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
@@ -34,7 +34,7 @@ public class AutoMapperProfileTests
 		result.Date.Should().Be("2022-12-15 01:02:03");
 	}
 
-	[Test]
+	[Fact]
 	public void Map_VideoSource_VideoSourceModel()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
@@ -52,7 +52,7 @@ public class AutoMapperProfileTests
 		result.ChannelName.Should().Be("ChannelName");
 	}
 
-	[Test]
+	[Fact]
 	public void Map_Ima_ImaModel()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
@@ -73,7 +73,7 @@ public class AutoMapperProfileTests
 		result.Datum.ToString("yyyy-MM-dd HH:mm:ss").Should().Be("2022-12-15 01:02:03");
 	}
 
-	[Test]
+	[Fact]
 	public void Map_Content_ContentDetailsModel()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
@@ -88,18 +88,18 @@ public class AutoMapperProfileTests
 		result.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss").Should().Be("2022-12-15 01:02:03");
 	}
 
-	[Test]
+	[Fact]
 	public void Map_ContentDetailsModel_Content()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
 		var mapper = config.CreateMapper();
         var result = mapper.Map<ContentDetailsModel, Content>(new ContentDetailsModel(Guid.Empty, DateTime.Parse("2022-12-15 01:02:03"), null, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
         );
-		result.Cim.Should().BeNull();
-		result.Fulldatum.Should().Be("2022-12-15 01:02:03");
-	}
+        result.Cim.Should().BeNull();
+        result.Fulldatum.Should().Be("2022-12-15 01:02:03");
+    }
 
-	[Test]
+    [Fact]
 	public void Map_FixContent_ContentDetailsModel()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
@@ -115,7 +115,7 @@ public class AutoMapperProfileTests
 		result.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss").Should().Be(DateTime.Now.ToString("yyyy-") + "12-15 00:00:00");
 	}
 
-	[Test]
+	[Fact]
 	public void Map_Maiszent_ContentDetailsModel()
 	{
 		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());

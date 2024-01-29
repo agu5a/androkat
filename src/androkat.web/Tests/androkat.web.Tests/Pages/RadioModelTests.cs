@@ -3,7 +3,7 @@ using androkat.domain.Model;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,11 +11,8 @@ namespace androkat.web.Tests.Pages;
 
 public class RadioModelTests : BaseTest
 {
-	[TestCase("ChannelId", "ChannelId")]
-	[TestCase("", "")]
-	[TestCase(null, "")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
-    public void RadioModelTest(string actual, string expected)
+    [Fact]
+    public void RadioModelTest()
 	{
 		var (pageContext, tempData, actionContext) = GetPreStuff();
 

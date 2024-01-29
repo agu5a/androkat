@@ -10,16 +10,17 @@ using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 
 namespace androkat.application.Tests.Services;
 
 public class FixCacheFillTests : BaseTest
 {
-    [Test]
+    [Fact]
     public void FixCacheFillUpSelectMaiSzent1()
     {
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
@@ -44,10 +45,10 @@ public class FixCacheFillTests : BaseTest
         var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, clock.Object);
         MainCache res = cacheService.MainCacheFillUp();
 
-        Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == 21).Count(), Is.EqualTo(1));
+        res.ContentDetailsModels.Where(w => w.Tipus == 21).Count().Should().Be(1);
     }
 
-    [Test]
+    [Fact]
     public void FixCacheFillUpSelectMaiSzent2()
     {
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
@@ -72,10 +73,10 @@ public class FixCacheFillTests : BaseTest
         var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, clock.Object);
         MainCache res = cacheService.MainCacheFillUp();
 
-        Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == 21).Count(), Is.EqualTo(1));
+        res.ContentDetailsModels.Where(w => w.Tipus == 21).Count().Should().Be(1);
     }
 
-    [Test]
+    [Fact]
     public void FixCacheFillUpSelectMaiSzent3()
     {
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
@@ -107,8 +108,7 @@ public class FixCacheFillTests : BaseTest
         var cacheService = new CacheService(repository, new Mock<ILogger<CacheService>>().Object, clock.Object);
         var res = cacheService.MainCacheFillUp();
 
-        Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == 21).Count(), Is.EqualTo(1));
-        Assert.That(res.ContentDetailsModels.Where(w => w.Tipus == 21).FirstOrDefault().Fulldatum.ToString("yyyy-MM-dd HH:mm:ss"),
-            Is.EqualTo(DateTime.Now.ToString("yyyy") + "-01-02 00:00:00"));
+        res.ContentDetailsModels.Where(w => w.Tipus == 21).Count().Should().Be(1);
+        res.ContentDetailsModels.Where(w => w.Tipus == 21).FirstOrDefault().Fulldatum.ToString("yyyy-MM-dd HH:mm:ss").Should().Be(DateTime.Now.ToString("yyyy") + "-01-02 00:00:00");
     }
 }

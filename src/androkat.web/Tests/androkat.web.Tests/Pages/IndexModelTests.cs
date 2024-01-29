@@ -1,14 +1,14 @@
 ﻿using androkat.domain.Enum;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Routing;
-using NUnit.Framework;
+using Xunit;
 using System.Linq;
 
 namespace androkat.web.Tests.Pages;
 
 public class IndexModelTests : BaseTest
 {
-    [Test]
+    [Fact]
     public void IndexModelTest()
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();

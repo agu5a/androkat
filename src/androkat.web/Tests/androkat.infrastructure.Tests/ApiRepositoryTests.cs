@@ -6,7 +6,7 @@ using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Linq;
 
@@ -14,7 +14,7 @@ namespace androkat.infrastructure.Tests;
 
 public class ApiRepositoryTests : BaseTest
 {
-	[Test]
+    [Fact]
     public void GetSystemInfoModels_Exist()
     {
         var logger = new Mock<ILogger<ApiRepository>>();
@@ -33,7 +33,7 @@ public class ApiRepositoryTests : BaseTest
         result.Count().Should().Be(1);
     }
 
-    [Test]
+    [Fact]
     public void AddVideo_Exist()
     {
         Guid nid = Guid.NewGuid();
@@ -57,7 +57,7 @@ public class ApiRepositoryTests : BaseTest
         context.VideoContent.Count().Should().Be(1);
     }
 
-    [Test]
+    [Fact]
     public void AddVideo_NotFound()
     {
         Guid nid = Guid.NewGuid();
@@ -78,7 +78,7 @@ public class ApiRepositoryTests : BaseTest
         context.VideoContent.Count().Should().Be(1);
     }
 
-    [Test]
+    [Fact]
     public void DeleteVideoByNid_NotFound()
     {
         Guid nid = Guid.NewGuid();
@@ -99,7 +99,7 @@ public class ApiRepositoryTests : BaseTest
         context.VideoContent.Count().Should().Be(1);
     }
 
-    [Test]
+    [Fact]
     public void UpdateRadioSystemInfo_Exist()
     {
         var logger = new Mock<ILogger<ApiRepository>>();
@@ -119,7 +119,7 @@ public class ApiRepositoryTests : BaseTest
         context.SystemInfo.FirstOrDefault(f => f.Key == "radio").Value.Should().Be("newvalue");
     }
 
-    [Test]
+    [Fact]
     public void UpdateRadioSystemInfo_NotFound()
     {
         var logger = new Mock<ILogger<ApiRepository>>();
@@ -135,15 +135,15 @@ public class ApiRepositoryTests : BaseTest
         result.Should().Be(false);
     }
 
-    [Test]
-	public void UpdateRadioMusor_NotFound()
-	{
-		var logger = new Mock<ILogger<ApiRepository>>();
+    [Fact]
+    public void UpdateRadioMusor_NotFound()
+    {
+        var logger = new Mock<ILogger<ApiRepository>>();
 
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
 
-		var clock = GetToday();
+        var clock = GetToday();
 
         using var context = new AndrokatContext(GetDbContextOptions());
         var repo = new ApiRepository(context, clock.Object, mapper);
@@ -152,15 +152,15 @@ public class ApiRepositoryTests : BaseTest
         context.RadioMusor.FirstOrDefault(f => f.Source == "Source").Should().BeNull();
     }
 
-	[Test]
-	public void UpdateRadioMusor_Happy()
-	{
-		var logger = new Mock<ILogger<ApiRepository>>();
+    [Fact]
+    public void UpdateRadioMusor_Happy()
+    {
+        var logger = new Mock<ILogger<ApiRepository>>();
 
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
 
-		var clock = GetToday();
+        var clock = GetToday();
 
         using var context = new AndrokatContext(GetDbContextOptions());
         Guid nid = Guid.NewGuid();
@@ -183,19 +183,20 @@ public class ApiRepositoryTests : BaseTest
         radio.Nid.Should().Be(nid);
     }
 
-	[TestCase(1, "cím1", "9E0BFF6C-619D-4A2A-884B-7A36F6E7C15B", 1, "cím1", "AA4E35F9-0875-49E9-8A19-67AD429BE747")]
-	[TestCase(1, "cím1", "9E0BFF6C-619D-4A2A-884B-7A36F6E7C15B", 1, "cím2", "9E0BFF6C-619D-4A2A-884B-7A36F6E7C15B")]
-	public void AddContentDetailsModel_Conflict(int tipusDb, string cimDb, string guidDb, int tipus, string cim, string guid)
-	{
-		var logger = new Mock<ILogger<ApiRepository>>();
+    [Theory]
+    [InlineData(1, "cím1", "9E0BFF6C-619D-4A2A-884B-7A36F6E7C15B", 1, "cím1", "AA4E35F9-0875-49E9-8A19-67AD429BE747")]
+    [InlineData(1, "cím1", "9E0BFF6C-619D-4A2A-884B-7A36F6E7C15B", 1, "cím2", "9E0BFF6C-619D-4A2A-884B-7A36F6E7C15B")]
+    public void AddContentDetailsModel_Conflict(int tipusDb, string cimDb, string guidDb, int tipus, string cim, string guid)
+    {
+        var logger = new Mock<ILogger<ApiRepository>>();
 
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
 
-		var clock = GetToday();
+        var clock = GetToday();
 
-		var nidDb = Guid.Parse(guidDb);
-		var nid = Guid.Parse(guid);
+        var nidDb = Guid.Parse(guidDb);
+        var nid = Guid.Parse(guid);
         using var context = new AndrokatContext(GetDbContextOptions());
         var entity = new Content
         {
@@ -213,18 +214,19 @@ public class ApiRepositoryTests : BaseTest
         context.Content.FirstOrDefault(f => f.Nid == nid && f.Cim == cim).Should().BeNull();
     }
 
-	[TestCase(1, "cím1", "9E0BFF6C-619D-4A2A-884B-7A36F6E7C15B", 1, "cím2", "AA4E35F9-0875-49E9-8A19-67AD429BE747")]
-	public void AddContentDetailsModel_Happy(int tipusDb, string cimDb, string guidDb, int tipus, string cim, string guid)
-	{
-		var logger = new Mock<ILogger<ApiRepository>>();
+    [Theory]
+    [InlineData(1, "cím1", "9E0BFF6C-619D-4A2A-884B-7A36F6E7C15B", 1, "cím2", "AA4E35F9-0875-49E9-8A19-67AD429BE747")]
+    public void AddContentDetailsModel_Happy(int tipusDb, string cimDb, string guidDb, int tipus, string cim, string guid)
+    {
+        var logger = new Mock<ILogger<ApiRepository>>();
 
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-		var mapper = config.CreateMapper();
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
 
-		var clock = GetToday();
+        var clock = GetToday();
 
-		var nidDb = Guid.Parse(guidDb);
-		var nid = Guid.Parse(guid);
+        var nidDb = Guid.Parse(guidDb);
+        var nid = Guid.Parse(guid);
         using var context = new AndrokatContext(GetDbContextOptions());
         var entity = new Content
         {

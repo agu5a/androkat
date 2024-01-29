@@ -3,7 +3,7 @@ using androkat.domain.Model;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace androkat.web.Tests.Pages;
 
 public class ImaModelTests : BaseTest
 {
-    [Test]
+    [Fact]
     public void ImaModelTest()
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();

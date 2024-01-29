@@ -8,7 +8,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +18,9 @@ namespace androkat.web.Tests.APITests;
 
 public class GetVideoByOffsetTests : BaseTest
 {
-    [TestCase(-1)]
-    [TestCase(51)]
+    [Theory]
+    [InlineData(-1)]
+    [InlineData(51)]
     public void API_GetVideoByOffset_V2_BadRequest(int offset)
     {
         var api = new Api(null);
@@ -29,7 +30,7 @@ public class GetVideoByOffsetTests : BaseTest
         result.Should().Be("Hiba");
     }
 
-    [Test]
+    [Fact]
     public void API_GetVideoByOffset_NoCache_V1()
     {
         var clock = new Mock<IClock>();
@@ -54,16 +55,16 @@ public class GetVideoByOffsetTests : BaseTest
         dynamic sV1 = resV1.Result;
 
         var videoResponse = ((IReadOnlyCollection<VideoResponse>)sV1.Value).First();
-        Assert.That(videoResponse.Cim, Is.EqualTo("cim"));
-        Assert.That(videoResponse.VideoLink, Is.EqualTo("vlink"));
-        Assert.That(videoResponse.Img, Is.EqualTo("img"));
-        Assert.That(videoResponse.Date, Is.EqualTo(date));
-        Assert.That(videoResponse.Forras, Is.EqualTo("forras"));
-        Assert.That(videoResponse.ChannelId, Is.EqualTo("cId"));
-        Assert.That(videoResponse.ChannelId, Is.EqualTo("cId"));
+        videoResponse.Cim.Should().Be("cim");
+        videoResponse.VideoLink.Should().Be("vlink");
+        videoResponse.Img.Should().Be("img");
+        videoResponse.Date.Should().Be(date);
+        videoResponse.Forras.Should().Be("forras");
+        videoResponse.ChannelId.Should().Be("cId");
+        videoResponse.ChannelId.Should().Be("cId");
     }
 
-    [Test]
+    [Fact]
     public void API_GetVideoByOffset_V2()
     {
         var clock = new Mock<IClock>();
@@ -80,10 +81,10 @@ public class GetVideoByOffsetTests : BaseTest
         ActionResult<List<VideoResponse>> res = api.GetVideoByOffsetV2(0);
         dynamic s = res.Result;
 
-        Assert.That(((IReadOnlyCollection<VideoResponse>)s.Value).First().Cim, Is.EqualTo("cim"));
+        ((IReadOnlyCollection<VideoResponse>)s.Value).First().Cim.Should().Be("cim");
     }
 
-    [Test]
+    [Fact]
     public void API_GetVideoByOffset_V2_Zero()
     {
         var clock = new Mock<IClock>();
@@ -100,6 +101,6 @@ public class GetVideoByOffsetTests : BaseTest
         ActionResult<List<VideoResponse>> res = api.GetVideoByOffsetV2(0);
         dynamic s = res.Result;
 
-        Assert.That(((IReadOnlyCollection<VideoResponse>)s.Value).Count, Is.EqualTo(0));
+        ((IReadOnlyCollection<VideoResponse>)s.Value).Count.Should().Be(0);
     }
 }

@@ -7,16 +7,16 @@ using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xunit;
 
 namespace androkat.application.Tests.Services;
 
 public class BookRadioSysCacheFillUpTests : BaseTest
 {
-    [Test]
+    [Fact]
     public void BookRadioSysCacheFillUp_Happy_test()
     {
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
@@ -44,15 +44,15 @@ public class BookRadioSysCacheFillUpTests : BaseTest
         var cacheService = new CacheService(cacheRepository.Object, new Mock<ILogger<CacheService>>().Object, clock.Object);
         var res = cacheService.BookRadioSysCacheFillUp();
 
-        Assert.That(res.Books.Count, Is.EqualTo(1));
-        Assert.That(res.RadioMusor.Count, Is.EqualTo(1));
+        res.Books.Count.Should().Be(1);
+        res.RadioMusor.Count.Should().Be(1);
         res.RadioMusor.First().Nid.Should().Be(radioNid);
-        Assert.That(res.SystemData.Count, Is.EqualTo(1));
-        Assert.That(res.SystemData.First().Id, Is.EqualTo(1));
-        Assert.That(res.Inserted.ToString("yyyy-MM-dd"), Is.EqualTo("2012-01-03"));
+        res.SystemData.Count.Should().Be(1);
+        res.SystemData.First().Id.Should().Be(1);
+        res.Inserted.ToString("yyyy-MM-dd").Should().Be("2012-01-03");
     }
 
-    [Test]
+    [Fact]
     public void BookRadioSysCacheFillUp_Throws_Exception()
     {
         var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
