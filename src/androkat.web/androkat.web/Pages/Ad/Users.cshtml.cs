@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace androkat.web.Pages.Ad;
 
-[Authorize]
+//[Authorize]
 [BindProperties]
 public class UsersModel : PageModel
 {

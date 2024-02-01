@@ -1,0 +1,45 @@
+﻿@page
+@using androkat.web.Pages.Ad
+@model IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@section meta_extra {
+}
+@section scripts {
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="border">
+                <div style="margin-bottom: 5px;">@Html.Raw(Model.AdminResult.Header)</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="border" style="word-break: break-all;">
+                <div style="margin-bottom: 5px;">  @Html.Raw(Model.AdminAResult.MaiAnyagok)    </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="border">
+                <strong>Rádió műsorok</strong><br>
+                <div style="margin-bottom: 5px;">
+                    @Html.Raw(Model.AdminBResult.Radio)
+                </div>
+                    <div style="margin-bottom: 5px; word-break: break-all;">
+                    @Html.Raw(Model.AdminBResult.RadioList)
+                </div>
+            </div>
+            <div class="border" *ngIf="bl.adminBResult">
+                <strong>Tipusok mennyiségileg</strong><br>
+                <span>@Html.Raw(Model.AdminBResult.CountOfTipusok)</span>
+            </div>           
+            <div class="border" style="word-break: break-all;">
+                <strong>system tábla</strong> (cache-ből)<br>
+                <span>@Html.Raw(Model.AdminBResult.SysTable)</span>
+            </div>
+        </div>
+    </div>
+</div>
