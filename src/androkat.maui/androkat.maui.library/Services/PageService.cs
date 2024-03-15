@@ -138,7 +138,7 @@ public class PageService(IDownloadService downloadService, IRepository repositor
                 responseData = JsonSerializer.Deserialize<T>(json);
             }
 
-            if (responseData != null)
+            if (!Equals(responseData, default(T)))
                 Barrel.Current.Add(path, responseData, TimeSpan.FromMinutes(10));
         }
         catch (Exception ex)

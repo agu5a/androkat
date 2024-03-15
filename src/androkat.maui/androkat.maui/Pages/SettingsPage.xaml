@@ -5,9 +5,9 @@
     Title="Beállítások"
     
     xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
-    Style="{StaticResource MainSectionStyle}"
-    
-    x:Class="androkat.hu.Pages.SettingsPage">
+    Style="{StaticResource MainSectionStyle}"    
+    x:Class="androkat.hu.Pages.SettingsPage"
+    x:DataType="viewmodels:SettingsViewModel">
 
     <ScrollView VerticalOptions="FillAndExpand">
     <StackLayout Orientation="Vertical" Padding="15" Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}">

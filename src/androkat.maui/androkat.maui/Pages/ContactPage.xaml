@@ -6,9 +6,9 @@
     x:Name="this"
     
     xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
-    Style="{StaticResource MainSectionStyle}"
-    
-    x:Class="androkat.hu.Pages.ContactPage">
+    Style="{StaticResource MainSectionStyle}"    
+    x:Class="androkat.hu.Pages.ContactPage"
+    x:DataType="viewmodels:ContactViewModel">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" Padding="10" Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}">
             <HorizontalStackLayout>
