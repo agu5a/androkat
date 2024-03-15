@@ -41,7 +41,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public bool LogInUser(string email)
     {
-        _logger.LogDebug("LogInUser was called, email: {email}", email);
+        _logger.LogDebug("LogInUser was called, email: {Email}", email);
         try
         {
             var res = Ctx.Admin.FirstOrDefault(f => f.Email == email);
@@ -59,14 +59,14 @@ public class AdminRepository : BaseRepository, IAdminRepository
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception: LogInUser is failed {email}", email);
+            _logger.LogError(ex, "Exception: LogInUser is failed {Email}", email);
         }
         return false;
     }
 
     public bool DeleteRadio(string nid)
     {
-        _logger.LogDebug("DeleteRadio was called, {nid}", nid);
+        _logger.LogDebug("DeleteRadio was called, {Nid}", nid);
 
         try
         {
@@ -89,7 +89,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public bool DeleteTempContentByNid(string nid)
     {
-        _logger.LogDebug("{Method} was called, {nid}", nameof(DeleteTempContentByNid), nid);
+        _logger.LogDebug("{Method} was called, {Nid}", nameof(DeleteTempContentByNid), nid);
 
         try
         {
@@ -112,7 +112,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public bool DeleteIma(string nid)
     {
-        _logger.LogDebug("DeleteIma was called, {nid}", nid);
+        _logger.LogDebug("DeleteIma was called, {Nid}", nid);
 
         try
         {
@@ -135,7 +135,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public bool DeleteContent(string nid)
     {
-        _logger.LogDebug("DeleteContent was called, {nid}", nid);
+        _logger.LogDebug("DeleteContent was called, {Nid}", nid);
 
         try
         {
@@ -158,7 +158,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public bool InsertIma(ImaModel imaModel)
     {
-        _logger.LogDebug("InsertIma was called, {nid}", imaModel.Nid);
+        _logger.LogDebug("InsertIma was called, {Nid}", imaModel.Nid);
 
         try
         {
@@ -175,7 +175,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public bool InsertContent(ContentDetailsModel content)
     {
-        _logger.LogDebug("InsertContent was called, {cim} {tipus}", content.Cim, content.Tipus);
+        _logger.LogDebug("InsertContent was called, {Cim} {Tipus}", content.Cim, content.Tipus);
 
         try
         {
@@ -194,7 +194,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public bool InsertError(ErrorRequest content)
     {
-        _logger.LogWarning("InsertError was called: {error}", content.Error);
+        _logger.LogWarning("InsertError was called: {Error}", content.Error);
 
         try
         {
@@ -209,7 +209,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public bool UpdateContent(ContentDetailsModel content)
     {
-        _logger.LogDebug("UpdateContent was called, {nid}", content.Nid);
+        _logger.LogDebug("UpdateContent was called, {Nid}", content.Nid);
 
         try
         {
@@ -240,7 +240,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public bool UpdateMaiSzent(MaiSzentModel maiszent)
     {
-        _logger.LogDebug("UpdateMaiSzent was called, {nid}", maiszent.Nid);
+        _logger.LogDebug("UpdateMaiSzent was called, {Nid}", maiszent.Nid);
 
         try
         {
@@ -269,7 +269,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public bool UpdateIma(ImaModel imaModel)
     {
-        _logger.LogDebug("UpdateIma was called, {nid}", imaModel.Nid);
+        _logger.LogDebug("UpdateIma was called, {Nid}", imaModel.Nid);
 
         try
         {
@@ -297,7 +297,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public bool UpdateRadio(RadioMusorModel radioMusorModel)
     {
-        _logger.LogDebug("UpdateRadio was called, {nid}", radioMusorModel.Nid);
+        _logger.LogDebug("UpdateRadio was called, {Nid}", radioMusorModel.Nid);
 
         try
         {
@@ -358,7 +358,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public ContentResult LoadPufferTodayContentByNid(string nid)
     {
-        _logger.LogDebug("{method} was called, {nid}", nameof(LoadPufferTodayContentByNid), nid);
+        _logger.LogDebug("{Method} was called, {Nid}", nameof(LoadPufferTodayContentByNid), nid);
 
         try
         {
@@ -428,7 +428,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public LastTodayResult GetLastTodayContentByTipus(int tipus)
     {
-        _logger.LogDebug("{Method} was called, {tipus}", nameof(GetLastTodayContentByTipus), tipus);
+        _logger.LogDebug("{Method} was called, {Tipus}", nameof(GetLastTodayContentByTipus), tipus);
 
         try
         {
@@ -488,7 +488,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public IEnumerable<AllRecordResult> GetAllContentByTipus(int tipus)
     {
-        _logger.LogDebug("{name} was called, {tipus}", nameof(GetAllContentByTipus), tipus);
+        _logger.LogDebug("{Name} was called, {Tipus}", nameof(GetAllContentByTipus), tipus);
 
         var res = Ctx.Content
             .Where(g => g.Tipus == tipus).Select(s => new AllRecordResult { Nid = s.Nid, Datum = s.Fulldatum })
@@ -499,7 +499,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public Dictionary<int, string> GetAllContentTipusFromDb()
     {
-        _logger.LogDebug("{name} was called", nameof(GetAllContentTipusFromDb));
+        _logger.LogDebug("{Name} was called", nameof(GetAllContentTipusFromDb));
 
         var tipusok = new Dictionary<int, string>();
         Ctx.Content.GroupBy(p => p.Tipus).Select(g =>
@@ -514,7 +514,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public IEnumerable<AllRecordResult> GetAllMaiSzentByMonthResult(string date)
     {
-        _logger.LogDebug("GetAllMaiSzentByMonthResult was called, {date}", date);
+        _logger.LogDebug("GetAllMaiSzentByMonthResult was called, {Date}", date);
 
         var res = Ctx.MaiSzent
             .Where(g => g.Datum.StartsWith(date)).Select(s => new AllRecordResult { Nid = s.Nid, Datum = s.Datum })
@@ -525,7 +525,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public IEnumerable<AllRecordResult> GetAllImaByCsoportResult(string csoport)
     {
-        _logger.LogDebug("GetAllImaByCsoportResult was called, {csoport}", csoport);
+        _logger.LogDebug("GetAllImaByCsoportResult was called, {Csoport}", csoport);
 
         var res = Ctx.ImaContent
             .Where(g => g.Csoport == csoport).Select(s => new AllRecordResult { Nid = s.Nid, Csoport = s.Cim })
@@ -547,7 +547,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public RadioResult LoadRadioByNid(string nid)
     {
-        _logger.LogDebug("LoadRadioByNid was called, {nid}", nid);
+        _logger.LogDebug("LoadRadioByNid was called, {Nid}", nid);
 
         try
         {
@@ -574,7 +574,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public ContentResult LoadImaByNid(string nid)
     {
-        _logger.LogDebug("LoadImaByNid was called, {nid}", nid);
+        _logger.LogDebug("LoadImaByNid was called, {Nid}", nid);
 
         try
         {
@@ -604,7 +604,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public ContentResult LoadMaiSzentByNid(string nid)
     {
-        _logger.LogDebug("LoadMaiSzentByNid was called, {nid}", nid);
+        _logger.LogDebug("LoadMaiSzentByNid was called, {Nid}", nid);
 
         try
         {
@@ -634,7 +634,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
     public ContentResult LoadTodayContentByNid(string nid)
     {
-        _logger.LogDebug("LoadTodayContentByNid was called, {nid}", nid);
+        _logger.LogDebug("LoadTodayContentByNid was called, {Nid}", nid);
 
         try
         {

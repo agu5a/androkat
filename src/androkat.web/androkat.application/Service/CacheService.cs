@@ -27,7 +27,7 @@ public partial class CacheService : ICacheService
 
     public VideoCache VideoCacheFillUp()
     {
-        _logger.LogInformation("{name} was called", nameof(VideoCacheFillUp));
+        _logger.LogInformation("{Name} was called", nameof(VideoCacheFillUp));
 
         try
         {
@@ -57,7 +57,7 @@ public partial class CacheService : ICacheService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception: {name}", nameof(VideoCacheFillUp));
+            _logger.LogError(ex, "Exception: {Name}", nameof(VideoCacheFillUp));
         }
 
         return new VideoCache
@@ -70,7 +70,7 @@ public partial class CacheService : ICacheService
 
     public BookRadioSysCache BookRadioSysCacheFillUp()
     {
-        _logger.LogInformation("{name} was called", nameof(BookRadioSysCacheFillUp));
+        _logger.LogInformation("{Name} was called", nameof(BookRadioSysCacheFillUp));
 
         try
         {
@@ -84,7 +84,7 @@ public partial class CacheService : ICacheService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception: {name}", nameof(BookRadioSysCacheFillUp));
+            _logger.LogError(ex, "Exception: {Name}", nameof(BookRadioSysCacheFillUp));
         }
 
         return new BookRadioSysCache
@@ -98,7 +98,7 @@ public partial class CacheService : ICacheService
 
     public ImaCache ImaCacheFillUp()
     {
-        _logger.LogInformation("{name} was called", nameof(ImaCacheFillUp));
+        _logger.LogInformation("{Name} was called", nameof(ImaCacheFillUp));
 
         try
         {
@@ -110,7 +110,7 @@ public partial class CacheService : ICacheService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception: {name}", nameof(ImaCacheFillUp));
+            _logger.LogError(ex, "Exception: {Name}", nameof(ImaCacheFillUp));
         }
 
         return new ImaCache
@@ -122,7 +122,7 @@ public partial class CacheService : ICacheService
 
     public MainCache MainCacheFillUp()
     {
-        _logger.LogInformation("{name} was called", nameof(MainCacheFillUp));
+        _logger.LogInformation("{Name} was called", nameof(MainCacheFillUp));
 
         try
         {
@@ -141,7 +141,7 @@ public partial class CacheService : ICacheService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception: {name}", nameof(MainCacheFillUp));
+            _logger.LogError(ex, "Exception: {Name}", nameof(MainCacheFillUp));
         }
 
         return new MainCache

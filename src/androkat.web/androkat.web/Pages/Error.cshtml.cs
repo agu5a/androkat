@@ -41,7 +41,7 @@ public class ErrorModel : PageModel
                 exceptionMessage += $" {exceptionHandlerPathFeature.Path}";
 
             if (!string.IsNullOrWhiteSpace(exceptionMessage))
-                _logger.LogError("Error: {exceptionMessage} RequestId: {requestId}", exceptionMessage, requestId);
+                _logger.LogError("Error: {ExceptionMessage} RequestId: {RequestId}", exceptionMessage, requestId);
         }
         catch (Exception ex)
         {
@@ -62,7 +62,7 @@ public class ErrorModel : PageModel
             }
             
                 var httpRequestFeature = HttpContext.Features.Get<IHttpRequestFeature>();
-                _logger.LogError("Error - Path: {OriginalPath}, Query: {OriginalQueryString}, Code: {statusCode}, Method: {Method}, Scheme: {Scheme}, Protocol: {Protocol}",
+                _logger.LogError("Error - Path: {OriginalPath}, Query: {OriginalQueryString}, Code: {StatusCode}, Method: {Method}, Scheme: {Scheme}, Protocol: {Protocol}",
                     statusCodeReExecuteFeature.OriginalPath, statusCodeReExecuteFeature.OriginalQueryString, statusCode, httpRequestFeature.Method,
                     httpRequestFeature.Scheme, httpRequestFeature.Protocol);
             }

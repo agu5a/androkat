@@ -23,7 +23,7 @@ public class ContentMetaDataService : IContentMetaDataService
         var json = tr.ReadToEnd();
         var list = JsonSerializer.Deserialize<List<ContentMetaDataModel>>(json);
 
-        _logger.LogInformation("{Name} GetContentMetaDataList has been finished. Count: {count}", nameof(ContentMetaDataService), list.Count);
+        _logger.LogInformation("{Name} GetContentMetaDataList has been finished. Count: {Count}", nameof(ContentMetaDataService), list.Count);
 
         return [.. list.OrderBy(o => o.TipusNev)];
     }

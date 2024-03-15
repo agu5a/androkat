@@ -16,7 +16,7 @@ public static class WebApplicationExtensions
     {
         var app = builder.Build();
 
-        Log.Information("androkat.web version: " + Assembly.GetEntryAssembly()!.GetName().Version);
+        Log.Information("androkat.web version: {Version}", Assembly.GetEntryAssembly()!.GetName().Version);
 
         if (app.Environment.IsDevelopment())
         {

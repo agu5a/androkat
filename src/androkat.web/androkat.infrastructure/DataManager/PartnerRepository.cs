@@ -27,7 +27,7 @@ public class PartnerRepository : IPartnerRepository
 
     public ContentDetailsModel GetTempContentByNid(string nid)
     {
-        _logger.LogDebug("GetTempContentByNid was called, nid: {nid}", nid);
+        _logger.LogDebug("GetTempContentByNid was called, nid: {Nid}", nid);
         try
         {
             var guid = Guid.Parse(nid);
@@ -36,14 +36,14 @@ public class PartnerRepository : IPartnerRepository
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception: GetTempContentByNid is failed {nid}", nid);
+            _logger.LogError(ex, "Exception: GetTempContentByNid is failed {Nid}", nid);
         }
         return null;
     }
 
     public IEnumerable<ContentDetailsModel> GetTempContentByTipus(int tipus)
     {
-        _logger.LogDebug("GetTempContentByTipus was called, tipus: {tipus}", tipus);
+        _logger.LogDebug("GetTempContentByTipus was called, tipus: {Tipus}", tipus);
         try
         {
             var res = _ctx.TempContent.Where(w => w.Tipus == tipus).OrderBy(o => o.Fulldatum);
@@ -51,14 +51,14 @@ public class PartnerRepository : IPartnerRepository
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception: GetTempContentByTipus is failed {tipus}", tipus);
+            _logger.LogError(ex, "Exception: GetTempContentByTipus is failed {Tipus}", tipus);
         }
         return [];
     }
 
     public bool InsertTempContent(ContentDetailsModel contentDetailsModel)
     {
-        _logger.LogDebug("InsertTempContent was called, nid: {nid}", contentDetailsModel.Nid);
+        _logger.LogDebug("InsertTempContent was called, nid: {Nid}", contentDetailsModel.Nid);
         try
         {
             var res = _ctx.TempContent.Find(contentDetailsModel.Nid);
@@ -79,7 +79,7 @@ public class PartnerRepository : IPartnerRepository
 
     public bool LogInUser(string email)
     {
-        _logger.LogDebug("LogInUser was called, email: {email}", email);
+        _logger.LogDebug("LogInUser was called, email: {Email}", email);
         try
         {
             var res = _ctx.Admin.FirstOrDefault(f => f.Email == email);
@@ -95,14 +95,14 @@ public class PartnerRepository : IPartnerRepository
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception: LogInUser is failed {email}", email);
+            _logger.LogError(ex, "Exception: LogInUser is failed {Email}", email);
         }
         return false;
     }
 
     public bool DeleteTempContentByNid(string nid)
     {
-        _logger.LogDebug("DeleteTempContentByNid was called, nid: {nid}", nid);
+        _logger.LogDebug("DeleteTempContentByNid was called, nid: {Nid}", nid);
         try
         {
             var guid = Guid.Parse(nid);
@@ -116,7 +116,7 @@ public class PartnerRepository : IPartnerRepository
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception: DeleteTempContentByNid is failed {nid}", nid);
+            _logger.LogError(ex, "Exception: DeleteTempContentByNid is failed {Nid}", nid);
         }
         return false;
     }

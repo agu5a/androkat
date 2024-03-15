@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace androkat.web.Pages.Ad;
 
-//[Authorize]
+[Authorize]
 public class FilesModel : PageModel
 {
     private readonly IWebHostEnvironment _environment;

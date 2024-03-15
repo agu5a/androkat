@@ -13,7 +13,7 @@ using System.Reflection;
 
 namespace androkat.web.Pages.Ad;
 
-//[Authorize]
+[Authorize]
 public class CacheModel : PageModel
 {
     private readonly IMemoryCache _memoryCache;

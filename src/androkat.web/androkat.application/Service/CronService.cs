@@ -62,7 +62,7 @@ public class CronService : ICronService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception: Failed to run {name}", nameof(Start));
+            _logger.LogError(ex, "Exception: Failed to run {Name}", nameof(Start));
         }
     }
 
@@ -80,7 +80,7 @@ public class CronService : ICronService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception: Failed to run {name}", nameof(DeleteCaches));
+            _logger.LogError(ex, "Exception: Failed to run {Name}", nameof(DeleteCaches));
         }
     }
 
@@ -98,11 +98,11 @@ public class CronService : ICronService
         if (osszes <= torlendo.Count)
             return;
 
-        _logger.LogDebug("delete from Content. {tipus} {Count}", tipus, torlendo.Count);
+        _logger.LogDebug("delete from Content. {Tipus} {Count}", tipus, torlendo.Count);
         foreach (var item in torlendo)
         {
             _apiRepository.DeleteContentDetailsByNid(item.Nid);
-            _logger.LogDebug("delete from Content. {tipus} {time}", item.Tipus, item.Fulldatum);
+            _logger.LogDebug("delete from Content. {Tipus} {Time}", item.Tipus, item.Fulldatum);
         }
     }
 
@@ -122,7 +122,7 @@ public class CronService : ICronService
         foreach (var item in osszes!)
         {
             _apiRepository.DeleteContentDetailsByNid(item.Nid);
-            _logger.LogDebug("delete from Content. {tipus} {datum}", item.Tipus, item.Fulldatum);
+            _logger.LogDebug("delete from Content. {Tipus} {Datum}", item.Tipus, item.Fulldatum);
         }
     }
 
@@ -135,7 +135,7 @@ public class CronService : ICronService
         foreach (var item in osszes)
         {
             _apiRepository.DeleteVideoByNid(item.Nid);
-            _logger.LogDebug("delete from videoContent. {date}", item.Date);
+            _logger.LogDebug("delete from videoContent. {Date}", item.Date);
         }
     }
 }

@@ -54,7 +54,7 @@ public class Update : Endpoint<RadioMusorModelRequest, RadioMusorModelResponse>
 		}
 		catch (Exception ex)
 		{
-			_logger.LogError(ex, "Exception: Failed to run {name}", nameof(HandleAsync));
+			_logger.LogError(ex, "Exception: Failed to run {Name}", nameof(HandleAsync));
 
 			await SendAsync(new RadioMusorModelResponse(false), StatusCodes.Status500InternalServerError, ct);
 		}

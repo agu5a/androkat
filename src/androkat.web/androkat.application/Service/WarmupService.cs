@@ -25,12 +25,12 @@ public class WarmupService : IWarmupService
         {
 			_memoryCache.Set(CacheKey.MainCacheKey.ToString(), _cacheService.MainCacheFillUp(),
 				new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
-			_logger.LogInformation("{name} was called", nameof(MainCacheFillUp));
+			_logger.LogInformation("{Name} was called", nameof(MainCacheFillUp));
 
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception: {name}", nameof(MainCacheFillUp));
+            _logger.LogError(ex, "Exception: {Name}", nameof(MainCacheFillUp));
         }
     }
 
@@ -54,11 +54,11 @@ public class WarmupService : IWarmupService
         {
             _memoryCache.Set(CacheKey.ImaCacheKey.ToString(), _cacheService.ImaCacheFillUp(),
 				new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(1)));
-			_logger.LogInformation("{name} was called", nameof(ImaCacheFillUp));
+			_logger.LogInformation("{Name} was called", nameof(ImaCacheFillUp));
         }
         catch (Exception ex)
         {
-           _logger.LogError(ex, "Exception: {name}", nameof(ImaCacheFillUp));
+           _logger.LogError(ex, "Exception: {Name}", nameof(ImaCacheFillUp));
         }
     }
 
@@ -68,11 +68,11 @@ public class WarmupService : IWarmupService
         {
             var result = _cacheService.VideoCacheFillUp();
             _memoryCache.Set(CacheKey.VideoCacheKey.ToString(), result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
-			_logger.LogInformation("{name} was called", nameof(VideoCacheFillUp));
+			_logger.LogInformation("{Name} was called", nameof(VideoCacheFillUp));
         }
         catch (Exception ex)
         {
-			_logger.LogError(ex, "Exception: {name}", nameof(VideoCacheFillUp));
+			_logger.LogError(ex, "Exception: {Name}", nameof(VideoCacheFillUp));
         }
     }
 }

@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace androkat.web.Pages.Ad;
 
-//[Authorize]
+[Authorize]
 [BindProperties]
 public class UpdateMaiSzentModel : PageModel
 {

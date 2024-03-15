@@ -20,6 +20,6 @@ public class AndrokatConfigurationOptions : IConfigureOptions<AndrokatConfigurat
     public void Configure(AndrokatConfiguration options)
     {
         options.ContentMetaDataList = _contentMetaDataService.GetContentMetaDataList();
-        _logger.LogInformation("{Name} Configure finished. Count: {count}", nameof(AndrokatConfigurationOptions), options.ContentMetaDataList.ToList().Count);
+        _logger.LogInformation("{Name} Configure finished. Count: {Count}", nameof(AndrokatConfigurationOptions), options.ContentMetaDataList.ToList().Count);
     }
 }

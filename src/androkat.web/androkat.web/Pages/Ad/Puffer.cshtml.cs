@@ -14,7 +14,7 @@ using System.Globalization;
 
 namespace androkat.web.Pages.Ad;
 
-//[Authorize]
+[Authorize]
 [BindProperties]
 public class PufferModel : PageModel
 {

@@ -9,7 +9,7 @@ using System;
 
 namespace androkat.web.Pages.Ad;
 
-//[Authorize]
+[Authorize]
 public class VideoModel : PageModel
 {
     private readonly ILogger<VideoModel> _logger;

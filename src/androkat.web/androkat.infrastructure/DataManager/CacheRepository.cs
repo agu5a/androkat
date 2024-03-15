@@ -94,7 +94,7 @@ public class CacheRepository : BaseRepository, ICacheRepository
         var rows = Ctx.MaiSzent.AsNoTracking().Where(w => w.Datum == hoNap);
         if (!rows.Any())
         {
-            _logger.LogDebug("{name}: nincs mai szent mai napra", nameof(GetMaiSzentToCache));
+            _logger.LogDebug("{Name}: nincs mai szent mai napra", nameof(GetMaiSzentToCache));
 
             var rows2 = Ctx.MaiSzent.AsNoTracking().AsEnumerable()
             .Where(w => w.Datum.StartsWith($"{month}-") && w.Fulldatum < Clock.Now)
@@ -102,7 +102,7 @@ public class CacheRepository : BaseRepository, ICacheRepository
 
             if (rows2.Count == 0)
             {
-                _logger.LogDebug("{name}: nincs mai szent az aktuális hónapra", nameof(GetMaiSzentToCache));
+                _logger.LogDebug("{Name}: nincs mai szent az aktuális hónapra", nameof(GetMaiSzentToCache));
 
                 var prevmonth = Clock.Now.AddMonths(-1).ToString("MM");
                 rows2 = Ctx.MaiSzent.AsNoTracking().AsEnumerable()
@@ -188,7 +188,7 @@ public class CacheRepository : BaseRepository, ICacheRepository
 
         if (res!.Count == 0)
         {
-            _logger.LogDebug("{name}: nincs mai, akkor egy a korábbiakból, ha van. tipus {tipus} date {date}", nameof(GetContentDetailsModel), tipus, date);
+            _logger.LogDebug("{Name}: nincs mai, akkor egy a korábbiakból, ha van. tipus {Tipus} date {Date}", nameof(GetContentDetailsModel), tipus, date);
             res = allRecords.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted).Take(1).ToList();
         }
 

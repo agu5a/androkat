@@ -10,7 +10,7 @@ using System;
 
 namespace androkat.web.Pages.Ad;
 
-//[Authorize]
+[Authorize]
 [BindProperties]
 public class IndexModel : PageModel
 {
