@@ -73,6 +73,28 @@ public class PufferTests : BaseTest
 		model.TipusId.Should().Be(6);
 	}
 
+	[Fact]
+	public void OnGet_Failed_Auth_Test()
+	{
+		var (pageContext, tempData, actionContext) = GetPreStuff();
+
+		var _logger = new Mock<ILogger<IndexModel>>();
+		var adminRepository = new Mock<IAdminRepository>();
+		var authService = new Mock<IAuthService>();
+		authService.Setup(s => s.IsAuthenticated(It.IsAny<string>())).Returns(false);
+
+		var model = new IndexModel(_logger.Object, adminRepository.Object, authService.Object)
+		{
+			PageContext = pageContext,
+			TempData = tempData,
+			Url = new UrlHelper(actionContext)
+		};
+
+		dynamic res = model.OnGet();
+		string url = res.Url;
+		url.Should().Be("/");
+	}
+
 	private static (PageContext pageContext, TempDataDictionary tempData, ActionContext actionContext) GetPreStuff()
 	{
 		var httpContext = new DefaultHttpContext();

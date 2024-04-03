@@ -9,10 +9,13 @@ using FastEndpoints;
 using FastEndpoints.ApiExplorer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 
@@ -63,7 +66,26 @@ public static class DependencyInjection
         });
 
         builder.Services.AddControllers()
-            .AddRazorRuntimeCompilation().AddJsonOptions(options =>
+            .ConfigureApiBehaviorOptions(opt =>
+            {
+                opt.InvalidModelStateResponseFactory = context =>
+                {
+                    var errors = context.ModelState.Keys.Select(k =>
+                    {
+                        return $"{k}: {string.Join(",", context.ModelState[k]?.Errors.Select(e => e.ErrorMessage) ?? [])}";
+                    });
+
+                    var errorMessage = $"Path: {context.HttpContext.Request.Path}" +
+                        $" Method: {context.HttpContext.Request.Method}" +
+                        $" Controller: {(context.ActionDescriptor as ControllerActionDescriptor)?.ControllerName}" +
+                        $" Action: {(context.ActionDescriptor as ControllerActionDescriptor)?.ActionName}" +
+                        $" Errors: {string.Join(";", errors)}";
+
+                    return new BadRequestObjectResult(errorMessage);
+                };
+            })
+            .AddRazorRuntimeCompilation()
+            .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
