@@ -319,6 +319,29 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return false;
     }
 
+	public bool UpdateSystemInfo(SystemInfoData systemInfoData)
+	{
+		_logger.LogDebug("UpdateSystemInfo was called, {Nid}", systemInfoData.Id);
+
+		try
+		{
+			var res = Ctx.SystemInfo.FirstOrDefault(f => f.Id == systemInfoData.Id);
+			if (res is null)
+				return false;
+
+			res.Value = systemInfoData.Value;
+			Ctx.SaveChanges();
+
+			return true;
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Exception: ");
+		}
+
+		return false;
+	}
+
     public IEnumerable<AllTodayResult> LoadAllTodayResult()
     {
         _logger.LogDebug("{Method} was called", nameof(LoadAllTodayResult));
@@ -914,6 +937,20 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
         return adminResult;
     }
+
+	public IEnumerable<SystemInfoData> GetAllSystemInfo()
+	{
+		_logger.LogDebug("GetAllRadioResult was called");
+
+		var res = Ctx.SystemInfo.Select(s => new SystemInfoData
+		{
+			Id = s.Id,
+			Key = s.Key,
+			Value = s.Value
+		}).ToList();
+
+		return res;
+	}
 
     private static string GetSysTable(List<SystemInfo> sysRes)
     {

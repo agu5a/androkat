@@ -16,6 +16,7 @@ namespace androkat.web.Controllers;
 [EnableRateLimiting("fixed-by-ip")]
 [Route("cronv1")]
 [ApiController]
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S6960:Controllers should not have mixed responsibilities", Justification = "<Pending>")]
 public class Cron : ControllerBase
 {
 	private readonly ILogger<Cron> _logger;

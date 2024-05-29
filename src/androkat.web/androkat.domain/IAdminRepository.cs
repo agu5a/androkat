@@ -38,4 +38,6 @@ public interface IAdminRepository
     Dictionary<int, string> GetAllContentTipusFromDb();
     bool InsertError(ErrorRequest content);
     List<SystemInfoData> GetIsAdventAndNagybojt();
+	IEnumerable<SystemInfoData> GetAllSystemInfo();
+	bool UpdateSystemInfo(SystemInfoData systemInfoData);
 }
