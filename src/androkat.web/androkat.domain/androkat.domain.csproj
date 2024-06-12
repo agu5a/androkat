@@ -7,7 +7,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
-		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.25.1.91650">
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.27.0.93347">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
