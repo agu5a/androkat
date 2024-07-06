@@ -19,7 +19,7 @@ public class AndrokatConfiguration
 	{
 		return new List<int> { (int)Forras.pio, (int)Forras.janospal, (int)Forras.sztjanos, (int)Forras.kisterez,
 			(int)Forras.terezanya, (int)Forras.bojte, (int)Forras.kempis, (int)Forras.humor, (int)Forras.vianney, (int)Forras.prohaszka,
-			(int)Forras.szentszalezi, (int)Forras.sienaikatalin };		
+            (int)Forras.szentszalezi, (int)Forras.sienaikatalin, (int)Forras.medjugorje };
 	}
 
 	public static IEnumerable<int> ContentTypeIds()

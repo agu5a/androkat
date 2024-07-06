@@ -5,7 +5,7 @@ namespace androkat.web.ViewModels;
 public class InsertData
 {
     [Required]
-	public int Tipus { get; set; }
+    public required int Tipus { get; set; }
     [Required]
 	public string Datum { get; set; }
     [Required]

@@ -42,5 +42,6 @@ public enum Forras
     laciatya = 57,
     ajanlatweb = 58,
     audiotaize = 60,
-    sienaikatalin = 61
+    sienaikatalin = 61,
+    medjugorje = 62
 }

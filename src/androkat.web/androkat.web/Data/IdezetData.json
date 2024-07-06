@@ -367,5 +367,14 @@
     "EnumString": "sienaikatalin",
     "Segedlink": null,
     "Image": "images/sienaikatalin.png"
+  },
+  {
+    "TipusId": 62,
+    "TipusNev": "Medjugorje üzenetek",
+    "Forras": "Marija Pavlović-Lunetti",
+    "Link": "https://www.libri.hu/konyv/beke-kiralynojenek-365-uzenete-medjugorjebol.html",
+    "EnumString": "medjugorje",
+    "Segedlink": null,
+    "Image": "images/medjugorje.png"
   }
 ]

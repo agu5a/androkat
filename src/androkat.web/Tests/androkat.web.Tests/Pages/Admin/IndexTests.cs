@@ -99,37 +99,27 @@ public class IndexTests : BaseTest
 		model.OnGet();
 		model.AdminResult.Header.Should().Be(" | blog: <span style='color:red;'>NOT OK</span> #: 0 | video: #: 1 | ima: #: 1 | ");
 
-		string expected = "<strong>Ma hiányzó anyagok</strong>" +
-			"<br> 2 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Pio atya breviáriuma</a>" +
-					"<br> 3 - <a href='https://www.szentgellertkiado.hu' target='_blank'>II. János Pál pápa breviáriuma</a>" +
-					"<br> 4 - <a href='http://www.karmelitarend.hu' target='_blank'>Keresztes Szent János aranymondásai</a>" +
-					"<br> 5 - <a href='http://karmelita.hu' target='_blank'>Kis Szent Teréz breviáriuma</a>" +
-					"<br> 6 - <a href='https://www.evangelium365.hu' target='_blank'>Horváth István Sándor (evangélium365.hu)</a>" +
-					"<br> 8 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Teréz Anya breviáriuma</a>" +
-					"<br> 9 - <a href='https://www.magyarkurir.hu/ferenc-papa/ferenc-papa-twitter' target='_blank'>Ferenc pápa twitter üzenete</a>" +
-					"<br> 10 - <a href='http://orszagutiferencesek.hu' target='_blank'>Advent</a>" +
-					"<br> 11 - <a href='https://igenaptar.katolikus.hu' target='_blank'>Napi Ige és olvasmányok</a>" +
-					"<br> 12 - <a href='http://szikrak.jezsuita.hu' target='_blank'>Loyolai Szent Ignác válogatott gondolatai</a>" +
-					"<br> 13 - <a href='http://barsitelekmm.blogspot.hu' target='_blank'>Barsi és Telek - Magasság és mélység</a>" +
-					"<br> 14 - <a href='https://www.evangelium365.hu' target='_blank'>Horváth István Sándor (evangélium365.hu)</a>" +
-                    "<br> 15 - <a href='https://open.spotify.com/show/4f2oWtBVw0jnTmeDrHh7ey' target='_blank'>Jezsuita napi-útra-való</a>" +
-					//"<br> 16 - <a href='http://orszagutiferencesek.hu' target='_blank'>Nagyböjti elmélkedések</a>" +
-					"<br> 17 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Böjte Csaba testvér gondolatai</a>" +
+		string expected = "<strong>Ma hiányzó anyagok</strong><br> 2 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Pio atya breviáriuma</a><br> 3 - <a href='https://www.szentgellertkiado.hu' target='_blank'>II. János Pál pápa breviáriuma</a>" +
+			"<br> 4 - <a href='http://www.karmelitarend.hu' target='_blank'>Keresztes Szent János aranymondásai</a><br> 5 - <a href='http://karmelita.hu' target='_blank'>Kis Szent Teréz breviáriuma</a><br> 6 - " +
+			"<a href='https://www.evangelium365.hu' target='_blank'>Horváth István Sándor (evangélium365.hu)</a><br> 8 - " +
+			"<a href='https://www.szentgellertkiado.hu' target='_blank'>Teréz Anya breviáriuma</a><br> 9 - " +
+			"<a href='https://www.magyarkurir.hu/ferenc-papa/ferenc-papa-twitter' target='_blank'>Ferenc pápa twitter üzenete</a><br> 10 - <a href='http://orszagutiferencesek.hu' target='_blank'>Advent</a><br> 11 - " +
+			"<a href='https://igenaptar.katolikus.hu' target='_blank'>Napi Ige és olvasmányok</a>" +
+			"<br> 12 - <a href='http://szikrak.jezsuita.hu' target='_blank'>Loyolai Szent Ignác válogatott gondolatai</a><br> 13 - <a href='http://barsitelekmm.blogspot.hu' target='_blank'>Barsi és Telek - Magasság és mélység</a><br> 14 - " +
+			"<a href='https://www.evangelium365.hu' target='_blank'>Horváth István Sándor (evangélium365.hu)</a><br> 15 - " +
+			"<a href='https://open.spotify.com/show/4f2oWtBVw0jnTmeDrHh7ey' target='_blank'>Jezsuita napi-útra-való</a><br> 17 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Böjte Csaba testvér gondolatai</a>" +
 					"<br> 19 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Kempis Tamás: Krisztus követése (válogatás)</a><br> 24 - " +
-					"<a href='https://www.szentgellertkiado.hu' target='_blank'>Szeretet-újság</a><br> 25 - <a href='https://www.szentgellertkiado.hu' " +
-					"target='_blank'>Humor</a><br> 28 - <a href='https://www.katolikusradio.hu' target='_blank'>Napi evangélium</a><br> 38 - " +
-					"<a href='https://www.youtube.com/channel/UC_aC_9qFjPI5U0JrznoyYRA' target='_blank'>Barsi Balázs atya prédikációi</a><br> 39 - " +
-					"<a href='https://www.palferi.hu/hanganyagok' target='_blank'>Pál Feri atya prédikációi</a><br> 42 - <a href='https://www.szentgellertkiado.hu' " +
-					"target='_blank'>Vianney Szent János breviáriuma</a><br> 45 - <a href='https://regnumchristi.hu' target='_blank'>" +
-					"Regnum Christi Mozgalom napi elmélkedése</a><br> 47 - <a href='https://www.taize.fr' target='_blank'>Taizé</a><br> 48 - " +
-					"<a href='http://www.szfvar.katolikus.hu/proima/prohaszka_breviarium' target='_blank'>Prohászka Ottokár breviáriuma</a><br> 50 - " +
-					"<a href='https://ciszterna.ocist.hu' target='_blank'>Szent Bernát idézetek minden napra</a><br> 52 - <a href='http://kairosz.hu' target='_blank'>" +
-					"Szalézi Szent Ferenc: Gondolatok minden napra</a><br> 57 - <a href='https://www.facebook.com/profile.php?id=100050238980182' target='_blank'>" +
-					"Varga László megyéspüspök gondolatai</a><br> 58 - <a href='https://www.szentgellertkiado.hu' target='_blank'>AJÁNDéKOZZ KÖNYVET</a><br> 60 - " +
-					"<a href='https://www.taize.fr' target='_blank'>Taizé napi imák</a><br> 61 - <a href='https://www.szentgellertkiado.hu' target='_blank'>" +
-					"Sienai Szent Katalin breviáriuma</a><br><strong>Mai anyagok</strong>" +
-					"<br> 7 - <a href='http://www.fokolare.hu' target='_blank'>Fokoláre: életige</a><br>[" + DateTime.Now.ToString("yyyy") + "-02-01 04:05:06] - fokolareCim<br>" +
-					"<br> 18 - <a href='https://www.magyarkurir.hu' target='_blank'>magyarkurir.hu</a><br>[" + DateTime.Now.ToString("yyyy") + "-02-03 04:05:06] - kurircím<br><br>";
+			"<a href='https://www.szentgellertkiado.hu' target='_blank'>Szeretet-újság</a><br> 25 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Humor</a><br> 28 - " +
+			"<a href='https://www.katolikusradio.hu' target='_blank'>Napi evangélium</a><br> 38 - <a href='https://www.youtube.com/channel/UC_aC_9qFjPI5U0JrznoyYRA' target='_blank'>Barsi Balázs atya prédikációi</a><br> 39 - " +
+			"<a href='https://www.palferi.hu/hanganyagok' target='_blank'>Pál Feri atya prédikációi</a><br> 42 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Vianney Szent János breviáriuma</a><br> 45 - " +
+			"<a href='https://regnumchristi.hu' target='_blank'>Regnum Christi Mozgalom napi elmélkedése</a><br> 47 - <a href='https://www.taize.fr' target='_blank'>Taizé</a><br> 48 - " +
+			"<a href='http://www.szfvar.katolikus.hu/proima/prohaszka_breviarium' target='_blank'>Prohászka Ottokár breviáriuma</a><br> 50 - <a href='https://ciszterna.ocist.hu' target='_blank'>Szent Bernát idézetek minden napra</a>" +
+			"<br> 52 - <a href='http://kairosz.hu' target='_blank'>Szalézi Szent Ferenc: Gondolatok minden napra</a><br> 57 - <a href='https://www.facebook.com/profile.php?id=100050238980182' target='_blank'>Varga László megyéspüspök gondolatai</a><br> 58 - " +
+			"<a href='https://www.szentgellertkiado.hu' target='_blank'>AJÁNDéKOZZ KÖNYVET</a><br> 60 - <a href='https://www.taize.fr' target='_blank'>Taizé napi imák</a><br> 61 - " +
+			"<a href='https://www.szentgellertkiado.hu' target='_blank'>Sienai Szent Katalin breviáriuma</a><br> 62 - <a href='https://www.libri.hu/konyv/beke-kiralynojenek-365-uzenete-medjugorjebol.html' target='_blank'>Medjugorje üzenetek</a>" +
+			"<br><strong>Mai anyagok</strong><br> 7 - " +
+			"<a href='http://www.fokolare.hu' target='_blank'>Fokoláre: életige</a><br>[2024-02-01 04:05:06] - fokolareCim<br><br> 18 - " +
+			"<a href='https://www.magyarkurir.hu' target='_blank'>magyarkurir.hu</a><br>[2024-02-03 04:05:06] - kurircím<br><br>";
 
 		model.AdminAResult.MaiAnyagok.Should().Be(expected);
 

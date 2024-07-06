@@ -1,4 +1,5 @@
-﻿using androkat.application.Interfaces;
+﻿#nullable enable
+using androkat.application.Interfaces;
 using androkat.domain;
 using androkat.domain.Configuration;
 using androkat.domain.Enum;
@@ -171,6 +172,34 @@ public class AdminRepository : BaseRepository, IAdminRepository
             _logger.LogError(ex, "Exception: ");
         }
         return false;
+    }
+
+    public (bool isSuccess, string? message) InsertFixContent(string cim, string idezet, int tipus, string datum)
+    {
+        _logger.LogDebug("InsertFixContent was called, {Cim} {Tipus}", cim, tipus);
+
+        try
+        {
+            var res = Ctx.FixContent.FirstOrDefault(f => f.Datum == datum && f.Tipus == tipus);
+            if (res is not null)
+                return (false, "the record already exists with the same date and tipus");
+
+            Ctx.FixContent.Add(new FixContent
+			{
+				Cim = cim.Replace("\n", " ").Replace("\r", " "),
+                Idezet = idezet.Replace("\n", " ").Replace("\r", " "),
+				Tipus = tipus,
+                Datum = datum,
+				Nid = Guid.NewGuid()
+            });
+            Ctx.SaveChanges();
+            return (true, null);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+            return (false, ex.Message);
+        }        
     }
 
     public bool InsertContent(ContentDetailsModel content)
@@ -379,7 +408,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return [.. temp.OrderBy(o => o.TipusNev)];
     }
 
-    public ContentResult LoadPufferTodayContentByNid(string nid)
+	public ContentResult? LoadPufferTodayContentByNid(string nid)
     {
         _logger.LogDebug("{Method} was called, {Nid}", nameof(LoadPufferTodayContentByNid), nid);
 
@@ -463,7 +492,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
                 hoNap = Clock.Now.ToString("MM-01");
             }
 
-            ContentDetailsModel res = null;
+			ContentDetailsModel? res = null;
 
             if (!AndrokatConfiguration.FixContentTypeIds().Contains(tipus))
             {
@@ -568,7 +597,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return res;
     }
 
-    public RadioResult LoadRadioByNid(string nid)
+	public RadioResult? LoadRadioByNid(string nid)
     {
         _logger.LogDebug("LoadRadioByNid was called, {Nid}", nid);
 
@@ -595,7 +624,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return null;
     }
 
-    public ContentResult LoadImaByNid(string nid)
+	public ContentResult? LoadImaByNid(string nid)
     {
         _logger.LogDebug("LoadImaByNid was called, {Nid}", nid);
 
@@ -625,7 +654,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return null;
     }
 
-    public ContentResult LoadMaiSzentByNid(string nid)
+	public ContentResult? LoadMaiSzentByNid(string nid)
     {
         _logger.LogDebug("LoadMaiSzentByNid was called, {Nid}", nid);
 
@@ -655,7 +684,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return null;
     }
 
-    public ContentResult LoadTodayContentByNid(string nid)
+	public ContentResult? LoadTodayContentByNid(string nid)
     {
         _logger.LogDebug("LoadTodayContentByNid was called, {Nid}", nid);
 
