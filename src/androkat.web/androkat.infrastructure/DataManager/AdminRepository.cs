@@ -157,7 +157,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return false;
     }
 
-    public bool InsertIma(ImaModel imaModel)
+    public (bool isSuccess, string? message) InsertIma(ImaModel imaModel)
     {
         _logger.LogDebug("InsertIma was called, {Nid}", imaModel.Nid);
 
@@ -165,13 +165,13 @@ public class AdminRepository : BaseRepository, IAdminRepository
         {
             Ctx.ImaContent.Add(Mapper.Map<ImaContent>(imaModel));
             Ctx.SaveChanges();
-            return true;
+            return (true, null);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Exception: ");
+            return (false, ex.Message);
         }
-        return false;
     }
 
     public (bool isSuccess, string? message) InsertFixContent(string cim, string idezet, int tipus, string datum)
@@ -185,12 +185,12 @@ public class AdminRepository : BaseRepository, IAdminRepository
                 return (false, "the record already exists with the same date and tipus");
 
             Ctx.FixContent.Add(new FixContent
-			{
-				Cim = cim.Replace("\n", " ").Replace("\r", " "),
+            {
+                Cim = cim.Replace("\n", " ").Replace("\r", " "),
                 Idezet = idezet.Replace("\n", " ").Replace("\r", " "),
-				Tipus = tipus,
+                Tipus = tipus,
                 Datum = datum,
-				Nid = Guid.NewGuid()
+                Nid = Guid.NewGuid()
             });
             Ctx.SaveChanges();
             return (true, null);
@@ -199,7 +199,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         {
             _logger.LogError(ex, "Exception: ");
             return (false, ex.Message);
-        }        
+        }
     }
 
     public bool InsertContent(ContentDetailsModel content)
@@ -348,28 +348,28 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return false;
     }
 
-	public bool UpdateSystemInfo(SystemInfoData systemInfoData)
-	{
-		_logger.LogDebug("UpdateSystemInfo was called, {Nid}", systemInfoData.Id);
+    public bool UpdateSystemInfo(SystemInfoData systemInfoData)
+    {
+        _logger.LogDebug("UpdateSystemInfo was called, {Nid}", systemInfoData.Id);
 
-		try
-		{
-			var res = Ctx.SystemInfo.FirstOrDefault(f => f.Id == systemInfoData.Id);
-			if (res is null)
-				return false;
+        try
+        {
+            var res = Ctx.SystemInfo.FirstOrDefault(f => f.Id == systemInfoData.Id);
+            if (res is null)
+                return false;
 
-			res.Value = systemInfoData.Value;
-			Ctx.SaveChanges();
+            res.Value = systemInfoData.Value;
+            Ctx.SaveChanges();
 
-			return true;
-		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Exception: ");
-		}
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
 
-		return false;
-	}
+        return false;
+    }
 
     public IEnumerable<AllTodayResult> LoadAllTodayResult()
     {
@@ -408,7 +408,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return [.. temp.OrderBy(o => o.TipusNev)];
     }
 
-	public ContentResult? LoadPufferTodayContentByNid(string nid)
+    public ContentResult? LoadPufferTodayContentByNid(string nid)
     {
         _logger.LogDebug("{Method} was called, {Nid}", nameof(LoadPufferTodayContentByNid), nid);
 
@@ -492,7 +492,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
                 hoNap = Clock.Now.ToString("MM-01");
             }
 
-			ContentDetailsModel? res = null;
+            ContentDetailsModel? res = null;
 
             if (!AndrokatConfiguration.FixContentTypeIds().Contains(tipus))
             {
@@ -597,7 +597,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return res;
     }
 
-	public RadioResult? LoadRadioByNid(string nid)
+    public RadioResult? LoadRadioByNid(string nid)
     {
         _logger.LogDebug("LoadRadioByNid was called, {Nid}", nid);
 
@@ -624,7 +624,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return null;
     }
 
-	public ContentResult? LoadImaByNid(string nid)
+    public ContentResult? LoadImaByNid(string nid)
     {
         _logger.LogDebug("LoadImaByNid was called, {Nid}", nid);
 
@@ -654,7 +654,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return null;
     }
 
-	public ContentResult? LoadMaiSzentByNid(string nid)
+    public ContentResult? LoadMaiSzentByNid(string nid)
     {
         _logger.LogDebug("LoadMaiSzentByNid was called, {Nid}", nid);
 
@@ -684,7 +684,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return null;
     }
 
-	public ContentResult? LoadTodayContentByNid(string nid)
+    public ContentResult? LoadTodayContentByNid(string nid)
     {
         _logger.LogDebug("LoadTodayContentByNid was called, {Nid}", nid);
 
@@ -780,7 +780,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         {
             var rows2 = Ctx.MaiSzent.AsNoTracking().AsEnumerable()
             .Where(w => w.Datum.StartsWith($"{month}-") && w.Fulldatum < Clock.Now)
-            .OrderByDescending(o => o.Datum).Take(1)!.ToList();
+            .OrderByDescending(o => o.Datum).Take(1).ToList();
 
             if (rows2.Count == 0)
             {
@@ -846,9 +846,9 @@ public class AdminRepository : BaseRepository, IAdminRepository
             return "";
 
         var res = "[" + res2.Fulldatum + "] - " + res2.Cim;
-        if (item != 6 && item != 15 && item != 28 && item != 38 && item != 39 && item != 60) 
+        if (item != 6 && item != 15 && item != 28 && item != 38 && item != 39 && item != 60)
             return res;
-        
+
         if (string.IsNullOrWhiteSpace(res2.FileUrl))
             res += "<br><a href='" + res2.Idezet + "'>" + res2.Idezet + "</a>";
         else
@@ -916,12 +916,9 @@ public class AdminRepository : BaseRepository, IAdminRepository
             var radios = JsonSerializer.Deserialize<Dictionary<string, string>>(vatikan!)!;
 
             var sb = new StringBuilder();
-            foreach (var item in radios)
+            foreach (var item in radios.Where(item => item.Key == "vatikan"))
             {
-                if (item.Key == "vatikan")
-                {
-                    sb.Append(item.Key + " (" + item.Value + ")");
-                }
+                sb.Append(item.Key + " (" + item.Value + ")");
             }
             adminResult.RadioList += sb.ToString();
 
@@ -967,19 +964,19 @@ public class AdminRepository : BaseRepository, IAdminRepository
         return adminResult;
     }
 
-	public IEnumerable<SystemInfoData> GetAllSystemInfo()
-	{
-		_logger.LogDebug("GetAllRadioResult was called");
+    public IEnumerable<SystemInfoData> GetAllSystemInfo()
+    {
+        _logger.LogDebug("GetAllRadioResult was called");
 
-		var res = Ctx.SystemInfo.Select(s => new SystemInfoData
-		{
-			Id = s.Id,
-			Key = s.Key,
-			Value = s.Value
-		}).ToList();
+        var res = Ctx.SystemInfo.Select(s => new SystemInfoData
+        {
+            Id = s.Id,
+            Key = s.Key,
+            Value = s.Value
+        }).ToList();
 
-		return res;
-	}
+        return res;
+    }
 
     private static string GetSysTable(List<SystemInfo> sysRes)
     {

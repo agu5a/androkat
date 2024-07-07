@@ -10,7 +10,7 @@ public interface IAdminRepository
 {
     AdminResult GetAdminResult();
     AdminBResult GetAdminBResult();
-    bool InsertIma(ImaModel imaModel);
+    (bool isSuccess, string? message) InsertIma(ImaModel imaModel);
     IEnumerable<AllTodayResult> LoadAllTodayResult();
     ContentResult? LoadPufferTodayContentByNid(string nid);
     LastTodayResult GetLastTodayContentByTipus(int tipus);
