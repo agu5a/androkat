@@ -38,8 +38,7 @@ public class ImaModel : PageModel
 			return;
 		}
 
-		var res = _adminRepository.InsertIma(new domain.Model.ImaModel(Guid.NewGuid(), _iClock.Now.Date, Cim, Csoport, Idezet));
-
-		Error = res ? "siker" : "vmi rossz volt";
+		var (isSuccess, message) = _adminRepository.InsertIma(new domain.Model.ImaModel(Guid.NewGuid(), _iClock.Now.Date, Cim, Csoport, Idezet));
+		Error = isSuccess ? "siker" : message;
 	}
 }

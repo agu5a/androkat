@@ -21,7 +21,9 @@ public class ApiRepository : BaseRepository, IApiRepository
     {
         var res = Ctx.Content.FirstOrDefault(f => f.Nid == nid);
         if (res is null)
+        {
             return false;
+        }
 
         Ctx.Content.Remove(res);
         Ctx.SaveChanges();
@@ -40,19 +42,18 @@ public class ApiRepository : BaseRepository, IApiRepository
         old.Musor = radioMusorModel.Musor;
         Ctx.SaveChanges();
         return true;
-
     }
 
     public bool UpdateRadioSystemInfo(string value)
     {
-        if (Ctx.SystemInfo.FirstOrDefault(w => w.Key == "radio") is not null)
-    {
-        Ctx.SystemInfo.First(w => w.Key == "radio").Value = value;
-        Ctx.SaveChanges();
-            return true;
+        if (Ctx.SystemInfo.FirstOrDefault(w => w.Key == "radio") is null)
+        {
+            return false;
         }
 
-        return false;
+        Ctx.SystemInfo.First(w => w.Key == "radio").Value = value;
+        Ctx.SaveChanges();
+        return true;
     }
 
     public IEnumerable<SystemInfoModel> GetSystemInfoModels()
@@ -66,7 +67,9 @@ public class ApiRepository : BaseRepository, IApiRepository
         var exist = Ctx.Content.FirstOrDefault(w => w.Tipus == contentDetailsModel.Tipus
         && (w.Cim.Contains(contentDetailsModel.Cim) || w.Nid == contentDetailsModel.Nid));
         if (exist is not null)
+        {
             return false;
+        }
 
         Ctx.Content.Add(Mapper.Map<Content>(contentDetailsModel));
         Ctx.SaveChanges();
@@ -84,7 +87,9 @@ public class ApiRepository : BaseRepository, IApiRepository
         var exist = Ctx.TempContent.FirstOrDefault(w => w.Tipus == contentDetailsModel.Tipus
        && (w.Cim.Contains(contentDetailsModel.Cim) || w.Nid == contentDetailsModel.Nid));
         if (exist is not null)
+        {
             return false;
+        }
 
         Ctx.TempContent.Add(Mapper.Map<TempContent>(contentDetailsModel));
         Ctx.SaveChanges();
@@ -95,7 +100,9 @@ public class ApiRepository : BaseRepository, IApiRepository
     {
         var exist = Ctx.VideoContent.FirstOrDefault(w => w.VideoLink == videoModel.VideoLink);
         if (exist is not null)
+        {
             return false;
+        }
 
         Ctx.VideoContent.Add(Mapper.Map<VideoContent>(videoModel));
         Ctx.SaveChanges();
@@ -107,7 +114,9 @@ public class ApiRepository : BaseRepository, IApiRepository
     {
         var res = Ctx.VideoContent.FirstOrDefault(f => f.Nid == nid);
         if (res is null)
+        {
             return false;
+        }
 
         Ctx.VideoContent.Remove(res);
         Ctx.SaveChanges();

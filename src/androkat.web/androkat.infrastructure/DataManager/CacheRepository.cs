@@ -186,11 +186,13 @@ public class CacheRepository : BaseRepository, ICacheRepository
         else
             res = [.. allRecords.Where(w => w.Tipus == tipus && w.Fulldatum.StartsWith(date)).OrderByDescending(o => o.Inserted)];
 
-        if (res!.Count == 0)
+        if (res!.Count != 0)
         {
-            _logger.LogDebug("{Name}: nincs mai, akkor egy a korábbiakból, ha van. tipus {Tipus} date {Date}", nameof(GetContentDetailsModel), tipus, date);
-            res = allRecords.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted).Take(1).ToList();
+            return res!;
         }
+
+        _logger.LogDebug("{Name}: nincs mai, akkor egy a korábbiakból, ha van. tipus {Tipus} date {Date}", nameof(GetContentDetailsModel), tipus, date);
+        res = allRecords.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted).Take(1).ToList();
 
         return res!;
     }
