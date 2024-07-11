@@ -8,7 +8,7 @@
 		<PackageReference Include="Autofac" Version="8.0.0" />
 		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="AutoMapper" Version="13.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
 		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.28.0.94264">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

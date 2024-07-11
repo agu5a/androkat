@@ -17,7 +17,7 @@
 		<PackageReference Include="FastEndpoints" Version="5.27.0" />
 		<PackageReference Include="FastEndpoints.ApiExplorer" Version="2.3.0" />
 		<PackageReference Include="FastEndpoints.Swagger.Swashbuckle" Version="2.3.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.7" />
 		<PackageReference Include="OneOf" Version="3.0.271" />
 		<PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
