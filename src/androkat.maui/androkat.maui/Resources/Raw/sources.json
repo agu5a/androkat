@@ -6,7 +6,7 @@
       "source": "Mello",
       "sourcelink": "Mello",
       "img": "ic_launcher",
-      "group":"group_napiolvaso",
+      "group": "group_napiolvaso",
       "active": false
     },
     {
@@ -15,7 +15,7 @@
       "source": "Szent Gellért Kiadó",
       "sourcelink": "https://www.szentgellertkiado.hu",
       "img": "pio",
-      "group":"group_szentek",
+      "group": "group_szentek",
       "active": true
     },
     {
@@ -24,7 +24,7 @@
       "source": "Szent Gellért Kiadó",
       "sourcelink": "https://www.szentgellertkiado.hu",
       "img": "janospal",
-      "group":"group_szentek",
+      "group": "group_szentek",
       "active": true
     },
     {
@@ -33,7 +33,7 @@
       "source": "Magyar Kármelita Rendtartomány",
       "sourcelink": "http://www.karmelitarend.hu",
       "img": "szentjanos",
-      "group":"group_szentek",
+      "group": "group_szentek",
       "active": true
     },
     {
@@ -42,7 +42,7 @@
       "source": "Sarutlan Kármelita Nővérek",
       "sourcelink": "http://karmelita.hu",
       "img": "kisterez",
-      "group":"group_szentek",
+      "group": "group_szentek",
       "active": true
     },
     {
@@ -51,7 +51,7 @@
       "source": "Horváth István Sándor atya",
       "sourcelink": "http://evangelium365.hu",
       "img": "evangelium365",
-      "group":"group_audio",
+      "group": "group_audio",
       "active": true
     },
     {
@@ -60,7 +60,7 @@
       "source": "Fokoláre Mozgalom",
       "sourcelink": "http://www.fokolare.hu",
       "img": "focolare",
-      "group":"group_napiolvaso",
+      "group": "group_napiolvaso",
       "active": true
     },
     {
@@ -69,7 +69,7 @@
       "source": "Szent Gellért Kiadó",
       "sourcelink": "https://www.szentgellertkiado.hu",
       "img": "terezanya",
-      "group":"group_szentek",
+      "group": "group_szentek",
       "active": true
     },
     {
@@ -78,7 +78,7 @@
       "source": "Magyar Kurír",
       "sourcelink": "https://www.magyarkurir.hu/ferenc-papa/ferenc-papa-twitter",
       "img": "ferencpapa",
-      "group":"group_napiolvaso",
+      "group": "group_napiolvaso",
       "active": true
     },
     {
@@ -87,7 +87,7 @@
       "source": "Országúti Ferences Plébánia",
       "sourcelink": "http://orszagutiferencesek.hu",
       "img": "advent",
-      "group":"group_napiolvaso",
+      "group": "group_napiolvaso",
       "active": false
     },
     {
@@ -96,7 +96,7 @@
       "source": "katolikus.hu",
       "sourcelink": "https://igenaptar.katolikus.hu",
       "img": "napibible",
-      "group":"group_napiolvaso",
+      "group": "group_napiolvaso",
       "active": true
     },
     {
@@ -105,7 +105,7 @@
       "source": "Korda Kiadó",
       "sourcelink": "http://szikrak.jezsuita.hu",
       "img": "ignac",
-      "group":"group_szentek",
+      "group": "group_szentek",
       "active": true
     },
     {
@@ -114,7 +114,7 @@
       "source": "barsitelekmm.blogspot.hu",
       "sourcelink": "http://barsitelekmm.blogspot.hu",
       "img": "barsi",
-      "group":"group_napiolvaso",
+      "group": "group_napiolvaso",
       "active": true
     },
     {
@@ -123,7 +123,7 @@
       "source": "Horváth István Sándor atya",
       "sourcelink": "https://www.evangelium365.hu",
       "img": "evangelium365",
-      "group":"group_napiolvaso",
+      "group": "group_napiolvaso",
       "active": true
     },
     {
@@ -132,7 +132,7 @@
       "source": "jezsuita.hu",
       "sourcelink": "https://www.mixcloud.com/napiutravalo",
       "img": "prayasyougo",
-      "group":"group_audio",
+      "group": "group_audio",
       "active": true
     },
     {
@@ -141,7 +141,7 @@
       "source": "orszagutiferencesek.hu",
       "sourcelink": "http://orszagutiferencesek.hu",
       "img": "nagybojt",
-      "group":"group_napiolvaso",
+      "group": "group_napiolvaso",
       "active": true
     },
     {
@@ -150,7 +150,7 @@
       "source": "Szent Gellért Kiadó",
       "sourcelink": "https://www.szentgellertkiado.hu",
       "img": "bojte",
-      "group":"group_napiolvaso",
+      "group": "group_napiolvaso",
       "active": true
     },
     {
@@ -159,7 +159,7 @@
       "source": "Magyar Kurír",
       "sourcelink": "https://www.magyarkurir.hu",
       "img": "kurir",
-      "group":"group_news",
+      "group": "group_news",
       "active": true
     },
     {
@@ -168,7 +168,7 @@
       "source": "Szent Gellért Kiadó",
       "sourcelink": "https://www.szentgellertkiado.hu",
       "img": "kempis",
-      "group":"group_napiolvaso",
+      "group": "group_napiolvaso",
       "active": true
     },
     {
@@ -177,7 +177,7 @@
       "source": "bonumtv.hu",
       "sourcelink": "https://bonumtv.hu",
       "img": "bonumtv",
-      "group":"group_news",
+      "group": "group_news",
       "active": true
     },
     {
@@ -186,7 +186,7 @@
       "source": "katolikus.hu",
       "sourcelink": "https://archiv.katolikus.hu/szentek/d.html",
       "img": "katolikus_hu",
-      "group":"maiszent",
+      "group": "maiszent",
       "active": true
     },
     {
@@ -195,7 +195,7 @@
       "source": "Ima gyűjtemény",
       "sourcelink": "Ima gyűjtemény",
       "img": "candle",
-      "group":"group_ima",
+      "group": "group_ima",
       "active": true
     },
     {
@@ -204,7 +204,7 @@
       "source": "Szent Gellért Kiadó",
       "sourcelink": "https://www.szentgellertkiado.hu",
       "img": "szentgellertkiado",
-      "group":"group_napiolvaso",
+      "group": "group_napiolvaso",
       "active": true
     },
     {
@@ -213,7 +213,7 @@
       "source": "Szent Gellért Kiadó",
       "sourcelink": "https://www.szentgellertkiado.hu",
       "img": "ic_smile",
-      "group":"group_humor",
+      "group": "group_humor",
       "active": true
     },
     {
@@ -222,7 +222,7 @@
       "source": "katolikusradio.hu",
       "sourcelink": "https://www.katolikusradio.hu",
       "img": "katolikusradio",
-      "group":"group_audio",
+      "group": "group_audio",
       "active": true
     },
     {
@@ -231,7 +231,7 @@
       "source": "keresztenyelet.hu",
       "sourcelink": "http://www.keresztenyelet.hu",
       "img": "keresztenyelet",
-      "group":"group_news",
+      "group": "group_news",
       "active": true
     },
     {
@@ -240,7 +240,7 @@
       "source": "katolikus.hu",
       "sourcelink": "https://katolikus.hu",
       "img": "nagybojt",
-      "group":"gyonas",
+      "group": "gyonas",
       "active": true
     },
     {
@@ -249,7 +249,7 @@
       "source": "Barsi Balázs youtube csatorna",
       "sourcelink": "https://www.youtube.com/channel/UC_aC_9qFjPI5U0JrznoyYRA",
       "img": "barsi",
-      "group":"group_audio",
+      "group": "group_audio",
       "active": true
     },
     {
@@ -258,7 +258,7 @@
       "source": "palferi.hu",
       "sourcelink": "https://www.palferi.hu/hanganyagok",
       "img": "palferi",
-      "group":"group_audio",
+      "group": "group_audio",
       "active": true
     },
     {
@@ -267,7 +267,7 @@
       "source": "Szent Gellért Kiadó",
       "sourcelink": "https://www.szentgellertkiado.hu",
       "img": "vianney",
-      "group":"group_szentek",
+      "group": "group_szentek",
       "active": true
     },
     {
@@ -276,7 +276,7 @@
       "source": "777blog.hu",
       "sourcelink": "https://777blog.hu",
       "img": "b777",
-      "group":"group_blog",
+      "group": "group_blog",
       "active": true
     },
     {
@@ -285,7 +285,7 @@
       "source": "Regnum Christi Mozgalom",
       "sourcelink": "https://regnumchristi.hu",
       "img": "regnum",
-      "group":"group_napiolvaso",
+      "group": "group_napiolvaso",
       "active": true
     },
     {
@@ -294,7 +294,7 @@
       "source": "EPub könyvek",
       "sourcelink": "EPub könyvek",
       "img": "book",
-      "group":"book",
+      "group": "book",
       "active": true
     },
     {
@@ -303,7 +303,7 @@
       "source": "Taizé",
       "sourcelink": "https://www.taize.fr",
       "img": "taize",
-      "group":"group_napiolvaso",
+      "group": "group_napiolvaso",
       "active": true
     },
     {
@@ -312,7 +312,7 @@
       "source": "Székesfehérvári Egyházmegye",
       "sourcelink": "http://www.szfvar.katolikus.hu/proima/prohaszka_breviarium",
       "img": "prohaszka",
-      "group":"group_napiolvaso",
+      "group": "group_napiolvaso",
       "active": true
     },
     {
@@ -330,7 +330,7 @@
       "source": "Zirci Ciszterci Apátság",
       "sourcelink": "https://ciszterna.ocist.hu",
       "img": "szentbernat",
-      "group":"group_szentek",
+      "group": "group_szentek",
       "active": true
     },
     {
@@ -339,7 +339,7 @@
       "source": "jezsuita.blog.hu",
       "sourcelink": "https://jezsuita.blog.hu",
       "img": "jezsuitablog",
-      "group":"group_blog",
+      "group": "group_blog",
       "active": true
     },
     {
@@ -348,7 +348,7 @@
       "source": "kairosz.hu",
       "sourcelink": "http://kairosz.hu",
       "img": "szentszalezi",
-      "group":"group_szentek",
+      "group": "group_szentek",
       "active": true
     },
     {
@@ -357,7 +357,7 @@
       "source": "facebook.com",
       "sourcelink": "https://www.facebook.com/profile.php?id=100050238980182",
       "img": "laciatya",
-      "group":"group_napiolvaso",
+      "group": "group_napiolvaso",
       "active": true
     },
     {
@@ -366,7 +366,7 @@
       "source": "Szent Gellért Kiadó",
       "sourcelink": "https://www.szentgellertkiado.hu",
       "img": "gift",
-      "group":"group_ajanlatok",
+      "group": "group_ajanlatok",
       "active": true
     },
     {
@@ -375,7 +375,7 @@
       "source": "Taizé",
       "sourcelink": "https://www.taize.fr",
       "img": "taize",
-      "group":"group_audio",
+      "group": "group_audio",
       "active": true
     },
     {
@@ -384,7 +384,16 @@
       "source": "Szent Gellért Kiadó",
       "sourcelink": "https://www.szentgellertkiado.hu",
       "img": "sienaikatalin",
-      "group":"group_szentek",
+      "group": "group_szentek",
+      "active": true
+    },
+    {
+      "id": 62,
+      "title": "Medjugorje üzenetek",
+      "source": "Marija Pavlović-Lunetti",
+      "sourcelink": "https://www.libri.hu/konyv/beke-kiralynojenek-365-uzenete-medjugorjebol.html",
+      "img": "medjugorje.png",
+      "group": "group_napiolvaso",
       "active": true
     }
   ]

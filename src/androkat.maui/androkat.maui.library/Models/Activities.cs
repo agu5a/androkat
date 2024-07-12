@@ -58,7 +58,8 @@ public enum Activities
     group_ajanlatok = 59, //group
     audiotaize = 60,
     sienaikatalin = 61,
-    group_web = 62
+    medjugorje = 62,
+    group_web = 63
 }
 
 public static class ActivitiesHelper

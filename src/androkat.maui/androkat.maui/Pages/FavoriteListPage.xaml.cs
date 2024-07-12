@@ -91,7 +91,7 @@ public partial class FavoriteListPage : ContentPage
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(savePath));
                 File.Create(savePath);
-                File.WriteAllText(savePath, "[]");
+                await File.WriteAllTextAsync(savePath, "[]");
             }
             catch (Exception)
             {
@@ -111,7 +111,7 @@ public partial class FavoriteListPage : ContentPage
         {
             var list = await ViewModel.GetFavContentsAsync();
             string json = System.Text.Json.JsonSerializer.Serialize(list);
-            File.WriteAllText(savePath, json);
+            await File.WriteAllTextAsync(savePath, json);
 
             using var cancellationTokenSource = new CancellationTokenSource();
             var toast = Toast.Make("Mentés sikerült", ToastDuration.Short, 14d);
@@ -131,7 +131,7 @@ public partial class FavoriteListPage : ContentPage
 
         if (fileResult != null)
         {
-            string fileContent = File.ReadAllText(fileResult.FullPath);
+            string fileContent = await File.ReadAllTextAsync(fileResult.FullPath);
             var o = System.Text.Json.JsonSerializer.Deserialize<List<FavoriteContentEntity>>(fileContent);
 
             using var cancellationTokenSource = new CancellationTokenSource();

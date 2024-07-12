@@ -1,4 +1,5 @@
-﻿using androkat.maui.library.Abstraction;
+﻿#nullable enable
+using androkat.maui.library.Abstraction;
 using androkat.maui.library.Helpers;
 using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
@@ -15,11 +16,11 @@ public partial class ContentListViewModel : ViewModelBase
     private readonly ISourceData _sourceData;
     private readonly IAndrokatService _androkatService;
 
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     [ObservableProperty]
 #pragma warning disable S1104 // Fields should not have public accessibility
-    public string pageTitle;
+    public string? pageTitle;
 #pragma warning restore S1104 // Fields should not have public accessibility
 
     [ObservableProperty]
@@ -49,6 +50,10 @@ public partial class ContentListViewModel : ViewModelBase
             {
                 var serverInfo = await _androkatService.GetServerInfo();
                 var ver = serverInfo.Find(f => f.Key == "versionmaui");
+                if(ver is null)
+                {
+                    return;
+                }
                 var newVersion = int.Parse(ver.Value);
 
                 int curVersion = _pageService.GetVersion();
@@ -62,9 +67,9 @@ public partial class ContentListViewModel : ViewModelBase
                 }
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Hiba", "??", "Bezárás");
+            await Shell.Current.DisplayAlert("Hiba", ex.Message, "Bezárás");
         }
     }
 

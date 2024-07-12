@@ -38,8 +38,8 @@ public static class ConsValues
                 Activities.szeretetujsag.ToString(),
                 Activities.kempis.ToString(),
                 Activities.taize.ToString(),
-                Activities.laciatya.ToString()
-
+                Activities.laciatya.ToString(),
+                Activities.medjugorje.ToString()
             ];
 
     public static readonly string[] szentekResourceName =
