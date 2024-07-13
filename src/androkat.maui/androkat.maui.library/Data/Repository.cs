@@ -21,7 +21,17 @@ public class Repository : IRepository
         if (conn != null)
             return;
 
-        conn = new SQLiteAsyncConnection(_dbPath);
+        SQLiteOpenFlags flags =
+        // open the database in read/write mode
+        SQLiteOpenFlags.ReadWrite |
+        // create the database if it doesn't exist
+        SQLiteOpenFlags.Create |
+        // enable multi-threaded database access
+        SQLiteOpenFlags.SharedCache;
+
+        //https://learn.microsoft.com/en-us/dotnet/maui/data-cloud/database-sqlite?view=net-maui-8.0
+        //Database.EnableWriteAheadLoggingAsync()
+        conn = new SQLiteAsyncConnection(_dbPath, flags);
 
         if (tableCheck)
         {
