@@ -1,29 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
+<ContentPage
+    x:Class="androkat.hu.Pages.WebRadioPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Rádiók"
-    x:Name="this"
-    
     xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
-    Style="{StaticResource MainSectionStyle}"
+    x:Name="this"
+    Title="Rádiók"
     x:DataType="viewmodels:WebRadioViewModel"
-    x:Class="androkat.hu.Pages.WebRadioPage">
+    Style="{StaticResource MainSectionStyle}">
     <Grid>
         <ScrollView>
-            <FlexLayout x:Name="flexLayout" BindableLayout.ItemsSource="{Binding Items}"
-                        Wrap="Wrap" AlignItems="Start" AlignContent="Start"  
-                        JustifyContent="Start" Margin="5">
+            <FlexLayout
+                x:Name="flexLayout"
+                Margin="5"
+                AlignContent="Start"
+                AlignItems="Start"
+                BindableLayout.ItemsSource="{Binding Items}"
+                JustifyContent="Start"
+                Wrap="Wrap">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="viewmodels:WebUrl">
                         <StackLayout>
-                            <Frame HasShadow="True" BorderColor="DarkGray" CornerRadius="5"
-                                       Margin="5">
+                            <Frame
+                                Margin="5"
+                                BorderColor="DarkGray"
+                                CornerRadius="5"
+                                HasShadow="True">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding NavigateToWebCommand}" />
                                 </Frame.GestureRecognizers>
                                 <VerticalStackLayout>
-                                    <Label Text="{Binding Name}" FontSize="16" />
+                                    <Label FontSize="16" Text="{Binding Name}" />
                                 </VerticalStackLayout>
                             </Frame>
                         </StackLayout>
@@ -32,9 +39,10 @@
             </FlexLayout>
         </ScrollView>
 
-        <ActivityIndicator x:Name="activityIndicator"
-                           IsRunning="True"
-                           VerticalOptions="Center" />
+        <ActivityIndicator
+            x:Name="activityIndicator"
+            IsRunning="True"
+            VerticalOptions="Center" />
     </Grid>
 
 </ContentPage>

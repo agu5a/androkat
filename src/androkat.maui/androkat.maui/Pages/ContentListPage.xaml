@@ -1,42 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             
-             Title="{Binding PageTitle}"
-             x:Name="this"
-             xmlns:view="clr-namespace:androkat.hu.Views"
-             xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
-             Style="{StaticResource MainSectionStyle}"
-             
-             x:DataType="viewmodels:ContentListViewModel"
-             x:Class="androkat.hu.Pages.ContentListPage">
+<ContentPage
+    x:Class="androkat.hu.Pages.ContentListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:view="clr-namespace:androkat.hu.Views"
+    xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
+    x:Name="this"
+    Title="{Binding PageTitle}"
+    x:DataType="viewmodels:ContentListViewModel"
+    Style="{StaticResource MainSectionStyle}">
     <ContentPage.Resources>
-        <Style x:Key="ListTitleStyle"
-               TargetType="Label"
-               BasedOn="{OnIdiom Phone={StaticResource H6LabelStyle}}">
-            <Setter Property="Padding"
-                    Value="{OnIdiom Phone='0,0,0,0'}" />
+        <Style
+            x:Key="ListTitleStyle"
+            BasedOn="{OnIdiom Phone={StaticResource H6LabelStyle}}"
+            TargetType="Label">
+            <Setter Property="Padding" Value="{OnIdiom Phone='0,0,0,0'}" />
         </Style>
     </ContentPage.Resources>
     <Grid Background="{AppThemeBinding Light={StaticResource BackgroundActivity}, Dark={StaticResource BackgroundActivityDark}}">
-        <CollectionView ItemsSource="{Binding Contents}"
-                        Margin="{OnIdiom Phone='10,10,10,0'}"
-                        SelectionMode="None"
-                        IsGrouped="True">
+        <CollectionView
+            Margin="{OnIdiom Phone='10,10,10,0'}"
+            IsGrouped="True"
+            ItemsSource="{Binding Contents}"
+            SelectionMode="None">
             <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical"
-                            Span="{OnIdiom Phone=1, Tablet=2}"
-                            HorizontalItemSpacing="5"
-                            VerticalItemSpacing="5" />
+                <GridItemsLayout
+                    HorizontalItemSpacing="5"
+                    Orientation="Vertical"
+                    Span="{OnIdiom Phone=1,
+                                   Tablet=2}"
+                    VerticalItemSpacing="5" />
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <view:ContentItemView SubscriptionCommand="{Binding SubscribeCommand, Source={RelativeSource AncestorType={x:Type viewmodels:ContentListViewModel}}}"
-                                       SubscriptionCommandParameter="{Binding }" 
-                                       SemanticProperties.Description="Description"/>
+                    <view:ContentItemView
+                        SemanticProperties.Description="Description"
+                        SubscriptionCommand="{Binding SubscribeCommand, Source={RelativeSource AncestorType={x:Type viewmodels:ContentListViewModel}}}"
+                        SubscriptionCommandParameter="{Binding}" />
                 </DataTemplate>
-            </CollectionView.ItemTemplate>            
-        </CollectionView>      
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
     </Grid>
 </ContentPage>

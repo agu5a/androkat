@@ -1,46 +1,53 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<VerticalStackLayout  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                      x:Class="androkat.hu.Views.ContentItemView"
-                      xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
-                      x:DataType="viewmodels:ContentItemViewModel"
-                      x:Name="self"
-                      >
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<VerticalStackLayout
+    x:Class="androkat.hu.Views.ContentItemView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
+    x:Name="self"
+    x:DataType="viewmodels:ContentItemViewModel">
     <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource CardviewbackDark}, Light={StaticResource Cardviewback}}">
         <Grid>
             <Grid.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding NavigateToDetailCommand}" />
             </Grid.GestureRecognizers>
-            <HorizontalStackLayout>                
+            <HorizontalStackLayout>
 
-                <Image Aspect="AspectFit"
-                   MinimumWidthRequest="{x:OnIdiom Phone=48}"
-                   MinimumHeightRequest="{x:OnIdiom Phone=48}"
-                   MaximumHeightRequest="{x:OnIdiom Phone=48}"
-                   MaximumWidthRequest="{x:OnIdiom Phone=48}"
-                   Source="{Binding ContentEntity.Image}"
-                   Loaded="Image_Loaded"
-                   HorizontalOptions="Start"
-                   VerticalOptions="Center"
-                   Margin="0,0,15,0" />
+                <Image
+                    Margin="0,0,15,0"
+                    Aspect="AspectFit"
+                    HorizontalOptions="Start"
+                    Loaded="Image_Loaded"
+                    MaximumHeightRequest="{x:OnIdiom Phone=48}"
+                    MaximumWidthRequest="{x:OnIdiom Phone=48}"
+                    MinimumHeightRequest="{x:OnIdiom Phone=48}"
+                    MinimumWidthRequest="{x:OnIdiom Phone=48}"
+                    Source="{Binding ContentEntity.Image}"
+                    VerticalOptions="Center" />
 
                 <VerticalStackLayout VerticalOptions="FillAndExpand">
-                    <Label Text="{Binding ContentEntity.Cim}"
-                       MaxLines="1"
-                       HorizontalOptions="Start"
-                       LineBreakMode="WordWrap"
-                       MaximumWidthRequest="{x:OnIdiom Phone=250}"
-                       Style="{OnIdiom Default={StaticResource BodyXLLabelStyle},Phone={StaticResource BodyLLabelStyle}}" />
-                    <Label Text="{Binding datum}"
-                       LineBreakMode="TailTruncation"
-                       MaxLines="1"
-                       Style="{OnIdiom Default={StaticResource BodyMLabelStyle},Phone={StaticResource BodySLabelStyle}}" />
-                    <Label Text="{Binding forras}"
-                       LineBreakMode="TailTruncation"
-                       MaxLines="1"
-                       Style="{OnIdiom Default={StaticResource BodyMLabelStyle},Phone={StaticResource BodySLabelStyle}}" />
-                </VerticalStackLayout>                
-                
+                    <Label
+                        HorizontalOptions="Start"
+                        LineBreakMode="WordWrap"
+                        MaxLines="1"
+                        MaximumWidthRequest="{x:OnIdiom Phone=250}"
+                        Style="{OnIdiom Default={StaticResource BodyXLLabelStyle},
+                                        Phone={StaticResource BodyLLabelStyle}}"
+                        Text="{Binding ContentEntity.Cim}" />
+                    <Label
+                        LineBreakMode="TailTruncation"
+                        MaxLines="1"
+                        Style="{OnIdiom Default={StaticResource BodyMLabelStyle},
+                                        Phone={StaticResource BodySLabelStyle}}"
+                        Text="{Binding datum}" />
+                    <Label
+                        LineBreakMode="TailTruncation"
+                        MaxLines="1"
+                        Style="{OnIdiom Default={StaticResource BodyMLabelStyle},
+                                        Phone={StaticResource BodySLabelStyle}}"
+                        Text="{Binding forras}" />
+                </VerticalStackLayout>
+
             </HorizontalStackLayout>
         </Grid>
 

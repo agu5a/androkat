@@ -14,11 +14,11 @@ public partial class IgeNaptarPage : ContentPage
 
     private async void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
     {
-        await ViewModel.InitializeAsync(e.NewDate.Day);
+        await ViewModel.InitializeAsync(e.NewDate);
     }
 
     protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
-        await ViewModel.InitializeAsync(100);
+        await ViewModel.InitializeAsync(DateTime.Now);
     }
 }

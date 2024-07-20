@@ -1,44 +1,66 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
+<ContentPage
+    x:Class="androkat.hu.Pages.IgeNaptarPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
-    Title="IgeNaptár"
-    x:Name="this"
-    
     xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
-    Style="{StaticResource MainSectionStyle}"
-    
+    x:Name="this"
+    Title="IgeNaptár"
     x:DataType="viewmodels:IgeNaptarViewModel"
-    x:Class="androkat.hu.Pages.IgeNaptarPage">
+    Style="{StaticResource MainSectionStyle}">
     <ContentPage.Content>
-        <ScrollView VerticalOptions="FillAndExpand" Margin="5,0,5,0">
-            <StackLayout Orientation="Vertical" Padding="10" Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}">
-                <DatePicker x:Name="startDatePicker" MinimumDate="{Binding MinDate}" 
-                            MaximumDate="{Binding MaxDate}" Date="{Binding SelectedDate, Mode=TwoWay}"
-                             DateSelected="DatePicker_DateSelected" />
-                <CarouselView ItemsSource="{Binding Contents}">
-                    <CarouselView.ItemTemplate>
-                        <DataTemplate x:DataType="viewmodels:IgeNaptarView">
-                            <StackLayout>
-                                <Frame HasShadow="True" BorderColor="DarkGray" CornerRadius="5"
-                                       Margin="20" HeightRequest="300" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
-                                    <StackLayout>
-                                        <WebView Margin="5,0,5,0" x:Name="MyWebView" android:WebView.MixedContentMode="AlwaysAllow"
-                                                 android:WebView.EnableZoomControls="false"
-                                                 android:WebView.DisplayZoomControls="false">
-                                            <WebView.Source>
-                                                <HtmlWebViewSource Html="{Binding Path=Html}" android:WebView.MixedContentMode="AlwaysAllow">
-                                                </HtmlWebViewSource>
-                                            </WebView.Source>
-                                        </WebView>
-                                    </StackLayout>
-                                </Frame>
-                            </StackLayout>
-                        </DataTemplate>
-                    </CarouselView.ItemTemplate>
-                </CarouselView> 
-            </StackLayout>
-        </ScrollView>
+        <Grid
+            Margin="6"
+            Padding="6"
+            Background="{AppThemeBinding Light={StaticResource Grey1},
+                                         Dark={StaticResource Grey9}}"
+            RowDefinitions="auto,auto,*"
+            RowSpacing="{OnIdiom Phone=6}"
+            VerticalOptions="FillAndExpand">
+            <Label
+                Grid.Row="0"
+                Margin="0,10,0,10"
+                HorizontalOptions="Start"
+                Style="{OnIdiom Phone={StaticResource SH6LabelStyle}}"
+                Text="Válassz dátumot" />
+            <DatePicker
+                x:Name="startDatePicker"
+                Grid.Row="1"
+                Date="{Binding SelectedDate, Mode=TwoWay}"
+                DateSelected="DatePicker_DateSelected"
+                MaximumDate="{Binding MaxDate}"
+                MinimumDate="{Binding MinDate}" />
+            <CarouselView
+                Grid.Row="2"
+                ItemsSource="{Binding Contents}"
+                Position="{Binding Position}"
+                VerticalOptions="FillAndExpand">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodels:IgeNaptarView">
+                        <ScrollView Margin="0,0,0,0" VerticalOptions="FillAndExpand">
+                            <Frame
+                                Margin="8"
+                                BorderColor="DarkGray"
+                                CornerRadius="5"
+                                HasShadow="True"
+                                HorizontalOptions="Center"
+                                VerticalOptions="CenterAndExpand">
+                                <WebView
+                                    x:Name="MyWebView"
+                                    Margin="0,0,0,0"
+                                    android:WebView.DisplayZoomControls="false"
+                                    android:WebView.EnableZoomControls="false"
+                                    VerticalOptions="FillAndExpand">
+                                    <WebView.Source>
+                                        <HtmlWebViewSource Html="{Binding Path=Html}" />
+                                    </WebView.Source>
+                                </WebView>
+                            </Frame>
+                        </ScrollView>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

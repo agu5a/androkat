@@ -1,44 +1,65 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
+<ContentPage
+    x:Class="androkat.hu.Pages.GyonasPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Gyónás"
-    x:Name="this"
-    
     xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
-    Style="{StaticResource MainSectionStyle}"
+    x:Name="this"
+    Title="Gyónás"
     x:DataType="viewmodels:GyonasViewModel"
-    x:Class="androkat.hu.Pages.GyonasPage">
+    Style="{StaticResource MainSectionStyle}">
     <Grid>
         <ScrollView>
             <VerticalStackLayout Padding="5">
-                <Label Text="Figyelem! Az alkalmazás a felkészülést segíteni, nem helyettesíti a szentségi gyónást." FontSize="16" Margin="10,10,0,10" />
-                <FlexLayout x:Name="flexLayout" BindableLayout.ItemsSource="{Binding Items}"
-                        Wrap="Wrap" AlignItems="Start" AlignContent="Start"  
-                        JustifyContent="SpaceAround" Margin="3">
+                <Label
+                    Margin="10,10,0,10"
+                    FontSize="16"
+                    Text="Figyelem! Az alkalmazás a felkészülést segíteni, nem helyettesíti a szentségi gyónást." />
+                <FlexLayout
+                    x:Name="flexLayout"
+                    Margin="3"
+                    AlignContent="Start"
+                    AlignItems="Start"
+                    BindableLayout.ItemsSource="{Binding Items}"
+                    JustifyContent="SpaceAround"
+                    Wrap="Wrap">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="viewmodels:GyonasTile">
                             <StackLayout>
-                                <Frame HasShadow="True" BorderColor="DarkGray" CornerRadius="5"
-                                       Margin="3" WidthRequest="110" HeightRequest="110" BackgroundColor="#00796B" Padding="2">
+                                <Frame
+                                    Margin="3"
+                                    Padding="2"
+                                    BackgroundColor="#00796B"
+                                    BorderColor="DarkGray"
+                                    CornerRadius="5"
+                                    HasShadow="True"
+                                    HeightRequest="110"
+                                    WidthRequest="110">
                                     <Frame.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="{Binding Name}" />
                                     </Frame.GestureRecognizers>
                                     <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                                         <Label Text="{Binding Name}" FontSize="14" TextColor="#F5F5F5" />
+                                        <Label
+                                            FontSize="14"
+                                            Text="{Binding Name}"
+                                            TextColor="#F5F5F5" />
                                     </VerticalStackLayout>
                                 </Frame>
                             </StackLayout>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </FlexLayout>
-                <Label Text="Utolsó gyónás előkészítés:" FontSize="16" Margin="10,10,0,0" />
+                <Label
+                    Margin="10,10,0,0"
+                    FontSize="16"
+                    Text="Utolsó gyónás előkészítés:" />
             </VerticalStackLayout>
         </ScrollView>
 
-        <ActivityIndicator x:Name="activityIndicator"
-                           IsRunning="True"
-                           VerticalOptions="Center" />
+        <ActivityIndicator
+            x:Name="activityIndicator"
+            IsRunning="True"
+            VerticalOptions="Center" />
     </Grid>
 
 </ContentPage>

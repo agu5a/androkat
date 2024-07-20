@@ -11,6 +11,7 @@
     Style="{StaticResource MainSectionStyle}">
     <ContentPage.Content>
         <Grid
+            Margin="6"
             Padding="5"
             Background="{AppThemeBinding Light={StaticResource Grey1},
                                          Dark={StaticResource Grey9}}"

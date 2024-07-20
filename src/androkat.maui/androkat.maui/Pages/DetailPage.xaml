@@ -1,98 +1,114 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage x:Class="androkat.hu.Pages.DetailPage"
-             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
-             xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
-             x:Name="this"
-             Title="{Binding ContentView.detailscim}"
-             Style="{StaticResource DetailPageStyle}"
-             x:DataType="viewmodels:DetailViewModel">
+<ContentPage
+    x:Class="androkat.hu.Pages.DetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
+    x:Name="this"
+    Title="{Binding ContentView.detailscim}"
+    x:DataType="viewmodels:DetailViewModel"
+    Style="{StaticResource DetailPageStyle}">
 
-    <ScrollView VerticalOptions="FillAndExpand" Margin="5,0,5,0">
-        <Grid Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}" Padding="{OnIdiom Phone=22}"
-                      ColumnDefinitions="auto, *"
-                      ColumnSpacing="{OnIdiom Phone=10}"
-                      RowDefinitions="auto,auto,auto,auto"
-                      RowSpacing="{OnIdiom Phone=6}">
+    <ScrollView Margin="5,0,5,0" VerticalOptions="FillAndExpand">
+        <Grid
+            Padding="{OnIdiom Phone=22}"
+            Background="{AppThemeBinding Light={StaticResource Grey1},
+                                         Dark={StaticResource Grey9}}"
+            ColumnDefinitions="auto, *"
+            ColumnSpacing="{OnIdiom Phone=10}"
+            RowDefinitions="auto,auto,auto,auto"
+            RowSpacing="{OnIdiom Phone=6}">
 
-            <Label Text="{Binding ContentView.detailscim}"
-               Style="{OnIdiom Phone={StaticResource H6LabelStyle}}"
-               Grid.Column="0"
-               Grid.ColumnSpan="2"
-               Grid.Row="0"
-               Margin="0,10,0,10"               
-               LineBreakMode="WordWrap"
-               VerticalOptions="FillAndExpand" 
-               HorizontalOptions="Start" />
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,10"
+                HorizontalOptions="Start"
+                LineBreakMode="WordWrap"
+                Style="{OnIdiom Phone={StaticResource H6LabelStyle}}"
+                Text="{Binding ContentView.detailscim}"
+                VerticalOptions="FillAndExpand" />
 
-            <Image Aspect="AspectFit"
-               Grid.Column="0"
-               Grid.Row="1"   
-               HorizontalOptions="Center"
-               VerticalOptions="Start"
-               HeightRequest="{OnIdiom Phone=48}"
-               Source="{Binding ContentView.ContentEntity.Image}"
-               WidthRequest="{OnIdiom Phone=48}" />
+            <Image
+                Grid.Row="1"
+                Grid.Column="0"
+                Aspect="AspectFit"
+                HeightRequest="{OnIdiom Phone=48}"
+                HorizontalOptions="Center"
+                Source="{Binding ContentView.ContentEntity.Image}"
+                VerticalOptions="Start"
+                WidthRequest="{OnIdiom Phone=48}" />
 
-            <VerticalStackLayout Grid.Column="1" Grid.Row="1">
-                <Label                            
-                           Style="{OnIdiom Phone={StaticResource BodyMLabelStyle}}"
-                           Text="{Binding ContentView.ContentEntity.Cim}" />
-                <Label 
-                           Style="{StaticResource BodyMLabelStyle}" TextType="Html"
-                           Text="{Binding ContentView.forras}" />
-                <Label 
-                           Style="{StaticResource BodyMLabelStyle}" TextType="Html"
-                           Text="{Binding ContentView.datum}" />
+            <VerticalStackLayout Grid.Row="1" Grid.Column="1">
+                <Label Style="{OnIdiom Phone={StaticResource BodyMLabelStyle}}" Text="{Binding ContentView.ContentEntity.Cim}" />
+                <Label
+                    Style="{StaticResource BodyMLabelStyle}"
+                    Text="{Binding ContentView.forras}"
+                    TextType="Html" />
+                <Label
+                    Style="{StaticResource BodyMLabelStyle}"
+                    Text="{Binding ContentView.datum}"
+                    TextType="Html" />
 
             </VerticalStackLayout>
 
-            <HorizontalStackLayout Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Margin="0,10,0,0">
+            <HorizontalStackLayout
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,0">
 
-                <Button BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
-                            SemanticProperties.Description="Hangos felolvasás"
-                            HeightRequest="44"
-                            WidthRequest="44"
-                            Margin="0,0,5,0"
-                            Command="{Binding StartTextToSpeechCommand}"
-                            ImageSource="voice">
-                </Button>
-                <Button BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
-                            HeightRequest="44"
-                            WidthRequest="44"
-                            Margin="0,0,5,0"
-                        SemanticProperties.Description="Hozzáadás kedvencekhez"
-                            Command="{Binding AddFavoriteCommand}"
-                            ImageSource="favorite2">
+                <Button
+                    Margin="0,0,5,0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark},
+                                                      Dark={StaticResource PrimaryDark}}"
+                    Command="{Binding StartTextToSpeechCommand}"
+                    HeightRequest="44"
+                    ImageSource="voice"
+                    SemanticProperties.Description="Hangos felolvasás"
+                    WidthRequest="44" />
+                <Button
+                    Margin="0,0,5,0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark},
+                                                      Dark={StaticResource PrimaryDark}}"
+                    Command="{Binding AddFavoriteCommand}"
+                    HeightRequest="44"
+                    ImageSource="favorite2"
+                    SemanticProperties.Description="Hozzáadás kedvencekhez"
+                    WidthRequest="44">
                     <Button.Triggers>
-                        <DataTrigger Binding="{Binding ContentView.IsSubscribed }"
-                                         Value="true"
-                                         TargetType="Button">
-                            <Setter Property="Text"
-                                        Value="Subscribed" />
+                        <DataTrigger
+                            Binding="{Binding ContentView.IsSubscribed}"
+                            TargetType="Button"
+                            Value="true">
+                            <Setter Property="Text" Value="Subscribed" />
                         </DataTrigger>
                     </Button.Triggers>
                 </Button>
-                <Button BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
-                            SemanticProperties.Description="Küldés"
-                            HeightRequest="44"
-                            WidthRequest="44"
-                            Margin="0,0,5,0"
-                            Command="{Binding ShareContentCommand}"
-                            ImageSource="ic_send_24dp2">
-                </Button>
+                <Button
+                    Margin="0,0,5,0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark},
+                                                      Dark={StaticResource PrimaryDark}}"
+                    Command="{Binding ShareContentCommand}"
+                    HeightRequest="44"
+                    ImageSource="ic_send_24dp2"
+                    SemanticProperties.Description="Küldés"
+                    WidthRequest="44" />
             </HorizontalStackLayout>
-            <VerticalStackLayout Margin="0,10,0,10"
-                             Grid.Column="{OnIdiom Phone=0}"
-                 Grid.ColumnSpan="{OnIdiom Phone=2}"
-                 Grid.Row="{OnIdiom Phone=3}">
-                <WebView x:Name="MyWebView" android:WebView.MixedContentMode="AlwaysAllow"
-                 android:WebView.EnableZoomControls="false"
-                 android:WebView.DisplayZoomControls="false">
+            <VerticalStackLayout
+                Grid.Row="{OnIdiom Phone=3}"
+                Grid.Column="{OnIdiom Phone=0}"
+                Grid.ColumnSpan="{OnIdiom Phone=2}"
+                Margin="0,10,0,10">
+                <WebView
+                    x:Name="MyWebView"
+                    android:WebView.DisplayZoomControls="false"
+                    android:WebView.EnableZoomControls="false"
+                    android:WebView.MixedContentMode="AlwaysAllow">
                     <WebView.Source>
-                        <HtmlWebViewSource Html="{Binding ContentView.ContentEntity.Idezet}" android:WebView.MixedContentMode="AlwaysAllow">
-                        </HtmlWebViewSource>
+                        <HtmlWebViewSource android:WebView.MixedContentMode="AlwaysAllow" Html="{Binding ContentView.ContentEntity.Idezet}" />
                     </WebView.Source>
                 </WebView>
             </VerticalStackLayout>
