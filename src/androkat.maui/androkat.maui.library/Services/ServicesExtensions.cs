@@ -15,6 +15,7 @@ public static class ServicesExtensions
         builder.Services.AddSingleton<IRepository>(s => ActivatorUtilities.CreateInstance<Repository>(s, dbPath));
         builder.Services.AddSingleton<IDownloadService, DownloadService>();
         builder.Services.AddSingleton<ISourceData, SourceDataMapper>();
+        builder.Services.AddSingleton<IResourceData, ResourceDataService>();
         builder.Services.AddSingleton<IHelperSharedPreferences, HelperSharedPreferences>();
         builder.Services.AddSingleton<IAndrokatService, AndrokatService>();
         builder.Services.AddSingleton<IPageService, PageService>();

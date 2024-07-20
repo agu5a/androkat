@@ -1,41 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
+<ContentPage
+    x:Class="androkat.hu.Pages.KeresztutPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
-    Title="Keresztút"
-    x:Name="this"
-    
     xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
-    Style="{StaticResource MainSectionStyle}"
-    
+    x:Name="this"
+    Title="Keresztút"
     x:DataType="viewmodels:KeresztutViewModel"
-    x:Class="androkat.hu.Pages.KeresztutPage">
+    Style="{StaticResource MainSectionStyle}">
     <ContentPage.Content>
-        <ScrollView VerticalOptions="FillAndExpand" Margin="5,0,5,0">
-            <StackLayout Orientation="Vertical" Padding="10" Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}">
-                <CarouselView ItemsSource="{Binding Contents}">
-                    <CarouselView.ItemTemplate>
-                        <DataTemplate x:DataType="viewmodels:KeresztutView">
-                            <StackLayout>
-                                <Frame HasShadow="True" BorderColor="DarkGray" CornerRadius="5"
-                                       Margin="20" HeightRequest="300" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
-                                    <StackLayout>
-                                        <WebView Margin="5,0,5,0" x:Name="MyWebView" android:WebView.MixedContentMode="AlwaysAllow"
-                                                 android:WebView.EnableZoomControls="false"
-                                                 android:WebView.DisplayZoomControls="false">
-                                            <WebView.Source>
-                                                <HtmlWebViewSource Html="{Binding Path=Html}" android:WebView.MixedContentMode="AlwaysAllow">
-                                                </HtmlWebViewSource>
-                                            </WebView.Source>
-                                        </WebView>
-                                    </StackLayout>
-                                </Frame>
-                            </StackLayout>
-                        </DataTemplate>
-                    </CarouselView.ItemTemplate>
-                </CarouselView> 
-            </StackLayout>
-        </ScrollView>
+        <Grid
+            Padding="5"
+            Background="{AppThemeBinding Light={StaticResource Grey1},
+                                         Dark={StaticResource Grey9}}"
+            VerticalOptions="FillAndExpand">
+            <CarouselView ItemsSource="{Binding Contents}" VerticalOptions="FillAndExpand">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodels:KeresztutView">
+                        <ScrollView Margin="0,0,0,0" VerticalOptions="FillAndExpand">
+                            <Frame
+                                Margin="8"
+                                BorderColor="DarkGray"
+                                CornerRadius="5"
+                                HasShadow="True"
+                                HorizontalOptions="Center"
+                                VerticalOptions="CenterAndExpand">
+                                <WebView
+                                    x:Name="MyWebView"
+                                    Margin="0,0,0,0"
+                                    android:WebView.DisplayZoomControls="false"
+                                    android:WebView.EnableZoomControls="false"
+                                    VerticalOptions="FillAndExpand">
+                                    <WebView.Source>
+                                        <HtmlWebViewSource Html="{Binding Path=Html}" />
+                                    </WebView.Source>
+                                </WebView>
+                            </Frame>
+                        </ScrollView>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
