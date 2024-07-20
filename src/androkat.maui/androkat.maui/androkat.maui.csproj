@@ -14,12 +14,12 @@
 		<ApplicationTitle>AndroKat</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>androkat.hu</ApplicationId>
+		<ApplicationId>hu.AndroKat</ApplicationId>
 		<ApplicationIdGuid>0BE13A10-A7E4-44D6-AFF1-12038428A25C</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.18</ApplicationDisplayVersion>
-		<ApplicationVersion>18</ApplicationVersion>
+		<ApplicationDisplayVersion>03.55</ApplicationDisplayVersion>
+		<ApplicationVersion>318</ApplicationVersion>
 
 		<!-- Required for C# Hot Reload -->
 		<UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
