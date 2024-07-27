@@ -2,6 +2,7 @@
 
 public static class Settings
 {
+    public static DateTime LastVersionCheck { get; set; } = DateTime.MinValue;
     public static DateTime LastUpdate { get; set; } = DateTime.MinValue;
 
     public static AppTheme Theme

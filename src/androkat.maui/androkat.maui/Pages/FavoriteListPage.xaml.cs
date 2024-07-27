@@ -12,6 +12,8 @@ public partial class FavoriteListPage : ContentPage
     private readonly IPageService _pageService;
     private int _stackCount = 0;
     private FavoriteListViewModel ViewModel => BindingContext as FavoriteListViewModel;
+    private static readonly string[] valueArray = ["application/json"];
+    private static readonly string[] value = ["application/json"];
 
     public FavoriteListPage(FavoriteListViewModel viewModel, IPageService pageService)
     {
@@ -20,7 +22,7 @@ public partial class FavoriteListPage : ContentPage
         _pageService = pageService;
     }
 
-    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         ViewModel.PageTitle = GetPageTitle();
         if (_stackCount != 2)
@@ -28,12 +30,20 @@ public partial class FavoriteListPage : ContentPage
             //Nem DetailPage-ről jöttünk viszsa, így üres oldallal indulunk
             ViewModel.Contents.Clear();
         }
-        await ViewModel.InitializeAsync();
         base.OnNavigatedTo(args);
     }
 
-    private static readonly string[] valueArray = ["application/json"];
-    private static readonly string[] value = ["application/json"];
+    protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
+    {
+        _stackCount = Application.Current.MainPage.Navigation.NavigationStack.Count;
+        base.OnNavigatedFrom(args);
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await ViewModel.InitializeAsync();
+    }
 
     private string GetPageTitle()
     {
@@ -41,12 +51,6 @@ public partial class FavoriteListPage : ContentPage
             return $"Kedvencek ({ViewModel.FavoriteCount})";
         else
             return $"Kedvencek";
-    }
-
-    protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
-    {
-        _stackCount = Application.Current.MainPage.Navigation.NavigationStack.Count;
-        base.OnNavigatedFrom(args);
     }
 
     private async void Button_Clicked(object sender, EventArgs e)

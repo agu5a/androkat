@@ -13,7 +13,7 @@ public partial class ContentListPage : ContentPage
         BindingContext = viewModel;
     }
 
-    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         // Hack: Get the category Id
         ViewModel.Id = GetCategoryIdFromRoute();
@@ -23,7 +23,6 @@ public partial class ContentListPage : ContentPage
             //Nem DetailPage-ről jöttünk viszsa, így üres oldallal indulunk
             ViewModel.Contents.Clear();
         }
-        await ViewModel.InitializeAsync();
         base.OnNavigatedTo(args);
     }
 
@@ -31,6 +30,16 @@ public partial class ContentListPage : ContentPage
     {
         _stackCount = Application.Current.MainPage.Navigation.NavigationStack.Count;
         base.OnNavigatedFrom(args);
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        activityIndicator.IsRunning = true;
+        activityIndicator.IsVisible = true;
+        await ViewModel.InitializeAsync();
+        activityIndicator.IsRunning = false;
+        activityIndicator.IsVisible = false;
     }
 
     private static string GetPageTitle(string pageTypeId)

@@ -38,19 +38,41 @@ public partial class ContentListViewModel : ViewModelBase
     {
         //Delay on first load until window loads
         await Task.Delay(1000);
+        await UpdateData();
         await CheckNewVersion();
         await FetchAsync();
+    }
+
+    private async Task UpdateData()
+    {
+        try
+        {
+            if (Settings.LastUpdate < DateTime.Now.AddMinutes(-5))
+            {
+                var result = await _pageService.DownloadAll();
+                if (result == -1)
+                {
+                    await Shell.Current.DisplayAlert("Hiba!", "Nem érhető el az Androkat szervere! Próbálja meg később, vagy írjon az uzenet@androkat.hu email címre!", "OK");
+                }
+
+                Settings.LastUpdate = DateTime.Now;
+            }
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Hiba", ex.Message, "Bezárás");
+        }
     }
 
     private async Task CheckNewVersion()
     {
         try
         {
-            if (Settings.LastUpdate < DateTime.Now.AddHours(-1))
+            if (Settings.LastVersionCheck < DateTime.Now.AddHours(-1))
             {
                 var serverInfo = await _androkatService.GetServerInfo();
                 var ver = serverInfo.Find(f => f.Key == "versionmaui");
-                if(ver is null)
+                if (ver is null)
                 {
                     return;
                 }

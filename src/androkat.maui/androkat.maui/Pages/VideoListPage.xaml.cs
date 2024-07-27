@@ -12,10 +12,9 @@ public partial class VideoListPage : ContentPage
         BindingContext = viewModel;
     }
 
-    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
+    protected override async void OnAppearing()
     {
-        // Hack: Get the category Id
+        base.OnAppearing();
         await ViewModel.InitializeAsync();
-        base.OnNavigatedTo(args);
     }
 }

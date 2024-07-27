@@ -36,7 +36,7 @@ public class AndrokatService : IAndrokatService
             }
         }
 
-        Settings.LastUpdate = DateTime.Now;
+        Settings.LastVersionCheck = DateTime.Now;
         return result;
     }
 

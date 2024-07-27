@@ -12,10 +12,15 @@ public partial class WebRadioPage : ContentPage
         BindingContext = viewModel;
     }
 
-    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
-        await ViewModel.InitializeAsync();
         activityIndicator.IsRunning = false;
         activityIndicator.IsVisible = false;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await ViewModel.InitializeAsync();
     }
 }

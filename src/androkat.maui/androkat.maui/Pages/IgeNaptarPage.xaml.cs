@@ -12,13 +12,14 @@ public partial class IgeNaptarPage : ContentPage
         BindingContext = viewModel;
     }
 
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await ViewModel.InitializeAsync(DateTime.Now);
+    }
+
     private async void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
     {
         await ViewModel.InitializeAsync(e.NewDate);
-    }
-
-    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
-    {
-        await ViewModel.InitializeAsync(DateTime.Now);
     }
 }

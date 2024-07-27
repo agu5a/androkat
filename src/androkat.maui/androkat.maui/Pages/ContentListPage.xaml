@@ -19,6 +19,7 @@
     </ContentPage.Resources>
     <Grid Background="{AppThemeBinding Light={StaticResource BackgroundActivity}, Dark={StaticResource BackgroundActivityDark}}">
         <CollectionView
+            Grid.Row="1"
             Margin="{OnIdiom Phone='10,10,10,0'}"
             IsGrouped="True"
             ItemsSource="{Binding Contents}"
@@ -41,5 +42,10 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
+        <ActivityIndicator
+            x:Name="activityIndicator"
+            IsRunning="False"
+            IsVisible="False"
+            VerticalOptions="Center" />
     </Grid>
 </ContentPage>

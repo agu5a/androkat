@@ -36,9 +36,13 @@ public partial class SettingsPage : ContentPage
     {
         var result = await _pageService.DownloadAll();
         if (result != -1)
+        {
             await Application.Current.MainPage.DisplayAlert("Siker!", "Minden letöltés kész", "OK");
-        else if (result == -1) //nem érhető el az androkat.hu
+        }
+        else if (result == -1)
+        {
             await Application.Current.MainPage.DisplayAlert("Hiba!", "Nem érhető el az Androkat szervere! Próbálja meg később, vagy írjon az uzenet@androkat.hu email címre!", "OK");
+        }
     }
 
     private async void Button_Clicked_1(object sender, EventArgs e)
@@ -65,7 +69,7 @@ public partial class SettingsPage : ContentPage
             await SetDbButton();
 
             using var cancellationTokenSource = new CancellationTokenSource();
-            var toast = Toast.Make("Offline adatbázis sikeresen törölve.", ToastDuration.Short, 14d);            
+            var toast = Toast.Make("Offline adatbázis sikeresen törölve.", ToastDuration.Short, 14d);
             await toast.Show(cancellationTokenSource.Token);
         }
     }

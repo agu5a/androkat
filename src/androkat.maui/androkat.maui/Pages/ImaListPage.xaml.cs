@@ -13,7 +13,7 @@ public partial class ImaListPage : ContentPage
         BindingContext = viewModel;
     }
 
-    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {        
         ViewModel.PageTitle = "Imádságok";
         if (_stackCount != 2)
@@ -21,7 +21,6 @@ public partial class ImaListPage : ContentPage
             //Nem DetailPage-ről jöttünk viszsa, így üres oldallal indulunk
             ViewModel.Contents.Clear();
         }
-        await ViewModel.InitializeAsync();
         base.OnNavigatedTo(args);
     }
 
@@ -29,5 +28,11 @@ public partial class ImaListPage : ContentPage
     {
         _stackCount = Application.Current.MainPage.Navigation.NavigationStack.Count;
         base.OnNavigatedFrom(args);
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await ViewModel.InitializeAsync();
     }
 }

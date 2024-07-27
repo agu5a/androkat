@@ -12,8 +12,9 @@ public partial class KeresztutPage : ContentPage
         BindingContext = viewModel;
     }
 
-    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
+    protected override async void OnAppearing()
     {
+        base.OnAppearing();
         await ViewModel.InitializeAsync();
     }
 }
