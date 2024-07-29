@@ -97,9 +97,10 @@
                 $('.se-wrapper-code').val(temp2);
             });
 
-            $('.se-wrapper-wysiwyg').on('DOMSubtreeModified', function () {
+            editor.onChange = function (contents, core) 
+            {
                 $('#Idezet').val($('.se-wrapper-wysiwyg').html());
-            });
+            }            
         });
     </script>
 }
