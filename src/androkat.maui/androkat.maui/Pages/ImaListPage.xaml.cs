@@ -5,6 +5,8 @@ namespace androkat.hu.Pages;
 public partial class ImaListPage : ContentPage
 {
     private int _stackCount = 0;
+    private int _pageNumber = 1;
+    private readonly int _pageSize = 10;
     private ImaListViewModel ViewModel => BindingContext as ImaListViewModel;
 
     public ImaListPage(ImaListViewModel viewModel)
@@ -32,7 +34,13 @@ public partial class ImaListPage : ContentPage
 
     protected override async void OnAppearing()
     {
-        base.OnAppearing();
-        await ViewModel.InitializeAsync();
+        await ViewModel.InitializeAsync(_pageNumber, _pageSize);
+        base.OnAppearing();        
+    }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S1186:Methods should not be empty", Justification = "<Pending>")]
+    private async void CollectionView_RemainingItemsThresholdReached(object sender, EventArgs e)
+    {
+        await ViewModel.InitializeAsync(++_pageNumber, _pageSize);
     }
 }

@@ -32,9 +32,12 @@
                 MaximumDate="{Binding MaxDate}"
                 MinimumDate="{Binding MinDate}" />
             <CarouselView
+                x:Name="MyCarouselView"
                 Grid.Row="2"
+                CurrentItem="{Binding CurrentItem, Mode=TwoWay}"
                 ItemsSource="{Binding Contents}"
-                Position="{Binding Position}"
+                Loop="True"
+                Position="{Binding Position, Mode=TwoWay}"
                 VerticalOptions="FillAndExpand">
                 <CarouselView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodels:IgeNaptarView">

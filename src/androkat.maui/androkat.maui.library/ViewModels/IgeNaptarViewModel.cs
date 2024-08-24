@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using MvvmHelpers;
 using System.Text.Json;
 using System.Linq;
+using System.Buffers.Text;
 
 namespace androkat.maui.library.ViewModels;
 
@@ -34,6 +35,9 @@ public partial class IgeNaptarViewModel : ViewModelBase
     [ObservableProperty]
     int position;
 
+    [ObservableProperty]
+    IgeNaptarView currentItem;
+
     public async Task InitializeAsync(DateTime day)
     {
         //Delay on first load until window loads
@@ -43,15 +47,22 @@ public partial class IgeNaptarViewModel : ViewModelBase
         var dayContents = JsonSerializer.Deserialize<Dictionary<string, string>>(igenaptar);
 
         var s = StartCheck(day, dayContents);
-        Contents.ReplaceRange(s);
-        if (s.Count > 0)
+        Contents.ReplaceRange(s);        
+    }
+
+    public void SetPosition(DateTime day)
+    {
+        if (Contents.Count > 0)
         {
-            var item = s.IndexOf(s.FirstOrDefault(f => f.Html.Contains(day.ToString("MM-dd")), s[0]));
+            var item = Contents.IndexOf(Contents.FirstOrDefault(f => f.Html.Contains(day.ToString("MM-dd")), Contents[0]));
             Position = item;
+            CurrentItem = Contents[item];
+            //OnPropertyChanged(nameof(Position))
+            //Position="{Binding Position, Mode=TwoWay}"
         }
     }
 
-    private List<IgeNaptarView> StartCheck(DateTime date, Dictionary<string, string> dayContents)
+    private static List<IgeNaptarView> StartCheck(DateTime date, Dictionary<string, string> dayContents)
     {
         string tegnapelott2 = date.AddDays(-4).ToString("MM-dd");
         string tegnapelott1 = date.AddDays(-3).ToString("MM-dd");
@@ -132,5 +143,35 @@ public partial class IgeNaptarViewModel : ViewModelBase
         }
 
         return s;
+    }
+}
+
+public class CustomCarouselView : CarouselView
+{
+    public new static readonly BindableProperty PositionProperty =
+        BindableProperty.Create(nameof(Position), typeof(int), typeof(CustomCarouselView), propertyChanged: OnPositionPropertyChanged);
+
+    private static void OnPositionPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var carouselView = bindable as CustomCarouselView;
+        if (carouselView.viewModel is IgeNaptarViewModel myLibraryVm)
+        {
+            carouselView.ScrollTo(myLibraryVm.Position);
+        }
+    }
+
+    public new int Position
+    {
+        get => (int)GetValue(PositionProperty);
+        set => SetValue(PositionProperty, value);
+    }
+
+    private IgeNaptarViewModel viewModel;
+
+    protected override void OnBindingContextChanged()
+    {
+        base.OnBindingContextChanged();
+
+        viewModel = BindingContext as IgeNaptarViewModel;
     }
 }

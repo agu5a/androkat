@@ -306,13 +306,16 @@ public class Repository : IRepository
         return [];
     }
 
-    public async Task<List<ImadsagEntity>> GetImaContents()
+    public async Task<List<ImadsagEntity>> GetImaContents(int pageNumber, int pageSize)
     {
         try
         {
             Init();
             return await conn.Table<ImadsagEntity>()
-                .Where(w => !w.IsHided).OrderBy(o => o.Cim).ToListAsync();
+                .Where(w => !w.IsHided).OrderBy(o => o.Cim)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
         catch (Exception ex)
         {

@@ -18,6 +18,7 @@ public partial class SettingsPage : ContentPage
         _pageService = pageService;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S2325:Methods and properties that don't access instance data should be static", Justification = "<Pending>")]
     private void MaxOffline_TextChanged(object sender, TextChangedEventArgs e)
     {
         if (!string.IsNullOrWhiteSpace(e.NewTextValue) && int.TryParse(e.NewTextValue, out int max) && max > 15)
@@ -54,6 +55,7 @@ public partial class SettingsPage : ContentPage
         });
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S2325:Methods and properties that don't access instance data should be static", Justification = "<Pending>")]
     private void Switch_Toggled(object sender, ToggledEventArgs e)
     {
         TheTheme.SetTheme();

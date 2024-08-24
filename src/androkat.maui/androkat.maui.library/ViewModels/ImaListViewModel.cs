@@ -25,16 +25,16 @@ public partial class ImaListViewModel : ViewModelBase
         Contents = [];
     }
 
-    public async Task InitializeAsync()
+    public async Task InitializeAsync(int pageNumber, int pageSize)
     {
         //Delay on first load until window loads
         await Task.Delay(1000);
-        await FetchAsync();
+        await FetchAsync(pageNumber, pageSize);
     }
 
-    private async Task FetchAsync()
+    private async Task FetchAsync(int pageNumber, int pageSize)
     {
-        var imaContents = await _pageService.GetImaContents();
+        var imaContents = await _pageService.GetImaContents(pageNumber, pageSize);
 
         if (imaContents == null)
         {
@@ -48,7 +48,7 @@ public partial class ImaListViewModel : ViewModelBase
 
         var temp = ConvertToViewModels(imaContents);
         var s = new List<List<ImaContentViewModel>> { temp.ToList() };
-        Contents.ReplaceRange(s);
+        Contents.AddRange(s);
     }
 
     private static List<ImaContentViewModel> ConvertToViewModels(IEnumerable<ImadsagEntity> items)

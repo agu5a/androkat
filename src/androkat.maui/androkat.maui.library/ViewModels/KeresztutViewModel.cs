@@ -20,7 +20,7 @@ public partial class KeresztutViewModel : ViewModelBase
     public async Task InitializeAsync()
     {
         //Delay on first load until window loads
-        await Task.Delay(2000);
+        await Task.Delay(1000);
 
         try
         {

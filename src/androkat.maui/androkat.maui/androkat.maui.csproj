@@ -18,8 +18,8 @@
 		<ApplicationIdGuid>0BE13A10-A7E4-44D6-AFF1-12038428A25C</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>03.56</ApplicationDisplayVersion>
-		<ApplicationVersion>319</ApplicationVersion>
+		<ApplicationDisplayVersion>03.57</ApplicationDisplayVersion>
+		<ApplicationVersion>320</ApplicationVersion>
 
 		<!-- Required for C# Hot Reload -->
 		<UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
@@ -51,11 +51,11 @@
 
 
 	<ItemGroup>
-		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.29.0.95321">
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.32.0.97167">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.70" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.80" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -63,8 +63,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.70" />
-		<PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.70" />
+	  <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.80" />
+		<PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.80" />
 	</ItemGroup>
 
 </Project>

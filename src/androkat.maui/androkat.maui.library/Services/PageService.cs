@@ -58,9 +58,9 @@ public class PageService(IDownloadService downloadService, IRepository repositor
         return await repository.DeleteAllFavorite();
     }
 
-    public async Task<List<ImadsagEntity>> GetImaContents()
+    public async Task<List<ImadsagEntity>> GetImaContents(int pageNumber, int pageSize)
     {
-        return await repository.GetImaContents();
+        return await repository.GetImaContents(pageNumber, pageSize);
     }
 
     public async Task<int> GetFavoriteCountAsync()

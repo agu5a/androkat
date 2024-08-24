@@ -18,8 +18,7 @@ public partial class SettingsViewModel : ViewModelBase
 
     partial void OnIsDarkModeEnabledChanged(bool value) => SettingsViewModel.ChangeUserAppTheme(value);
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
-    public string AppVersion => AppInfo.VersionString;
+    public static string AppVersion => AppInfo.VersionString;
 
     static void ChangeUserAppTheme(bool activateDarkMode)
     {
