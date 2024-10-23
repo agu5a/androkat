@@ -3,6 +3,6 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
-		<NoWarn>$(NoWarn);IDE0290;IDE0028;NU1903</NoWarn>
+		<NoWarn>$(NoWarn);IDE0290;IDE0028;NU1903;NU1904</NoWarn>
 	</PropertyGroup>
 </Project>
