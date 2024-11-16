@@ -6,6 +6,6 @@ public static class TheTheme
 {
     public static void SetTheme()
     {
-        Application.Current.UserAppTheme = Settings.Theme;
+        Application.Current!.UserAppTheme = Settings.Theme;
     }
 }

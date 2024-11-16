@@ -4,7 +4,7 @@ namespace androkat.hu.Pages;
 
 public partial class VideoListPage : ContentPage
 {
-    private VideoListViewModel ViewModel => BindingContext as VideoListViewModel;
+    private VideoListViewModel ViewModel => (BindingContext as VideoListViewModel)!;
 
     public VideoListPage(VideoListViewModel viewModel)
     {

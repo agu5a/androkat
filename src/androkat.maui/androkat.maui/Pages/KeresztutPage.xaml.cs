@@ -4,7 +4,7 @@ namespace androkat.hu.Pages;
 
 public partial class KeresztutPage : ContentPage
 {
-    private KeresztutViewModel ViewModel => BindingContext as KeresztutViewModel;
+    private KeresztutViewModel ViewModel => (BindingContext as KeresztutViewModel)!;
 
     public KeresztutPage(KeresztutViewModel viewModel)
     {

@@ -38,11 +38,11 @@ public partial class SettingsPage : ContentPage
         var result = await _pageService.DownloadAll();
         if (result != -1)
         {
-            await Application.Current.MainPage.DisplayAlert("Siker!", "Minden letöltés kész", "OK");
+            await Application.Current!.Windows[0].Page!.DisplayAlert("Siker!", "Minden letöltés kész", "OK");
         }
         else if (result == -1)
         {
-            await Application.Current.MainPage.DisplayAlert("Hiba!", "Nem érhető el az Androkat szervere! Próbálja meg később, vagy írjon az uzenet@androkat.hu email címre!", "OK");
+            await Application.Current!.Windows[0].Page!.DisplayAlert("Hiba!", "Nem érhető el az Androkat szervere! Próbálja meg később, vagy írjon az uzenet@androkat.hu email címre!", "OK");
         }
     }
 

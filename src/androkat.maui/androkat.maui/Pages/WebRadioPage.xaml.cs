@@ -4,7 +4,7 @@ namespace androkat.hu.Pages;
 
 public partial class WebRadioPage : ContentPage
 {
-    private WebRadioViewModel ViewModel => BindingContext as WebRadioViewModel;
+    private WebRadioViewModel ViewModel => (BindingContext as WebRadioViewModel)!;
 
     public WebRadioPage(WebRadioViewModel viewModel)
     {

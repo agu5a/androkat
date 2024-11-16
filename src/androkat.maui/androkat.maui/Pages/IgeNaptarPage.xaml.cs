@@ -5,7 +5,7 @@ namespace androkat.hu.Pages;
 
 public partial class IgeNaptarPage : ContentPage
 {
-    private IgeNaptarViewModel ViewModel => BindingContext as IgeNaptarViewModel;
+    private IgeNaptarViewModel ViewModel => (BindingContext as IgeNaptarViewModel)!;
 
     public IgeNaptarPage(IgeNaptarViewModel viewModel)
     {

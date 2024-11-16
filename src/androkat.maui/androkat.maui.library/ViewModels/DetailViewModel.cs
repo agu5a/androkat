@@ -134,8 +134,12 @@ public partial class DetailViewModel(IPageService _pageService, ISourceData _sou
         var locale = locales.FirstOrDefault(w => w.Country.Equals("hu", StringComparison.CurrentCultureIgnoreCase) && w.Language.Equals("hu", StringComparison.CurrentCultureIgnoreCase));
         if (locale == null)
         {
-            await Application.Current.MainPage.DisplayAlert("Hiba!", "Nincs magyar nyelv telepítve a felolvasáshoz!", "OK");
-            return;
+            var mainPage = Application.Current?.Windows[0].Page;
+            if (mainPage != null)
+            {
+                await mainPage.DisplayAlert("Hiba!", "Nincs magyar nyelv telepítve a felolvasáshoz!", "OK");
+                return;
+            }
         }
 
         int max = 2000;
@@ -190,5 +194,5 @@ public partial class DetailViewModel(IPageService _pageService, ISourceData _sou
     [GeneratedRegex("<.*?>")]
     private static partial Regex TitleRegex();
     [GeneratedRegex("<.*?>")]
-    private static partial Regex IdezetRegex();      
+    private static partial Regex IdezetRegex();
 }

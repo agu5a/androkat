@@ -4,7 +4,7 @@ namespace androkat.hu.Pages;
 
 public partial class GyonasPage : ContentPage
 {
-    private GyonasViewModel ViewModel => BindingContext as GyonasViewModel;
+    private GyonasViewModel ViewModel => (BindingContext as GyonasViewModel)!;
 
     public GyonasPage(GyonasViewModel viewModel)
     {

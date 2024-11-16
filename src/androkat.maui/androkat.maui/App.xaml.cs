@@ -1,26 +1,24 @@
 ﻿using androkat.hu.Helpers;
 using androkat.hu.Pages;
-using Application = Microsoft.Maui.Controls.Application;
 
 namespace androkat.hu;
 
 public partial class App : Application
 {
+    Window? window;
+
     public App()
     {
         InitializeComponent();
 
         TheTheme.SetTheme();
 
-        MainPage = new MobileShell();
-
         Routing.RegisterRoute(nameof(DetailPage), typeof(DetailPage));
     }
-
-    Window window;
-    protected override Window CreateWindow(IActivationState activationState)
+    
+    protected override Window CreateWindow(IActivationState? activationState)
     {
-        window = base.CreateWindow(activationState);
+        window = new Window(new MobileShell());
         return window;
     }
 

@@ -4,7 +4,7 @@ namespace androkat.hu.Pages;
 
 public partial class ContentListPage : ContentPage
 {
-    private ContentListViewModel ViewModel => BindingContext as ContentListViewModel;
+    private ContentListViewModel ViewModel => (BindingContext as ContentListViewModel)!;
     private int _stackCount = 0;
 
     public ContentListPage(ContentListViewModel viewModel)
@@ -28,7 +28,7 @@ public partial class ContentListPage : ContentPage
 
     protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
     {
-        _stackCount = Application.Current.MainPage.Navigation.NavigationStack.Count;
+        _stackCount = Application.Current!.Windows[0].Page!.Navigation.NavigationStack.Count;
         base.OnNavigatedFrom(args);
     }
 
@@ -66,6 +66,6 @@ public partial class ContentListPage : ContentPage
         // in XAML, we have to parse the route. 
         // as a convention the last route section defines the category.
         // ugly but works for now :-(
-        return Shell.Current.CurrentState.Location.OriginalString.Split("/").LastOrDefault();
+        return Shell.Current.CurrentState.Location.OriginalString.Split("/").LastOrDefault()!;
     }
 }
