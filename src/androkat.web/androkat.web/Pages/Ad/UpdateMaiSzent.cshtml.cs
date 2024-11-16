@@ -19,7 +19,7 @@ namespace androkat.web.Pages.Ad;
 [BindProperties]
 public class UpdateMaiSzentModel : PageModel
 {
-    protected readonly ILogger<UpdateMaiSzentModel> _logger;
+    private readonly ILogger<UpdateMaiSzentModel> _logger;
     private readonly IClock _iClock;
     private readonly IAdminRepository _adminRepository;
     private readonly IOptions<AndrokatConfiguration> _androkatConfiguration;

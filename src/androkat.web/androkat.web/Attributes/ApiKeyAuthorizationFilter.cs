@@ -1,6 +1,7 @@
 ﻿using androkat.web.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Linq;
 
 namespace androkat.web.Attributes;
 
@@ -16,8 +17,16 @@ public class ApiKeyAuthorizationFilter : IAuthorizationFilter
 
     public void OnAuthorization(AuthorizationFilterContext context)
     {
-        var isValid = _apiKeyValidator.IsValid(context.HttpContext.Request.Headers[ApiKeyHeaderName]);
-        if (!isValid)
+        if (!context.HttpContext.Request.Headers.TryGetValue(ApiKeyHeaderName, out var value))
+        {
             context.Result = new UnauthorizedResult();
+            return;
+        }
+
+        var apiKey = value.FirstOrDefault();
+        if (string.IsNullOrEmpty(apiKey) || !_apiKeyValidator.IsValid(apiKey))
+        {
+            context.Result = new UnauthorizedResult();
+        }
     }
 }

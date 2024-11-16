@@ -4,6 +4,4 @@ using System.Diagnostics.CodeAnalysis;
 namespace androkat.web.Pages;
 
 [ExcludeFromCodeCoverage]
-public class AdatvedelemModel : PageModel
-{
-}
+public class AdatvedelemModel : PageModel;

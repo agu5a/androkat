@@ -15,7 +15,7 @@ namespace androkat.web.Pages.Ad;
 [BindProperties]
 public class UpdateImaModel : PageModel
 {
-    protected readonly ILogger<UpdateImaModel> _logger;
+    private readonly ILogger<UpdateImaModel> _logger;
     private readonly IAdminRepository _adminRepository;
 
     public UpdateImaModel(ILogger<UpdateImaModel> logger, IAdminRepository adminRepository)

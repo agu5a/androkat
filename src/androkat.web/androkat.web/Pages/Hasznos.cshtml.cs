@@ -4,6 +4,4 @@ using System.Diagnostics.CodeAnalysis;
 namespace androkat.web.Pages;
 
 [ExcludeFromCodeCoverage]
-public class HasznosModel : PageModel
-{
-}
+public class HasznosModel : PageModel;

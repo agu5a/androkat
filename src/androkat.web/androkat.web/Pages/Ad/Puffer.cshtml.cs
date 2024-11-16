@@ -18,7 +18,7 @@ namespace androkat.web.Pages.Ad;
 [BindProperties]
 public class PufferModel : PageModel
 {
-    protected readonly ILogger<PufferModel> _logger;
+    private readonly ILogger<PufferModel> _logger;
     private readonly IClock _iClock;
     private readonly IAdminRepository _adminRepository;
     private readonly IOptions<AndrokatConfiguration> _androkatConfiguration;
@@ -108,11 +108,11 @@ public class PufferModel : PageModel
         }
 
         LastTodayResult = _adminRepository.GetLastTodayContentByTipus(TipusId.Value);
-        var newContent = new ContentDetailsModel(Guid.Empty, DateTime.Parse(FullDatum + DateTime.Now.ToString(" HH:mm:ss"), CultureInfo.CreateSpecificCulture("hu-HU")), 
+        var newContent = new ContentDetailsModel(Guid.Empty, DateTime.Parse(FullDatum + DateTime.Now.ToString(" HH:mm:ss"), CultureInfo.CreateSpecificCulture("hu-HU")),
             Cim, Idezet ?? "", TipusId.Value,
         _iClock.Now.Date, string.Empty, Image ?? "", FileUrl ?? "", Forras ?? "");
 
-        var res = _adminRepository.InsertContent(newContent);        
+        var res = _adminRepository.InsertContent(newContent);
 
         if (IsNewItem)
             return Redirect("/Ad/Puffer");
@@ -143,28 +143,24 @@ public class PufferModel : PageModel
         {
             return;
         }
-        
-            switch (tipus)
-            {
-                case 24: //szeretet újság
-                    Forras = "https://www.szentgellertkiado.hu/szeretet-ujsag";
-                    break;
-                case 58: //ajándékozz könyvet
-                    Forras = "https://www.szentgellertkiado.hu";
-                    break;
-                case (int)domain.Enum.Forras.advent:
-                case (int)domain.Enum.Forras.nagybojt:
-                    Forras = "https://orszagutiferencesek.hu";
-                    break;
-            }
+
+        Forras = tipus switch
+        {
+            24 => //szeretet újság
+                "https://www.szentgellertkiado.hu/szeretet-ujsag",
+            58 => //ajándékozz könyvet
+                "https://www.szentgellertkiado.hu",
+            (int)domain.Enum.Forras.advent or (int)domain.Enum.Forras.nagybojt => "https://orszagutiferencesek.hu",
+            _ => Forras
+        };
     }
 
     private void SetFileUrl(int tipus)
     {
         if (!string.IsNullOrEmpty(FileUrl))
-            {
+        {
             return;
-            }
+        }
 
         FileUrl = tipus switch
         {
@@ -191,12 +187,12 @@ public class PufferModel : PageModel
     private void SetCim(int tipus)
     {
         switch (tipus)
-        {            
+        {
             case (int)domain.Enum.Forras.prayasyougo:
                 var res = _adminRepository.GetLastTodayContentByTipus((int)domain.Enum.Forras.maievangelium);
-                Cim = res.Cim.Replace(" (Napi Ige)" , "");
+                Cim = res.Cim.Replace(" (Napi Ige)", "");
                 break;
-            case (int)domain.Enum.Forras.laciatya:                            
+            case (int)domain.Enum.Forras.laciatya:
                 Cim = $"{DateTime.Now:yyyy-MM-dd} {DayReplace(DateTime.Now.DayOfWeek.ToString())}";
                 break;
         }
