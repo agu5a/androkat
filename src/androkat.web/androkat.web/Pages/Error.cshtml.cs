@@ -60,12 +60,12 @@ public class ErrorModel : PageModel
             {
                 return;
             }
-            
-                var httpRequestFeature = HttpContext.Features.Get<IHttpRequestFeature>();
-                _logger.LogError("Error - Path: {OriginalPath}, Query: {OriginalQueryString}, Code: {StatusCode}, Method: {Method}, Scheme: {Scheme}, Protocol: {Protocol}",
-                    statusCodeReExecuteFeature.OriginalPath, statusCodeReExecuteFeature.OriginalQueryString, statusCode, httpRequestFeature.Method,
-                    httpRequestFeature.Scheme, httpRequestFeature.Protocol);
-            }
+
+            var httpRequestFeature = HttpContext.Features.Get<IHttpRequestFeature>();
+            _logger.LogError("Error - Path: {OriginalPath}, Query: {OriginalQueryString}, Code: {StatusCode}, Method: {Method}, Scheme: {Scheme}, Protocol: {Protocol}",
+                statusCodeReExecuteFeature.OriginalPath, statusCodeReExecuteFeature.OriginalQueryString, statusCode, httpRequestFeature.Method,
+                httpRequestFeature.Scheme, httpRequestFeature.Protocol);
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Exception: error");

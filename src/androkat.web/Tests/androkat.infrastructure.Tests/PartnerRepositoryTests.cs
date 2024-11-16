@@ -11,7 +11,6 @@ using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MockQueryable;
 
 namespace androkat.infrastructure.Tests;
 
@@ -78,7 +77,7 @@ public class PartnerRepositoryTests : BaseTest
         var clock = GetToday();
         Guid guid = Guid.NewGuid();
 
-        var mock = new List<TempContent>().BuildMock().BuildMockDbSet();
+        var mock = new List<TempContent>().BuildMockDbSet();
         mock.Setup(x => x.Find(guid)).Throws(new Exception());
 
         var contextMock = new Mock<AndrokatContext>();
@@ -122,7 +121,7 @@ public class PartnerRepositoryTests : BaseTest
         var clock = GetToday();
         Guid guid = Guid.NewGuid();
 
-        var mock = new List<TempContent>().BuildMock().BuildMockDbSet();
+        var mock = new List<TempContent>().BuildMockDbSet();
         mock.Setup(x => x.Find(guid)).Throws(new Exception());
 
         var contextMock = new Mock<AndrokatContext>();

@@ -13,7 +13,7 @@ namespace androkat.web.Pages.Ad;
 [BindProperties]
 public class LogoutModel : PageModel
 {
-    protected readonly ILogger<LogoutModel> _logger;
+    private readonly ILogger<LogoutModel> _logger;
 
     public LogoutModel(ILogger<LogoutModel> logger)
     {

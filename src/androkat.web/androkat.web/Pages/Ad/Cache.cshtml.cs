@@ -17,7 +17,7 @@ namespace androkat.web.Pages.Ad;
 public class CacheModel : PageModel
 {
     private readonly IMemoryCache _memoryCache;
-    protected readonly ILogger<CacheModel> _logger;
+    private readonly ILogger<CacheModel> _logger;
 
     public CacheModel(IMemoryCache memoryCache, ILogger<CacheModel> logger)
     {

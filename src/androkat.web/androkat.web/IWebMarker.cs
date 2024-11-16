@@ -3,6 +3,4 @@
 /// <summary>
 /// Marker interface for integration tests
 /// </summary>
-public interface IWebMarker
-{
-}
+public interface IWebMarker;
