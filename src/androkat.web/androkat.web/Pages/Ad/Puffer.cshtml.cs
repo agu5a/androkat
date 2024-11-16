@@ -42,9 +42,10 @@ public class PufferModel : PageModel
     public string FileUrl { get; set; }
     public int? TipusId { get; set; }
     public string Nid { get; set; }
-    public string Error { get; set; }
     public string Today { get; set; }
     public bool IsNewItem { get; set; }
+    public bool ShowToast { get; set; }
+    public string Error { get; set; }
 
     public void OnGet(int? tipus, string id, string newitem)
     {
@@ -98,12 +99,14 @@ public class PufferModel : PageModel
         if (!TipusId.HasValue)
         {
             Error = "hiányzik a tipus";
+            ShowToast = true;
             return Page();
         }
 
         if (string.IsNullOrWhiteSpace(Cim) || string.IsNullOrWhiteSpace(FullDatum) || (string.IsNullOrWhiteSpace(Idezet) && string.IsNullOrWhiteSpace(FileUrl)))
         {
             Error = "hiányzik";
+            ShowToast = true;
             return Page();
         }
 
@@ -115,9 +118,20 @@ public class PufferModel : PageModel
         var res = _adminRepository.InsertContent(newContent);
 
         if (IsNewItem)
-            return Redirect("/Ad/Puffer");
+        {
+            Cim = "";
+            Idezet = "";
+            FileUrl = "";
+            Forras = "";
+            Image = "";
+            Nid = "";
+            FullDatum = "";
+            TipusId = null;
+        }
+        //     return Redirect("/Ad/Puffer")
 
-        Error = res ? "siker" : "vmi rossz volt";
+        Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
+        ShowToast = true;
         return Page();
     }
 
@@ -134,6 +148,7 @@ public class PufferModel : PageModel
             return Redirect("/Ad/Puffer");
 
         Error = "vmi rossz volt";
+        ShowToast = true;
         return Page();
     }
 

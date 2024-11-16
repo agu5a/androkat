@@ -2,8 +2,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using MvvmHelpers;
 using System.Text.Json;
-using System.Linq;
-using System.Buffers.Text;
 
 namespace androkat.maui.library.ViewModels;
 
@@ -47,7 +45,7 @@ public partial class IgeNaptarViewModel : ViewModelBase
         var dayContents = JsonSerializer.Deserialize<Dictionary<string, string>>(igenaptar);
 
         var s = StartCheck(day, dayContents);
-        Contents.ReplaceRange(s);        
+        Contents.ReplaceRange(s);
     }
 
     public void SetPosition(DateTime day)
@@ -143,35 +141,5 @@ public partial class IgeNaptarViewModel : ViewModelBase
         }
 
         return s;
-    }
-}
-
-public class CustomCarouselView : CarouselView
-{
-    public new static readonly BindableProperty PositionProperty =
-        BindableProperty.Create(nameof(Position), typeof(int), typeof(CustomCarouselView), propertyChanged: OnPositionPropertyChanged);
-
-    private static void OnPositionPropertyChanged(BindableObject bindable, object oldValue, object newValue)
-    {
-        var carouselView = bindable as CustomCarouselView;
-        if (carouselView.viewModel is IgeNaptarViewModel myLibraryVm)
-        {
-            carouselView.ScrollTo(myLibraryVm.Position);
-        }
-    }
-
-    public new int Position
-    {
-        get => (int)GetValue(PositionProperty);
-        set => SetValue(PositionProperty, value);
-    }
-
-    private IgeNaptarViewModel viewModel;
-
-    protected override void OnBindingContextChanged()
-    {
-        base.OnBindingContextChanged();
-
-        viewModel = BindingContext as IgeNaptarViewModel;
     }
 }

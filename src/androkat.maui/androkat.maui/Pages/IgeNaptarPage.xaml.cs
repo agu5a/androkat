@@ -1,5 +1,4 @@
 ﻿using androkat.maui.library.ViewModels;
-using Microsoft.Maui.Controls;
 
 namespace androkat.hu.Pages;
 

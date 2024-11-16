@@ -10,7 +10,16 @@
 
         $(document).ready(function () {
 
-            function getParameterByName(name, url) {
+        @{
+            if (Model.ShowToast)
+            {
+                <text>
+                 $("#myToast").toast("show");
+                </text>
+            }
+        }
+
+        function getParameterByName(name, url) {
                 if (!url)
                     url = window.location.href;
                 name = name.replace(/[\[\]]/g, '\\$&');
@@ -116,8 +125,8 @@
                 window.location = "/ad/puffer?tipus=" + id + data;
             });
 
-            editor.onChange = function (contents, core) 
-            { 
+            editor.onChange = function (contents, core)
+            {
                 $('#Idezet').val($('.se-wrapper-wysiwyg').html());
             }
         });
@@ -150,7 +159,7 @@
                 {
                     <div>
                         <span class="tipusValasztas" style="color:blue" id="@todayContent.Tipus"
-                        @Html.Raw(string.IsNullOrEmpty(todayContent.Datum) ? " data=\"&newitem=1\"" : " data=\"&id=" + todayContent.Nid +"\"")>
+                        @Html.Raw(string.IsNullOrEmpty(todayContent.Datum) ? " data=\"&newitem=1\"" : " data=\"&id=" + todayContent.Nid + "\"")>
                             @todayContent.TipusNev
                         </span> <strong>Típus</strong>: @todayContent.Tipus
                         @Html.Raw(string.IsNullOrEmpty(todayContent.Datum) ? "" : "<strong>Dátum</strong>: " + todayContent.Datum)
@@ -166,21 +175,14 @@
                 <input hidden="hidden" type="checkbox" asp-for="IsNewItem" class="form-check-input" />
                 <div class="mb-3">
                     <div>
-                        <span>
-                            @Model.Error
-                        </span>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <div>
-                            @if (Model.IsNewItem)
-                            {
+                        @if (Model.IsNewItem)
+                        {
                             @Html.Raw("<span class='bg-success p-2 text-white'>Új Anyag</span>")
-                            }
+                        }
                         else if (!string.IsNullOrWhiteSpace(Model.Nid))
-                            {
+                        {
                             @Html.Raw("<span class='bg-success p-2 text-white'>Aktiválás</span>")
-                            }
+                        }
                     </div>
                     <div class="mt-3">
                         <span>
@@ -203,10 +205,10 @@
 
                         @if (Model.TipusId is not null && Model.TipusId is 6 or 15 or 28 or 38 or 39 or 46 or 60)
                         {
-                            <div class="mb-1">                                
+                            <div class="mb-1">
                                 <strong>Idézet</strong>: <a href="@Model.LastTodayResult.Idezet" target="_blank">@Model.LastTodayResult.Idezet</a>
                             </div>
-                            <div class="mb-1">                                
+                            <div class="mb-1">
                                 <strong>FileUrl</strong>: <a href="@Model.LastTodayResult.FileUrl" target="_blank">@Model.LastTodayResult.FileUrl</a>
                             </div>
                         }
@@ -286,5 +288,15 @@
                 </div>
             </form>
         </div>
+    </div>
+</div>
+<div id="myToast" class="toast position-fixed top-0 start-0 p-3" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-body">
+        @Html.Raw(Model.Error)
+        <button type="button"
+                class="btn btn-info btn-sm"
+                data-bs-dismiss="toast">
+            OK
+        </button>
     </div>
 </div>
