@@ -42,7 +42,9 @@ public class ApiServiceCacheDecorate : IApiService
         var key = CacheKey.EgyebOlvasnivaloResponseCacheKey + "_" + tipus + "_" + n;
         var result = GetCache<IReadOnlyCollection<ContentResponse>>(key);
         if (result is not null)
+        {
             return result;
+        }
 
         bookRadioSysCache = GetCache(CacheKey.BookRadioSysCacheKey.ToString(), () => _cacheService.BookRadioSysCacheFillUp());
         mainCache = GetCache(CacheKey.MainCacheKey.ToString(), () => _cacheService.MainCacheFillUp());
@@ -59,7 +61,9 @@ public class ApiServiceCacheDecorate : IApiService
         var key = CacheKey.ImaResponseCacheKey + "_" + datum.ToString("yyyy-MM-dd_HH:mm:ss ");
         var result = GetCache<ImaResponse>(key);
         if (result is not null)
+        {
             return result;
+        }
 
         imaCache = GetCache(CacheKey.ImaCacheKey.ToString(), () => _cacheService.ImaCacheFillUp());
         result = _apiService.GetImaByDate(date, imaCache);
@@ -73,7 +77,9 @@ public class ApiServiceCacheDecorate : IApiService
         var key = CacheKey.ContentResponseCacheKey + "_" + tipus + "_" + n;
         var result = GetCache<IReadOnlyCollection<ContentResponse>>(key);
         if (result is not null)
+        {
             return result;
+        }
 
         mainCache = GetCache(CacheKey.MainCacheKey.ToString(), () => _cacheService.MainCacheFillUp());
         result = _apiService.GetContentByTipusAndNid(tipus, n, mainCache);
@@ -87,7 +93,9 @@ public class ApiServiceCacheDecorate : IApiService
         var key = CacheKey.RadioResponseCacheKey + "_" + s;
         var result = GetCache<IReadOnlyCollection<RadioMusorResponse>>(key);
         if (result is not null)
+        {
             return result;
+        }
 
         bookRadioSysCache = GetCache(CacheKey.BookRadioSysCacheKey.ToString(), () => _cacheService.BookRadioSysCacheFillUp());
         result = _apiService.GetRadioBySource(s, bookRadioSysCache);
@@ -108,7 +116,9 @@ public class ApiServiceCacheDecorate : IApiService
         var key = CacheKey.VideoResponseCacheKey + "_" + offset;
         var result = GetCache<IReadOnlyCollection<VideoResponse>>(key);
         if (result is not null)
+        {
             return result;
+        }
 
         videoCache = GetCache(CacheKey.VideoCacheKey.ToString(), () => _cacheService.VideoCacheFillUp());
         result = _apiService.GetVideoByOffset(offset, videoCache);
@@ -122,7 +132,9 @@ public class ApiServiceCacheDecorate : IApiService
         var key = CacheKey.VideoResponseCacheKey + "_" + f + "_" + offset;
         var result = GetCache<string>(key);
         if (!string.IsNullOrWhiteSpace(result))
+        {
             return result;
+        }
 
         videoCache = GetCache(CacheKey.VideoCacheKey.ToString(), () => _cacheService.VideoCacheFillUp());
         result = _apiService.GetVideoForWebPage(f, offset, videoCache);
@@ -134,7 +146,9 @@ public class ApiServiceCacheDecorate : IApiService
     private TC GetCache<TC>(string key)
     {
         if (_memoryCache.TryGetValue(key, out var result) && result is TC cached)
+        {
             return cached;
+        }
 
         return default;
     }
@@ -143,11 +157,15 @@ public class ApiServiceCacheDecorate : IApiService
     {
         var cached = GetCache<TC>(key);
         if (cached is not null)
+        {
             return cached;
+        }
 
         var res = function();
         if (res is not null)
+        {
             _memoryCache.Set(key, res, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
+        }
 
         return res;
     }

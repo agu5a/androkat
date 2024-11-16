@@ -1,4 +1,5 @@
-﻿using androkat.application.Interfaces;
+﻿using androkat.application.Contants;
+using androkat.application.Interfaces;
 using androkat.domain;
 using androkat.domain.Model;
 using androkat.domain.Model.AdminPage;
@@ -36,11 +37,13 @@ public class IndexModel : PageModel
     {
         try
         {
-            if (!_authService.IsAuthenticated("blabla@gmail.com"))
+            if (!_authService.IsAuthenticated(ContantValues.Admin))
+            {
                 return Redirect("/");
+            }
 
             _logger.LogInformation("Login RemoteIpAddress {IP}", Request.HttpContext.Connection.RemoteIpAddress?.ToString());
-            _adminRepository.LogInUser("blabla@gmail.com");
+            _adminRepository.LogInUser(ContantValues.Admin);
 
             var res = _adminRepository.GetIsAdventAndNagybojt();
             res.ForEach(x =>

@@ -32,12 +32,12 @@ public class UploadModel : PageModel
     [BindProperty]
     public BufferedSingleFileUploadPhysical FileUpload1 { get; set; }
 
-    [BindProperty]
+    [BindProperty] 
     public BufferedSingleFileUploadPhysical FileUpload2 { get; set; }
 
     public string Result { get; private set; }
 
-    [BindProperty]
+    [BindProperty] 
     public string FileNameReplace { get; set; }
 
     public IActionResult OnPostReplace()
@@ -143,7 +143,9 @@ public class UploadModel : PageModel
         // a display name.
         MemberInfo property = typeof(T).GetProperty(formFile.Name[(formFile.Name.IndexOf('.') + 1)..]);
         if (property?.GetCustomAttribute(typeof(DisplayAttribute)) is DisplayAttribute displayAttribute)
+        {
             fieldDisplayName = $"{displayAttribute.Name} ";
+        }
 
         // Don't trust the file name sent by the client. To display the file name, HTML-encode the value.
         var trustedFileNameForDisplay = WebUtility.HtmlEncode(formFile.FileName);
@@ -173,14 +175,16 @@ public class UploadModel : PageModel
             if (!IsValidFileExtensionAndSignature(formFile.FileName, memoryStream, permittedExtensions))
             {
                 Result = $"{fieldDisplayName}({trustedFileNameForDisplay}) file " +
-                    "type isn't permitted or the file's signature doesn't match the file's extension.";
+                         "type isn't permitted or the file's signature doesn't match the file's extension.";
 
                 modelState.AddModelError(formFile.Name,
                     $"{fieldDisplayName}({trustedFileNameForDisplay}) file " +
                     "type isn't permitted or the file's signature doesn't match the file's extension.");
             }
             else
+            {
                 return memoryStream.ToArray();
+            }
         }
         catch (Exception ex)
         {
@@ -195,7 +199,9 @@ public class UploadModel : PageModel
     private static bool IsValidFileExtensionAndSignature(string fileName, Stream data, string[] permittedExtensions)
     {
         if (string.IsNullOrEmpty(fileName) || data is null || data.Length == 0)
+        {
             return false;
+        }
 
         var ext = Path.GetExtension(fileName).ToLowerInvariant();
 

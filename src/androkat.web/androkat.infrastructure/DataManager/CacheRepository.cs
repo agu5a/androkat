@@ -116,10 +116,12 @@ public class CacheRepository : BaseRepository, ICacheRepository
             });
         }
         else
+        {
             rows.ToList().ForEach(row =>
             {
                 list.Add(Mapper.Map<ContentDetailsModel>(row));
             });
+        }
 
         return list.AsReadOnly();
     }
@@ -167,7 +169,9 @@ public class CacheRepository : BaseRepository, ICacheRepository
             var date = Clock.Now.ToString("yyyy-MM-dd");
 
             if (tipus == (int)Forras.fokolare)
+            {
                 date = Clock.Now.ToString("yyyy-MM") + "-01";
+            }
 
             var res = GetContentDetailsModel(allRecords, tipus, date, tomorrow, osszes);
             result.AddRange(Mapper.Map<List<ContentDetailsModel>>(res));
@@ -180,11 +184,17 @@ public class CacheRepository : BaseRepository, ICacheRepository
     {
         List<Content> res;
         if (tipus == (int)Forras.maievangelium) //szombaton már megjelenik a vasárnapi is
+        {
             res = [.. allRecords.Where(w => w.Tipus == tipus && (w.Fulldatum.StartsWith(date) || w.Fulldatum.StartsWith(tomorrow))).OrderByDescending(o => o.Inserted)];
+        }
         else if (osszes.Contains(tipus)) //ajanlo és néhány hanganyagból a weboldalon látszik mindegyik 
+        {
             res = [.. allRecords.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted)];
+        }
         else
+        {
             res = [.. allRecords.Where(w => w.Tipus == tipus && w.Fulldatum.StartsWith(date)).OrderByDescending(o => o.Inserted)];
+        }
 
         if (res!.Count != 0)
         {

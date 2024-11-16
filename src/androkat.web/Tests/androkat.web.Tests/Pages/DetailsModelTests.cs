@@ -39,11 +39,11 @@ public class DetailsModelTests : BaseTest
 		model.ShareUrl.Should().Be($"https://androkat.hu/details/{nid}/{tipus}");
 		model.EncodedUrl.Should().Be(HttpUtility.UrlEncode($"https://androkat.hu/details/{nid}/{tipus}"));
 		model.ShareTitle.Should().Be(HttpUtility.UrlEncode("Cim"));
-		if (tipus == (int)Forras.ajanlatweb)
-			model.Image.Should().Be("https://androkat.hu/images/ajanlatok/Image");
-		else
-			model.Image.Should().Be("https://androkat.hu/images/szentek/Image");
-		model.ForrasLink.Should().Be("MetaLink");
+        model.Image.Should().Be(tipus == (int)Forras.ajanlatweb
+            ? "https://androkat.hu/images/ajanlatok/Image"
+            : "https://androkat.hu/images/szentek/Image");
+
+        model.ForrasLink.Should().Be("MetaLink");
 		model.ForrasText.Should().Be("MetaForras");
 	}
 

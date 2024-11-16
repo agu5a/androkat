@@ -58,7 +58,9 @@ public class UpdateImaModel : PageModel
         try
         {
             if (string.IsNullOrWhiteSpace(Tipus))
+            {
                 Tipus = "11";
+            }
 
             var all = _adminRepository.GetAllImaByCsoportResult(Tipus).ToList();
             AllRecordResult = all.Select(s => new SelectListItem { Text = s.Csoport.ToString(), Value = s.Nid.ToString() }).ToList();
@@ -88,10 +90,14 @@ public class UpdateImaModel : PageModel
 
         if (string.IsNullOrWhiteSpace(Nid) || string.IsNullOrWhiteSpace(Cim)
             || string.IsNullOrWhiteSpace(Datum) || string.IsNullOrWhiteSpace(Idezet))
+        {
             return;
+        }
 
         if (string.IsNullOrWhiteSpace(Tipus))
+        {
             Tipus = "11";
+        }
 
         var all = _adminRepository.GetAllImaByCsoportResult(Tipus).ToList();
         AllRecordResult = all.Select(s => new SelectListItem { Text = s.Csoport.ToString(), Value = s.Nid.ToString() }).ToList();
@@ -106,12 +112,16 @@ public class UpdateImaModel : PageModel
         GetDropDownData();
 
         if (string.IsNullOrWhiteSpace(Nid))
+        {
             return;
+        }
 
         var res = _adminRepository.DeleteIma(Nid);
 
         if (string.IsNullOrWhiteSpace(Tipus))
+        {
             Tipus = "11";
+        }
 
         var all = _adminRepository.GetAllImaByCsoportResult(Tipus).ToList();
         AllRecordResult = all.Select(s => new SelectListItem { Text = s.Csoport.ToString(), Value = s.Nid.ToString() }).ToList();

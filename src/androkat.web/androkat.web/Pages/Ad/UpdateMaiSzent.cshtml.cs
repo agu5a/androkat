@@ -69,10 +69,14 @@ public class UpdateMaiSzentModel : PageModel
         try
         {
             if (string.IsNullOrWhiteSpace(CurrentMonth))
+            {
                 CurrentMonth = _iClock.Now.ToString("MM");
+            }
 
             if (string.IsNullOrWhiteSpace(Tipus))
+            {
                 Tipus = "21";
+            }
 
             var all = _adminRepository.GetAllMaiSzentByMonthResult(CurrentMonth).ToList();
             AllRecordResult = all.Select(s => new SelectListItem { Text = s.Datum, Value = s.Nid.ToString() }).ToList();
@@ -102,10 +106,14 @@ public class UpdateMaiSzentModel : PageModel
 
         if (string.IsNullOrWhiteSpace(Nid) || string.IsNullOrWhiteSpace(Cim)
             || string.IsNullOrWhiteSpace(Datum) || string.IsNullOrWhiteSpace(Idezet))
+        {
             return;
+        }
 
         if (string.IsNullOrWhiteSpace(CurrentMonth))
+        {
             CurrentMonth = _iClock.Now.ToString("MM");
+        }
 
         var all = _adminRepository.GetAllMaiSzentByMonthResult(CurrentMonth).ToList();
         AllRecordResult = all.Select(s => new SelectListItem { Text = s.Datum, Value = s.Nid.ToString() }).ToList();
@@ -136,7 +144,11 @@ public class UpdateMaiSzentModel : PageModel
             foreach (var item in list)
             {
                 var label = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item).TipusNev;
-                if (item == 14) label = "audió " + label;
+                if (item == 14)
+                {
+                    label = "audió " + label;
+                }
+
                 result.Add(new AllTipusResult
                 {
                     Tipus = item,

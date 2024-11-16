@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace androkat.application.Tests;
+namespace androkat.application.Tests.Services;
 
 public class ApiServiceCacheDecorateTests : BaseTest
 {
@@ -100,7 +100,7 @@ public class ApiServiceCacheDecorateTests : BaseTest
         var id = Guid.NewGuid();
         var bookRadioSysCache = new BookRadioSysCache();
         var mainCache = new MainCache();
-        var expectedContentResponse = new List<ContentResponse> 
+        var expectedContentResponse = new List<ContentResponse>
         {
             new()
             {
@@ -185,7 +185,7 @@ public class ApiServiceCacheDecorateTests : BaseTest
         var expectedImaResponse = new ImaResponse
         {
             HasMore = false,
-            Imak = new List<ImaDetailsResponse> 
+            Imak = new List<ImaDetailsResponse>
             {
                 new()
                 {

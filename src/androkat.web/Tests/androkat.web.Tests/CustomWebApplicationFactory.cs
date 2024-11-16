@@ -46,7 +46,7 @@ public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStar
                 services.Remove(descriptor);
             }
 
-            string inMemoryCollectionName = Guid.NewGuid().ToString();
+            var inMemoryCollectionName = Guid.NewGuid().ToString();
             services.AddDbContext<AndrokatContext>(options =>
             {
                 options.UseInMemoryDatabase(inMemoryCollectionName);
