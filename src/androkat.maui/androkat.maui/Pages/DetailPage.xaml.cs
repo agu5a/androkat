@@ -4,7 +4,7 @@ namespace androkat.hu.Pages;
 
 public partial class DetailPage : ContentPage
 {
-    private DetailViewModel ViewModel => BindingContext as DetailViewModel;
+    private DetailViewModel ViewModel => (BindingContext as DetailViewModel)!;
 
     public DetailPage(DetailViewModel viewModel)
     {

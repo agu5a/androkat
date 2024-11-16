@@ -7,7 +7,7 @@ public partial class ImaListPage : ContentPage
     private int _stackCount = 0;
     private int _pageNumber = 1;
     private readonly int _pageSize = 10;
-    private ImaListViewModel ViewModel => BindingContext as ImaListViewModel;
+    private ImaListViewModel ViewModel => (BindingContext as ImaListViewModel)!;
 
     public ImaListPage(ImaListViewModel viewModel)
     {
@@ -28,7 +28,7 @@ public partial class ImaListPage : ContentPage
 
     protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
     {
-        _stackCount = Application.Current.MainPage.Navigation.NavigationStack.Count;
+        _stackCount = Application.Current!.Windows[0].Page!.Navigation.NavigationStack.Count;
         base.OnNavigatedFrom(args);
     }
 

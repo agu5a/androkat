@@ -11,7 +11,7 @@ public partial class FavoriteListPage : ContentPage
 {
     private readonly IPageService _pageService;
     private int _stackCount = 0;
-    private FavoriteListViewModel ViewModel => BindingContext as FavoriteListViewModel;
+    private FavoriteListViewModel ViewModel => (BindingContext as FavoriteListViewModel)!;
     private static readonly string[] valueArray = ["application/json"];
     private static readonly string[] value = ["application/json"];
 
@@ -35,7 +35,7 @@ public partial class FavoriteListPage : ContentPage
 
     protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
     {
-        _stackCount = Application.Current.MainPage.Navigation.NavigationStack.Count;
+        _stackCount = Application.Current!.Windows[0].Page!.Navigation.NavigationStack.Count;
         base.OnNavigatedFrom(args);
     }
 
@@ -86,14 +86,14 @@ public partial class FavoriteListPage : ContentPage
             }
         }
 
-        var savePath = Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath,
+        var savePath = Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads)!.AbsolutePath,
             "AndroKat", "kedvencek.json");
 
         if (!File.Exists(savePath))
         {
             try
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(savePath));
+                Directory.CreateDirectory(Path.GetDirectoryName(savePath)!);
                 File.Create(savePath);
                 await File.WriteAllTextAsync(savePath, "[]");
             }
@@ -139,7 +139,7 @@ public partial class FavoriteListPage : ContentPage
             var o = System.Text.Json.JsonSerializer.Deserialize<List<FavoriteContentEntity>>(fileContent);
 
             using var cancellationTokenSource = new CancellationTokenSource();
-            var toast = Toast.Make("Olvasás: " + o.Count, ToastDuration.Short, 14d);
+            var toast = Toast.Make("Olvasás: " + o!.Count, ToastDuration.Short, 14d);
             await toast.Show(cancellationTokenSource.Token);
         }
     }

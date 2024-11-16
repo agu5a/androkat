@@ -4,7 +4,7 @@ namespace androkat.hu.Pages;
 
 public partial class WebPage : ContentPage
 {
-    private WebViewModel ViewModel => BindingContext as WebViewModel;
+    private WebViewModel ViewModel => (BindingContext as WebViewModel)!;
 
     public WebPage(WebViewModel viewModel)
     {
