@@ -71,9 +71,11 @@ public class UpdateSystemModel : PageModel
 	public void OnPostSave()
 	{
 		if (string.IsNullOrWhiteSpace(Nid) || string.IsNullOrWhiteSpace(Value))
-			return;
+        {
+            return;
+        }
 
-		var all = _adminRepository.GetAllSystemInfo().ToList();
+        var all = _adminRepository.GetAllSystemInfo().ToList();
 		AllRecordResult = all.Select(s => new SelectListItem { Text = s.Key, Value = s.Id.ToString() }).ToList();
 
 		var res = _adminRepository.UpdateSystemInfo(new SystemInfoData { Id = int.Parse(Nid), Value = Value });

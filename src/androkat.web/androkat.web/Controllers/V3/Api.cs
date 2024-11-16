@@ -25,11 +25,15 @@ public class Api : ControllerBase
     public ActionResult<IEnumerable<ContentResponse>> GetContentsByTipusAndId(int tipus, string id)
     {
         if (tipus is < 1 or > 100)
+        {
             return BadRequest("Hiba");
+        }
 
         var guid = Guid.Empty;
         if (!string.IsNullOrWhiteSpace(id) && !Guid.TryParse(id, out guid))
+        {
             return BadRequest("Hiba");
+        }
 
         var result = _apiService.GetContentByTipusAndId(tipus, guid, default, default);
         return Ok(result);

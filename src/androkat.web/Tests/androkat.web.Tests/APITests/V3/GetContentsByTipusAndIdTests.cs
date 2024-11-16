@@ -76,7 +76,7 @@ public class GetContentsByTipusAndIdTests : BaseTest
         var dec = new ApiServiceCacheDecorate(service, cache, null);
         var apiV3 = new Api(dec);
 
-        ActionResult<IEnumerable<ContentResponse>> res = apiV3.GetContentsByTipusAndId(tipus, id);
+        var res = apiV3.GetContentsByTipusAndId(tipus, id);
         dynamic s = res.Result;
 
         if (string.IsNullOrWhiteSpace(id))
@@ -87,7 +87,9 @@ public class GetContentsByTipusAndIdTests : BaseTest
             ((IEnumerable<ContentResponse>)s.Value).Count().Should().Be(2);
         }
         else
+        {
             ((IEnumerable<ContentResponse>)s.Value).Count().Should().Be(0);
+        }
     }
 
     [Fact]
@@ -106,7 +108,7 @@ public class GetContentsByTipusAndIdTests : BaseTest
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
         var apiV3 = new Api(dec);
-        ActionResult<IEnumerable<ContentResponse>> res = apiV3.GetContentsByTipusAndId((int)Forras.book, null);
+        var res = apiV3.GetContentsByTipusAndId((int)Forras.book, null);
         dynamic s = res.Result;
         ((IEnumerable<ContentResponse>)s.Value).Count().Should().Be(0);
     }
@@ -175,7 +177,9 @@ public class GetContentsByTipusAndIdTests : BaseTest
             ((IEnumerable<ContentResponse>)s.Value).Count().Should().Be(tipus == 2 || tipus == (int)Forras.audiotaize || tipus == (int)Forras.maiszent ? 2 : 1);
         }
         else
+        {
             ((IEnumerable<ContentResponse>)s.Value).Count().Should().Be(0);
+        }
 
         if (tipus == (int)Forras.audiotaize)
         {
@@ -235,7 +239,7 @@ public class GetContentsByTipusAndIdTests : BaseTest
         var service = new ApiService(clock.Object);
         var dec = new ApiServiceCacheDecorate(service, cache, null);
         var apiV3 = new Api(dec);
-        ActionResult<IEnumerable<ContentResponse>> res = apiV3.GetContentsByTipusAndId(f, nid);
+        var res = apiV3.GetContentsByTipusAndId(f, nid);
         dynamic s = res.Result;
 
         if (string.IsNullOrWhiteSpace(nid))

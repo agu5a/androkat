@@ -128,7 +128,9 @@ public class ApiService : IApiService
             {
                 //a user már letöltötte, nem kell újból
                 if (n != Guid.Empty && n == item.Nid)
+                {
                     break;
+                }
 
                 temp.Add(new ContentResponse
                 {
@@ -183,7 +185,9 @@ public class ApiService : IApiService
         {
             //a user már letöltötte, nem kell újból
             if (n != Guid.Empty && n == item.Nid)
+            {
                 break;
+            }
 
             temp.Add(new ContentResponse
             {
@@ -202,7 +206,9 @@ public class ApiService : IApiService
         {
             //a user már letöltötte, nem kell újból
             if (n != Guid.Empty && n == item.Nid)
+            {
                 break;
+            }
 
             temp.Add(new ContentResponse
             {
@@ -230,19 +236,19 @@ public class ApiService : IApiService
 
         //a user már letöltötte, nem kell újból
         if (downloaded)
-            {
+        {
             return;
         }
-        
-                temp.Add(new ContentResponse
-                {
-                    Cim = todayContent.Cim,
-                    Datum = todayContent.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss"),
-                    Forras = todayContent.Forras ?? string.Empty,
-                    Idezet = todayContent.Idezet,
-                    Img = todayContent.Img ?? string.Empty,
-                    Nid = todayContent.Nid,
-                    KulsoLink = string.Empty
-                });
-            }
-        }
+
+        temp.Add(new ContentResponse
+        {
+            Cim = todayContent.Cim,
+            Datum = todayContent.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss"),
+            Forras = todayContent.Forras ?? string.Empty,
+            Idezet = todayContent.Idezet,
+            Img = todayContent.Img ?? string.Empty,
+            Nid = todayContent.Nid,
+            KulsoLink = string.Empty
+        });
+    }
+}

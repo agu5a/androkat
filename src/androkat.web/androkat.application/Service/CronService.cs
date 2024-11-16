@@ -88,15 +88,21 @@ public class CronService : ICronService
     {
         var osszes = _apiRepository.GetContentDetailsModels().Count(w => w.Tipus == tipus);
         if (osszes == 0)
+        {
             return;
+        }
 
         var mult = _clock.Now.DateTime.AddDays(days);
         var torlendo = _apiRepository.GetContentDetailsModels().Where(w => w.Tipus == tipus && w.Fulldatum < mult).ToList();
         if (torlendo.Count == 0)
+        {
             return;
+        }
 
         if (osszes <= torlendo.Count)
+        {
             return;
+        }
 
         _logger.LogDebug("delete from Content. {Tipus} {Count}", tipus, torlendo.Count);
         foreach (var item in torlendo)
@@ -111,13 +117,19 @@ public class CronService : ICronService
         var osszes = new List<ContentDetailsModel>();
 
         if (_clock.Now.DateTime.ToString("MM") == "01") // törölni a tavalyit, egyébként a dátum sorrend miatt mindig az újakat törölné :((
+        {
             osszes = _apiRepository.GetContentDetailsModels().Where(w => w.Tipus == tipus && !w.Fulldatum.ToString("MM-dd").StartsWith("01-")).Skip(max).ToList();
+        }
 
         if (osszes.Count == 0)
+        {
             osszes = _apiRepository.GetContentDetailsModels().Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).Skip(max).ToList();
+        }
 
         if (osszes!.Count == 0)
+        {
             return;
+        }
 
         foreach (var item in osszes!)
         {
@@ -130,7 +142,9 @@ public class CronService : ICronService
     {
         var osszes = _apiRepository.GetVideoModels().OrderByDescending(o => o.Date).Skip(max).ToList();
         if (osszes.Count == 0)
+        {
             return;
+        }
 
         foreach (var item in osszes)
         {

@@ -82,9 +82,11 @@ public class ContentService : IContentService
         var list = new List<ContentModel>();
         var result = GetIma(csoport);
         foreach (var item in result)
+        {
             list.Add(new ContentModel(new ContentDetailsModel(item.Nid, DateTime.MinValue, item.Cim, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
             , default)
             );
+        }
 
         return list.AsReadOnly();
     }
@@ -108,7 +110,9 @@ public class ContentService : IContentService
         var list = new List<VideoSourceModel>();
         var result = GetVideoSource();
         foreach (var item in result)
+        {
             list.Add(new VideoSourceModel(item.ChannelId, item.ChannelName));
+        }
 
         return list.AsReadOnly();
     }
@@ -155,7 +159,9 @@ public class ContentService : IContentService
         var res = GetMainCache();
 
         foreach (var item in res.ContentDetailsModels.Where(w => w.Tipus == (int)Forras.humor))
+        {
             list.Add(new ContentModel(item, _androkatConfiguration.Value.GetContentMetaDataModelByTipus((int)Forras.humor)));
+        }
 
         return list.AsReadOnly();
     }
@@ -164,7 +170,9 @@ public class ContentService : IContentService
     {
         var contentDetailsModel = GetMainCache().ContentDetailsModels.FirstOrDefault(w => w.Tipus == tipus && w.Nid == nid);
         if (contentDetailsModel is null)
+        {
             return default;
+        }
 
         var data = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus);
         return new ContentModel(contentDetailsModel, data);
@@ -172,7 +180,7 @@ public class ContentService : IContentService
 
     public ImaModel GetImaById(Guid nid)
     {
-        var res = GetCache(CacheKey.ImaCacheKey.ToString(), () => _cacheService.ImaCacheFillUp() );
+        var res = GetCache(CacheKey.ImaCacheKey.ToString(), () => _cacheService.ImaCacheFillUp());
         return res.Imak.FirstOrDefault(w => w.Nid == nid);
     }
 
@@ -182,7 +190,9 @@ public class ContentService : IContentService
 
         var result = Get(tipusok);
         foreach (var item in result)
+        {
             list.Add(new ContentModel(item, _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus)));
+        }
 
         return list.AsReadOnly();
     }
@@ -220,7 +230,7 @@ public class ContentService : IContentService
 
     private IEnumerable<ImaModel> GetIma(string csoport)
     {
-        var res = GetCache(CacheKey.ImaCacheKey.ToString(), () => _cacheService.ImaCacheFillUp() );
+        var res = GetCache(CacheKey.ImaCacheKey.ToString(), () => _cacheService.ImaCacheFillUp());
 
         return !string.IsNullOrWhiteSpace(csoport) ? res.Imak.Where(w => w.Csoport == csoport).OrderBy(o => o.Cim) : res.Imak.OrderBy(o => o.Cim);
     }
@@ -248,7 +258,9 @@ public class ContentService : IContentService
         var res = GetCache(CacheKey.MainCacheKey.ToString(), () => _cacheService.MainCacheFillUp());
 
         if (tipus > 0)
+        {
             return [.. res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum)];
+        }
 
         var list = new List<int> { (int)Forras.bonumtv, (int)Forras.kurir, (int)Forras.keresztenyelet };
         return res.Egyeb.Where(w => list.Contains(w.Tipus)).OrderByDescending(o => o.Fulldatum);
@@ -259,7 +271,9 @@ public class ContentService : IContentService
         var res = GetCache(CacheKey.MainCacheKey.ToString(), () => _cacheService.MainCacheFillUp());
 
         if (tipus > 0)
+        {
             return [.. res.Egyeb.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum)];
+        }
 
         var list = new List<int> { (int)Forras.b777, (int)Forras.bzarandokma, (int)Forras.jezsuitablog };
         return res.Egyeb.Where(w => list.Contains(w.Tipus)).OrderByDescending(o => o.Fulldatum);
@@ -268,11 +282,15 @@ public class ContentService : IContentService
     private C GetCache<C>(string key, Func<C> function)
     {
         if (_memoryCache.TryGetValue(key, out var result) && result is C cached)
+        {
             return cached;
+        }
 
         var res = function();
         if (res is not null)
+        {
             _memoryCache.Set(key, res, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
+        }
 
         return res;
     }

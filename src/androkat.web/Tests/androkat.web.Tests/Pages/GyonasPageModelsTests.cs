@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Routing;
 using Moq;
 using Xunit;
 
-namespace UnitTest.Pages;
+namespace androkat.web.Tests.Pages;
 
 public class GyonasPageModelsTests
 {
@@ -18,7 +18,7 @@ public class GyonasPageModelsTests
     {
         var (pageContext, tempData, actionContext) = GetPreStuff();
 
-        var model = new androkat.web.Pages.Gyonas.ImaModel()
+        var model = new web.Pages.Gyonas.ImaModel()
         {
             PageContext = pageContext,
             TempData = tempData,

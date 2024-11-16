@@ -42,10 +42,14 @@ public class IndexModel : PageModel
                .FirstOrDefault(s => s.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress");
 
             if (email is null || string.IsNullOrEmpty(email.Value))
+            {
                 return Redirect("/");
+            }
 
-            if (email.Value != "blabla@gmail.com")
+            if (email.Value != "alkotunk@szentgellertkiado.hu" && email.Value != "arnoldgulyas@gmail.com" && email.Value != "szendike8@gmail.com")
+            {
                 return Redirect("/");
+            }
 
             _partnerRepository.LogInUser(email.Value);
         }

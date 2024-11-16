@@ -52,7 +52,9 @@ public class PufferModel : PageModel
         try
         {
             if (!string.IsNullOrWhiteSpace(newitem) && newitem == "1")
+            {
                 IsNewItem = true;
+            }
 
             var obj = string.IsNullOrWhiteSpace(id) || IsNewItem ? new domain.Model.AdminPage.ContentResult() : _adminRepository.LoadPufferTodayContentByNid(id);
 
@@ -65,7 +67,9 @@ public class PufferModel : PageModel
                 TipusNev = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus.Value).TipusNev;
             }
             else
+            {
                 TipusNev = obj?.Def;
+            }
 
             Forras = obj?.Forras;
             Idezet = obj?.Idezet;
@@ -98,14 +102,14 @@ public class PufferModel : PageModel
 
         if (!TipusId.HasValue)
         {
-            Error = "hiányzik a tipus";
+            Error = "Hiányzik a tipus!";
             ShowToast = true;
             return Page();
         }
 
         if (string.IsNullOrWhiteSpace(Cim) || string.IsNullOrWhiteSpace(FullDatum) || (string.IsNullOrWhiteSpace(Idezet) && string.IsNullOrWhiteSpace(FileUrl)))
         {
-            Error = "hiányzik";
+            Error = "Hiányzik kötelező adat: Cím/Dátum/Idézet vagy fájl url";
             ShowToast = true;
             return Page();
         }
@@ -119,16 +123,8 @@ public class PufferModel : PageModel
 
         if (IsNewItem)
         {
-            Cim = "";
-            Idezet = "";
-            FileUrl = "";
-            Forras = "";
-            Image = "";
-            Nid = "";
-            FullDatum = "";
-            TipusId = null;
+            ResetForm();
         }
-        //     return Redirect("/Ad/Puffer")
 
         Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
         ShowToast = true;
@@ -141,15 +137,37 @@ public class PufferModel : PageModel
         LastTodayResult = new LastTodayResult();
 
         if (string.IsNullOrWhiteSpace(Nid))
+        {
             return Page();
+        }
 
         var res = _adminRepository.DeleteTempContentByNid(Nid);
         if (res)
-            return Redirect("/Ad/Puffer");
+        {
+            ResetForm();
+            Error = "A törlés sikerült";
+            ShowToast = true;
+            return Page();
+        }
 
-        Error = "vmi rossz volt";
+        Error = "Valamilyen hiba történt!";
         ShowToast = true;
         return Page();
+    }
+
+    private void ResetForm()
+    {
+        Cim = "";
+        Idezet = "";
+        FileUrl = "";
+        Forras = "";
+        Image = "";
+        Nid = "";
+        FullDatum = "";
+        TipusId = null;
+        AllTodayContent = [];
+        TipusNev = "";
+        LastTodayResult = new LastTodayResult();
     }
 
     private void SetForras(int tipus)

@@ -55,7 +55,9 @@ public class CronTests : BaseTest
         List<string> result = s2.Value;
         result.Count.Should().Be(count);
         if (result.Count == 1)
+        {
             result.First().Should().Be("cim");
+        }
     }
 
     [Theory]

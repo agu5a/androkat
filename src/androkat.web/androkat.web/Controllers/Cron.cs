@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using androkat.application.Contants;
 using androkat.application.Interfaces;
 using androkat.domain;
 using androkat.domain.Enum;
@@ -14,7 +15,7 @@ using Microsoft.Extensions.Logging;
 namespace androkat.web.Controllers;
 
 [EnableRateLimiting("fixed-by-ip")]
-[Route("cronv1")]
+[Route(ContantValues.Cron)]
 [ApiController]
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S6960:Controllers should not have mixed responsibilities", Justification = "<Pending>")]
 public class Cron : ControllerBase
@@ -145,7 +146,9 @@ public class Cron : ControllerBase
 		try
 		{
 			if (!_apiRepository.AddVideo(videoModel))
+            {
 				return Conflict();
+            }
 
 			return Ok();
 		}

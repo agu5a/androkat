@@ -75,7 +75,9 @@ public class UpdateRadioModel : PageModel
     {
         if (string.IsNullOrWhiteSpace(Nid) || string.IsNullOrWhiteSpace(Source)
            || string.IsNullOrWhiteSpace(Inserted) || string.IsNullOrWhiteSpace(Musor))
+        {
             return;
+        }
 
         var all = _adminRepository.GetAllRadioResult().ToList();
         AllRecordResult = all.Select(s => new SelectListItem { Text = s.Csoport.ToString(), Value = s.Nid.ToString() }).ToList();
@@ -88,7 +90,9 @@ public class UpdateRadioModel : PageModel
     public void OnPostDelete()
     {
         if (string.IsNullOrWhiteSpace(Nid))
+        {
             return;
+        }
 
         var res = _adminRepository.DeleteRadio(Nid);
 

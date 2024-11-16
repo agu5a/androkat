@@ -66,7 +66,9 @@ public class UpdateModel : PageModel
         try
         {
             if (string.IsNullOrWhiteSpace(Tipus))
+            {
                 Tipus = ((int)domain.Enum.Forras.papaitwitter).ToString();
+            }
 
             var all = _adminRepository.GetAllContentByTipus(int.Parse(Tipus)).ToList();
             AllRecordResult = all.Select(s => new SelectListItem { Text = s.Datum, Value = s.Nid.ToString() }).ToList();
@@ -98,7 +100,10 @@ public class UpdateModel : PageModel
 
         if (string.IsNullOrWhiteSpace(Nid) || string.IsNullOrWhiteSpace(Cim)
             || string.IsNullOrWhiteSpace(Fulldatum) || (string.IsNullOrWhiteSpace(Idezet) && string.IsNullOrWhiteSpace(FileUrl)))
+        {
             return;
+        }
+
         var res = _adminRepository.UpdateContent(new ContentDetailsModel(Guid.Parse(Nid), DateTime.Parse(Fulldatum, CultureInfo.CreateSpecificCulture("hu-HU")), Cim, Idezet ?? "", default,
         DateTime.Parse(Inserted, CultureInfo.CreateSpecificCulture("hu-HU")), string.Empty, Img ?? "", FileUrl ?? "", Forras ?? "")
         );
@@ -110,7 +115,9 @@ public class UpdateModel : PageModel
         GetDropDownData();
 
         if (string.IsNullOrWhiteSpace(Nid))
+        {
             return;
+        }
 
         var res = _adminRepository.DeleteContent(Nid);
 
@@ -133,7 +140,9 @@ public class UpdateModel : PageModel
                     or (int)domain.Enum.Forras.audionapievangelium 
                     or (int)domain.Enum.Forras.audiopalferi 
                     or (int)domain.Enum.Forras.audiotaize)
+                {
                     label = "audió " + label;
+                }
 
                 result.Add(new AllTipusResult
                 {

@@ -52,7 +52,7 @@ public class CreateTempContentTests : IClassFixture<CustomWebApplicationFactory<
 
     private async Task<HttpResponseMessage> PostAndEnsureConflictAsync(string requestUri, HttpContent content)
     {
-        HttpResponseMessage response = await _client.PostAsync(requestUri, content);
+        var response = await _client.PostAsync(requestUri, content);
         if (response.StatusCode != HttpStatusCode.Conflict)
         {
             throw new HttpRequestException("");

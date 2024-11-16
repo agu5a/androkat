@@ -43,7 +43,9 @@ public partial class CacheService : ICacheService
                 {
                     var match = YoutubeRegex().Match(item.VideoLink);
                     if (match.Success)
+                    {
                         link = "https://www.youtube.com/watch?v=" + match.Groups[1].Value;
+                    }
                 }
                 videoModel.Add(new VideoModel(item.Nid, item.Img, link, item.Cim, item.Date, item.Forras, item.ChannelId, item.Inserted));
             }

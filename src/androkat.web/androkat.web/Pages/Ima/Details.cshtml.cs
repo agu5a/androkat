@@ -29,14 +29,20 @@ public class DetailsModel : PageModel
     public IActionResult OnGet()
     {
         if(string.IsNullOrWhiteSpace(Nid))
+        {
             return Redirect("/Error");
+        }
 
         if(!Guid.TryParse(Nid, out var guid))
+        {
             return Redirect("/Error");
+        }
 
         var result = _contentService.GetImaById(guid);
         if (result is null)
+        {
             return Redirect("/Error");
+        }
 
         ImaCsoportok = new Dictionary<string, string> {{ "Alapimák", "11" }, {"Napi imák","9" }, {"Kérő és felajánló imák","12" },
             {"Hála és dicsőítő imák","7"}, {"Litániák","4"}, {"Szentmise","3"},
