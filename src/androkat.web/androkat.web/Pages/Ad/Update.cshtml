@@ -6,6 +6,16 @@
 @section meta_extra {
     <script type="text/javascript">
         $(document).ready(function () {
+
+        @{
+            if (Model.ShowToast)
+            {
+                <text>
+                $("#myToast").toast("show");
+                </text>
+            }
+        }
+
             $('#maidatum').on('click', function () {
                 Date.prototype.yyyymmdd = function () {
                     var yy = this.getUTCFullYear();
@@ -54,127 +64,127 @@
                 temp2 = temp2.replace(new RegExp("…", 'g'), '...');
                 temp2 = temp2.replace(new RegExp(/ +/g, 'g'), ' ');
                 $('#idezet').val(temp2);
-            });            
+            });
         });
     </script>
 }
 
-    @section scripts {
+@section scripts {
 }
 
-    <div class="container-fluid">
-        <div class="py-5 text-center">
-            <h3>Content update</h3>
-        </div>
-        <form method="post">
-            <div class="row">
-                <div class="me-4" style="width: 400px;">
-                    @Html.DropDownListFor(model => model.Tipus, Model.Tipusok, "--Típus--", new { @class = "form-control form-control-sm", style = "width: 400px;" })
-                </div>
-                <div class="me-4" style="width: 150px;">
-                    @Html.DropDownListFor(model => model.Nid, Model.AllRecordResult, "--Nid--", new { @class = "form-control form-control-sm", style = "width: 150px;" })
-                </div>
-                <div class="" style="width: 100px;">
-                    <button type="submit" class="btn btn-sm btn-primary" asp-page-handler="Search">
-                        keresés
-                    </button>
-                </div>
+<div class="container-fluid">
+    <div class="py-5 text-center">
+        <h3>Content update</h3>
+    </div>
+    <form method="post">
+        <div class="row">
+            <div class="me-4" style="width: 400px;">
+                @Html.DropDownListFor(model => model.Tipus, Model.Tipusok, "--Típus--", new { @class = "form-control form-control-sm", style = "width: 400px;" })
             </div>
-            <div class="row">
-                <div class="col-md-12 order-md-1">
-                    <div class="mb-3 mt-3">
+            <div class="me-4" style="width: 150px;">
+                @Html.DropDownListFor(model => model.Nid, Model.AllRecordResult, "--Nid--", new { @class = "form-control form-control-sm", style = "width: 150px;" })
+            </div>
+            <div class="" style="width: 100px;">
+                <button type="submit" class="btn btn-sm btn-primary" asp-page-handler="Search">
+                    keresés
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 order-md-1">
+                <div class="mb-3">
+                    <div>
+                        <span>
+                            típus: @Model.Tipus
+                        </span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
                         <div>
-                            <span>
-                                @Model.Error
+                            <span class="p-1 mb-3 bg-primary text-white">
+                                dátum: (pl: @Model.Today)
                             </span>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <div>
-                            <span>
-                                típus: @Model.Tipus
-                            </span>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <div>
-                                <span class="p-1 mb-3 bg-primary text-white">
-                                    dátum: (pl: @Model.Today)
-                                </span>
-                            </div>
-                            <div style="margin: 10px 0 0 0;">
-                            <input type="text" class="form-control" asp-for="Fulldatum" value="@Model.Fulldatum" />
-                                <button type="button" id="maidatum" style="margin-top: 10px;">
-                                    mai dátum
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div><span class="p-1 mb-3 bg-primary text-white">cím:</span></div>
-                            <div style="margin: 10px 0 0 0;">
-                                <input type="text" class="form-control" asp-for="Cim" value="@Model.Cim" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <div><span class="p-1 mb-3 bg-primary text-white">idézet</span></div>
                         <div style="margin: 10px 0 0 0;">
-                            <textarea id="idezet" name="idezet" class="form-control" rows="18" cols="100">@Model.Idezet</textarea>
+                            <input type="text" class="form-control" asp-for="Fulldatum" value="@Model.Fulldatum" />
+                            <button type="button" id="maidatum" style="margin-top: 10px;">
+                                mai dátum
+                            </button>
                         </div>
                     </div>
+                    <div class="col-md-6 mb-3">
+                        <div><span class="p-1 mb-3 bg-primary text-white">cím:</span></div>
+                        <div style="margin: 10px 0 0 0;">
+                            <input type="text" class="form-control" asp-for="Cim" value="@Model.Cim" />
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div><span class="p-1 mb-3 bg-primary text-white">idézet</span></div>
+                    <div style="margin: 10px 0 0 0;">
+                        <textarea id="idezet" name="idezet" class="form-control" rows="18" cols="100">@Model.Idezet</textarea>
+                    </div>
+                </div>
                 <div class="mb-3">
                     <div><span class="p-1 mb-3 bg-primary text-white">FileUrl</span></div>
                     <div style="margin: 10px 0 0 0;">
                         <input type="text" class="form-control" asp-for="FileUrl" value="@Model.FileUrl" />
                     </div>
                 </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <div><span class="p-1 mb-3 bg-primary text-white">inserted:</span></div>
-                            <div style="margin-top: 10px;">
-                                <input type="text" class="form-control" asp-for="Inserted" value="@Model.Inserted" />
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div><span class="p-1 mb-3 bg-primary text-white">inserted:</span></div>
+                        <div style="margin-top: 10px;">
+                            <input type="text" class="form-control" asp-for="Inserted" value="@Model.Inserted" />
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <div><span class="p-1 mb-3 bg-primary text-white">image:</span></div>
-                            <div style="margin-top: 10px;">
-                                <input type="text" class="form-control" asp-for="Img" value="@Model.Img" />
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div><span class="p-1 mb-3 bg-primary text-white">forrás:</span></div>
-                            <div style="margin-top: 10px;">
-                                <input type="text" class="form-control" asp-for="Forras" value="@Model.Forras" />
-                            </div>
-                        </div>
+                    <div class="col-md-6 mb-3">
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-md-4" style="width: 107px;">
-                            <button type="submit" class="btn btn-lg btn-primary" asp-page-handler="Save">
-                                mehet
-                            </button>
-                        </div>
-                        <div class="col-md-4" style="width: 100px;">
-                            <button type="button" class="btn btn-lg btn-info" id="tisztit">
-                                tisztít
-                            </button>
-                        </div>
-                        <div class="col-md-4" style="width: 100px;">
-                            <button type="submit" class="btn btn-lg btn-danger" asp-page-handler="Delete">
-                                törlés
-                            </button>
-                        </div>
-                    </div>
-
                 </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div><span class="p-1 mb-3 bg-primary text-white">image:</span></div>
+                        <div style="margin-top: 10px;">
+                            <input type="text" class="form-control" asp-for="Img" value="@Model.Img" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div><span class="p-1 mb-3 bg-primary text-white">forrás:</span></div>
+                        <div style="margin-top: 10px;">
+                            <input type="text" class="form-control" asp-for="Forras" value="@Model.Forras" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4" style="width: 107px;">
+                        <button type="submit" class="btn btn-lg btn-primary" asp-page-handler="Save">
+                            mehet
+                        </button>
+                    </div>
+                    <div class="col-md-4" style="width: 100px;">
+                        <button type="button" class="btn btn-lg btn-info" id="tisztit">
+                            tisztít
+                        </button>
+                    </div>
+                    <div class="col-md-4" style="width: 100px;">
+                        <button type="submit" class="btn btn-lg btn-danger" asp-page-handler="Delete">
+                            törlés
+                        </button>
+                    </div>
+                </div>
+
             </div>
-        </form>
+        </div>
+    </form>
+</div>
+<div id="myToast" class="toast position-fixed top-0 start-0 m-5 p-3" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+        <div class="toast-body">
+            @Html.Raw(Model.Error)
+        </div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
+</div>

@@ -10,6 +10,15 @@
 
         $(document).ready(function () {
 
+        @{
+            if (Model.ShowToast)
+            {
+                <text>
+                $("#myToast").toast("show");
+                </text>
+            }
+        }
+
             function getParameterByName(name, url) {
                 if (!url)
                     url = window.location.href;
@@ -97,7 +106,7 @@
                 $('.se-wrapper-code').val(temp2);
             });
 
-            editor.onChange = function (contents, core) 
+            editor.onChange = function (contents, core)
             {
                 $('#idezet').val($('.se-wrapper-wysiwyg').html());
             }
@@ -105,67 +114,68 @@
     </script>
 }
 
-    @section scripts {
+@section scripts {
 }
 
-    <div class="container-fluid">
-        <div class="py-5 text-center">
-            <h3>Új Ima</h3>
-        </div>
-        <div class="row">
-            <div class="col-md-12 order-md-1">
-                <form method="post">
-                    <div class="mb-3">
-                        <div>
-                            <span>
-                                @Model.Error
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <div><span class="p-1 mb-3 bg-primary text-white">cím:</span></div>
-                            <div style="margin: 10px 0 0 0;">
-                                <em>Kötelező</em>
-                                <input type="text" class="form-control" asp-for="Cim" required value="@Model.Cim" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <div><span class="p-1 mb-3 bg-primary text-white">szöveg</span></div>
+<div class="container-fluid">
+    <div class="py-5 text-center">
+        <h3>Új Ima</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12 order-md-1">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div><span class="p-1 mb-3 bg-primary text-white">cím:</span></div>
                         <div style="margin: 10px 0 0 0;">
                             <em>Kötelező</em>
-                            <textarea asp-for="Idezet" class="form-control" rows="18" cols="100">@Model.Idezet</textarea>
+                            <input type="text" class="form-control" asp-for="Cim" required value="@Model.Cim" />
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3" style="width: 300px;">
-                            <span>Alapimák"=>"11"</span><br /><span>Napi imák"=>"9"</span><br />
-                            <span>Kérő és felajánló imák"=>"12"</span><br /><span>Hála és dicsőítő imák"=>"7"</span><br />
-                            <span>Litániák"=>"4"</span><br /><span>Szentmise"=>"3"</span><br />
-                            <span>Szűz Mária"=>"10"</span><br /><span>Rózsafüzér"=>"2"</span><br />
-                            <span>Szentek imái"=>"1"</span><br /><span>Zsoltár"=>"0"</span>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div><span class="p-1 mb-3 bg-primary text-white">csoport:</span></div>
-                            <div style="margin-top: 10px;">
-                                <input type="text" class="form-control" style="width: 100px;" asp-for="Csoport" value="@Model.Csoport" required />
-                            </div>
+                </div>
+                <div class="mb-3">
+                    <div><span class="p-1 mb-3 bg-primary text-white">szöveg</span></div>
+                    <div style="margin: 10px 0 0 0;">
+                        <em>Kötelező</em>
+                        <textarea asp-for="Idezet" class="form-control" rows="18" cols="100">@Model.Idezet</textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3" style="width: 300px;">
+                        <span>Alapimák"=>"11"</span><br /><span>Napi imák"=>"9"</span><br />
+                        <span>Kérő és felajánló imák"=>"12"</span><br /><span>Hála és dicsőítő imák"=>"7"</span><br />
+                        <span>Litániák"=>"4"</span><br /><span>Szentmise"=>"3"</span><br />
+                        <span>Szűz Mária"=>"10"</span><br /><span>Rózsafüzér"=>"2"</span><br />
+                        <span>Szentek imái"=>"1"</span><br /><span>Zsoltár"=>"0"</span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div><span class="p-1 mb-3 bg-primary text-white">csoport:</span></div>
+                        <div style="margin-top: 10px;">
+                            <input type="text" class="form-control" style="width: 100px;" asp-for="Csoport" value="@Model.Csoport" required />
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3" style="width: 100px;">
-                            <button type="submit" class="btn btn-lg btn-primary" id="submit">
-                                mehet
-                            </button>
-                        </div>
-                        <div class="col-md-6 mb-3" style="width: 100px;">
-                            <button type="button" class="btn btn-lg btn-info" id="tisztit">
-                                tisztít
-                            </button>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3" style="width: 100px;">
+                        <button type="submit" class="btn btn-lg btn-primary" id="submit">
+                            mehet
+                        </button>
                     </div>
-                </form>
-            </div>
+                    <div class="col-md-6 mb-3" style="width: 100px;">
+                        <button type="button" class="btn btn-lg btn-info" id="tisztit">
+                            tisztít
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+<div id="myToast" class="toast position-fixed top-0 start-0 m-5 p-3" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+        <div class="toast-body">
+            @Html.Raw(Model.Error)
+        </div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>

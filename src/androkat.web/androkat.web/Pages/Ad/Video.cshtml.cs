@@ -44,11 +44,19 @@ public class VideoModel : PageModel
                 Inserted = DateTime.Now
             });
             _ctx.SaveChanges();
-            VideoPageData = new VideoData { Error = "siker�lt" };
+
+            VideoPageData = new VideoData
+            {
+                Error = "sikerült"
+            };
         }
         catch (Exception ex)
         {
-            VideoPageData = new VideoData { Error = ex.Message };
+            VideoPageData = new VideoData
+            {
+                Error = ex.Message
+            };
+
             _logger.LogError(ex, "Exception: ");
         }
     }

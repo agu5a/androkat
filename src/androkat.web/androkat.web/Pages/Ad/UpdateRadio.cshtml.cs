@@ -30,6 +30,7 @@ public class UpdateRadioModel : PageModel
     public string Source { get; set; }
     public string Nid { get; set; }
     public string Error { get; set; }
+    public bool ShowToast { get; set; }
     public List<SelectListItem> AllRecordResult { get; set; }
 
     public void OnGet()
@@ -67,6 +68,7 @@ public class UpdateRadioModel : PageModel
         catch (Exception ex)
         {
             Error = ex.Message;
+            ShowToast = true;
             _logger.LogError(ex, "Exception: ");
         }
     }
@@ -84,7 +86,8 @@ public class UpdateRadioModel : PageModel
 
         var res = _adminRepository.UpdateRadio(new RadioMusorModel(Guid.Parse(Nid), Source, Musor, Inserted));
 
-        Error = res ? "siker" : "vmi rossz volt";
+        Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
+        ShowToast = true;
     }
 
     public void OnPostDelete()
@@ -99,6 +102,7 @@ public class UpdateRadioModel : PageModel
         var all = _adminRepository.GetAllRadioResult().ToList();
         AllRecordResult = all.Select(s => new SelectListItem { Text = s.Csoport.ToString(), Value = s.Nid.ToString() }).ToList();
 
-        Error = res ? "siker" : "vmi rossz volt";
+        Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
+        ShowToast = true;
     }
 }

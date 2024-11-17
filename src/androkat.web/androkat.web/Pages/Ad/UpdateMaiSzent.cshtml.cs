@@ -41,6 +41,7 @@ public class UpdateMaiSzentModel : PageModel
     public string Tipus { get; set; }
     public string Nid { get; set; }
     public string Error { get; set; }
+    public bool ShowToast { get; set; }
     public List<SelectListItem> Months { get; set; }
     public List<SelectListItem> AllRecordResult { get; set; }
     public List<SelectListItem> Tipusok { get; set; }
@@ -96,6 +97,7 @@ public class UpdateMaiSzentModel : PageModel
         catch (Exception ex)
         {
             Error = ex.Message;
+            ShowToast = true;
             _logger.LogError(ex, "Exception: ");
         }
     }
@@ -128,7 +130,8 @@ public class UpdateMaiSzentModel : PageModel
             Inserted = DateTime.Parse(Inserted, CultureInfo.CreateSpecificCulture("hu-HU"))
         });
 
-        Error = res ? "siker" : "vmi rossz volt";
+        Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
+        ShowToast = true;
     }
 
     private void GetDropDownData()

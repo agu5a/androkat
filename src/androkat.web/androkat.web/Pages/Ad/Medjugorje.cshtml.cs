@@ -23,6 +23,7 @@ public class MedjugorjeModel : PageModel
     public string Datum { get; set; }
     public string Idezet { get; set; }
     public string Error { get; set; }
+    public bool ShowToast { get; set; }
 
     public void OnGet()
     {
@@ -33,17 +34,20 @@ public class MedjugorjeModel : PageModel
     {
         if (string.IsNullOrWhiteSpace(Cim) || string.IsNullOrWhiteSpace(Idezet) || string.IsNullOrWhiteSpace(Datum))
         {
-            Error = "valami hiányzik";
+            Error = "Hiányzik kötelező adat";
+            ShowToast = true;
             return;
         }
 
         if (!DateTime.TryParseExact(Datum, "MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
         {
-            Error = "nem jó a dátum";
+            Error = "Nem megfelelő a dátum";
+            ShowToast = true;
             return;
         }
 
         var (isSuccess, message) = _adminRepository.InsertFixContent(Cim, Idezet, (int)Forras.medjugorje, Datum);
-        Error = isSuccess ? "siker" : message;
+        Error = isSuccess ? "A mentés sikerült" : message;
+        ShowToast = true;
     }
 }

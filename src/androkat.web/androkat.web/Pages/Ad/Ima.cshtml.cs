@@ -24,8 +24,9 @@ public class ImaModel : PageModel
 	public string Idezet { get; set; }
 	public string Csoport { get; set; }
 	public string Error { get; set; }
+    public bool ShowToast { get; set; }
 
-	public void OnGet()
+    public void OnGet()
 	{
 		//nothing here
 	}
@@ -34,11 +35,13 @@ public class ImaModel : PageModel
 	{
 		if (string.IsNullOrWhiteSpace(Cim) || string.IsNullOrWhiteSpace(Idezet) || string.IsNullOrWhiteSpace(Csoport))
 		{
-			Error = "valami hiányzik";
-			return;
+			Error = "Hiányzik kötelező adat";
+            ShowToast = true;
+            return;
 		}
 
 		var (isSuccess, message) = _adminRepository.InsertIma(new domain.Model.ImaModel(Guid.NewGuid(), _iClock.Now.Date, Cim, Csoport, Idezet));
-		Error = isSuccess ? "siker" : message;
-	}
+		Error = isSuccess ? "A mentés sikerült" : message;
+        ShowToast = true;
+    }
 }

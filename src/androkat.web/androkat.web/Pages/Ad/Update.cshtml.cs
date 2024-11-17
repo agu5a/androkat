@@ -40,6 +40,7 @@ public class UpdateModel : PageModel
     public string Tipus { get; set; }
     public string Nid { get; set; }
     public string Error { get; set; }
+    public bool ShowToast { get; set; }
     public List<SelectListItem> AllRecordResult { get; set; }
     public List<SelectListItem> Tipusok { get; set; }
     public string Today { get; set; }
@@ -90,6 +91,7 @@ public class UpdateModel : PageModel
         catch (Exception ex)
         {
             Error = ex.Message;
+            ShowToast = true;
             _logger.LogError(ex, "Exception: ");
         }
     }
@@ -107,7 +109,8 @@ public class UpdateModel : PageModel
         var res = _adminRepository.UpdateContent(new ContentDetailsModel(Guid.Parse(Nid), DateTime.Parse(Fulldatum, CultureInfo.CreateSpecificCulture("hu-HU")), Cim, Idezet ?? "", default,
         DateTime.Parse(Inserted, CultureInfo.CreateSpecificCulture("hu-HU")), string.Empty, Img ?? "", FileUrl ?? "", Forras ?? "")
         );
-        Error = res ? "siker" : "vmi rossz volt";
+        Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
+        ShowToast = true;
     }
 
     public void OnPostDelete()
@@ -121,7 +124,8 @@ public class UpdateModel : PageModel
 
         var res = _adminRepository.DeleteContent(Nid);
 
-        Error = res ? "siker" : "vmi rossz volt";
+        Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
+        ShowToast = true;
     }
 
     private void GetDropDownData()

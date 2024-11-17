@@ -60,7 +60,10 @@ public class AdminRepositoryTests : BaseTest
         using var context = new AndrokatContext(GetDbContextOptions());
 
         var repo = new AdminRepository(context, loggerRepo.Object, clock.Object, idezetData, null);
-        var result = repo.InsertError(new ErrorRequest { Error = "hiba"});
+        var result = repo.InsertError(new ErrorRequest
+        {
+            Error = "hiba"
+        });
         result.Should().BeTrue();
     }
 

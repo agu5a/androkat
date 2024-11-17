@@ -165,7 +165,6 @@ public class PufferModel : PageModel
         Nid = "";
         FullDatum = "";
         TipusId = null;
-        AllTodayContent = [];
         TipusNev = "";
         LastTodayResult = new LastTodayResult();
     }

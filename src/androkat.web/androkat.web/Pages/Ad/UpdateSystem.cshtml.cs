@@ -28,7 +28,8 @@ public class UpdateSystemModel : PageModel
 	public string Key { get; set; }
 	public string Nid { get; set; }
 	public string Error { get; set; }
-	public List<SelectListItem> AllRecordResult { get; set; }
+    public bool ShowToast { get; set; }
+    public List<SelectListItem> AllRecordResult { get; set; }
 
 	public void OnGet()
 	{
@@ -64,7 +65,8 @@ public class UpdateSystemModel : PageModel
 		catch (Exception ex)
 		{
 			Error = ex.Message;
-			_logger.LogError(ex, "Exception: ");
+            ShowToast = true;
+            _logger.LogError(ex, "Exception: ");
 		}
 	}
 
@@ -80,6 +82,7 @@ public class UpdateSystemModel : PageModel
 
 		var res = _adminRepository.UpdateSystemInfo(new SystemInfoData { Id = int.Parse(Nid), Value = Value });
 
-		Error = res ? "siker" : "vmi rossz volt";
-	}	
+		Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
+        ShowToast = true;
+    }	
 }
