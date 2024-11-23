@@ -10,53 +10,63 @@
 
         $(document).ready(function () {
 
-        @{
-            if (Model.ShowToast)
-            {
-                <text>
-                 $("#myToast").toast("show");
-                </text>
-            }
-        }
+            @{
+                if (Model.ShowToast)
+                {
+                    <text>
+                        $("#myToast").toast("show");
+                    </text>
+                }
 
-        function getParameterByName(name, url) {
+                if (Model.TipusId.HasValue)
+                {
+                    <text>
+                         const editor = SUNEDITOR.create('Idezet', {
+                             tagsBlacklist: "(span|h1|h2|h3|h4|h5|h6|style|class)",
+                             pasteTagsBlacklist: "(span|h1|h2|h3|h4|h5|h6|style|class)",
+                             display: 'block',
+                             width: '100%',
+                             height: 'auto',
+                             popupDisplay: 'full',
+                             charCounter: true,
+                             defaultStyle: "font-size:16px;",
+                             toolbarWidth: "600px",
+                             buttonList: [['undo', 'redo'], ['formatBlock'], ['paragraphStyle'],['bold', 'italic'],['removeFormat'],['align', 'horizontalRule', 'list'],['link'], ['fullScreen', 'showBlocks', 'codeView']]
+                         });
+
+                         editor.toggleCodeView = function (isCodeView, core) {
+                             if (isCodeView) {
+                                 var $textarea = $('.se-wrapper-inner');
+                                 $textarea.scrollTop(0);
+                                 $textarea.prop('selectionEnd', 0);
+                             }
+                         }
+
+                         editor.onChange = function (contents, core)
+                         {
+                             $('#Idezet').val($('.se-wrapper-wysiwyg').html());
+                         }
+                    </text>
+                }
+            }
+
+            function getParameterByName(name, url) {
                 if (!url)
+                {
                     url = window.location.href;
+                }
                 name = name.replace(/[\[\]]/g, '\\$&');
                 var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                    results = regex.exec(url);
+                results = regex.exec(url);
                 if (!results)
+                {
                     return null;
-                if (!results[2])
-                    return '';
-                return decodeURIComponent(results[2].replace(/\+/g, ' '));
-            }
-
-            const editor = SUNEDITOR.create('Idezet', {
-                tagsBlacklist: "(span|h1|h2|h3|h4|h5|h6|style|class)",
-                pasteTagsBlacklist: "(span|h1|h2|h3|h4|h5|h6|style|class)",
-                display: 'block',
-                width: '100%',
-                height: 'auto',
-                popupDisplay: 'full',
-                charCounter: true,
-                defaultStyle: "font-size:16px;",
-                toolbarWidth: "600px",
-                buttonList: [
-                    ['undo', 'redo'], ['formatBlock'], ['paragraphStyle'],
-                    ['bold', 'italic'],
-                    ['removeFormat'],
-                    ['align', 'horizontalRule', 'list'],
-                    ['link'], ['fullScreen', 'showBlocks', 'codeView']
-                ]
-            });
-
-            editor.toggleCodeView = function (isCodeView, core) {
-                if (isCodeView) {
-                    var $textarea = $('.se-wrapper-inner');
-                    $textarea.scrollTop(0);
-                    $textarea.prop('selectionEnd', 0);
                 }
+                if (!results[2])
+                {
+                    return '';
+                }
+                return decodeURIComponent(results[2].replace(/\+/g, ' '));
             }
 
             $('#tisztit').on('click', function () {
@@ -125,10 +135,6 @@
                 window.location = "/ad/puffer?tipus=" + id + data;
             });
 
-            editor.onChange = function (contents, core)
-            {
-                $('#Idezet').val($('.se-wrapper-wysiwyg').html());
-            }
         });
     </script>
 }
@@ -153,7 +159,7 @@
     </div>
     <div class="row">
         <div class="col-md-4 order-md-2 mb-4 overflow-hidden">
-            <label>Válassz</label>
+            <label class="bg-success p-2 text-white">Válassz</label>
             <div>
                 @foreach (var todayContent in Model.AllTodayContent)
                 {
@@ -167,127 +173,143 @@
                 }
             </div>
         </div>
-        <div class="col-md-8 order-md-1">
-            <form method="post">
-                <input type="hidden" asp-for="TipusId" />
-                <input type="hidden" asp-for="TipusNev" />
-                <input type="hidden" asp-for="Nid" />
-                <input hidden="hidden" type="checkbox" asp-for="IsNewItem" class="form-check-input" />
-                <div class="mb-3">
-                    <div>
-                        @if (Model.IsNewItem)
-                        {
-                            @Html.Raw("<span class='bg-success p-2 text-white'>Új Anyag</span>")
-                        }
-                        else if (!string.IsNullOrWhiteSpace(Model.Nid))
-                        {
-                            @Html.Raw("<span class='bg-success p-2 text-white'>Aktiválás</span>")
-                        }
-                    </div>
-                    <div class="mt-3">
-                        <span>
-                            <strong>Típus neve</strong>: @Model.TipusNev || <strong>típus</strong>: @Model.TipusId || <strong>nid</strong>: @Model.Nid
-                        </span>
-                    </div>
-                </div>
-                <div class="mb-3 border border-1 border-secondary p-2">
-                    <div class="mb-2"><span class="p-1 bg-primary text-white">Korábbi anyag:</span></div>
-                    <div>
-                        @if (!string.IsNullOrWhiteSpace(Model.LastTodayResult.Link) && !string.IsNullOrWhiteSpace(Model.LastTodayResult.Def))
-                        {
-                            @Html.Raw("<div class='mb-1'><a href='" + Model.LastTodayResult.Link + "' target='_blank'>" + Model.LastTodayResult.Def + "</a></div>")
-                        }
+        @{
+            if (Model.TipusId.HasValue)
+            {
+                <div class="col-md-8 order-md-1">
+                    <form method="post">
+                        <input type="hidden" asp-for="TipusId" />
+                        <input type="hidden" asp-for="TipusNev" />
+                        <input type="hidden" asp-for="Nid" />
+                        <input hidden="hidden" type="checkbox" asp-for="IsNewItem" class="form-check-input" />
+                        <div class="mb-3">
+                            <div>
+                                @if (Model.IsNewItem)
+                                {
+                                    @Html.Raw("<span class='bg-success p-2 text-white'>Új Anyag</span>")
+                                }
+                                else if (!string.IsNullOrWhiteSpace(Model.Nid))
+                                {
+                                    @Html.Raw("<span class='bg-success p-2 text-white'>Aktiválás</span>")
+                                }
+                            </div>
+                            <div class="mt-3">
+                                <span>
+                                    <strong>Típus neve</strong>: @Model.TipusNev || <strong>típus</strong>: @Model.TipusId || <strong>nid</strong>: @Model.Nid
+                                </span>
+                            </div>
+                        </div>
+                        <div class="mb-3 border border-1 border-secondary p-2">
+                            <div class="mb-2"><span class="p-1 bg-primary text-white">Korábbi anyag:</span></div>
+                            <div>
+                                @if (!string.IsNullOrWhiteSpace(Model.LastTodayResult.Link) && !string.IsNullOrWhiteSpace(Model.LastTodayResult.Def))
+                                {
+                                    @Html.Raw("<div class='mb-1'><a href='" + Model.LastTodayResult.Link + "' target='_blank'>" + Model.LastTodayResult.Def + "</a></div>")
+                                }
 
-                        @if (!string.IsNullOrWhiteSpace(Model.LastTodayResult.FullDatum) && !string.IsNullOrWhiteSpace(Model.LastTodayResult.Cim))
-                        {
-                            @Html.Raw("<div class='mb-1'>[" + Model.LastTodayResult.FullDatum + "] -  " + Model.LastTodayResult.Cim + "</div>")
-                        }
+                                @if (!string.IsNullOrWhiteSpace(Model.LastTodayResult.FullDatum) && !string.IsNullOrWhiteSpace(Model.LastTodayResult.Cim))
+                                {
+                                    @Html.Raw("<div class='mb-1'>[" + Model.LastTodayResult.FullDatum + "] -  " + Model.LastTodayResult.Cim + "</div>")
+                                }
 
-                        @if (Model.TipusId is not null && Model.TipusId is 6 or 15 or 28 or 38 or 39 or 46 or 60)
-                        {
-                            <div class="mb-1">
-                                <strong>Idézet</strong>: <a href="@Model.LastTodayResult.Idezet" target="_blank">@Model.LastTodayResult.Idezet</a>
+                                @if (Model.TipusId is not null && Model.TipusId is 6 or 15 or 28 or 38 or 39 or 46 or 60)
+                                {
+                                    <div class="mb-1">
+                                        <strong>Idézet</strong>: <a href="@Model.LastTodayResult.Idezet" target="_blank">@Model.LastTodayResult.Idezet</a>
+                                    </div>
+                                    <div class="mb-1">
+                                        <strong>FileUrl</strong>: <a href="@Model.LastTodayResult.FileUrl" target="_blank">@Model.LastTodayResult.FileUrl</a>
+                                    </div>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(Model.LastTodayResult.Segedlink))
+                                {
+                                    <div class="mb-1">
+                                        <strong>Segédlink</strong>: <a href="@Model.LastTodayResult.Segedlink" target="_blank">@Model.LastTodayResult.Segedlink</a>
+                                    </div>
+                                }
                             </div>
-                            <div class="mb-1">
-                                <strong>FileUrl</strong>: <a href="@Model.LastTodayResult.FileUrl" target="_blank">@Model.LastTodayResult.FileUrl</a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div>
+                                    <span class="p-1 mb-3 bg-primary text-white">
+                                        dátum: (pl: @Model.Today)
+                                    </span>
+                                </div>
+                                <div style="margin: 10px 0 0 0;">
+                                    <em>Kötelező</em>
+                                    <input type="text" class="form-control" asp-for="FullDatum" required value="@Model.FullDatum" />
+                                    <button type="button" id="maidatum" style="margin-top: 10px;">
+                                        mai dátum
+                                    </button>
+                                </div>
                             </div>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(Model.LastTodayResult.Segedlink))
-                        {
-                            <div class="mb-1">
-                                <strong>Segédlink</strong>: <a href="@Model.LastTodayResult.Segedlink" target="_blank">@Model.LastTodayResult.Segedlink</a>
+                            <div class="col-md-6 mb-3">
+                                <div><span class="p-1 mb-3 bg-primary text-white">cím:</span></div>
+                                <div style="margin: 10px 0 0 0;">
+                                    <em>Kötelező</em>
+                                    <input type="text" class="form-control" asp-for="Cim" required value="@Model.Cim" />
+                                </div>
                             </div>
-                        }
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <div>
-                            <span class="p-1 mb-3 bg-primary text-white">
-                                dátum: (pl: @Model.Today)
-                            </span>
                         </div>
-                        <div style="margin: 10px 0 0 0;">
-                            <em>Kötelező</em>
-                            <input type="text" class="form-control" asp-for="FullDatum" required value="@Model.FullDatum" />
-                            <button type="button" id="maidatum" style="margin-top: 10px;">
-                                mai dátum
-                            </button>
+                        <div class="mb-3">
+                            <div><span class="p-1 mb-3 bg-primary text-white">idézet</span></div>
+                            <div style="margin: 10px 0 0 0;">
+                                <textarea asp-for="Idezet" class="form-control" rows="18" cols="100">@Model.Idezet</textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <div><span class="p-1 mb-3 bg-primary text-white">cím:</span></div>
-                        <div style="margin: 10px 0 0 0;">
-                            <em>Kötelező</em>
-                            <input type="text" class="form-control" asp-for="Cim" required value="@Model.Cim" />
+                        <div class="mb-3">
+                            <div><span class="p-1 mb-3 bg-primary text-white">FileUrl</span></div>
+                            <div style="margin: 10px 0 0 0;">
+                                <input type="text" class="form-control" asp-for="FileUrl" value="@Model.FileUrl" />
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <div><span class="p-1 mb-3 bg-primary text-white">idézet</span></div>
-                    <div style="margin: 10px 0 0 0;">
-                        <textarea asp-for="Idezet" class="form-control" rows="18" cols="100">@Model.Idezet</textarea>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <div><span class="p-1 mb-3 bg-primary text-white">FileUrl</span></div>
-                    <div style="margin: 10px 0 0 0;">
-                        <input type="text" class="form-control" asp-for="FileUrl" value="@Model.FileUrl" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <div><span class="p-1 mb-3 bg-primary text-white">image:</span></div>
-                        <div style="margin-top: 10px;">
-                            <input type="text" class="form-control" asp-for="Image" value="@Model.Image" />
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div><span class="p-1 mb-3 bg-primary text-white">image:</span></div>
+                                <div style="margin-top: 10px;">
+                                    <input type="text" class="form-control" asp-for="Image" value="@Model.Image" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div><span class="p-1 mb-3 bg-primary text-white">forrás:</span></div>
+                                <div style="margin-top: 10px;">
+                                    <input type="text" class="form-control" asp-for="Forras" value="@Model.Forras" />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <div><span class="p-1 mb-3 bg-primary text-white">forrás:</span></div>
-                        <div style="margin-top: 10px;">
-                            <input type="text" class="form-control" asp-for="Forras" value="@Model.Forras" />
+                        <div class="row">
+                            <div class="col-md-4 mb-3" style="width: 107px;">
+                                <button type="submit" class="btn btn-lg btn-primary" id="submit" asp-page-handler="Save">
+                                    mehet
+                                </button>
+                            </div>
+                            <div class="col-md-4 mb-3" style="width: 100px;">
+                                <button type="button" class="btn btn-lg btn-info" id="tisztit">
+                                    tisztít
+                                </button>
+                            </div>
+                            @{
+                                if (!Model.IsNewItem)
+                                {
+                                    <div class="col-md-4 mb-3" style="width: 100px;">
+                                        <button type="submit" class="btn btn-lg btn-danger delete" id="@Model.Nid" asp-page-handler="Delete">
+                                            törlés
+                                        </button>
+                                    </div>
+                                }
+                            }
                         </div>
-                    </div>
+                    </form>
                 </div>
-                <div class="row">
-                    <div class="col-md-4 mb-3" style="width: 107px;">
-                        <button type="submit" class="btn btn-lg btn-primary" id="submit" asp-page-handler="Save">
-                            mehet
-                        </button>
-                    </div>
-                    <div class="col-md-4 mb-3" style="width: 100px;">
-                        <button type="button" class="btn btn-lg btn-info" id="tisztit">
-                            tisztít
-                        </button>
-                    </div>
-                    <div class="col-md-4 mb-3" style="width: 100px;">
-                        <button type="submit" class="btn btn-lg btn-danger delete" id="@Model.Nid" asp-page-handler="Delete">
-                            törlés
-                        </button>
-                    </div>
+            }
+            else
+            {
+                <div class="col-md-8 order-md-1">
+                    <label class="bg-success p-2 text-white">Válassz a jobb oldali tartalmakból</label>
                 </div>
-            </form>
-        </div>
+            }
+        }
     </div>
 </div>
 <div id="myToast" class="toast position-fixed top-0 start-0 m-5 p-3" role="alert" aria-live="assertive" aria-atomic="true">
@@ -296,5 +318,5 @@
             @Html.Raw(Model.Error)
         </div>
         <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>  
+    </div>
 </div>
