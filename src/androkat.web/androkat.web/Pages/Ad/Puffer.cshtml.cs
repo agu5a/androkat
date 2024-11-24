@@ -91,8 +91,9 @@ public class PufferModel : PageModel
         catch (Exception ex)
         {
             _logger.LogError(ex, "Exception: ");
-            AllTodayContent = _adminRepository.LoadAllTodayResult();
-            LastTodayResult = tipus is null ? new LastTodayResult() : _adminRepository.GetLastTodayContentByTipus(tipus.Value);
+            Error = ex.Message;
+            ShowToast = true;
+            ResetForm();
         }
     }
 
@@ -167,6 +168,7 @@ public class PufferModel : PageModel
         TipusId = null;
         TipusNev = "";
         LastTodayResult = new LastTodayResult();
+        AllTodayContent = _adminRepository.LoadAllTodayResult();
     }
 
     private void SetForras(int tipus)
