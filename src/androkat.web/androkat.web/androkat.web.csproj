@@ -39,8 +39,4 @@
 		</None>
 	</ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="wwwroot\.well-known\pki-validation\" />
-	</ItemGroup>
-
 </Project>

@@ -113,7 +113,7 @@
     "Forras": "Barsi Balázs - Telek Péter-Pál",
     "Link": "http://barsitelekmm.blogspot.hu",
     "EnumString": "barsi",
-    "Segedlink": null,
+    "Segedlink": "http://barsitelekmm.blogspot.com/feeds/posts/default",
     "Image": "images/barsi.png"
   },
   {
@@ -122,7 +122,7 @@
     "Forras": "Horváth István Sándor",
     "Link": "https://www.evangelium365.hu",
     "EnumString": "horvath",
-    "Segedlink": null,
+    "Segedlink": "https://evangelium.katolikus.hu/rss/",
     "Image": "images/evangelium.png"
   },
   {
@@ -131,7 +131,7 @@
     "Forras": "jezsuita.hu",
     "Link": "https://open.spotify.com/show/4f2oWtBVw0jnTmeDrHh7ey",
     "EnumString": "prayasyougo",
-    "Segedlink": "https://node2.feed43.com/napi-utra-valo.xml",
+    "Segedlink": "https://drive.google.com/drive/folders/1YIrhdGgtlgRA3UNjA4hsKxFG8oe9oXgn",
     "Image": "images/pray-as-you-go.png"
   },
   {
@@ -158,7 +158,7 @@
     "Forras": "Magyar Kurír",
     "Link": "https://www.magyarkurir.hu",
     "EnumString": "kurir",
-    "Segedlink": null,
+    "Segedlink": "https://www.magyarkurir.hu/rss/",
     "Image": "images/kurir.jpg"
   },
   {
@@ -176,7 +176,7 @@
     "Forras": "bonumtv.hu",
     "Link": "https://bonumtv.hu",
     "EnumString": "bonumtv",
-    "Segedlink": null,
+    "Segedlink": "https://katolikus.tv/feed/",
     "Image": "images/bonumtv.jpg"
   },
   {
@@ -228,18 +228,18 @@
     "TipusId": 38,
     "TipusNev": "Barsi Balázs atya prédikációi",
     "Forras": "Barsi Balázs youtube csatorna",
-    "Link": "https://www.youtube.com/channel/UC_aC_9qFjPI5U0JrznoyYRA",
+    "Link": "https://www.youtube.com/c/BarsiBal%C3%A1zsOFM/videos",
     "EnumString": "audiobarsi",
-    "Segedlink": "https://www.youtube.com/channel/UC_aC_9qFjPI5U0JrznoyYRA",
+    "Segedlink": "",
     "Image": "images/barsi.png"
   },
   {
     "TipusId": 39,
     "TipusNev": "Pál Feri atya prédikációi",
     "Forras": "palferi.hu",
-    "Link": "https://www.palferi.hu/hanganyagok",
+    "Link": "https://www.youtube.com/PalferiOnline/videos",
     "EnumString": "audiopalferi",
-    "Segedlink": "https://mail.palferi.hu/hang/2023-2024/",
+    "Segedlink": "",
     "Image": "images/palferi.png"
   },
   {
@@ -257,7 +257,7 @@
     "Forras": "777blog.hu",
     "Link": "https://777blog.hu",
     "EnumString": "b777",
-    "Segedlink": null,
+    "Segedlink": "https://777blog.hu/feed/",
     "Image": "images/b777.png"
   },
   {
@@ -302,7 +302,7 @@
     "Forras": "Zarándok.Ma",
     "Link": "https://zarandok.ma",
     "EnumString": "bzarandokma",
-    "Segedlink": null,
+    "Segedlink": "https://zarandok.ma/feed",
     "Image": "images/katolikusma.png"
   },
   {
@@ -320,7 +320,7 @@
     "Forras": "jezsuita.blog.hu",
     "Link": "https://jezsuita.blog.hu",
     "EnumString": "jezsuitablog",
-    "Segedlink": null,
+    "Segedlink": "https://jezsuita.blog.hu/rss/",
     "Image": "images/jezsuitablog.png"
   },
   {
