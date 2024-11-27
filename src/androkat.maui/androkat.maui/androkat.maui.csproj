@@ -8,7 +8,7 @@
 		<Nullable>enable</Nullable>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<WarningsNotAsErrors>CS8785,NU1603,XUA1001,XC0024,XC0045</WarningsNotAsErrors>
+		<WarningsNotAsErrors>CS8785,NU1603,XUA1001,XC0024,XC0045,IDE0290,AD0001</WarningsNotAsErrors>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<TrimMode>partial</TrimMode>
 
@@ -53,7 +53,7 @@
 
 
 	<ItemGroup>
-		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.32.0.97167">
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.3.0.106239">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
@@ -67,6 +67,18 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.10" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Pages\GyonasMeditationPage.xaml.cs">
+	    <DependentUpon>GyonasMeditationPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\GyonasMeditationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

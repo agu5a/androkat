@@ -6,7 +6,7 @@
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<WarningsNotAsErrors>CS8785,NU1603</WarningsNotAsErrors>
+		<WarningsNotAsErrors>CS8785,NU1603,XUA1001,AD0001</WarningsNotAsErrors>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">23.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
@@ -16,7 +16,7 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
 		<PackageReference Include="MonkeyCache.FileStore" Version="2.1.1" />
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
-		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.32.0.97167">
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.3.0.106239">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>

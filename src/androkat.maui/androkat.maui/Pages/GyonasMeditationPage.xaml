@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="androkat.hu.Pages.GyonasMeditationPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
+    x:DataType="viewmodels:GyonasMeditationViewModel"
+    x:Name="this"
+    Title="Gyónás elmélkedés"
+    Style="{StaticResource DetailPageStyle}">
+
+    <ScrollView Margin="5,0,5,0" VerticalOptions="FillAndExpand">
+        <Grid
+            Padding="{OnIdiom Phone=22}"
+            Background="{AppThemeBinding Light={StaticResource Grey1},
+                                         Dark={StaticResource Grey9}}"
+            ColumnDefinitions="auto"
+            ColumnSpacing="{OnIdiom Phone=10}"
+            RowDefinitions="auto,auto,auto,auto"
+            RowSpacing="{OnIdiom Phone=6}">
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="0,10,0,10"
+                HorizontalOptions="Start"
+                LineBreakMode="WordWrap"
+                Style="{OnIdiom Phone={StaticResource H6LabelStyle}}"
+                Text="Cím"
+                VerticalOptions="FillAndExpand" />
+
+            <VerticalStackLayout
+                Grid.Row="{OnIdiom Phone=1}"
+                Grid.Column="{OnIdiom Phone=0}"
+                Margin="0,10,0,10">
+                <WebView
+                    x:Name="MyWebView"
+                    android:WebView.DisplayZoomControls="false"
+                    android:WebView.EnableZoomControls="false"
+                    android:WebView.MixedContentMode="AlwaysAllow">
+                    <WebView.Source>
+                        <HtmlWebViewSource android:WebView.MixedContentMode="AlwaysAllow" Html="olvasni való" />
+                    </WebView.Source>
+                </WebView>
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>

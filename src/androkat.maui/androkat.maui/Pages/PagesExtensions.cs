@@ -19,6 +19,7 @@ public static class PagesExtensions
 
         // pages that are navigated to
         builder.Services.AddTransient<DetailPage>();
+        builder.Services.AddTransient<GyonasMeditationPage>();
 
         return builder;
     }

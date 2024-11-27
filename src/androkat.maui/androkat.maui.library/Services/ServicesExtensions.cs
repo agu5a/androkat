@@ -1,5 +1,4 @@
-﻿using androkat.hu.Data;
-using androkat.maui.library.Abstraction;
+﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Data;
 using androkat.maui.library.Helpers;
 

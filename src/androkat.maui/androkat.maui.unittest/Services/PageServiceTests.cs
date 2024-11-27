@@ -1,5 +1,4 @@
-﻿using androkat.hu.Data;
-using androkat.maui.library.Abstraction;
+﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Data;
 using androkat.maui.library.Models.Entities;
 using androkat.maui.library.Services;
@@ -8,7 +7,6 @@ using Microsoft.Maui;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
