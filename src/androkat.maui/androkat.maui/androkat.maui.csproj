@@ -70,12 +70,24 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\GyonasFinishPage.xaml.cs">
+	    <DependentUpon>GyonasFinishPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\GyonasPrayPage.xaml.cs">
+	    <DependentUpon>GyonasPrayPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\GyonasMeditationPage.xaml.cs">
 	    <DependentUpon>GyonasMeditationPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Pages\GyonasFinishPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\GyonasPrayPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\GyonasMeditationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
