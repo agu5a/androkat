@@ -6,7 +6,7 @@
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<WarningsNotAsErrors>CS8785,NU1603,XUA1001,AD0001</WarningsNotAsErrors>
+		<WarningsNotAsErrors>CS8785,NU1603,XUA1001,AD0001,S1144</WarningsNotAsErrors>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">23.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 

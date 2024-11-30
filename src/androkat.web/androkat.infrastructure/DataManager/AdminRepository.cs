@@ -411,6 +411,17 @@ public class AdminRepository : BaseRepository, IAdminRepository
 					});
 				}
 			}
+
+            if (!temp.Exists(c => c.Tipus == (int)Forras.gyonas))
+            {
+                temp.Add(new AllTodayResult
+                {
+                    Tipus = (int)Forras.gyonas,
+                    Datum = string.Empty,
+                    Nid = string.Empty,
+                    TipusNev = _androkatConfiguration.Value.GetContentMetaDataModelByTipus((int)Forras.gyonas).TipusNev
+                });
+            }
 		}
 		catch (Exception ex)
 		{
