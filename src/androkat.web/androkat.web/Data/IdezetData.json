@@ -225,6 +225,15 @@
     "Image": "images/keresztenyelet.jpg"
   },
   {
+    "TipusId": 34,
+    "TipusNev": "Elmélkedés gyónáshoz",
+    "Forras": "",
+    "Link": "",
+    "EnumString": "gyonas",
+    "Segedlink": null,
+    "Image": ""
+  },
+  {
     "TipusId": 38,
     "TipusNev": "Barsi Balázs atya prédikációi",
     "Forras": "Barsi Balázs youtube csatorna",

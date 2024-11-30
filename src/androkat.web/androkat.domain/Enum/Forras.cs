@@ -27,6 +27,7 @@ public enum Forras
     humor = 25,
     audionapievangelium = 28,
     keresztenyelet = 29,
+    gyonas = 34,
     audiobarsi = 38,
     audiopalferi = 39,
     vianney = 42,
