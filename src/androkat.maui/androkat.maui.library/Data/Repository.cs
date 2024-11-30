@@ -38,6 +38,8 @@ public class Repository : IRepository
             conn.CreateTableAsync<FavoriteContentEntity>();
             conn.CreateTableAsync<ImadsagEntity>();
             conn.CreateTableAsync<VideoEntity>();
+            conn.CreateTableAsync<Bunok>();
+            conn.CreateTableAsync<GyonasiJegyzet>();
         }
     }
 
@@ -285,6 +287,31 @@ public class Repository : IRepository
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"********************************** DeleteImadsagByNid EXCEPTION! {ex}");
+        }
+        return -1;
+    }
+
+    public async Task<int> DeleteUserGyonas(bool jegyzet, bool bun)
+    {
+        try
+        {
+            Init();
+            var res = 0;
+            if (bun)
+            {
+                res = await conn.Table<Bunok>().DeleteAsync();
+            }
+
+            if (jegyzet)
+            {
+                res += await conn.Table<GyonasiJegyzet>().DeleteAsync();
+            }
+
+            return res;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"********************************** DeleteUserGyonas EXCEPTION! {ex}");
         }
         return -1;
     }

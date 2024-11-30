@@ -53,6 +53,11 @@ public class PageService(IDownloadService downloadService, IRepository repositor
         return res;
     }
 
+    public async Task<int> DeleteUserGyonas(bool jegyzet, bool bun)
+    {
+        return await repository.DeleteUserGyonas(jegyzet, bun);
+    }
+
     public async Task<int> DeleteAllFavorite()
     {
         return await repository.DeleteAllFavorite();
