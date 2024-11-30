@@ -8,7 +8,7 @@
     xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
     x:DataType="viewmodels:ShellViewModel">
     <Shell.FlyoutHeader>
-        <Label Text="Header" />
+        <Label Text="AndroKat" Margin="0" Padding="18,8,0,8" BackgroundColor="#00796B" TextColor="#FFFFFF" FontFamily="OpenSansSemibold" />
     </Shell.FlyoutHeader>
     <FlyoutItem Title="Elmélkedés" Icon="book">
         <Tab>

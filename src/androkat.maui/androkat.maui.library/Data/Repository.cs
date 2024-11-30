@@ -1,9 +1,8 @@
-﻿using androkat.maui.library.Data;
-using androkat.maui.library.Models;
+﻿using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
 using SQLite;
 
-namespace androkat.hu.Data;
+namespace androkat.maui.library.Data;
 
 public class Repository : IRepository
 {

@@ -25,11 +25,11 @@
                     Source="{Binding ContentEntity.Image}"
                     VerticalOptions="Center" />
 
-                <VerticalStackLayout VerticalOptions="FillAndExpand">
+                <VerticalStackLayout VerticalOptions="Fill">
                     <Label
                         HorizontalOptions="Start"
                         LineBreakMode="WordWrap"
-                        MaxLines="1"
+                        MaxLines="2"
                         MaximumWidthRequest="{x:OnIdiom Phone=250}"
                         Style="{OnIdiom Default={StaticResource BodyXLLabelStyle},
                                         Phone={StaticResource BodyLLabelStyle}}"

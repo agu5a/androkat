@@ -17,6 +17,9 @@ public static class ViewModelExtensions
         builder.Services.AddTransient<VideoListViewModel>();
         builder.Services.AddTransient<WebRadioViewModel>();
         builder.Services.AddTransient<GyonasViewModel>();
+        builder.Services.AddTransient<GyonasMeditationViewModel>();
+        builder.Services.AddTransient<GyonasPrayViewModel>();
+        builder.Services.AddTransient<GyonasFinishViewModel>();
 
         return builder;
     }

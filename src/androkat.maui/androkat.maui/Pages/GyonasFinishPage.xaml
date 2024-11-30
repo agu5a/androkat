@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="androkat.hu.Pages.GyonasFinishPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
+    x:DataType="viewmodels:GyonasFinishViewModel"
+    x:Name="this"
+    Title="Gyónás szövege"
+    Style="{StaticResource DetailPageStyle}">
+
+    <ScrollView Margin="5,0,5,0" VerticalOptions="Fill">
+        <Grid
+            Padding="{OnIdiom Phone=22}"
+            Background="{AppThemeBinding Light={StaticResource Grey1},
+                                         Dark={StaticResource Grey9}}"
+            ColumnDefinitions="*"
+            RowDefinitions="auto,*"
+            RowSpacing="{OnIdiom Phone=6}">
+
+
+            <HorizontalStackLayout  Grid.Row="{OnIdiom Phone=0}"
+                                    Grid.Column="{OnIdiom Phone=0}"
+                                    Margin="0,10,0,10">
+                <Label
+                    Margin="0,10,0,10"
+                    HorizontalOptions="Start"
+                    LineBreakMode="WordWrap"
+                    Style="{OnIdiom Phone={StaticResource H6LabelStyle}}"
+                    Text="Teljes szöveg?" />
+
+                <CheckBox
+                    Margin="0,10,0,10"
+                    HorizontalOptions="Start"
+                    IsChecked="{Binding IsChecked}"
+                    CheckedChanged="CheckBox_CheckedChanged"/>
+            </HorizontalStackLayout>
+
+            <VerticalStackLayout
+                Grid.Row="{OnIdiom Phone=1}"
+                Grid.Column="{OnIdiom Phone=0}"
+                Margin="0,10,0,10">
+                <WebView
+                    x:Name="MyWebView"
+                    android:WebView.DisplayZoomControls="false"
+                    android:WebView.EnableZoomControls="false"
+                    android:WebView.MixedContentMode="AlwaysAllow">
+                    <WebView.Source>
+                        <HtmlWebViewSource android:WebView.MixedContentMode="AlwaysAllow" Html="{Binding Ima}" />
+                    </WebView.Source>
+                </WebView>
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>

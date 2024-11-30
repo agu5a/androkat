@@ -14,6 +14,9 @@ public partial class App : Application
         TheTheme.SetTheme();
 
         Routing.RegisterRoute(nameof(DetailPage), typeof(DetailPage));
+        Routing.RegisterRoute(nameof(GyonasMeditationPage), typeof(GyonasMeditationPage));
+        Routing.RegisterRoute(nameof(GyonasPrayPage), typeof(GyonasPrayPage));
+        Routing.RegisterRoute(nameof(GyonasFinishPage), typeof(GyonasFinishPage));
     }
     
     protected override Window CreateWindow(IActivationState? activationState)
