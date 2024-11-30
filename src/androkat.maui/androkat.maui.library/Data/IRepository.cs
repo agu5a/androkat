@@ -36,4 +36,5 @@ public interface IRepository
     Task<int> DeleteAllImadsag();
     Task<int> DeleteAllFavorite();
     Task<ImadsagEntity> GetImadsagEntityById(Guid id);
+    Task<int> DeleteUserGyonas(bool jegyzet, bool bun);
 }

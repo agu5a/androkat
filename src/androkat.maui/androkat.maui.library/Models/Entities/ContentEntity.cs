@@ -9,7 +9,6 @@ public class ContentEntity
 {
     [PrimaryKey]
     [DataMember(Name = "nid")]
-
     public Guid Nid { get; set; }
 
     /// <summary>

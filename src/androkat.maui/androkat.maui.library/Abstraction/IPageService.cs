@@ -6,6 +6,7 @@ public interface IPageService
 {
     Task<int> DeleteAllContentAndIma();
     Task<int> DeleteAllFavorite();
+    Task<int> DeleteUserGyonas(bool jegyzet, bool bun);
     Task<int> DownloadAll();
     Task<ContentEntity> GetContentEntityByIdAsync(Guid id);
     Task<List<ContentEntity>> GetContentsAsync(string pageTypeId);

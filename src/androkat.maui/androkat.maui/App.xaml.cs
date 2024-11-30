@@ -13,6 +13,7 @@ public partial class App : Application
 
         TheTheme.SetTheme();
 
+        Routing.RegisterRoute(nameof(ContentListPage), typeof(ContentListPage));
         Routing.RegisterRoute(nameof(DetailPage), typeof(DetailPage));
         Routing.RegisterRoute(nameof(GyonasMeditationPage), typeof(GyonasMeditationPage));
         Routing.RegisterRoute(nameof(GyonasPrayPage), typeof(GyonasPrayPage));
