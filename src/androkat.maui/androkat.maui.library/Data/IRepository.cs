@@ -13,11 +13,9 @@ public interface IRepository
     Task<ContentEntity> GetContentById(Guid id);
     Task<List<ContentEntity>> GetContentsWithoutBook();
 
-    Task<List<ContentEntity>> GetAjanlatokContents();
+    Task<List<ContentEntity>> GetContentsByTypeId(string typeId);
     Task<List<ContentEntity>> GetAudioContents();
-    Task<List<ContentEntity>> GetBookContents();
     Task<List<ContentEntity>> GetHumorContents();
-    Task<List<ContentEntity>> GetMaiszentContents();
     Task<List<ContentEntity>> GetContents();
     Task<List<ContentEntity>> GetSzentekContents();
     Task<List<ContentEntity>> GetBlogContents();

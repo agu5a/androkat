@@ -316,13 +316,12 @@ public class Repository : IRepository
         return -1;
     }
 
-    public virtual async Task<List<ContentEntity>> GetAjanlatokContents()
+    public virtual async Task<List<ContentEntity>> GetContentsByTypeId(string typeId)
     {
         try
         {
             Init();
-            var id = ((int)Activities.ajanlatweb).ToString();
-            return await conn.Table<ContentEntity>().Where(w => w.Tipus == id).OrderByDescending(o => o.Datum).ToListAsync();
+            return await conn.Table<ContentEntity>().Where(w => w.Tipus == typeId).OrderByDescending(o => o.Datum).ToListAsync();
         }
         catch (Exception ex)
         {
@@ -367,44 +366,12 @@ public class Repository : IRepository
         return [];
     }
 
-    public async Task<List<ContentEntity>> GetBookContents()
-    {
-        try
-        {
-            Init();
-            var bookId = ((int)Activities.book).ToString();
-            return await conn.Table<ContentEntity>().Where(w => w.Tipus == bookId).OrderByDescending(o => o.Datum).ToListAsync();
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
-        }
-
-        return [];
-    }
-
     public async Task<List<ContentEntity>> GetHumorContents()
     {
         try
         {
             Init();
             return await conn.Table<ContentEntity>().Where(w => w.GroupName == "group_humor").OrderByDescending(o => o.Datum).ToListAsync();
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
-        }
-
-        return [];
-    }
-
-    public async Task<List<ContentEntity>> GetMaiszentContents()
-    {
-        try
-        {
-            Init();
-            var id = ((int)Activities.maiszent).ToString();
-            return await conn.Table<ContentEntity>().Where(w => w.Tipus == id).OrderByDescending(o => o.Datum).ToListAsync();
         }
         catch (Exception ex)
         {
