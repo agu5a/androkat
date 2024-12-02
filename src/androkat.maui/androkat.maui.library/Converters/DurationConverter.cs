@@ -1,13 +1,17 @@
-﻿using System.Globalization;
+﻿#nullable enable
+using System.Globalization;
 
 namespace androkat.maui.library.Converters;
 
 public class DurationConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value == null)
+        {
             return value;
+        }
+
         var result = string.Empty;
 
         if (value is string stringValue)
@@ -26,7 +30,7 @@ public class DurationConverter : IValueConverter
         return result;
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }

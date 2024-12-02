@@ -1,4 +1,5 @@
-﻿using androkat.maui.library.Abstraction;
+﻿#nullable enable
+using androkat.maui.library.Abstraction;
 using androkat.maui.library.Data;
 using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
@@ -10,9 +11,19 @@ namespace androkat.maui.library.Services;
 
 public class PageService(IDownloadService downloadService, IRepository repository) : IPageService
 {
-    private HttpClient client;
+    private HttpClient? client = null;
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3604:Member initializer values should not be redundant", Justification = "<Pending>")]
     private bool firstLoad = true;
+
+    public async Task<int> UpsertGyonasiJegyzet(string notes)
+    {
+        return await repository.UpsertGyonasiJegyzet(notes);
+    }
+
+    public async Task<GyonasiJegyzet?> GetGyonasiJegyzet()
+    {
+        return await repository.GetGyonasiJegyzet();
+    }
 
     public async Task<ContentEntity> GetContentEntityByIdAsync(Guid id)
     {
@@ -98,7 +109,7 @@ public class PageService(IDownloadService downloadService, IRepository repositor
 
 #pragma warning disable S1144 // Unused private types or members should be removed
 #pragma warning disable IDE0051 // Remove unused private members
-    private Task<T> TryGetAsync<T>(string path)
+    private Task<T?> TryGetAsync<T>(string path)
 #pragma warning restore IDE0051 // Remove unused private members
 #pragma warning restore S1144 // Unused private types or members should be removed
     {
@@ -117,7 +128,7 @@ public class PageService(IDownloadService downloadService, IRepository repositor
         return TryGetImplementationAsync<T>(path);
     }
 
-    private async Task<T> TryGetImplementationAsync<T>(string path)
+    private async Task<T?> TryGetImplementationAsync<T>(string path)
     {
         var json = string.Empty;
 
@@ -128,7 +139,7 @@ public class PageService(IDownloadService downloadService, IRepository repositor
         if (!Barrel.Current.IsExpired(path))
             json = Barrel.Current.Get<string>(path);
 
-        T responseData = default;
+        T? responseData = default;
         try
         {
             if (string.IsNullOrWhiteSpace(json))

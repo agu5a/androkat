@@ -1,4 +1,5 @@
-﻿using androkat.maui.library.Models;
+﻿#nullable enable
+using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
 using SQLite;
 
@@ -7,7 +8,7 @@ namespace androkat.maui.library.Data;
 public class Repository : IRepository
 {
     private readonly string _dbPath;
-    private SQLiteAsyncConnection conn;
+    private SQLiteAsyncConnection? conn = null;
 
     public Repository(string dbPath)
     {
@@ -49,7 +50,7 @@ public class Repository : IRepository
         {
             Init();
 
-            return await conn.Table<ContentEntity>().Where(w => w.Nid == id).FirstOrDefaultAsync();
+            return await conn!.Table<ContentEntity>().Where(w => w.Nid == id).FirstOrDefaultAsync();
         }
         catch (Exception ex)
         {
@@ -65,7 +66,7 @@ public class Repository : IRepository
         {
             Init();
 
-            return await conn.Table<ImadsagEntity>().Where(w => w.Nid == id).FirstOrDefaultAsync();
+            return await conn!.Table<ImadsagEntity>().Where(w => w.Nid == id).FirstOrDefaultAsync();
         }
         catch (Exception ex)
         {
@@ -81,7 +82,7 @@ public class Repository : IRepository
         {
             Init();
 
-            return await conn.Table<FavoriteContentEntity>().CountAsync();
+            return await conn!.Table<FavoriteContentEntity>().CountAsync();
         }
         catch (Exception ex)
         {
@@ -97,7 +98,7 @@ public class Repository : IRepository
         {
             Init();
 
-            return await conn.Table<FavoriteContentEntity>().OrderByDescending(o => o.Datum).ToListAsync();
+            return await conn!.Table<FavoriteContentEntity>().OrderByDescending(o => o.Datum).ToListAsync();
         }
         catch (Exception ex)
         {
@@ -113,7 +114,7 @@ public class Repository : IRepository
         {
             Init();
 
-            return await conn.Table<ContentEntity>()
+            return await conn!.Table<ContentEntity>()
                 .Where(w => w.GroupName == "group_napiolvaso").OrderByDescending(o => o.Datum).ToListAsync();
         }
         catch (Exception ex)
@@ -129,7 +130,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            var exists = await conn.Table<ContentEntity>()
+            var exists = await conn!.Table<ContentEntity>()
                 .Where(w => w.Nid == entity.Nid && w.Tipus == entity.Tipus).FirstOrDefaultAsync();
             if (exists is null)
                 return await conn.InsertAsync(entity);
@@ -141,12 +142,36 @@ public class Repository : IRepository
         return -1;
     }
 
+    public async Task<int> UpsertGyonasiJegyzet(string notes)
+    {
+        try
+        {
+            Init();
+            var res = await conn!.Table<GyonasiJegyzet>().FirstOrDefaultAsync();
+            if (res != null)
+            {
+                res.Jegyzet = notes;
+                return await conn.UpdateAsync(res);
+            }
+            else
+            {
+                return await conn.InsertAsync(new GyonasiJegyzet { Jegyzet = notes });
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
+        }
+
+        return -1;
+    }
+
     public async Task<int> InsertImadsag(ImadsagEntity entity)
     {
         try
         {
             Init();
-            var exists = await conn.Table<ImadsagEntity>()
+            var exists = await conn!.Table<ImadsagEntity>()
                 .Where(w => w.Nid == entity.Nid).FirstOrDefaultAsync();
             if (exists is null)
                 return await conn.InsertAsync(entity);
@@ -163,7 +188,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            var exists = await conn.Table<FavoriteContentEntity>()
+            var exists = await conn!.Table<FavoriteContentEntity>()
                 .Where(w => w.Nid == entity.Nid && w.Tipus == entity.Tipus).FirstOrDefaultAsync();
             if (exists is null)
                 return await conn.InsertAsync(entity);
@@ -176,12 +201,12 @@ public class Repository : IRepository
         return -1;
     }
 
-    public async Task<ImadsagEntity> GetFirstImadsag()
+    public async Task<ImadsagEntity?> GetFirstImadsag()
     {
         try
         {
             Init();
-            return await conn.Table<ImadsagEntity>().OrderByDescending(o => o.Datum).FirstOrDefaultAsync();
+            return await conn!.Table<ImadsagEntity>().OrderByDescending(o => o.Datum).FirstOrDefaultAsync();
         }
         catch (Exception ex)
         {
@@ -191,12 +216,12 @@ public class Repository : IRepository
         return null;
     }
 
-    public async Task<ContentEntity> GetContentsByTypeName(string typeName)
+    public async Task<ContentEntity?> GetContentsByTypeName(string typeName)
     {
         try
         {
             Init();
-            return await conn.Table<ContentEntity>().Where(w => w.TypeName == typeName).OrderByDescending(o => o.Datum).FirstOrDefaultAsync();
+            return await conn!.Table<ContentEntity>().Where(w => w.TypeName == typeName).OrderByDescending(o => o.Datum).FirstOrDefaultAsync();
         }
         catch (Exception ex)
         {
@@ -211,7 +236,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            return await conn.Table<ContentEntity>().CountAsync();
+            return await conn!.Table<ContentEntity>().CountAsync();
         }
         catch (Exception ex)
         {
@@ -226,7 +251,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            return await conn.Table<ContentEntity>().DeleteAsync(d => d.Nid == nid);
+            return await conn!.Table<ContentEntity>().DeleteAsync(d => d.Nid == nid);
         }
         catch (Exception ex)
         {
@@ -240,7 +265,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            return await conn.Table<ContentEntity>().DeleteAsync(d => d.Nid != Guid.Empty || d.Nid == Guid.Empty);
+            return await conn!.Table<ContentEntity>().DeleteAsync(d => d.Nid != Guid.Empty || d.Nid == Guid.Empty);
         }
         catch (Exception ex)
         {
@@ -254,7 +279,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            return await conn.Table<FavoriteContentEntity>().DeleteAsync(d => d.Nid != Guid.Empty || d.Nid == Guid.Empty);
+            return await conn!.Table<FavoriteContentEntity>().DeleteAsync(d => d.Nid != Guid.Empty || d.Nid == Guid.Empty);
         }
         catch (Exception ex)
         {
@@ -268,7 +293,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            return await conn.Table<ImadsagEntity>().DeleteAsync(d => d.Csoport != 5);
+            return await conn!.Table<ImadsagEntity>().DeleteAsync(d => d.Csoport != 5);
         }
         catch (Exception ex)
         {
@@ -282,7 +307,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            return await conn.Table<ImadsagEntity>().DeleteAsync(d => d.Nid == nid);
+            return await conn!.Table<ImadsagEntity>().DeleteAsync(d => d.Nid == nid);
         }
         catch (Exception ex)
         {
@@ -299,12 +324,12 @@ public class Repository : IRepository
             var res = 0;
             if (bun)
             {
-                res = await conn.Table<Bunok>().DeleteAsync();
+                res = await conn!.Table<Bunok>().DeleteAsync(d => d.ParancsId > -1);
             }
 
             if (jegyzet)
             {
-                res += await conn.Table<GyonasiJegyzet>().DeleteAsync();
+                res += await conn!.Table<GyonasiJegyzet>().DeleteAsync(d => d.Jegyzet != null);
             }
 
             return res;
@@ -316,12 +341,27 @@ public class Repository : IRepository
         return -1;
     }
 
-    public virtual async Task<List<ContentEntity>> GetContentsByTypeId(string typeId)
+    public async Task<GyonasiJegyzet?> GetGyonasiJegyzet()
     {
         try
         {
             Init();
-            return await conn.Table<ContentEntity>().Where(w => w.Tipus == typeId).OrderByDescending(o => o.Datum).ToListAsync();
+            return await conn!.Table<GyonasiJegyzet>().FirstOrDefaultAsync();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
+        }
+
+        return new();
+    }
+
+    public async Task<List<ContentEntity>> GetContentsByTypeId(string typeId)
+    {
+        try
+        {
+            Init();
+            return await conn!.Table<ContentEntity>().Where(w => w.Tipus == typeId).OrderByDescending(o => o.Datum).ToListAsync();
         }
         catch (Exception ex)
         {
@@ -336,7 +376,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            return await conn.Table<ImadsagEntity>()
+            return await conn!.Table<ImadsagEntity>()
                 .Where(w => !w.IsHided).OrderBy(o => o.Cim)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
@@ -355,7 +395,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            return await conn.Table<ContentEntity>()
+            return await conn!.Table<ContentEntity>()
                 .Where(w => w.GroupName == "group_audio").OrderByDescending(o => o.Datum).ToListAsync();
         }
         catch (Exception ex)
@@ -371,7 +411,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            return await conn.Table<ContentEntity>().Where(w => w.GroupName == "group_humor").OrderByDescending(o => o.Datum).ToListAsync();
+            return await conn!.Table<ContentEntity>().Where(w => w.GroupName == "group_humor").OrderByDescending(o => o.Datum).ToListAsync();
         }
         catch (Exception ex)
         {
@@ -387,7 +427,7 @@ public class Repository : IRepository
         {
             Init();
             var type = Activities.group_szentek.ToString();
-            return await conn.Table<ContentEntity>()
+            return await conn!.Table<ContentEntity>()
                 .Where(w => w.GroupName == type).OrderByDescending(o => o.Datum).ToListAsync();
         }
         catch (Exception ex)
@@ -403,7 +443,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            return await conn.Table<ContentEntity>().Where(w => w.GroupName == "group_blog").OrderByDescending(o => o.Datum).ToListAsync();
+            return await conn!.Table<ContentEntity>().Where(w => w.GroupName == "group_blog").OrderByDescending(o => o.Datum).ToListAsync();
         }
         catch (Exception ex)
         {
@@ -418,7 +458,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            return await conn.Table<ContentEntity>().Where(w => w.GroupName == "group_news").OrderByDescending(o => o.Datum).ToListAsync();
+            return await conn!.Table<ContentEntity>().Where(w => w.GroupName == "group_news").OrderByDescending(o => o.Datum).ToListAsync();
         }
         catch (Exception ex)
         {
@@ -433,7 +473,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            return await conn.Table<ContentEntity>().Where(w => w.TypeName != "book")
+            return await conn!.Table<ContentEntity>().Where(w => w.TypeName != "book")
                 .OrderBy(o => o.Datum)
                 .ToListAsync();
         }
@@ -450,7 +490,7 @@ public class Repository : IRepository
         try
         {
             Init();
-            var res = await conn.Table<ContentEntity>().Where(w => w.Nid == nid && !w.IsRead).ToListAsync();
+            var res = await conn!.Table<ContentEntity>().Where(w => w.Nid == nid && !w.IsRead).ToListAsync();
             if (res != null && res.Count != 0)
             {
                 res[0].IsRead = true;

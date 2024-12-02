@@ -23,7 +23,7 @@ public partial class GyonasTile(string name, string icon, IPageService pageServi
             "GYÓNÁS" => Shell.Current.GoToAsync("GyonasFinishPage"),
             "ELMÉLKEDÉS" => Shell.Current.GoToAsync("ContentListPage?Id=34"),
             "IMA" => Shell.Current.GoToAsync("GyonasPrayPage"),
-            "JEGYZET" => Shell.Current.DisplayAlert("Hiba", "JEGYZET Nincs még kész", "Bezárás"),
+            "JEGYZET" => Shell.Current.GoToAsync("GyonasNotesPage"),
             //TÖRLÉS
             _ => GyonasTorles(),
         };

@@ -1,4 +1,5 @@
-﻿using androkat.maui.library.Models.Entities;
+﻿#nullable enable
+using androkat.maui.library.Models.Entities;
 
 namespace androkat.maui.library.Abstraction;
 
@@ -16,5 +17,7 @@ public interface IPageService
     Task<List<ImadsagEntity>> GetImaContents(int pageNumber, int pageSize);
     Task<ImadsagEntity> GetImadsagEntityByIdAsync(Guid id);
     int GetVersion();
+    Task<GyonasiJegyzet?> GetGyonasiJegyzet();
     Task<int> InsertFavoriteContentAsync(FavoriteContentEntity favoriteContentEntity);
+    Task<int> UpsertGyonasiJegyzet(string notes);
 }

@@ -1,4 +1,5 @@
-﻿using androkat.maui.library.Models.Entities;
+﻿#nullable enable
+using androkat.maui.library.Models.Entities;
 
 namespace androkat.maui.library.Data;
 
@@ -9,7 +10,7 @@ public interface IRepository
     Task<int> InsertContent(ContentEntity entity);
     Task<int> DeleteContentByNid(Guid nid);
 
-    Task<ContentEntity> GetContentsByTypeName(string typeName);
+    Task<ContentEntity?> GetContentsByTypeName(string typeName);
     Task<ContentEntity> GetContentById(Guid id);
     Task<List<ContentEntity>> GetContentsWithoutBook();
 
@@ -25,7 +26,7 @@ public interface IRepository
     Task<List<FavoriteContentEntity>> GetFavoriteContents();
     Task<int> InsertFavoriteContent(FavoriteContentEntity entity);
     Task<int> GetFavoriteCount();
-    Task<ImadsagEntity> GetFirstImadsag();
+    Task<ImadsagEntity?> GetFirstImadsag();
     Task<int> DeleteImadsagByNid(Guid nid);
     Task<int> InsertImadsag(ImadsagEntity entity);
     Task<List<ImadsagEntity>> GetImaContents(int pageNumber, int pageSize);
@@ -35,4 +36,6 @@ public interface IRepository
     Task<int> DeleteAllFavorite();
     Task<ImadsagEntity> GetImadsagEntityById(Guid id);
     Task<int> DeleteUserGyonas(bool jegyzet, bool bun);
+    Task<GyonasiJegyzet?> GetGyonasiJegyzet();
+    Task<int> UpsertGyonasiJegyzet(string notes);
 }
