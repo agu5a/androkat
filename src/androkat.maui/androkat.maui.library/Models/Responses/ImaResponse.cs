@@ -8,5 +8,5 @@ public class ImaResponse
     public bool HasMore { get; set; }
 
     [JsonPropertyName("imak")]
-    public List<ImadsagResponse> Imak { get; set; }
+    public List<ImadsagResponse> Imak { get; set; } = new List<ImadsagResponse>();
 }

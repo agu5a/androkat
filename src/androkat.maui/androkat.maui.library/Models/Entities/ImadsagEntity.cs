@@ -10,7 +10,7 @@ public class ImadsagEntity
     public Guid Nid { get; set; }
 
     [DataMember(Name = "typeName")]
-    public string TypeName { get; set; }
+    public string TypeName { get; set; } = string.Empty;
 
     [DataMember(Name = "isread")]
     public int IsRead { get; set; }
@@ -19,16 +19,16 @@ public class ImadsagEntity
     public bool IsHided { get; set; }
 
     [DataMember(Name = "cim")]
-    public string Cim { get; set; }
+    public string Cim { get; set; } = string.Empty;
 
     [DataMember(Name = "leiras")]
-    public string Content { get; set; }
+    public string Content { get; set; } = string.Empty;
 
     [DataMember(Name = "datum")]
     public DateTime Datum { get; set; }
 
     [DataMember(Name = "groupName")]
-    public string GroupName { get; set; }
+    public string GroupName { get; set; } = string.Empty;
 
     [DataMember(Name = "csoport")]
     public int Csoport { get; set; }

@@ -10,20 +10,20 @@ public class VideoEntity
     public Guid Nid { get; set; }
 
     [DataMember(Name = "link")]
-    public string Link { get; set; }
+    public string Link { get; set; } = string.Empty;
 
     [DataMember(Name = "cim")]
-    public string Cim { get; set; }
+    public string Cim { get; set; } = string.Empty;
 
     [DataMember(Name = "channelId")]
-    public string ChannelId { get; set; }
+    public string ChannelId { get; set; } = string.Empty;
 
     [DataMember(Name = "date")]
     public DateTime Datum { get; set; }
 
     [DataMember(Name = "forras")]
-    public string Forras { get; set; }
+    public string Forras { get; set; } = string.Empty;
 
     [DataMember(Name = "img")]
-    public string Image { get; set; }
+    public string Image { get; set; } = string.Empty;
 }

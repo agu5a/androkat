@@ -5,5 +5,5 @@ namespace androkat.maui.library.Models;
 public class SourcesImport
 {
     [JsonPropertyName("sources")]
-    public List<SourceData> Sources { get; set; }
+    public List<SourceData> Sources { get; set; } = new List<SourceData>();
 }

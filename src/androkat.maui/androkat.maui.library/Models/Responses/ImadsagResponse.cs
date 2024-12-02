@@ -9,10 +9,10 @@ public class ImadsagResponse
     public Guid Nid { get; set; }
 
     [JsonPropertyName("cim")]
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     [JsonPropertyName("leiras")]
-    public string Content { get; set; }
+    public string Content { get; set; } = string.Empty;
 
     [JsonPropertyName("time")]
     public DateTime RecordDate { get; set; }
