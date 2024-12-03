@@ -1,4 +1,5 @@
-﻿using androkat.web.Endpoints.ContentDetailsModelEndpoints;
+﻿using androkat.domain.Enum;
+using androkat.web.Endpoints.ContentDetailsModelEndpoints;
 using Ardalis.HttpClientTestExtensions;
 using System;
 using System.Net;
@@ -41,7 +42,7 @@ public class CreateContentDetailsModelTests : IClassFixture<CustomWebApplication
     {
         var content = new StringContent(JsonSerializer.Serialize(new ContentDetailsModelRequest
         {
-            ContentDetailsModel = new domain.Model.ContentDetailsModel(Guid.Empty, DateTime.MinValue, "cím1", string.Empty, 1, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty)
+            ContentDetailsModel = new domain.Model.ContentDetailsModel(Guid.Empty, DateTime.MinValue, "cím1", string.Empty, (int)Forras.book, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty)
         }),
         Encoding.UTF8, "application/json");
 

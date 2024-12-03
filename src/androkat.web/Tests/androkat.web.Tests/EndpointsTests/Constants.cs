@@ -6,5 +6,6 @@ internal static class Constants
     public const string HealthCheckTestsUrl = "/fake_health";
     public const string CreateTempContentTestsUrl = "/api/saveTempContent";
     public const string CreateContentDetailsModelTestsUrl = "/api/saveContentDetailsModel";
+    public const string GetContentsApiTestsUrl = "/api/fake";
     public const string XAPIKey = "CronApiKey";
 }
