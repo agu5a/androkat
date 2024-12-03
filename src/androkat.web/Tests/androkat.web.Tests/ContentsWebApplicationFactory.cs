@@ -5,7 +5,7 @@ using System;
 
 namespace androkat.web.Tests;
 
-public class CustomWebApplicationFactory<TStartup> : BaseWebApplicationFactory<TStartup> where TStartup : class
+public class ContentsWebApplicationFactory<TStartup> : BaseWebApplicationFactory<TStartup> where TStartup : class
 {
     public override void PopulateTestData(AndrokatContext dbContext)
     {
@@ -28,17 +28,38 @@ public class CustomWebApplicationFactory<TStartup> : BaseWebApplicationFactory<T
             Nid = Guid.Parse("281cd115-1289-11ea-8aa1-cbeb38570c35"),
             Tipus = (int)Forras.book,
             Cim = "cím1",
+            Idezet = "idezet",
             Fulldatum = now.AddDays(-1).DateTime.ToString("yyyy-MM-dd"),
             Inserted = yesterday
         });
         dbContext.Content.Add(new Content
         {
             Nid = Guid.Parse("181cd115-1289-11ea-8aa1-cbeb38570c35"),
-            Tipus = (int)Forras.b777,
+            Tipus = (int)Forras.book,
             Cim = "cím2",
+            Idezet = "idezet",
             Fulldatum = now.AddDays(-1).DateTime.ToString("yyyy-MM-dd"),
             Inserted = beforeOfyesterday
         });
+        dbContext.Content.Add(new Content
+        {
+            Nid = Guid.Parse("381cd115-1289-11ea-8aa1-cbeb38570c35"),
+            Tipus = (int)Forras.b777,
+            Cim = "cím1",
+            Idezet = "idezet",
+            Fulldatum = now.AddDays(-1).DateTime.ToString("yyyy-MM-dd"),
+            Inserted = yesterday
+        });
+        dbContext.Content.Add(new Content
+        {
+            Nid = Guid.Parse("081cd115-1289-11ea-8aa1-cbeb38570c35"),
+            Tipus = (int)Forras.b777,
+            Cim = "cím2",
+            Idezet = "idezet",
+            Fulldatum = now.AddDays(-1).DateTime.ToString("yyyy-MM-dd"),
+            Inserted = beforeOfyesterday
+        });       
+
         dbContext.SaveChanges();
 
         dbContext.TempContent.Add(new TempContent { Tipus = 1, Cim = "cím1" });

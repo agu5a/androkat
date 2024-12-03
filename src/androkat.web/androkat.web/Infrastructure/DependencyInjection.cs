@@ -4,6 +4,7 @@ using androkat.domain.Configuration;
 using androkat.infrastructure.Configuration;
 using androkat.infrastructure.DataManager;
 using androkat.web.Attributes;
+using androkat.web.ModelBinders;
 using androkat.web.Service;
 using FastEndpoints;
 using FastEndpoints.ApiExplorer;
@@ -53,7 +54,7 @@ public static class DependencyInjection
         builder.Services.AddRateLimiter(options =>
         {
             options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
-            options.AddPolicy("fixed-by-ip", httpContext => 
+            options.AddPolicy("fixed-by-ip", httpContext =>
                 RateLimitPartition.GetFixedWindowLimiter
                 (
                     partitionKey: httpContext.Request.Headers["X-Forwarded-For"].ToString(), //Connection.RemoteIpAddress?.ToString()
@@ -65,31 +66,33 @@ public static class DependencyInjection
                     ));
         });
 
-        builder.Services.AddControllers()
-            .ConfigureApiBehaviorOptions(opt =>
+        builder.Services.AddControllers(options =>
+        {
+            options.ModelBinderProviders.Insert(0, new ContentRequestModelBinderProvider());
+
+        }).ConfigureApiBehaviorOptions(opt =>
+        {
+            opt.InvalidModelStateResponseFactory = context =>
             {
-                opt.InvalidModelStateResponseFactory = context =>
+                var errors = context.ModelState.Keys.Select(k =>
                 {
-                    var errors = context.ModelState.Keys.Select(k =>
-                    {
-                        return $"{k}: {string.Join(",", context.ModelState[k]?.Errors.Select(e => e.ErrorMessage) ?? [])}";
-                    });
+                    return $"{k}: {string.Join(",", context.ModelState[k]?.Errors.Select(e => e.ErrorMessage) ?? [])}";
+                });
 
-                    var errorMessage = $"Path: {context.HttpContext.Request.Path}" +
-                        $" Method: {context.HttpContext.Request.Method}" +
-                        $" Controller: {(context.ActionDescriptor as ControllerActionDescriptor)?.ControllerName}" +
-                        $" Action: {(context.ActionDescriptor as ControllerActionDescriptor)?.ActionName}" +
-                        $" Errors: {string.Join(";", errors)}";
+                var errorMessage = $"Path: {context.HttpContext.Request.Path}" +
+                    $" Method: {context.HttpContext.Request.Method}" +
+                    $" Controller: {(context.ActionDescriptor as ControllerActionDescriptor)?.ControllerName}" +
+                    $" Action: {(context.ActionDescriptor as ControllerActionDescriptor)?.ActionName}" +
+                    $" Errors: {string.Join(";", errors)}";
 
-                    return new BadRequestObjectResult(errorMessage);
-                };
-            })
-            .AddRazorRuntimeCompilation()
-            .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.PropertyNamingPolicy = null;
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-            });
+                return new BadRequestObjectResult(errorMessage);
+            };
+
+        }).AddRazorRuntimeCompilation().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        });
 
         builder.Services.SetServices();
         builder.Services.AddRazorPages();
