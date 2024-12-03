@@ -15,12 +15,7 @@ public interface IRepository
     Task<List<ContentEntity>> GetContentsWithoutBook();
 
     Task<List<ContentEntity>> GetContentsByTypeId(string typeId);
-    Task<List<ContentEntity>> GetAudioContents();
-    Task<List<ContentEntity>> GetHumorContents();
-    Task<List<ContentEntity>> GetContents();
-    Task<List<ContentEntity>> GetSzentekContents();
-    Task<List<ContentEntity>> GetBlogContents();
-    Task<List<ContentEntity>> GetNewsContents();
+    Task<List<ContentEntity>> GetContentsByGroupName(string groupName);
 
     Task<int> SetContentAsReadById(Guid nid);
     Task<List<FavoriteContentEntity>> GetFavoriteContents();

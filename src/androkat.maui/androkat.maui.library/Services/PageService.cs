@@ -90,15 +90,15 @@ public class PageService(IDownloadService downloadService, IRepository repositor
         {
             "1" => await repository.GetContentsByTypeId(((int)Activities.ajanlatweb).ToString()),
             "2" => await repository.GetContentsByTypeId(((int)Activities.maiszent).ToString()),
-            "3" => await repository.GetSzentekContents(),
-            "4" => await repository.GetNewsContents(),
-            "5" => await repository.GetBlogContents(),
-            "6" => await repository.GetHumorContents(),
+            "3" => await repository.GetContentsByGroupName("group_szentek"),
+            "4" => await repository.GetContentsByGroupName("group_news"),
+            "5" => await repository.GetContentsByGroupName("group_blog"),
+            "6" => await repository.GetContentsByGroupName("group_humor"),
             //"7" => ima
-            "8" => await repository.GetAudioContents(),
+            "8" => await repository.GetContentsByGroupName("group_audio"),
             "11" => await repository.GetContentsByTypeId(((int)Activities.book).ToString()),
             "34" => await repository.GetContentsByTypeId(((int)Activities.gyonas).ToString()),
-            _ => await repository.GetContents(),
+            /*0*/ _ => await repository.GetContentsByGroupName("group_napiolvaso"),
         };
     }
 

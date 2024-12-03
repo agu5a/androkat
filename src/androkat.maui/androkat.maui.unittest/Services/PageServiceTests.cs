@@ -146,14 +146,14 @@ public class PageServiceTests
     [Theory]
     [InlineData("1", nameof(IRepository.GetContentsByTypeId))]
     [InlineData("2", nameof(IRepository.GetContentsByTypeId))]
-    [InlineData("3", nameof(IRepository.GetSzentekContents))]
-    [InlineData("4", nameof(IRepository.GetNewsContents))]
-    [InlineData("5", nameof(IRepository.GetBlogContents))]
-    [InlineData("6", nameof(IRepository.GetHumorContents))]
-    [InlineData("8", nameof(IRepository.GetAudioContents))]
+    [InlineData("3", nameof(IRepository.GetContentsByGroupName))]
+    [InlineData("4", nameof(IRepository.GetContentsByGroupName))]
+    [InlineData("5", nameof(IRepository.GetContentsByGroupName))]
+    [InlineData("6", nameof(IRepository.GetContentsByGroupName))]
+    [InlineData("8", nameof(IRepository.GetContentsByGroupName))]
     [InlineData("11", nameof(IRepository.GetContentsByTypeId))]
     [InlineData("34", nameof(IRepository.GetContentsByTypeId))]
-    [InlineData("0", nameof(IRepository.GetContents))]
+    [InlineData("0", nameof(IRepository.GetContentsByGroupName))]
     public async Task Test_GetContentsAsync(string pageTypeId, string methodName)
     {
         var repositoryMock = new Mock<IRepository>();
@@ -161,13 +161,13 @@ public class PageServiceTests
         repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.ajanlatweb).ToString())).ReturnsAsync(expectedContents).Verifiable();
         repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.maiszent).ToString())).ReturnsAsync(expectedContents).Verifiable();
         repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.gyonas).ToString())).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetSzentekContents()).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetNewsContents()).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetBlogContents()).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetHumorContents()).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetAudioContents()).ReturnsAsync(expectedContents).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_szentek")).ReturnsAsync(expectedContents).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_news")).ReturnsAsync(expectedContents).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_blog")).ReturnsAsync(expectedContents).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_humor")).ReturnsAsync(expectedContents).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_audio")).ReturnsAsync(expectedContents).Verifiable();
         repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.book).ToString())).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContents()).ReturnsAsync(expectedContents).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_napiolvaso")).ReturnsAsync(expectedContents).Verifiable();
         var pageService = new PageService(_downloadServiceMock.Object, repositoryMock.Object);
 
         var result = await pageService.GetContentsAsync(pageTypeId);
@@ -192,23 +192,31 @@ public class PageServiceTests
                     repositoryMock.Verify(x => x.GetContentsByTypeId(((int)Activities.gyonas).ToString()), Times.Once);
                 }
                 break;
-            case "GetSzentekContents":
-                repositoryMock.Verify(x => x.GetSzentekContents(), Times.Once);
-                break;
-            case "GetNewsContents":
-                repositoryMock.Verify(x => x.GetNewsContents(), Times.Once);
-                break;
-            case "GetBlogContents":
-                repositoryMock.Verify(x => x.GetBlogContents(), Times.Once);
-                break;
-            case "GetHumorContents":
-                repositoryMock.Verify(x => x.GetHumorContents(), Times.Once);
-                break;
-            case "GetAudioContents":
-                repositoryMock.Verify(x => x.GetAudioContents(), Times.Once);
-                break;
-            case "GetElmelkedesContents":
-                repositoryMock.Verify(x => x.GetContents(), Times.Once);
+            case "GetContentsByGroupName":
+                if (pageTypeId == "8")
+                {
+                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_audio"), Times.Once);
+                }
+                if (pageTypeId == "6")
+                {
+                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_humor"), Times.Once);
+                }
+                if (pageTypeId == "0")
+                {
+                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_napiolvaso"), Times.Once);
+                }
+                if (pageTypeId == "3")
+                {
+                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_szentek"), Times.Once);
+                }
+                if (pageTypeId == "5")
+                {
+                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_blog"), Times.Once);
+                }
+                if (pageTypeId == "4")
+                {
+                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_news"), Times.Once);
+                }
                 break;
         };
 
