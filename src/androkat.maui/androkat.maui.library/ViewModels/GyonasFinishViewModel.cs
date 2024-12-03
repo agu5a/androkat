@@ -13,10 +13,10 @@ public partial class GyonasFinishViewModel : ViewModelBase
     }
 
     [ObservableProperty]
-    string ima;
+    string gyonasSzoveg;
 
     [ObservableProperty]
-    bool isChecked;
+    bool isChecked = true;
 
     public async Task InitializeAsync()
     {
@@ -27,11 +27,11 @@ public partial class GyonasFinishViewModel : ViewModelBase
     {
         if (IsChecked)
         {
-            Ima = await _resourceData.GetResourceAsString("gyonas.html");
+            GyonasSzoveg = await _resourceData.GetResourceAsString("gyonas.html");
         }
         else
         {
-            Ima = await _resourceData.GetResourceAsString("gyonasrovid.html");
+            GyonasSzoveg = await _resourceData.GetResourceAsString("gyonasrovid.html");
         }
     }
 }

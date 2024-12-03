@@ -47,7 +47,7 @@
                     android:WebView.EnableZoomControls="false"
                     android:WebView.MixedContentMode="AlwaysAllow">
                     <WebView.Source>
-                        <HtmlWebViewSource android:WebView.MixedContentMode="AlwaysAllow" Html="{Binding Ima}" />
+                        <HtmlWebViewSource android:WebView.MixedContentMode="AlwaysAllow" Html="{Binding GyonasSzoveg}" />
                     </WebView.Source>
                 </WebView>
             </VerticalStackLayout>

@@ -15,7 +15,7 @@ public partial class App : Application
 
         Routing.RegisterRoute(nameof(ContentListPage), typeof(ContentListPage));
         Routing.RegisterRoute(nameof(DetailPage), typeof(DetailPage));
-        Routing.RegisterRoute(nameof(GyonasMeditationPage), typeof(GyonasMeditationPage));
+        Routing.RegisterRoute(nameof(GyonasNotesPage), typeof(GyonasNotesPage));
         Routing.RegisterRoute(nameof(GyonasPrayPage), typeof(GyonasPrayPage));
         Routing.RegisterRoute(nameof(GyonasFinishPage), typeof(GyonasFinishPage));
     }

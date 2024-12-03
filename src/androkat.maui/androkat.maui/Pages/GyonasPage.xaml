@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
     x:Name="this"
-    Title="Gyónás"
+    Title="Gyónás előkészítő"
     x:DataType="viewmodels:GyonasViewModel"
     Style="{StaticResource MainSectionStyle}">
     <Grid>

@@ -159,7 +159,7 @@ public class CacheRepository : BaseRepository, ICacheRepository
             (int)Forras.audiohorvath, (int)Forras.audiotaize,
             (int)Forras.audiobarsi, (int)Forras.audionapievangelium,
             (int)Forras.ajanlatweb, (int)Forras.audiopalferi,
-            (int)Forras.prayasyougo
+            (int)Forras.prayasyougo, (int)Forras.gyonas
         };
 
         var tomorrow = Clock.Now.AddDays(1).ToString("yyyy-MM-dd");
@@ -176,6 +176,9 @@ public class CacheRepository : BaseRepository, ICacheRepository
             var res = GetContentDetailsModel(allRecords, tipus, date, tomorrow, osszes);
             result.AddRange(Mapper.Map<List<ContentDetailsModel>>(res));
         }
+
+        var gyonas = GetContentDetailsModel(allRecords, (int)Forras.gyonas, Clock.Now.ToString("yyyy-MM-dd"), tomorrow, osszes);
+        result.AddRange(Mapper.Map<List<ContentDetailsModel>>(gyonas));
 
         return result.AsReadOnly();
     }

@@ -125,6 +125,9 @@ GET {{androkat.web_HostAddress}}/v3/contents?tipus=3&id=
 GET {{androkat.web_HostAddress}}/v3/contents?tipus=3&id=62f662d1-1289-11ea-8aa1-cbeb38570c35
 ###
 
+GET {{androkat.web_HostAddress}}/v3/contents?tipus=34&id=
+###
+
 GET {{androkat.web_HostAddress}}/v3/contents?tipus=38&id=
 ###
 GET {{androkat.web_HostAddress}}/v3/contents?tipus=38&id=6a8e3d4e-1756-4254-9e57-7fdccb8c8aa2

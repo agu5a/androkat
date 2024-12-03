@@ -16,7 +16,8 @@ public partial class ContentListPage : ContentPage
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         // Hack: Get the category Id
-        ViewModel.Id = GetCategoryIdFromRoute();
+        var result = GetCategoryIdFromRoute();
+        ViewModel.Id = string.IsNullOrEmpty(result) ? "34" : result;
         ViewModel.PageTitle = GetPageTitle(ViewModel.Id);
         if (_stackCount != 2)
         {
@@ -55,6 +56,7 @@ public partial class ContentListPage : ContentPage
             "7" => "Imádságok",
             "8" => "Hanganyagok",
             "11" => "Könyvolvasó",
+            "34" => "Gyónáshoz elmélkedés",
             //Weboldalak
             _ => "Evangélium, elmélkedés", //0
         };
@@ -66,6 +68,7 @@ public partial class ContentListPage : ContentPage
         // in XAML, we have to parse the route. 
         // as a convention the last route section defines the category.
         // ugly but works for now :-(
-        return Shell.Current.CurrentState.Location.OriginalString.Split("/").LastOrDefault()!;
+        var result = Shell.Current.CurrentState.Location.OriginalString.Split("/").LastOrDefault()!;
+        return int.TryParse(result, out _) ? result : "";
     }
 }

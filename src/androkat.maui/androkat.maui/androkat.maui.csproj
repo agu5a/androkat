@@ -76,8 +76,8 @@
 	  <Compile Update="Pages\GyonasPrayPage.xaml.cs">
 	    <DependentUpon>GyonasPrayPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Pages\GyonasMeditationPage.xaml.cs">
-	    <DependentUpon>GyonasMeditationPage.xaml</DependentUpon>
+	  <Compile Update="Pages\GyonasNotesPage.xaml.cs">
+	    <DependentUpon>GyonasNotesPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -88,7 +88,7 @@
 	  <MauiXaml Update="Pages\GyonasPrayPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\GyonasMeditationPage.xaml">
+	  <MauiXaml Update="Pages\GyonasNotesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

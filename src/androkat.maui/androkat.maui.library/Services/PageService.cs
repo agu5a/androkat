@@ -1,4 +1,5 @@
-﻿using androkat.maui.library.Abstraction;
+﻿#nullable enable
+using androkat.maui.library.Abstraction;
 using androkat.maui.library.Data;
 using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
@@ -10,9 +11,19 @@ namespace androkat.maui.library.Services;
 
 public class PageService(IDownloadService downloadService, IRepository repository) : IPageService
 {
-    private HttpClient client;
+    private HttpClient? client = null;
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3604:Member initializer values should not be redundant", Justification = "<Pending>")]
     private bool firstLoad = true;
+
+    public async Task<int> UpsertGyonasiJegyzet(string notes)
+    {
+        return await repository.UpsertGyonasiJegyzet(notes);
+    }
+
+    public async Task<GyonasiJegyzet?> GetGyonasiJegyzet()
+    {
+        return await repository.GetGyonasiJegyzet();
+    }
 
     public async Task<ContentEntity> GetContentEntityByIdAsync(Guid id)
     {
@@ -77,16 +88,17 @@ public class PageService(IDownloadService downloadService, IRepository repositor
     {
         return pageTypeId switch
         {
-            "1" => await repository.GetAjanlatokContents(),
-            "2" => await repository.GetMaiszentContents(),
-            "3" => await repository.GetSzentekContents(),
-            "4" => await repository.GetNewsContents(),
-            "5" => await repository.GetBlogContents(),
-            "6" => await repository.GetHumorContents(),
+            "1" => await repository.GetContentsByTypeId(((int)Activities.ajanlatweb).ToString()),
+            "2" => await repository.GetContentsByTypeId(((int)Activities.maiszent).ToString()),
+            "3" => await repository.GetContentsByGroupName("group_szentek"),
+            "4" => await repository.GetContentsByGroupName("group_news"),
+            "5" => await repository.GetContentsByGroupName("group_blog"),
+            "6" => await repository.GetContentsByGroupName("group_humor"),
             //"7" => ima
-            "8" => await repository.GetAudioContents(),
-            "11" => await repository.GetBookContents(),
-            _ => await repository.GetContents(),
+            "8" => await repository.GetContentsByGroupName("group_audio"),
+            "11" => await repository.GetContentsByTypeId(((int)Activities.book).ToString()),
+            "34" => await repository.GetContentsByTypeId(((int)Activities.gyonas).ToString()),
+            /*0*/ _ => await repository.GetContentsByGroupName("group_napiolvaso"),
         };
     }
 
@@ -97,7 +109,7 @@ public class PageService(IDownloadService downloadService, IRepository repositor
 
 #pragma warning disable S1144 // Unused private types or members should be removed
 #pragma warning disable IDE0051 // Remove unused private members
-    private Task<T> TryGetAsync<T>(string path)
+    private Task<T?> TryGetAsync<T>(string path)
 #pragma warning restore IDE0051 // Remove unused private members
 #pragma warning restore S1144 // Unused private types or members should be removed
     {
@@ -116,7 +128,7 @@ public class PageService(IDownloadService downloadService, IRepository repositor
         return TryGetImplementationAsync<T>(path);
     }
 
-    private async Task<T> TryGetImplementationAsync<T>(string path)
+    private async Task<T?> TryGetImplementationAsync<T>(string path)
     {
         var json = string.Empty;
 
@@ -127,7 +139,7 @@ public class PageService(IDownloadService downloadService, IRepository repositor
         if (!Barrel.Current.IsExpired(path))
             json = Barrel.Current.Get<string>(path);
 
-        T responseData = default;
+        T? responseData = default;
         try
         {
             if (string.IsNullOrWhiteSpace(json))

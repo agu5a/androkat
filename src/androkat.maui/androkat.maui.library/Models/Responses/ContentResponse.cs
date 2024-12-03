@@ -11,17 +11,17 @@ public class ContentResponse
     public DateTime Datum { get; set; }
 
     [JsonPropertyName("cim")]
-    public string Cim { get; set; }
+    public string Cim { get; set; } = string.Empty;
 
     [JsonPropertyName("idezet")]
-    public string Idezet { get; set; }
+    public string Idezet { get; set; } = string.Empty;
 
     [JsonPropertyName("img")]
-    public string Image { get; set; }
+    public string Image { get; set; } = string.Empty;
 
     [JsonPropertyName("forras")]
-    public string Forras { get; set; }
+    public string Forras { get; set; } = string.Empty;
 
     [JsonPropertyName("kulsolink")]
-    public string KulsoLink { get; set; }
+    public string KulsoLink { get; set; } = string.Empty;
 }

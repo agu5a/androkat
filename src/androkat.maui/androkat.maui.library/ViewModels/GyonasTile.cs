@@ -21,11 +21,10 @@ public partial class GyonasTile(string name, string icon, IPageService pageServi
         {
             "LELKI TÜKÖR" => Shell.Current.DisplayAlert("Hiba", "LELKI TÜKÖR Nincs még kész", "Bezárás"),
             "GYÓNÁS" => Shell.Current.GoToAsync("GyonasFinishPage"),
-            "ELMÉLKEDÉS" => Shell.Current.GoToAsync("ContentListPage?Id=1"),
+            "ELMÉLKEDÉS" => Shell.Current.GoToAsync("ContentListPage?Id=34"),
             "IMA" => Shell.Current.GoToAsync("GyonasPrayPage"),
-            "JEGYZET" => Shell.Current.DisplayAlert("Hiba", "JEGYZET Nincs még kész", "Bezárás"),
-            //TÖRLÉS
-            _ => GyonasTorles(),
+            "JEGYZET" => Shell.Current.GoToAsync("GyonasNotesPage"),
+            /*TÖRLÉS*/ _ => GyonasTorles(),
         };
     }
 

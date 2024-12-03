@@ -102,6 +102,7 @@ public class DownloadService(IAndrokatService _androkatService, IRepository _rep
             Activities.szentbernat,
             Activities.szentszalezi,
             Activities.sienaikatalin,
+            Activities.gyonas,
 
             Activities.group_ima
         };

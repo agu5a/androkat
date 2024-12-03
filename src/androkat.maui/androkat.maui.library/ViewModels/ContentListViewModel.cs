@@ -97,7 +97,7 @@ public partial class ContentListViewModel : ViewModelBase
 
     private async Task FetchAsync()
     {
-        var contentsTemp = await _pageService.GetContentsAsync(Id);
+        var contentsTemp = await _pageService.GetContentsAsync(Id!);
 
         if (contentsTemp == null)
         {
