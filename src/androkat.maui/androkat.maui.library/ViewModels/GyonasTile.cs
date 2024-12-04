@@ -19,7 +19,7 @@ public partial class GyonasTile(string name, string icon, IPageService pageServi
     {
         return page switch
         {
-            "LELKI TÜKÖR" => Shell.Current.DisplayAlert("Hiba", "LELKI TÜKÖR Nincs még kész", "Bezárás"),
+            "LELKI TÜKÖR" => Shell.Current.GoToAsync("GyonasMirrorPage"),
             "GYÓNÁS" => Shell.Current.GoToAsync("GyonasFinishPage"),
             "ELMÉLKEDÉS" => Shell.Current.GoToAsync("ContentListPage?Id=34"),
             "IMA" => Shell.Current.GoToAsync("GyonasPrayPage"),

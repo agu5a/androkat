@@ -18,6 +18,7 @@ public partial class App : Application
         Routing.RegisterRoute(nameof(GyonasNotesPage), typeof(GyonasNotesPage));
         Routing.RegisterRoute(nameof(GyonasPrayPage), typeof(GyonasPrayPage));
         Routing.RegisterRoute(nameof(GyonasFinishPage), typeof(GyonasFinishPage));
+        Routing.RegisterRoute(nameof(GyonasMirrorPage), typeof(GyonasMirrorPage));
     }
     
     protected override Window CreateWindow(IActivationState? activationState)

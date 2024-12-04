@@ -22,6 +22,7 @@ public static class PagesExtensions
         builder.Services.AddTransient<GyonasNotesPage>();
         builder.Services.AddTransient<GyonasPrayPage>();
         builder.Services.AddTransient<GyonasFinishPage>();
+        builder.Services.AddTransient<GyonasMirrorPage>();
 
         return builder;
     }

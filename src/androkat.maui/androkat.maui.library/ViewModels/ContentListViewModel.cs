@@ -6,6 +6,7 @@ using androkat.maui.library.Models.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MvvmHelpers;
+using System.Collections;
 
 namespace androkat.maui.library.ViewModels;
 
@@ -16,6 +17,18 @@ public partial class ContentListViewModel : ViewModelBase
     private readonly ISourceData _sourceData;
     private readonly IAndrokatService _androkatService;
 
+    public ContentListViewModel(IDispatcher dispatcher, IPageService pageService, ISourceData sourceData, IAndrokatService androkatService)
+    {
+        Dispatcher = dispatcher;
+        _pageService = pageService;
+        Contents = [];
+        _sourceData = sourceData;
+        _androkatService = androkatService;
+
+        BindingBase.EnableCollectionSynchronization(Contents, null, ObservableCollectionCallback);
+    }
+
+    protected IDispatcher Dispatcher { get; }
     public string? Id { get; set; }
 
     [ObservableProperty]
@@ -25,14 +38,6 @@ public partial class ContentListViewModel : ViewModelBase
 
     [ObservableProperty]
     ObservableRangeCollection<List<ContentItemViewModel>> contents;
-
-    public ContentListViewModel(IPageService pageService, ISourceData sourceData, IAndrokatService androkatService)
-    {
-        _pageService = pageService;
-        Contents = [];
-        _sourceData = sourceData;
-        _androkatService = androkatService;
-    }
 
     public async Task InitializeAsync()
     {
@@ -136,4 +141,11 @@ public partial class ContentListViewModel : ViewModelBase
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
     [RelayCommand]
     public Task Subscribe(ContentItemViewModel viewModel) => Task.Run(() => { });
+
+    //Ensure Observable Collection is thread-safe https://codetraveler.io/2019/09/11/using-observablecollection-in-a-multi-threaded-xamarin-forms-application/
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1172:Unused method parameters should be removed", Justification = "<Pending>")]
+    void ObservableCollectionCallback(IEnumerable collection, object context, Action accessMethod, bool writeAccess)
+    {
+        Dispatcher.Dispatch(accessMethod);
+    }
 }
