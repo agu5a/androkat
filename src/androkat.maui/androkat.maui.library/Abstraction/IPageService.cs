@@ -20,4 +20,7 @@ public interface IPageService
     Task<GyonasiJegyzet?> GetGyonasiJegyzet();
     Task<int> InsertFavoriteContentAsync(FavoriteContentEntity favoriteContentEntity);
     Task<int> UpsertGyonasiJegyzet(string notes);
+    Task<int> InsertBunok(Bunok entity);
+    Task<int> DeleteBunokByIds(int bunId, int parancsId);
+    Task<List<Bunok>> GetBunok();
 }

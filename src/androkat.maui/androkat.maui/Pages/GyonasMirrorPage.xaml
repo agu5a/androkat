@@ -16,7 +16,7 @@
             Padding="{OnIdiom Phone=22}"
             Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}"
             ColumnDefinitions="*"
-            RowDefinitions="auto,auto,auto"
+            RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto"
             RowSpacing="{OnIdiom Phone=6}">
 
             <Label
@@ -33,15 +33,7 @@
                 <toolkit:Expander.Header>
                     <Label Text="1. Uradat, Istenedet imádd és csak Neki szolgálj!" Margin="0,10,0,10" Style="{OnIdiom Phone={StaticResource BodyXLLabelStyle}}" />
                 </toolkit:Expander.Header>
-                <VerticalStackLayout>
-                    <HorizontalStackLayout Padding="5">
-                        <CheckBox />
-                        <Label Text="Áldoztam-e halálos bűn állapotában?" />
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout Padding="5">
-                        <CheckBox />
-                        <Label Text="Áldoztam-e halálos bűn állapotában?" />
-                    </HorizontalStackLayout>
+                <VerticalStackLayout x:Name="VP1">
                 </VerticalStackLayout>
             </toolkit:Expander>
 
@@ -49,17 +41,74 @@
                 <toolkit:Expander.Header>
                     <Label Text="2. Isten nevét hiába ne vedd!" Margin="0,10,0,10" Style="{OnIdiom Phone={StaticResource BodyXLLabelStyle}}" />
                 </toolkit:Expander.Header>
-                <VerticalStackLayout>
-                    <HorizontalStackLayout Padding="5">
-                        <CheckBox />
-                        <Label Text="Esküdöztem fölöslegesen?" />
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout Padding="5">
-                        <CheckBox />
-                        <Label Text="Esküdöztem fölöslegesen?" />
-                    </HorizontalStackLayout>
+                <VerticalStackLayout x:Name="VP2">
                 </VerticalStackLayout>
             </toolkit:Expander>
+
+            <toolkit:Expander Grid.Column="0" Grid.Row="3">
+                <toolkit:Expander.Header>
+                    <Label Text="3. Az Úr napját szenteld meg!" Margin="0,10,0,10" Style="{OnIdiom Phone={StaticResource BodyXLLabelStyle}}" />
+                </toolkit:Expander.Header>
+                <VerticalStackLayout x:Name="VP3">
+                </VerticalStackLayout>
+            </toolkit:Expander>
+
+            <toolkit:Expander Grid.Column="0" Grid.Row="4">
+                <toolkit:Expander.Header>
+                    <Label Text="4. Atyádat és anyádat tiszteld!" Margin="0,10,0,10" Style="{OnIdiom Phone={StaticResource BodyXLLabelStyle}}" />
+                </toolkit:Expander.Header>
+                <VerticalStackLayout x:Name="VP4">
+                </VerticalStackLayout>
+            </toolkit:Expander>
+
+            <toolkit:Expander Grid.Column="0" Grid.Row="5">
+                <toolkit:Expander.Header>
+                    <Label Text="5. Ne ölj!" Margin="0,10,0,10" Style="{OnIdiom Phone={StaticResource BodyXLLabelStyle}}" />
+                </toolkit:Expander.Header>
+                <VerticalStackLayout x:Name="VP5">
+                </VerticalStackLayout>
+            </toolkit:Expander>
+
+            <toolkit:Expander Grid.Column="0" Grid.Row="6">
+                <toolkit:Expander.Header>
+                    <Label Text="6. Ne paráználkodj!" Margin="0,10,0,10" Style="{OnIdiom Phone={StaticResource BodyXLLabelStyle}}" />
+                </toolkit:Expander.Header>
+                <VerticalStackLayout x:Name="VP6">
+                </VerticalStackLayout>
+            </toolkit:Expander>
+
+            <toolkit:Expander Grid.Column="0" Grid.Row="7">
+                <toolkit:Expander.Header>
+                    <Label Text="7. Ne lopj!" Margin="0,10,0,10" Style="{OnIdiom Phone={StaticResource BodyXLLabelStyle}}" />
+                </toolkit:Expander.Header>
+                <VerticalStackLayout x:Name="VP7">
+                </VerticalStackLayout>
+            </toolkit:Expander>
+
+            <toolkit:Expander Grid.Column="0" Grid.Row="8">
+                <toolkit:Expander.Header>
+                    <Label Text="8. Ne hazudj, és mások becsületében kárt ne tégy!" Margin="0,10,0,10" Style="{OnIdiom Phone={StaticResource BodyXLLabelStyle}}" />
+                </toolkit:Expander.Header>
+                <VerticalStackLayout x:Name="VP8">
+                </VerticalStackLayout>
+            </toolkit:Expander>
+
+            <toolkit:Expander Grid.Column="0" Grid.Row="9">
+                <toolkit:Expander.Header>
+                    <Label Text="9. Felebarátod házastársát ne kívánd!" Margin="0,10,0,10" Style="{OnIdiom Phone={StaticResource BodyXLLabelStyle}}" />
+                </toolkit:Expander.Header>
+                <VerticalStackLayout x:Name="VP9">
+                </VerticalStackLayout>
+            </toolkit:Expander>
+
+            <toolkit:Expander Grid.Column="0" Grid.Row="10">
+                <toolkit:Expander.Header>
+                    <Label Text="10. Mások tulajdonát ne kívánd!" Margin="0,10,0,10" Style="{OnIdiom Phone={StaticResource BodyXLLabelStyle}}" />
+                </toolkit:Expander.Header>
+                <VerticalStackLayout x:Name="VP10">
+                </VerticalStackLayout>
+            </toolkit:Expander>
+
         </Grid>
     </ScrollView>
 </ContentPage>
