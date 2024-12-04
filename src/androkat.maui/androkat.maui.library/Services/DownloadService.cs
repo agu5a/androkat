@@ -131,10 +131,10 @@ public class DownloadService(IAndrokatService _androkatService, IRepository _rep
                 return await InsertIma(0);
             }
 
-            //a mai szent-et, ajanlatokat, humort nem lehet letiltani a beallitásokban, így mindig ellenőrizzük
+            //a mai szent-et, ajanlatokat, humort nem lehet letiltani a beállitásokban, így mindig ellenőrizzük
             if (act != Activities.maiszent && act != Activities.ajanlatweb
                 && act != Activities.humor
-                && !_helperSharedPreferences.GetSharedPreferencesBoolean(act.ToString(), true))// A tobbit csak ha keri a beállításokban
+                && !_helperSharedPreferences.GetSharedPreferencesBoolean(act.ToString(), true))// A többit csak ha kéri a beállításokban
                 return 0;
 
             int result = 0;

@@ -3,6 +3,7 @@ using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
 using androkat.maui.library.Models.Responses;
 using androkat.maui.library.ViewModels;
+using Microsoft.Maui.Dispatching;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,14 @@ public class ContentListViewModelTests
     private readonly Mock<IPageService> _pageServiceMock;
     private readonly Mock<ISourceData> _sourceDataMock;
     private readonly Mock<IAndrokatService> _androkatService;
+    private readonly Mock<IDispatcher> _dispatcherMock;
 
     public ContentListViewModelTests()
     {
         _pageServiceMock = new Mock<IPageService>();
         _sourceDataMock = new Mock<ISourceData>();
         _androkatService = new Mock<IAndrokatService>();
+        _dispatcherMock = new Mock<IDispatcher>();
     }
 
     [Fact]
@@ -58,7 +61,7 @@ public class ContentListViewModelTests
             }
         ]);
 
-        var viewModel = new ContentListViewModel(_pageServiceMock.Object, _sourceDataMock.Object, _androkatService.Object);
+        var viewModel = new ContentListViewModel(_dispatcherMock.Object, _pageServiceMock.Object, _sourceDataMock.Object, _androkatService.Object);
 
         // Act
         await viewModel.InitializeAsync();
@@ -76,7 +79,7 @@ public class ContentListViewModelTests
     {
         //arrange
         var itemViewModelMock = new ContentItemViewModel(new ContentEntity());
-        var viewModel = new ContentListViewModel(_pageServiceMock.Object, _sourceDataMock.Object, _androkatService.Object);
+        var viewModel = new ContentListViewModel(_dispatcherMock.Object, _pageServiceMock.Object, _sourceDataMock.Object, _androkatService.Object);
 
         //act
         await viewModel.Subscribe(itemViewModelMock);
