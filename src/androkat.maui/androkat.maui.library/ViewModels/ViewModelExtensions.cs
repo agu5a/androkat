@@ -20,6 +20,7 @@ public static class ViewModelExtensions
         builder.Services.AddTransient<GyonasNotesViewModel>();
         builder.Services.AddTransient<GyonasPrayViewModel>();
         builder.Services.AddTransient<GyonasFinishViewModel>();
+        builder.Services.AddTransient<GyonasMirrorViewModel>();
 
         return builder;
     }

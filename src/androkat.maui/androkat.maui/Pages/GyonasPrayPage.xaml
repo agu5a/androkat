@@ -10,7 +10,7 @@
     Title="Imák lelkiismeret vizsgálathoz"
     Style="{StaticResource DetailPageStyle}">
 
-    <ScrollView Margin="5,0,5,0" VerticalOptions="FillAndExpand">
+    <ScrollView Margin="5,0,5,0" VerticalOptions="Fill">
         <Grid
             Padding="{OnIdiom Phone=22}"
             Background="{AppThemeBinding Light={StaticResource Grey1},
@@ -27,7 +27,7 @@
                 LineBreakMode="WordWrap"
                 Style="{OnIdiom Phone={StaticResource H6LabelStyle}}"
                 Text="Ima"
-                VerticalOptions="FillAndExpand" />
+                VerticalOptions="Fill" />
 
             <VerticalStackLayout
                 Grid.Row="{OnIdiom Phone=1}"

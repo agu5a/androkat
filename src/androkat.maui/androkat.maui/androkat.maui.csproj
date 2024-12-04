@@ -10,6 +10,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<WarningsNotAsErrors>CS8785,NU1603,XUA1001,XC0024,XC0045,IDE0290,AD0001</WarningsNotAsErrors>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
 		<TrimMode>partial</TrimMode>
 		<IsPackable>false</IsPackable>
 

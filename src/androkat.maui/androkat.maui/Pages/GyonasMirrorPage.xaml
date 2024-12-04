@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="androkat.hu.Pages.GyonasMirrorPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
+    x:DataType="viewmodels:GyonasMirrorViewModel"
+    x:Name="this"
+    Title="Gyónáshoz lelkitükör"
+    Style="{StaticResource DetailPageStyle}">
+
+    <ScrollView Margin="5,0,5,0" VerticalOptions="Fill">
+        <Grid
+            Padding="{OnIdiom Phone=22}"
+            Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}"
+            ColumnDefinitions="*"
+            RowDefinitions="auto,auto,auto"
+            RowSpacing="{OnIdiom Phone=6}">
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="0,10,0,10"
+                HorizontalOptions="Start"
+                LineBreakMode="WordWrap"
+                Style="{OnIdiom Phone={StaticResource SH6LabelStyle}}"
+                Text="Kattints a parancsokra és válaszd ki azokat a kérdéseket, amiket a legközelebbi gyónásban elmondanál. Ha végeztél, menj vissza a Gyónás főoldalra és válaszd a GYÓNÁS gombot"
+                VerticalOptions="Fill" />
+
+            <toolkit:Expander Grid.Column="0" Grid.Row="1">
+                <toolkit:Expander.Header>
+                    <Label Text="1. Uradat, Istenedet imádd és csak Neki szolgálj!" Margin="0,10,0,10" Style="{OnIdiom Phone={StaticResource BodyXLLabelStyle}}" />
+                </toolkit:Expander.Header>
+                <VerticalStackLayout>
+                    <HorizontalStackLayout Padding="5">
+                        <CheckBox />
+                        <Label Text="Áldoztam-e halálos bűn állapotában?" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Padding="5">
+                        <CheckBox />
+                        <Label Text="Áldoztam-e halálos bűn állapotában?" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </toolkit:Expander>
+
+            <toolkit:Expander Grid.Column="0" Grid.Row="2">
+                <toolkit:Expander.Header>
+                    <Label Text="2. Isten nevét hiába ne vedd!" Margin="0,10,0,10" Style="{OnIdiom Phone={StaticResource BodyXLLabelStyle}}" />
+                </toolkit:Expander.Header>
+                <VerticalStackLayout>
+                    <HorizontalStackLayout Padding="5">
+                        <CheckBox />
+                        <Label Text="Esküdöztem fölöslegesen?" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Padding="5">
+                        <CheckBox />
+                        <Label Text="Esküdöztem fölöslegesen?" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </toolkit:Expander>
+        </Grid>
+    </ScrollView>
+</ContentPage>
