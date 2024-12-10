@@ -31,7 +31,7 @@ public class CronServiceTests : BaseTest
         var apiRepository = new Mock<IApiRepository>();
         apiRepository.Setup(s => s.GetContentDetailsModels()).Throws(new Exception("Hiba"));
 
-        var service = new CronService(apiRepository.Object, GetClock().Object, logger.Object, GetIMemoryCache());
+        var service = new CronService(apiRepository.Object, GetClock().Object, logger.Object, GetIMemoryCache(), new Mock<IAdminRepository>().Object);
 
         // Assert
         Action act = () => service.Start();
@@ -42,7 +42,7 @@ public class CronServiceTests : BaseTest
     public void DeleteCaches_Throw_Exception()
     {
         //memoryCache is null
-        var service = new CronService(new Mock<IApiRepository>().Object, GetClock().Object, new Mock<ILogger<CronService>>().Object, default);
+        var service = new CronService(new Mock<IApiRepository>().Object, GetClock().Object, new Mock<ILogger<CronService>>().Object, default, new Mock<IAdminRepository>().Object);
 
         Action act = () => service.DeleteCaches();
         act.Should().NotThrow();
@@ -58,7 +58,7 @@ public class CronServiceTests : BaseTest
         var cache = GetIMemoryCache();
         _ = cache.Set(key, expectedContentResponse);
 
-        var service = new CronService(new Mock<IApiRepository>().Object, GetClock().Object, logger.Object, GetIMemoryCache());
+        var service = new CronService(new Mock<IApiRepository>().Object, GetClock().Object, logger.Object, GetIMemoryCache(), new Mock<IAdminRepository>().Object);
         service.DeleteCaches();
 
         cache.Get(key).Should().Be(expectedContentResponse);
@@ -91,7 +91,7 @@ public class CronServiceTests : BaseTest
         var cache = GetIMemoryCache();
         var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
         var repository = new ApiRepository(context, clock.Object, mapper);
-        var service = new CronService(repository, clock.Object, logger.Object, GetIMemoryCache());
+        var service = new CronService(repository, clock.Object, logger.Object, GetIMemoryCache(), new Mock<IAdminRepository>().Object);
         service.Start();
 
         (context.Content.Count()).Should().Be(3);
@@ -135,7 +135,7 @@ public class CronServiceTests : BaseTest
         var cache = GetIMemoryCache();
         var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
         var repository = new ApiRepository(context, clock.Object, mapper);
-        var service = new CronService(repository, clock.Object, logger.Object, GetIMemoryCache());
+        var service = new CronService(repository, clock.Object, logger.Object, GetIMemoryCache(), new Mock<IAdminRepository>().Object);
         service.Start();
 
         (context.Content.Count()).Should().Be(4);
@@ -171,7 +171,7 @@ public class CronServiceTests : BaseTest
         var cache = GetIMemoryCache();
         var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
         var repository = new ApiRepository(context, clock.Object, mapper);
-        var service = new CronService(repository, clock.Object, logger.Object, GetIMemoryCache());
+        var service = new CronService(repository, clock.Object, logger.Object, GetIMemoryCache(), new Mock<IAdminRepository>().Object);
         service.Start();
 
         (context.Content.Count()).Should().Be(3);
@@ -207,7 +207,7 @@ public class CronServiceTests : BaseTest
         var cache = GetIMemoryCache();
         var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
         var repository = new ApiRepository(context, clock.Object, mapper);
-        var service = new CronService(repository, clock.Object, mock.Object, GetIMemoryCache());
+        var service = new CronService(repository, clock.Object, mock.Object, GetIMemoryCache(), new Mock<IAdminRepository>().Object);
         service.Start();
 
         (context.VideoContent.Count()).Should().Be(100);
@@ -239,7 +239,7 @@ public class CronServiceTests : BaseTest
         var cache = GetIMemoryCache();
         var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
         var repository = new ApiRepository(context, clock.Object, mapper);
-        var service = new CronService(repository, clock.Object, logger.Object, GetIMemoryCache());
+        var service = new CronService(repository, clock.Object, logger.Object, GetIMemoryCache(), new Mock<IAdminRepository>().Object);
         service.Start();
 
         (context.Content.Count()).Should().Be(4);
@@ -275,7 +275,7 @@ public class CronServiceTests : BaseTest
         var cache = GetIMemoryCache();
         var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
         var repository = new ApiRepository(context, clock.Object, mapper);
-        var service = new CronService(repository, clock.Object, logger.Object, GetIMemoryCache());
+        var service = new CronService(repository, clock.Object, logger.Object, GetIMemoryCache(), new Mock<IAdminRepository>().Object);
         service.Start();
 
         (context.Content.Count()).Should().Be(1);
@@ -316,7 +316,7 @@ public class CronServiceTests : BaseTest
         var cache = GetIMemoryCache();
         var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
         var repository = new ApiRepository(context, clock.Object, mapper);
-        var service = new CronService(repository, clock.Object, logger.Object, GetIMemoryCache());
+        var service = new CronService(repository, clock.Object, logger.Object, GetIMemoryCache(), new Mock<IAdminRepository>().Object);
         service.Start();
 
         (context.Content.Count()).Should().Be(2);

@@ -2,10 +2,12 @@
 using androkat.domain;
 using androkat.domain.Enum;
 using androkat.domain.Model;
+using androkat.domain.Model.AdminPage;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace androkat.application.Service;
@@ -16,17 +18,20 @@ public class CronService : ICronService
     private readonly IClock _clock;
     private readonly ILogger<CronService> _logger;
     private readonly IMemoryCache _memoryCache;
+    private readonly IAdminRepository _adminRepository;
 
     public CronService(
         IApiRepository apiRepository,
         IClock iClock,
         ILogger<CronService> logger,
-        IMemoryCache memoryCache)
+        IMemoryCache memoryCache,
+        IAdminRepository adminRepository)
     {
         _apiRepository = apiRepository;
         _clock = iClock;
         _logger = logger;
         _memoryCache = memoryCache;
+        _adminRepository = adminRepository;
     }
 
     public void Start()
@@ -151,5 +156,56 @@ public class CronService : ICronService
             _apiRepository.DeleteVideoByNid(item.Nid);
             _logger.LogDebug("delete from videoContent. {Date}", item.Date);
         }
+    }
+
+    public List<string> DeleteFiles(string webRootPath, bool shouldDelete = false)
+    {
+        var res = _adminRepository.GetImgList();
+        var filePath = Path.Combine(webRootPath, "images/ajanlatok");
+        var files = Directory.GetFiles(filePath).OrderBy(o => o).ToList();
+        List<string> fileNames = [];
+
+        if (files.Count != 0)
+        {
+            files.ForEach(f =>
+            {
+                var fileName = f.Replace(filePath, string.Empty).Replace("/", string.Empty).Replace("\\", string.Empty);
+                var imgData = res.FirstOrDefault(i => i.Img == fileName);
+                if (imgData is null && File.GetLastWriteTime(f) < DateTime.Now.AddDays(-20))
+                {
+                    fileNames.Add(f);
+                }
+            });
+        }
+
+        var filePaths = _adminRepository.GetAudioList();
+        filePath = Path.Combine(webRootPath, "download");
+        files = [.. Directory.GetFiles(filePath)];
+
+        if (files.Count != 0)
+        {
+            files.ForEach(f =>
+            {
+                var fileName = f.Replace(filePath, string.Empty).Replace("/", string.Empty).Replace("\\", string.Empty);
+                var fileData = filePaths.FirstOrDefault(d => d.Path.Contains(fileName));
+                if (fileData is null && File.GetLastWriteTime(f) < DateTime.Now.AddDays(-20))
+                {
+                    fileNames.Add(f);
+                }
+            });
+        }
+
+        if (shouldDelete)
+        {
+            foreach (var file in fileNames)
+            {
+                if (!file.Contains(".gitignore"))
+                {
+                    File.Delete(file);
+                }
+            }
+        }
+
+        return fileNames;
     }
 }
