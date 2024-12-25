@@ -11,15 +11,13 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace androkat.web.Pages.Ad;
 
-//https://github.com/dotnet/AspNetCore.Docs/blob/main/aspnetcore/mvc/models/file-uploads/samples/3.x/SampleApp/Pages/BufferedSingleFileUploadPhysical.cshtml.cs
-//https://docs.microsoft.com/en-us/aspnet/core/mvc/models/file-uploads?view=aspnetcore-6.0#upload-small-files-with-buffered-model-binding-to-physical-storage
-
 [Authorize]
-public class UploadModel : PageModel
+public partial class UploadModel : PageModel
 {
     private readonly ILogger<UploadModel> _logger;
     private readonly string[] _permittedExtensions = [".m4a", ".jpeg", ".jpg", ".mp3", ".png"];
@@ -36,25 +34,6 @@ public class UploadModel : PageModel
     public BufferedSingleFileUploadPhysical FileUpload2 { get; set; }
 
     public string Result { get; private set; }
-
-    [BindProperty] 
-    public string FileNameReplace { get; set; }
-
-    public IActionResult OnPostReplace()
-    {
-        if (string.IsNullOrWhiteSpace(FileNameReplace))
-        {
-            Result = "Please correct the FileNameReplace";
-            return Page();
-        }
-
-        //yt5s.com - igazi fájl név (128 kbps).mp3
-        Result = FileNameReplace.ToLower().Replace(" ", "_").Replace("ő", "o").Replace("ö", "o").Replace("ó", "o")
-            .Replace("ü", "u").Replace("ű", "u").Replace("ú", "u")
-            .Replace("í", "i").Replace("é", "e").Replace("á", "a").Replace("yt5s.com_-_", "")
-            .Replace("_(128_kbps)", "");
-        return Page();
-    }
 
     public async Task<IActionResult> OnPostUploadImagesAsync()
     {
@@ -78,7 +57,10 @@ public class UploadModel : PageModel
 
             var folderName = Path.Combine("wwwroot", "images", "ajanlatok");
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-            var filePath = Path.Combine(pathToSave, Path.GetFileName(FileUpload2.FormFile.FileName));
+            var fileName = Path.GetFileName(FileUpload2.FormFile.FileName).ToLower();
+            fileName = FileNameRegex().Replace(fileName, "_");
+            fileName = UnderscoreRegex().Replace(fileName, "_");
+            var filePath = Path.Combine(pathToSave, fileName);
 
             await using var fileStream = System.IO.File.Create(filePath);
             await fileStream.WriteAsync(formFileContent);
@@ -116,7 +98,10 @@ public class UploadModel : PageModel
 
             var folderName = Path.Combine("wwwroot", "download");
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-            var filePath = Path.Combine(pathToSave, Path.GetFileName(FileUpload1.FormFile.FileName));
+            var fileName = Path.GetFileName(FileUpload1.FormFile.FileName).ToLower();
+            fileName = FileNameRegex().Replace(fileName, "_");
+            fileName = UnderscoreRegex().Replace(fileName, "_");
+            var filePath = Path.Combine(pathToSave, fileName);
 
             await using var fileStream = System.IO.File.Create(filePath);
             await fileStream.WriteAsync(formFileContent);
@@ -207,4 +192,9 @@ public class UploadModel : PageModel
 
         return !string.IsNullOrEmpty(ext) && permittedExtensions.Contains(ext);
     }
+
+    [GeneratedRegex(@"[^0-9a-z\.]")]
+    private static partial Regex FileNameRegex();
+    [GeneratedRegex(@"_+")]
+    private static partial Regex UnderscoreRegex();
 }
