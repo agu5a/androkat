@@ -33,4 +33,7 @@ public interface IRepository
     Task<int> DeleteUserGyonas(bool jegyzet, bool bun);
     Task<GyonasiJegyzet?> GetGyonasiJegyzet();
     Task<int> UpsertGyonasiJegyzet(string notes);
+    Task<int> InsertBunok(Bunok entity);
+    Task<int> DeleteBunokByIds(int bunId, int parancsId);
+    Task<List<Bunok>> GetBunok();
 }

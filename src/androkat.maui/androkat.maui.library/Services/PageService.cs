@@ -20,6 +20,10 @@ public class PageService(IDownloadService downloadService, IRepository repositor
         return await repository.UpsertGyonasiJegyzet(notes);
     }
 
+    public async Task<List<Bunok>> GetBunok()
+    {
+        return await repository.GetBunok();
+    }
     public async Task<GyonasiJegyzet?> GetGyonasiJegyzet()
     {
         return await repository.GetGyonasiJegyzet();
@@ -40,6 +44,11 @@ public class PageService(IDownloadService downloadService, IRepository repositor
     {
         var temp = await repository.InsertFavoriteContent(favoriteContentEntity);
         return temp;
+    }
+
+    public async Task<int> InsertBunok(Bunok entity)
+    {
+        return await repository.InsertBunok(entity);
     }
 
     public async Task<int> DownloadAll()
@@ -72,6 +81,11 @@ public class PageService(IDownloadService downloadService, IRepository repositor
     public async Task<int> DeleteAllFavorite()
     {
         return await repository.DeleteAllFavorite();
+    }
+
+    public async Task<int> DeleteBunokByIds(int bunId, int parancsId)
+    {
+        return await repository.DeleteBunokByIds(bunId, parancsId);
     }
 
     public async Task<List<ImadsagEntity>> GetImaContents(int pageNumber, int pageSize)

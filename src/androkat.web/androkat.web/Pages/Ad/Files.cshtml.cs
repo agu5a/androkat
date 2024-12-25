@@ -1,3 +1,4 @@
+using androkat.application.Interfaces;
 using androkat.domain;
 using androkat.domain.Model.AdminPage;
 using Microsoft.AspNetCore.Authorization;
@@ -18,12 +19,18 @@ public class FilesModel : PageModel
     private readonly IWebHostEnvironment _environment;
     private readonly ILogger<FilesModel> _logger;
     private readonly IAdminRepository _adminRepository;
+    private readonly ICronService _cronService;
 
-    public FilesModel(ILogger<FilesModel> logger, IWebHostEnvironment environment, IAdminRepository adminRepository)
+    public FilesModel(
+        ILogger<FilesModel> logger,
+        IWebHostEnvironment environment,
+        IAdminRepository adminRepository,
+        ICronService cronService)
     {
         _logger = logger;
         _environment = environment;
         _adminRepository = adminRepository;
+        _cronService = cronService;
     }
 
     [BindProperty]
@@ -35,15 +42,55 @@ public class FilesModel : PageModel
     [BindProperty(SupportsGet = true)]
     public string FileName { get; set; }
 
+    [BindProperty]
+    public string Deletable { get; set; }
+
     public ActionResult OnGet()
+    {
+        if (!string.IsNullOrWhiteSpace(FileName) && System.IO.File.Exists(FileName))
+        {
+            System.IO.File.Delete(FileName);
+        }
+
+        FillData();
+        return Page();
+    }
+
+    public ActionResult OnPostGetDeletable()
     {
         try
         {
-            if (!string.IsNullOrWhiteSpace(FileName) && System.IO.File.Exists(FileName))
-            {
-                System.IO.File.Delete(FileName);
-            }
+            Deletable = string.Join("<br>", _cronService.DeleteFiles(_environment.WebRootPath));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
 
+        FillData();
+        return Page();
+    }
+
+    public ActionResult OnPostDelete()
+    {
+        try
+        {
+            _cronService.DeleteFiles(_environment.WebRootPath, true);
+            Deletable = string.Join("<br>", _cronService.DeleteFiles(_environment.WebRootPath));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: ");
+        }
+
+        FillData();
+        return Page();
+    }
+
+    private void FillData()
+    {
+        try
+        {
             var res = _adminRepository.GetImgList();
             var filePath = Path.Combine(_environment.WebRootPath, "images/ajanlatok");
             var files = Directory.GetFiles(filePath).OrderBy(o => o).ToList();
@@ -93,7 +140,5 @@ public class FilesModel : PageModel
         {
             _logger.LogError(ex, "{Message}", ex.Message);
         }
-
-        return Page();
     }
 }

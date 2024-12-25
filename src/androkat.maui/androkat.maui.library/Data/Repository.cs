@@ -91,6 +91,22 @@ public class Repository : IRepository
         return 0;
     }
 
+    public async Task<List<Bunok>> GetBunok()
+    {
+        try
+        {
+            Init();
+
+            return await _conn!.Table<Bunok>().ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"********************************** GetBunok EXCEPTION! {ex}");
+        }
+
+        return [];
+    }
+
     public async Task<List<FavoriteContentEntity>> GetFavoriteContents()
     {
         try
@@ -234,6 +250,27 @@ public class Repository : IRepository
         return [];
     }
 
+    public async Task<int> InsertBunok(Bunok entity)
+    {
+        try
+        {
+            Init();
+            var exists = await _conn!.Table<Bunok>()
+                .Where(w => w.BunId == entity.BunId && w.ParancsId == entity.ParancsId).FirstOrDefaultAsync();
+            if (exists is null)
+            {
+                entity.Nid = Guid.NewGuid();
+                return await _conn.InsertAsync(entity);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"********************************** InsertBunok EXCEPTION! {ex}");
+        }
+
+        return -1;
+    }
+
     public async Task<int> InsertContent(ContentEntity entity)
     {
         try
@@ -358,6 +395,21 @@ public class Repository : IRepository
         catch (Exception ex)
         {
             Debug.WriteLine($"********************************** DeleteImadsagByNid EXCEPTION! {ex}");
+        }
+
+        return -1;
+    }
+
+    public async Task<int> DeleteBunokByIds(int bunId, int parancsId)
+    {
+        try
+        {
+            Init();
+            return await _conn!.Table<Bunok>().DeleteAsync(d => d.BunId == bunId && d.ParancsId == parancsId);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"********************************** DeleteBunokByIds EXCEPTION! {ex}");
         }
 
         return -1;
