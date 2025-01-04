@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using androkat.web.Controllers;
+using Microsoft.AspNetCore.Hosting;
 
 namespace androkat.web.Tests.APITests;
 
@@ -49,7 +50,7 @@ public class CronTests : BaseTest
 
         var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
         var repository = new ApiRepository(context, clock.Object, mapper);
-        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object);
+        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object);
         var resV1 = controller.GetKeresztenyelet();
         dynamic s2 = resV1.Result;
         List<string> result = s2.Value;
@@ -86,7 +87,7 @@ public class CronTests : BaseTest
 
         var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
         var repository = new ApiRepository(context, clock.Object, mapper);
-        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object);
+        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object);
         var resV1 = controller.HasNapiolvasoByDate(2, date);
         dynamic s2 = resV1.Result;
         bool result = s2.Value;
@@ -116,7 +117,7 @@ public class CronTests : BaseTest
 
         var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
         var repository = new ApiRepository(context, clock.Object, mapper);
-        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object);
+        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object);
         var resV1 = controller.GetSzentbernat();
         dynamic s2 = resV1.Result;
         DateTime result = s2.Value;
@@ -132,7 +133,7 @@ public class CronTests : BaseTest
 
         using var context = new AndrokatContext(GetDbContextOptions());
 
-        var controller = new Cron(loggerRepo.Object, new Mock<IApiRepository>().Object, clock.Object, cronService.Object);//todo
+        var controller = new Cron(loggerRepo.Object, new Mock<IApiRepository>().Object, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object);//todo
         var resV1 = controller.GetSzentbernat();
         dynamic s2 = resV1.Result;
         DateTime result = s2.Value;
@@ -163,7 +164,7 @@ public class CronTests : BaseTest
 
         var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
         var repository = new ApiRepository(context, clock.Object, mapper);
-        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object);
+        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object);
         var resV1 = controller.GetLastContentByTipus((int)Forras.kurir);
         dynamic s2 = resV1.Result;
         DateTime result = s2.Value;
@@ -179,7 +180,7 @@ public class CronTests : BaseTest
 
         using var context = new AndrokatContext(GetDbContextOptions());
 
-        var controller = new Cron(loggerRepo.Object, new Mock<IApiRepository>().Object, clock.Object, cronService.Object);//todo
+        var controller = new Cron(loggerRepo.Object, new Mock<IApiRepository>().Object, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object);//todo
         var resV1 = controller.GetLastContentByTipus((int)Forras.kurir);
         dynamic s2 = resV1.Result;
         DateTime result = s2.Value;
