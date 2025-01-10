@@ -18,7 +18,7 @@ public class MaiszentTests
     }
 
     [Fact]
-    public void Maiszent_2023_And_02_29_Happy()
+    public void Maiszent_2024_And_02_29_Happy()
     {
         var model = new Maiszent
         {

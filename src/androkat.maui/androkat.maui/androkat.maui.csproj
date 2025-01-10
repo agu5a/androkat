@@ -35,7 +35,6 @@
 		<EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
 	</PropertyGroup>
 
-
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" Color="#00796B" />

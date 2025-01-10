@@ -99,7 +99,7 @@ public class IndexTests : BaseTest
 		model.OnGet();
 		model.AdminResult.Header.Should().Be(" | blog: <span style='color:red;'>NOT OK</span> #: 0 | video: #: 1 | ima: #: 1 | ");
 
-		string expected = "<strong>Ma hiányzó anyagok</strong>" +
+        string expected = "<strong>Ma hiányzó anyagok</strong>" +
             "<br> 2 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Pio atya breviáriuma</a>" +
             "<br> 3 - <a href='https://www.szentgellertkiado.hu' target='_blank'>II. János Pál pápa breviáriuma</a>" +
             "<br> 4 - <a href='http://www.karmelitarend.hu' target='_blank'>Keresztes Szent János aranymondásai</a>" +
@@ -131,13 +131,9 @@ public class IndexTests : BaseTest
             "<br> 60 - <a href='https://www.taize.fr' target='_blank'>Taizé napi imák</a>" +
             "<br> 61 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Sienai Szent Katalin breviáriuma</a>" +
             "<br> 62 - <a href='https://www.libri.hu/konyv/beke-kiralynojenek-365-uzenete-medjugorjebol.html' target='_blank'>Medjugorje üzenetek</a>" +
-            "<br><strong>Mai anyagok</strong>" +
-            "<br> 7 - <a href='http://www.fokolare.hu' target='_blank'>Fokoláre: életige</a>" +
-            "<br>[2024-02-01 04:05:06] - fokolareCim" +
-            "<br>" +
-            "<br> 18 - <a href='https://www.magyarkurir.hu' target='_blank'>magyarkurir.hu</a>" +
-            "<br>[2024-02-03 04:05:06] - kurircím" +
-            "<br><br>";
+            "<br><strong>Mai anyagok</strong><br> 7 - <a href='http://www.fokolare.hu' target='_blank'>Fokoláre: életige</a>" +
+            "<br>[2025-02-01 04:05:06] - fokolareCim<br><br> 18 - <a href='https://www.magyarkurir.hu' target='_blank'>magyarkurir.hu</a>" +
+            "<br>[2025-02-03 04:05:06] - kurircím<br><br>";        
 
 		model.AdminAResult.MaiAnyagok.Should().Be(expected);
 

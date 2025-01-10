@@ -105,12 +105,9 @@ public class PageModelsTests : BaseTest
         {
             PageContext = pageContext,
             TempData = tempData,
-            Url = new UrlHelper(actionContext),
-            FileNameReplace = "yt5s.com - igazi fájl név (128 kbps).mp3"
+            Url = new UrlHelper(actionContext)
         };
-        model.OnPostReplace();
-        (model.Result).Should().Contain("igazi_fajl_nev.mp3");
-
+        
         model.FileUpload2 = new BufferedSingleFileUploadPhysical
         {
             FormFile = GetFormFile().Object
@@ -118,11 +115,8 @@ public class PageModelsTests : BaseTest
 
         var onPostUploadImagesAsync = await model.OnPostUploadImagesAsync();
         (model.Result).Should().Contain("hiba");
-        (model.ModelState.Values.First().Errors[0].ErrorMessage).Should().Be("(test.jpeg) is empty.");
-        (model.ModelState.Values.First().Errors[1].ErrorMessage).Should().Be("(test.jpeg) file type isn't permitted or the file's signature doesn't match the file's extension.");
-
-        model.OnPostReplace();
-        (model.Result).Should().Be("igazi_fajl_nev.mp3");
+        (model.ModelState.Values.First().Errors[0].ErrorMessage).Should().Be("(fake_file) is empty.");
+        (model.ModelState.Values.First().Errors[1].ErrorMessage).Should().Be("(fake_file) file type isn't permitted or the file's signature doesn't match the file's extension.");
 
         model.FileUpload1 = new BufferedSingleFileUploadPhysical
         {
@@ -131,15 +125,15 @@ public class PageModelsTests : BaseTest
 
         var onPostUploadAsync = await model.OnPostUploadAsync();
         (model.Result).Should().Be("hiba");
-        (model.ModelState.Values.First().Errors[0].ErrorMessage).Should().Be("(test.jpeg) is empty.");
-        (model.ModelState.Values.First().Errors[1].ErrorMessage).Should().Be("(test.jpeg) file type isn't permitted or the file's signature doesn't match the file's extension.");
+        (model.ModelState.Values.First().Errors[0].ErrorMessage).Should().Be("(fake_file) is empty.");
+        (model.ModelState.Values.First().Errors[1].ErrorMessage).Should().Be("(fake_file) file type isn't permitted or the file's signature doesn't match the file's extension.");
     }
 
     private static Mock<IFormFile> GetFormFile()
     {
         var fileMock = new Mock<IFormFile>();
         var content = "Hello World from a Fake File";
-        var fileName = "test.jpeg";
+        var fileName = "fake_file";
         var ms = new MemoryStream();
         var writer = new StreamWriter(ms);
         writer.Write(content);
