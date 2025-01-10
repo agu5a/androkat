@@ -4,7 +4,7 @@
 	<PropertyGroup>
 	</PropertyGroup>
 
-	<ItemGroup>
+	<ItemGroup>		
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.10" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.10" />
@@ -13,7 +13,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.3.0.106239">
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.4.0.108396">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
@@ -22,5 +22,5 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\androkat.application\androkat.application.csproj" />
 	</ItemGroup>
-	
+
 </Project>

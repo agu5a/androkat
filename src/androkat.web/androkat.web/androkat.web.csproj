@@ -5,24 +5,24 @@
 		<Version>2.89.0</Version>
 		<IsPackable>false</IsPackable>
 		<NoWarn>$(NoWarn);S6967;</NoWarn>
-</PropertyGroup>
+	</PropertyGroup>
 
 	<ItemGroup>
 	  <None Include="Data\IdezetData.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
-
+	
 	<ItemGroup>
-		<PackageReference Include="FastEndpoints" Version="5.32.0" />
+		<PackageReference Include="FastEndpoints" Version="5.33.0" />
 		<PackageReference Include="FastEndpoints.ApiExplorer" Version="2.3.0" />
 		<PackageReference Include="FastEndpoints.Swagger.Swashbuckle" Version="2.3.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.10" />
 		<PackageReference Include="OneOf" Version="3.0.271" />
-		<PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+		<PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
 		<PackageReference Include="Serilog.Sinks.Logz.Io" Version="7.2.0" />
-		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.3.0.106239">
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.4.0.108396">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
@@ -33,7 +33,7 @@
 		<ProjectReference Include="..\androkat.infrastructure\androkat.infrastructure.csproj" />
 	</ItemGroup>
 
-<ItemGroup>
+	<ItemGroup>
 		<None Update="Data\androkat.db">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
