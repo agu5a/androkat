@@ -9,6 +9,11 @@
     Title="{Binding PageTitle}"
     x:DataType="viewmodels:ContentListViewModel"
     Style="{StaticResource MainSectionStyle}">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="filter.png" Clicked="OnFilterClicked" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <Style
             x:Key="ListTitleStyle"

@@ -39,13 +39,13 @@ public partial class ContentListViewModel : ViewModelBase
     [ObservableProperty]
     ObservableRangeCollection<List<ContentItemViewModel>> contents;
 
-    public async Task InitializeAsync()
+    public async Task InitializeAsync(bool returnVisited)
     {
         //Delay on first load until window loads
         await Task.Delay(1000);
         await UpdateData();
         await CheckNewVersion();
-        await FetchAsync();
+        await FetchAsync(returnVisited);
     }
 
     private async Task UpdateData()
@@ -100,9 +100,9 @@ public partial class ContentListViewModel : ViewModelBase
         }
     }
 
-    private async Task FetchAsync()
+    public async Task FetchAsync(bool returnVisited)
     {
-        var contentsTemp = await _pageService.GetContentsAsync(Id!);
+        var contentsTemp = await _pageService.GetContentsAsync(Id!, returnVisited);
 
         if (contentsTemp == null)
         {

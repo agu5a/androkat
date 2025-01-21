@@ -161,13 +161,13 @@ public class PageServiceTests
         repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.ajanlatweb).ToString())).ReturnsAsync(expectedContents).Verifiable();
         repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.maiszent).ToString())).ReturnsAsync(expectedContents).Verifiable();
         repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.gyonas).ToString())).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_szentek")).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_news")).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_blog")).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_humor")).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_audio")).ReturnsAsync(expectedContents).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_szentek", true)).ReturnsAsync(expectedContents).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_news", true)).ReturnsAsync(expectedContents).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_blog", true)).ReturnsAsync(expectedContents).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_humor", true)).ReturnsAsync(expectedContents).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_audio", true)).ReturnsAsync(expectedContents).Verifiable();
         repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.book).ToString())).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_napiolvaso")).ReturnsAsync(expectedContents).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_napiolvaso", true)).ReturnsAsync(expectedContents).Verifiable();
         var pageService = new PageService(_downloadServiceMock.Object, repositoryMock.Object);
 
         var result = await pageService.GetContentsAsync(pageTypeId);
@@ -195,27 +195,27 @@ public class PageServiceTests
             case "GetContentsByGroupName":
                 if (pageTypeId == "8")
                 {
-                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_audio"), Times.Once);
+                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_audio", true), Times.Once);
                 }
                 if (pageTypeId == "6")
                 {
-                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_humor"), Times.Once);
+                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_humor", true), Times.Once);
                 }
                 if (pageTypeId == "0")
                 {
-                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_napiolvaso"), Times.Once);
+                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_napiolvaso", true), Times.Once);
                 }
                 if (pageTypeId == "3")
                 {
-                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_szentek"), Times.Once);
+                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_szentek", true), Times.Once);
                 }
                 if (pageTypeId == "5")
                 {
-                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_blog"), Times.Once);
+                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_blog", true), Times.Once);
                 }
                 if (pageTypeId == "4")
                 {
-                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_news"), Times.Once);
+                    repositoryMock.Verify(x => x.GetContentsByGroupName("group_news", true), Times.Once);
                 }
                 break;
         };

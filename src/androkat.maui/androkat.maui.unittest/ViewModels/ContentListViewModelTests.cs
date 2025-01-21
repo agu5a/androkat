@@ -41,7 +41,7 @@ public class ContentListViewModelTests
             }
         };
 
-        _pageServiceMock.Setup(x => x.GetContentsAsync(It.IsAny<string>())).ReturnsAsync(contents);
+        _pageServiceMock.Setup(x => x.GetContentsAsync(It.IsAny<string>(), true)).ReturnsAsync(contents);
         _pageServiceMock.Setup(x => x.GetVersion()).Returns(1);
 
         var idezetSourceMock = new SourceData
@@ -64,13 +64,13 @@ public class ContentListViewModelTests
         var viewModel = new ContentListViewModel(_dispatcherMock.Object, _pageServiceMock.Object, _sourceDataMock.Object, _androkatService.Object);
 
         // Act
-        await viewModel.InitializeAsync();
+        await viewModel.InitializeAsync(true);
 
         // Assert
         Assert.Equal("SomeImage", viewModel.Contents.First().First().contentImg);
         Assert.Equal(idezetSourceMock.Img, viewModel.Contents.First().First().ContentEntity.Image);
 
-        _pageServiceMock.Verify(x => x.GetContentsAsync(It.IsAny<string>()), Times.Once);
+        _pageServiceMock.Verify(x => x.GetContentsAsync(It.IsAny<string>(), true), Times.Once);
         _sourceDataMock.Verify(x => x.GetSourcesFromMemory(It.IsAny<int>()), Times.Once);
     }
 

@@ -10,7 +10,7 @@
     x:DataType="viewmodels:DetailViewModel"
     Style="{StaticResource DetailPageStyle}">
 
-    <ScrollView Margin="5,0,5,0" VerticalOptions="FillAndExpand">
+    <ScrollView Margin="5,0,5,0" VerticalOptions="Fill">
         <Grid
             Padding="{OnIdiom Phone=22}"
             Background="{AppThemeBinding Light={StaticResource Grey1},
@@ -29,7 +29,7 @@
                 LineBreakMode="WordWrap"
                 Style="{OnIdiom Phone={StaticResource H6LabelStyle}}"
                 Text="{Binding ContentView.detailscim}"
-                VerticalOptions="FillAndExpand" />
+                VerticalOptions="Fill" />
 
             <Image
                 Grid.Row="1"

@@ -98,21 +98,21 @@ public class PageService(IDownloadService downloadService, IRepository repositor
         return await repository.GetFavoriteCount();
     }
 
-    public async Task<List<ContentEntity>> GetContentsAsync(string pageTypeId)
+    public async Task<List<ContentEntity>> GetContentsAsync(string pageTypeId, bool returnVisited = true)
     {
         return pageTypeId switch
         {
             "1" => await repository.GetContentsByTypeId(((int)Activities.ajanlatweb).ToString()),
             "2" => await repository.GetContentsByTypeId(((int)Activities.maiszent).ToString()),
-            "3" => await repository.GetContentsByGroupName("group_szentek"),
-            "4" => await repository.GetContentsByGroupName("group_news"),
-            "5" => await repository.GetContentsByGroupName("group_blog"),
-            "6" => await repository.GetContentsByGroupName("group_humor"),
+            "3" => await repository.GetContentsByGroupName("group_szentek", returnVisited),
+            "4" => await repository.GetContentsByGroupName("group_news", returnVisited),
+            "5" => await repository.GetContentsByGroupName("group_blog", returnVisited),
+            "6" => await repository.GetContentsByGroupName("group_humor", returnVisited),
             //"7" => ima
-            "8" => await repository.GetContentsByGroupName("group_audio"),
+            "8" => await repository.GetContentsByGroupName("group_audio", returnVisited),
             "11" => await repository.GetContentsByTypeId(((int)Activities.book).ToString()),
             "34" => await repository.GetContentsByTypeId(((int)Activities.gyonas).ToString()),
-            /*0*/ _ => await repository.GetContentsByGroupName("group_napiolvaso"),
+            /*0*/ _ => await repository.GetContentsByGroupName("group_napiolvaso", returnVisited),
         };
     }
 

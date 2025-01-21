@@ -48,7 +48,7 @@ public class Repository : IRepository
         try
         {
             Init();
-
+            await SetContentAsReadById(id);
             return await _conn!.Table<ContentEntity>().Where(w => w.Nid == id).FirstOrDefaultAsync();
         }
         catch (Exception ex)
@@ -217,13 +217,20 @@ public class Repository : IRepository
         return [];
     }
 
-    public async Task<List<ContentEntity>> GetContentsByGroupName(string groupName)
+    public async Task<List<ContentEntity>> GetContentsByGroupName(string groupName, bool returnVisited = true)
     {
         try
         {
             Init();
-            return await _conn!.Table<ContentEntity>()
-                .Where(w => w.GroupName == groupName).OrderByDescending(o => o.Datum).ToListAsync();
+            var query = _conn!.Table<ContentEntity>()
+                .Where(w => w.GroupName == groupName);
+            
+            if (!returnVisited)
+            {
+                query = query.Where(w => !w.IsRead);
+            }
+            
+            return await query.OrderByDescending(o => o.Datum).ToListAsync();
         }
         catch (Exception ex)
         {

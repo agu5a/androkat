@@ -1,4 +1,6 @@
-﻿using androkat.maui.library.ViewModels;
+﻿using androkat.hu.Views;
+using androkat.maui.library.ViewModels;
+using CommunityToolkit.Maui.Views;
 
 namespace androkat.hu.Pages;
 
@@ -6,6 +8,7 @@ public partial class ContentListPage : ContentPage
 {
     private ContentListViewModel ViewModel => (BindingContext as ContentListViewModel)!;
     private int _stackCount = 0;
+    private bool _showVisited = true;
 
     public ContentListPage(ContentListViewModel viewModel)
     {
@@ -38,9 +41,21 @@ public partial class ContentListPage : ContentPage
         base.OnAppearing();
         activityIndicator.IsRunning = true;
         activityIndicator.IsVisible = true;
-        await ViewModel.InitializeAsync();
+        await ViewModel.InitializeAsync(_showVisited);
         activityIndicator.IsRunning = false;
         activityIndicator.IsVisible = false;
+    }
+
+    private async void OnFilterClicked(object sender, EventArgs e)
+    {
+        var filterView = new FilterView(_showVisited);
+        filterView.FilterChanged += async (s, showVisited) =>
+        {
+            _showVisited = showVisited;
+            await ViewModel.FetchAsync(_showVisited);
+        };
+
+        await this.ShowPopupAsync(filterView);
     }
 
     private static string GetPageTitle(string pageTypeId)
