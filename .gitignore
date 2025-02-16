@@ -55,5 +55,6 @@ coverage.json
 Buffer*
 !BufferedSingleFileUploadPhysical.cs
 # Rider
+.idea
 **/.idea/**/workspace.xml
 **/.idea/**/projectSettingsUpdater.xml
