@@ -68,6 +68,7 @@ public class DownloadService(IAndrokatService _androkatService, IRepository _rep
             Activities.szeretetujsag,
             Activities.laciatya,
             Activities.medjugorje,
+            Activities.mello,
 
             Activities.maiszent,
 

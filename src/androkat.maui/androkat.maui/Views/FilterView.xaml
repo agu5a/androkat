@@ -9,7 +9,7 @@
            Padding="20">
         <HorizontalStackLayout Spacing="10">
             <CheckBox x:Name="ShowVisitedCheckbox" />
-            <Label Text="Show visited items"
+            <Label Text="Olvasottak elrejtése"
                        VerticalOptions="Center" />
         </HorizontalStackLayout>
         <Button Text="Bezárás" 

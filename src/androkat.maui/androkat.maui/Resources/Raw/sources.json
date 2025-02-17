@@ -2,12 +2,12 @@
   "sources": [
     {
       "id": 1,
-      "title": "Mello",
-      "source": "Mello",
-      "sourcelink": "Mello",
-      "img": "ic_launcher",
+      "title": "Anthony de Mello",
+      "source": "Anthony de Mello",
+      "sourcelink": "https://androkat.hu",
+      "img": "mello",
       "group": "group_napiolvaso",
-      "active": false
+      "active": true
     },
     {
       "id": 2,

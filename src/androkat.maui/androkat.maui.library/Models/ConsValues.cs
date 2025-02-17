@@ -39,7 +39,8 @@ public static class ConsValues
                 Activities.kempis.ToString(),
                 Activities.taize.ToString(),
                 Activities.laciatya.ToString(),
-                Activities.medjugorje.ToString()
+                Activities.medjugorje.ToString(),
+                    Activities.mello.ToString()
             ];
 
     public static readonly string[] szentekResourceName =

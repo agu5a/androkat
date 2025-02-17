@@ -58,3 +58,5 @@ Buffer*
 .idea
 **/.idea/**/workspace.xml
 **/.idea/**/projectSettingsUpdater.xml
+
+.DS_Store
