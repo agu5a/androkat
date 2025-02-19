@@ -73,9 +73,12 @@ public class CacheRepository : BaseRepository, ICacheRepository
         var list = new List<ContentDetailsModel>();
 
         var month = Clock.Now.ToString("MM");
-        var rows = Ctx.FixContent.AsNoTracking().AsEnumerable()
-            .Where(w => w.Tipus == (int)Forras.humor && w.Datum.StartsWith($"{month}-") && w.Fulldatum < Clock.Now.DateTime)
+        var tipus = (int)Forras.humor;
+        var rows = Ctx.FixContent
+            .Where(w => w.Tipus == tipus && w.Datum.StartsWith($"{month}-"))
             .OrderByDescending(o => o.Datum).ToList();
+        
+        rows = rows.Where(w => w.Fulldatum < Clock.Now.DateTime).ToList();
 
         rows.ForEach(w =>
         {
@@ -151,7 +154,7 @@ public class CacheRepository : BaseRepository, ICacheRepository
     {
         var result = new List<ContentDetailsModel>();
 
-        var allRecords = Ctx.Content.AsNoTracking().ToList();
+        var allRecords = Ctx.Content.AsNoTracking();
 
         //ezekből az összes elérhető kell, nem csak az adott napi
         var osszes = new List<int>
@@ -183,20 +186,20 @@ public class CacheRepository : BaseRepository, ICacheRepository
         return result.AsReadOnly();
     }
 
-    private List<Content> GetContentDetailsModel(IReadOnlyCollection<Content> allRecords, int tipus, string date, string tomorrow, List<int> osszes)
+    private List<Content> GetContentDetailsModel(IQueryable<Content> allRecords, int tipus, string date, string tomorrow, List<int> osszes)
     {
         List<Content> res;
         if (tipus == (int)Forras.maievangelium) //szombaton már megjelenik a vasárnapi is
         {
-            res = [.. allRecords.Where(w => w.Tipus == tipus && (w.Fulldatum.StartsWith(date) || w.Fulldatum.StartsWith(tomorrow))).OrderByDescending(o => o.Inserted)];
+            res = [.. allRecords.Where(w => w.Tipus == tipus && (w.Fulldatum.StartsWith(date) || w.Fulldatum.StartsWith(tomorrow))).OrderByDescending(o => o.Inserted).ToList()];
         }
         else if (osszes.Contains(tipus)) //ajanlo és néhány hanganyagból a weboldalon látszik mindegyik 
         {
-            res = [.. allRecords.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted)];
+            res = [.. allRecords.Where(w => w.Tipus == tipus).OrderByDescending(o => o.Inserted).ToList()];
         }
         else
         {
-            res = [.. allRecords.Where(w => w.Tipus == tipus && w.Fulldatum.StartsWith(date)).OrderByDescending(o => o.Inserted)];
+            res = [.. allRecords.Where(w => w.Tipus == tipus && w.Fulldatum.StartsWith(date)).OrderByDescending(o => o.Inserted).ToList()];
         }
 
         if (res!.Count != 0)

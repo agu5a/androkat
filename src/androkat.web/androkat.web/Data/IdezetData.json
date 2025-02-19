@@ -3,10 +3,10 @@
     "TipusId": 1,
     "TipusNev": "Mello",
     "Forras": null,
-    "Link": "about:blank",
+    "Link": "https://androkat.hu",
     "EnumString": "mello",
     "Segedlink": null,
-    "Image": null
+    "Image": "images/mello.jpg"
   },
   {
     "TipusId": 2,

@@ -96,7 +96,7 @@
 						<img data-src="~/images/VatikaniRadio.png" class="mr-2 rounded" alt="Vatikáni Rádió" style="width: 80px; height: 80px;float: left;margin-right:8px;margin-bottom:8px;" src="~/images/VatikaniRadio.png" data-holder-rendered="true">
 						<h5>Vatikáni Rádió</h5>
 						<p>
-							Forrás: <br /><a href="@(vatikan)" style="font-weight: normal;">@if(!string.IsNullOrEmpty(vatikan)) { vatikan.Substring(0, 40); }...</a>
+							Forrás: <br /><a href="@(vatikan)" style="font-weight: normal;">@if(!string.IsNullOrEmpty(vatikan)) { Html.Raw(vatikan.Substring(0, 40)); }...</a>
 						</p>
 					</div>
 					<div style="margin: 0 0 15px 0; overflow-wrap: break-word;">
@@ -117,7 +117,7 @@
 						<img data-src="~/images/ezazanap.png" class="mr-2 rounded" alt="Ez az a nap Rádió" style="width: 80px; height: 80px;float: left;margin-right:8px;margin-bottom:8px;" src="~/images/ezazanap.png" data-holder-rendered="true">
 						<h5>Ez az a nap Rádió</h5>
 						<p>
-							Forrás: <br /><a href="@(ezazanap)" style="font-weight: normal;">@if (!string.IsNullOrEmpty(ezazanap)) { ezazanap.Substring(0, 40); }...</a>
+							Forrás: <br /><a href="@(ezazanap)" style="font-weight: normal;">@if (!string.IsNullOrEmpty(ezazanap)) { Html.Raw(ezazanap.Substring(0, 40)); }...</a>
 						</p>
 					</div>
 					<div style="margin: 0 0 15px 0;">

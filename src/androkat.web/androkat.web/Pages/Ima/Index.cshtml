@@ -19,7 +19,7 @@
         var index = 0;
         var vege = false;
     }
-    @foreach (var p in Model.ContentModels)
+    @foreach (var p in Model.ContentModels.Select(p => p.ContentDetails))
     {
         vege = false;
         @if(index == 0)
@@ -29,8 +29,8 @@
         
         <div class="col-sm-4">
         <div class="card h-100"><div class="card-body">
-            <a href="/ima/details/@(p.ContentDetails.Nid)" class="navlink">
-            @Html.Raw("<h5>" + p.ContentDetails.Cim + "</h5>")          
+            <a href="/ima/details/@(p.Nid)" class="navlink">
+            @Html.Raw("<h5>" + p.Cim + "</h5>")          
             </a>
         </div></div></div>
 

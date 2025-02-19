@@ -41,21 +41,21 @@
                             @if (p.MetaData.TipusId == Forras.b777) {
                                 var pieces = p.ContentDetails.Idezet.Split(' ');
                                 var textIndex = 0;
-                                var b = "";
+                                var b = new System.Text.StringBuilder();
                                 @foreach(var piece in pieces)
                                                            {
                                     @if (textIndex == 55)
                                     {
                                         break;
                                     }
-                                    b += piece + " ";
+                                    b.Append(piece + " ");
                                     textIndex++;
                                 }
-                                b += "[...]<br>";
+                                b.Append("[...]<br>");
                                 @(p.MetaData.TipusNev) <br>@("[" + p.ContentDetails.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss") + "]")
                                 <br>
                                 <br> 
-                                @Html.Raw(b)
+                                @Html.Raw(b.ToString())
                             } 
                             else
                             {

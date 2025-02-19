@@ -9,15 +9,9 @@ public class CustomWebApplicationFactory<TStartup> : BaseWebApplicationFactory<T
 {
     public override void PopulateTestData(AndrokatContext dbContext)
     {
-        foreach (var item in dbContext.Content)
-        {
-            dbContext.Remove(item);
-        }
-
-        foreach (var item in dbContext.RadioMusor)
-        {
-            dbContext.Remove(item);
-        }
+        dbContext.Content.RemoveRange(dbContext.Content);
+        dbContext.RadioMusor.RemoveRange(dbContext.RadioMusor);
+        dbContext.TempContent.RemoveRange(dbContext.TempContent);
 
         var now = DateTimeOffset.Parse("2012-02-03T04:05:06");
         var yesterday = now.AddDays(-1).DateTime;

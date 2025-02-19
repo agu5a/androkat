@@ -8,7 +8,7 @@
     var index = 0;
     var vege = false;
   } 
-    @foreach (var p in Model.ContentModels)
+    @foreach (var p in Model.ContentModels.Select(p => p.ContentDetails))
     {
         vege = false;
         @if(index == 0)
@@ -18,12 +18,12 @@
 
            <div class="col-sm-4 mb-1">
            <div class="card h-100"><div class="card-body">                
-                    @Html.Raw("<h5>" + p.ContentDetails.Cim + "</h5>")
+                    @Html.Raw("<h5>" + p.Cim + "</h5>")
                     <p>
-                        @Html.Raw(p.ContentDetails.Fulldatum.ToString("MM-dd"))               
+                        @Html.Raw(p.Fulldatum.ToString("MM-dd"))               
                     </p>
                     <p>
-                        @Html.Raw(p.ContentDetails.Idezet)
+                        @Html.Raw(p.Idezet)
                     </p>                
             </div></div></div>
 

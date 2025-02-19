@@ -48,7 +48,8 @@ public class ContentService : IContentService
             (int)Forras.kempis,
             (int)Forras.taize,
             (int)Forras.szeretetujsag,
-            (int)Forras.medjugorje
+            (int)Forras.medjugorje,
+            (int)Forras.mello
         ]);
         return result;
     }

@@ -3,6 +3,7 @@ using androkat.infrastructure.DataManager;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -50,6 +51,12 @@ public abstract class BaseWebApplicationFactory<TStartup> : WebApplicationFactor
             if (descriptor is not null)
             {
                 services.Remove(descriptor);
+            }
+
+            var dbContextDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IDbContextOptionsConfiguration<AndrokatContext>));
+            if (dbContextDescriptor is not null)
+            {
+                services.Remove(dbContextDescriptor);
             }
 
             var inMemoryCollectionName = Guid.NewGuid().ToString();
