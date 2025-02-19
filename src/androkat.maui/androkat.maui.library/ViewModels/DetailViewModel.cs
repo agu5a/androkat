@@ -48,6 +48,19 @@ public partial class DetailViewModel(IPageService _pageService, ISourceData _sou
                           "Bezárás");
                 return;
             }
+            
+            item.Idezet = "<html><!DOCTYPE html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />"
+                                 + "<script type=\"text/javascript\">" +
+                                 "document.addEventListener(\"DOMContentLoaded\", function() {" +
+                                 "var links = document.getElementsByTagName(\"a\");" +
+                                 "for (var i = 0; i < links.length; i++) {" +
+                                 "links[i].addEventListener(\"click\", function(event) {" +
+                                 "event.preventDefault(); " +
+                                 "var href = this.getAttribute(\"href\");" +
+                                 "if (href && href !== \"#\") {" +
+                                 "window.location.href = \"appscheme://\" + href;" +
+                                 "}});}});</script>" +
+                                 "</head><body>" + item.Idezet + "</body></html>";
 
             SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
             var origImg = item.Image;

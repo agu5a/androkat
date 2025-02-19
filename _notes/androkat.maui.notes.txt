@@ -1,3 +1,10 @@
+Csinálni:
+DetailsPage
+ - Forrás nem kattintható
+Könyvajánló:
+ - kép nem látszik
+ - DONE: link nem kattintható
+
 Extensions:
 https://marketplace.visualstudio.com/items?itemName=MattLaceyLtd.MauiEssentials&ssr=false#overview
 
@@ -41,7 +48,7 @@ https://xamlabs.com/2019/10/06/xamarin-forms-add-ui-controls-to-navigation-bar-u
 //shell+Flyout
 //https://github.com/dotnet/maui-samples/tree/main/6.0/Navigation/ShellFlyoutSample/ShellFlyoutSample
 
-//vide�k
+//vide�k
 //https://www.youtube.com/playlist?list=PLdo4fOcmZ0oWePZU3W162NJ9vcXqgpMVc
 
 //https://github.com/jsuarezruiz/dotnet-maui-showcase

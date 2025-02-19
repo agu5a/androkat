@@ -6,9 +6,25 @@
     xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
     xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
     x:Name="this"
-    Title="{Binding ContentView.detailscim}"
+    Title=""
     x:DataType="viewmodels:DetailViewModel"
     Style="{StaticResource DetailPageStyle}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            IconImageSource="voice"
+            Command="{Binding StartTextToSpeechCommand}"
+            Text="Hangos felolvasás" />
+        <ToolbarItem
+            IconImageSource="favorite2"
+            Command="{Binding AddFavoriteCommand}"
+            Text="Hozzáadás kedvencekhez">
+        </ToolbarItem>
+        <ToolbarItem
+            IconImageSource="ic_send_24dp2"
+            Command="{Binding ShareContentCommand}"
+            Text="Küldés" />
+    </ContentPage.ToolbarItems>
 
     <ScrollView Margin="5,0,5,0" VerticalOptions="Fill">
         <Grid
@@ -51,52 +67,8 @@
                     Style="{StaticResource BodyMLabelStyle}"
                     Text="{Binding ContentView.datum}"
                     TextType="Html" />
-
             </VerticalStackLayout>
 
-            <HorizontalStackLayout
-                Grid.Row="2"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Margin="0,10,0,0">
-
-                <Button
-                    Margin="0,0,5,0"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark},
-                                                      Dark={StaticResource PrimaryDark}}"
-                    Command="{Binding StartTextToSpeechCommand}"
-                    HeightRequest="44"
-                    ImageSource="voice"
-                    SemanticProperties.Description="Hangos felolvasás"
-                    WidthRequest="44" />
-                <Button
-                    Margin="0,0,5,0"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark},
-                                                      Dark={StaticResource PrimaryDark}}"
-                    Command="{Binding AddFavoriteCommand}"
-                    HeightRequest="44"
-                    ImageSource="favorite2"
-                    SemanticProperties.Description="Hozzáadás kedvencekhez"
-                    WidthRequest="44">
-                    <Button.Triggers>
-                        <DataTrigger
-                            Binding="{Binding ContentView.IsSubscribed}"
-                            TargetType="Button"
-                            Value="true">
-                            <Setter Property="Text" Value="Subscribed" />
-                        </DataTrigger>
-                    </Button.Triggers>
-                </Button>
-                <Button
-                    Margin="0,0,5,0"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark},
-                                                      Dark={StaticResource PrimaryDark}}"
-                    Command="{Binding ShareContentCommand}"
-                    HeightRequest="44"
-                    ImageSource="ic_send_24dp2"
-                    SemanticProperties.Description="Küldés"
-                    WidthRequest="44" />
-            </HorizontalStackLayout>
             <VerticalStackLayout
                 Grid.Row="{OnIdiom Phone=3}"
                 Grid.Column="{OnIdiom Phone=0}"
