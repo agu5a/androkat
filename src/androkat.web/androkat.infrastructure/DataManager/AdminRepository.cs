@@ -157,6 +157,29 @@ public class AdminRepository : BaseRepository, IAdminRepository
 		return false;
 	}
 
+	public bool DeleteFixContent(string nid)
+	{
+		_logger.LogDebug("DeleteFixContent was called, {Nid}", nid);
+
+		try
+		{
+			var guid = Guid.Parse(nid);
+			var res = Ctx.FixContent.FirstOrDefault(f => f.Nid == guid);
+			if (res is not null)
+			{
+				Ctx.FixContent.Remove(res);
+				Ctx.SaveChanges();
+				return true;
+			}
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Exception: ");
+		}
+
+		return false;
+	}
+
     public (bool isSuccess, string? message) InsertIma(ImaModel imaModel)
 	{
 		_logger.LogDebug("InsertIma was called, {Nid}", imaModel.Nid);
@@ -259,6 +282,36 @@ public class AdminRepository : BaseRepository, IAdminRepository
 			res.Forras = content.Forras;
 			res.Fulldatum = content.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss");
 			res.Inserted = content.Inserted;
+			Ctx.SaveChanges();
+
+			return true;
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Exception: ");
+		}
+
+		return false;
+	}
+
+	public bool UpdateFixContent(ContentDetailsModel content)
+	{
+		_logger.LogDebug("UpdateFixContent was called, {Nid}", content.Nid);
+
+		try
+		{
+			var idezet = content.Idezet.Replace("\n", " ").Replace("\r", " ");
+
+			var res = Ctx.FixContent.FirstOrDefault(f => f.Nid == content.Nid);
+			if (res is null)
+            {
+                return false;
+            }
+
+            res.Idezet = idezet;
+			res.Cim = content.Cim;
+			//res.Tipus = content.Tipus
+			res.Datum = content.Fulldatum.ToString("MM-dd");
 			Ctx.SaveChanges();
 
 			return true;
@@ -422,7 +475,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
                     TipusNev = _androkatConfiguration.Value.GetContentMetaDataModelByTipus((int)Forras.gyonas).TipusNev
                 });
             }
-		}
+        }
 		catch (Exception ex)
 		{
 			_logger.LogError(ex, "Exception: ");
@@ -571,13 +624,24 @@ public class AdminRepository : BaseRepository, IAdminRepository
 		return new LastTodayResult();
 	}
 
-	public IEnumerable<AllRecordResult> GetAllContentByTipus(int tipus)
+	public IOrderedQueryable<AllRecordResult> GetAllContentByTipus(int tipus)
 	{
 		_logger.LogDebug("{Name} was called, {Tipus}", nameof(GetAllContentByTipus), tipus);
 
 		var res = Ctx.Content
 			.Where(g => g.Tipus == tipus).Select(s => new AllRecordResult { Nid = s.Nid, Datum = s.Fulldatum })
-			.OrderBy(o => o.Datum).ToList();
+			.OrderBy(o => o.Datum);
+
+		return res;
+	}
+
+	public IOrderedQueryable<AllRecordResult> GetAllFixContentByTipus(int tipus)
+	{
+		_logger.LogDebug("{Name} was called, {Tipus}", nameof(GetAllContentByTipus), tipus);
+
+		var res = Ctx.FixContent
+			.Where(g => g.Tipus == tipus).Select(s => new AllRecordResult { Nid = s.Nid, Datum = s.Datum })
+			.OrderBy(o => o.Datum);
 
 		return res;
 	}
@@ -591,6 +655,21 @@ public class AdminRepository : BaseRepository, IAdminRepository
 			new { tipus = g.Key, count = g.Count() }).ToList().ForEach(w =>
 			{
 				var tipus = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(w.tipus);
+				tipusok.Add(w.tipus, tipus.TipusNev);
+			});
+
+		return tipusok;
+	}
+
+	public Dictionary<int, string> GetAllFixContentTipusFromDb()
+	{
+		_logger.LogDebug("{Name} was called", nameof(GetAllFixContentTipusFromDb));
+
+		var tipusok = new Dictionary<int, string>();
+		Ctx.FixContent.GroupBy(p => p.Tipus).Select(g =>
+			new { tipus = g.Key, count = g.Count() }).ToList().ForEach(w =>
+			{
+				var tipus = _androkatConfiguration.Value.GetFixContentMetaDataModelByTipus(w.tipus);
 				tipusok.Add(w.tipus, tipus.TipusNev);
 			});
 
@@ -738,6 +817,36 @@ public class AdminRepository : BaseRepository, IAdminRepository
 					Def = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(res.Tipus).TipusNev,
 					Tipus = res.Tipus,
 					FullDatum = res.Fulldatum,
+					Inserted = res.Inserted.ToString("yyyy-MM-dd HH:mm:ss")
+				};
+			}
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Exception: ");
+		}
+
+		return null;
+	}
+
+	public ContentResult? LoadTodayFixContentByNid(string nid)
+	{
+		_logger.LogDebug("LoadTodayFixContentByNid was called, {Nid}", nid);
+
+		try
+		{
+			var guid = Guid.Parse(nid);
+			var res = Ctx.FixContent.FirstOrDefault(f => f.Nid == guid);
+			if (res is not null)
+			{
+				return new ContentResult
+				{
+					Cim = res.Cim,
+					Idezet = res.Idezet,
+					Nid = res.Nid.ToString(),
+					Def = _androkatConfiguration.Value.GetFixContentMetaDataModelByTipus(res.Tipus).TipusNev,
+					Tipus = res.Tipus,
+					FullDatum = res.Datum,
 					Inserted = res.Inserted.ToString("yyyy-MM-dd HH:mm:ss")
 				};
 			}

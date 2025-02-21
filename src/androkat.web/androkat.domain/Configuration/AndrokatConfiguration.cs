@@ -15,6 +15,12 @@ public class AndrokatConfiguration
         return ContentMetaDataList.FirstOrDefault(f => f.TipusId == forras);
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S2325:Methods and properties that don't access instance data should be static", Justification = "<Pending>")]
+    public ContentMetaDataModel GetFixContentMetaDataModelByTipus(int tipus)
+    {
+        return new ContentMetaDataModel((Forras)tipus, ((Forras)tipus).ToString(), "", "", "", "");
+    }
+
     public static IEnumerable<int> FixContentTypeIds()
     {
         return new List<int> { (int)Forras.pio, (int)Forras.janospal, (int)Forras.sztjanos, (int)Forras.kisterez,

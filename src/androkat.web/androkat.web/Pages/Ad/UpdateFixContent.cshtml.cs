@@ -16,13 +16,13 @@ namespace androkat.web.Pages.Ad;
 
 [Authorize]
 [BindProperties]
-public class UpdateModel : PageModel
+public class UpdateFixContentModel : PageModel
 {
-    private readonly ILogger<UpdateModel> _logger;
+    private readonly ILogger<UpdateFixContentModel> _logger;
     private readonly IClock _iClock;
     private readonly IAdminRepository _adminRepository;
 
-    public UpdateModel(ILogger<UpdateModel> logger, IClock iClock, IAdminRepository adminRepository)
+    public UpdateFixContentModel(ILogger<UpdateFixContentModel> logger, IClock iClock, IAdminRepository adminRepository)
     {
         _logger = logger;
         _iClock = iClock;
@@ -71,20 +71,17 @@ public class UpdateModel : PageModel
                 Tipus = ((int)domain.Enum.Forras.papaitwitter).ToString();
             }
 
-            var all = _adminRepository.GetAllContentByTipus(int.Parse(Tipus));
+            var all = _adminRepository.GetAllFixContentByTipus(int.Parse(Tipus));
             AllRecordResult = all.Select(s => new SelectListItem { Text = s.Datum, Value = s.Nid.ToString() }).ToList();
 
             if (string.IsNullOrWhiteSpace(Nid))
             {
                 return;
             }
-            
-            var obj = _adminRepository.LoadTodayContentByNid(Nid);
+
+            var obj = _adminRepository.LoadTodayFixContentByNid(Nid);
             Cim = obj?.Cim;
-            Forras = obj?.Forras;
             Idezet = obj?.Idezet;
-            Img = obj?.Img;
-            FileUrl = obj?.FileUrl;
             Fulldatum = obj?.FullDatum;
             Inserted = obj?.Inserted;
         }
@@ -98,17 +95,18 @@ public class UpdateModel : PageModel
 
     public void OnPostSave()
     {
-        GetDropDownData();
-
         if (string.IsNullOrWhiteSpace(Nid) || string.IsNullOrWhiteSpace(Cim)
-            || string.IsNullOrWhiteSpace(Fulldatum) || (string.IsNullOrWhiteSpace(Idezet) && string.IsNullOrWhiteSpace(FileUrl)))
+            || string.IsNullOrWhiteSpace(Fulldatum) || string.IsNullOrWhiteSpace(Idezet))
         {
             return;
         }
 
-        var res = _adminRepository.UpdateContent(new ContentDetailsModel(Guid.Parse(Nid), DateTime.Parse(Fulldatum, CultureInfo.CreateSpecificCulture("hu-HU")), Cim, Idezet ?? "", default,
-        DateTime.Parse(Inserted, CultureInfo.CreateSpecificCulture("hu-HU")), string.Empty, Img ?? "", FileUrl ?? "", Forras ?? "")
-        );
+        var res = _adminRepository.UpdateFixContent(new ContentDetailsModel(Guid.Parse(Nid), DateTime.Parse(Fulldatum, CultureInfo.CreateSpecificCulture("hu-HU")), Cim, Idezet, default,
+                DateTime.Parse(Inserted, CultureInfo.CreateSpecificCulture("hu-HU")), string.Empty, "", "", "")
+                );
+
+        GetDropDownData();
+
         Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
         ShowToast = true;
     }
@@ -122,7 +120,7 @@ public class UpdateModel : PageModel
             return;
         }
 
-        var res = _adminRepository.DeleteContent(Nid);
+        var res = _adminRepository.DeleteFixContent(Nid);
 
         Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
         ShowToast = true;
@@ -135,14 +133,14 @@ public class UpdateModel : PageModel
             Today = _iClock.Now.ToString("MM-dd");
 
             var result = new List<AllTipusResult>();
-            foreach (var item in _adminRepository.GetAllContentTipusFromDb())
+            foreach (var item in _adminRepository.GetAllFixContentTipusFromDb())
             {
                 var label = item.Value;
 
-                if (item.Key is (int)domain.Enum.Forras.audiohorvath 
-                    or (int)domain.Enum.Forras.audiobarsi 
-                    or (int)domain.Enum.Forras.audionapievangelium 
-                    or (int)domain.Enum.Forras.audiopalferi 
+                if (item.Key is (int)domain.Enum.Forras.audiohorvath
+                    or (int)domain.Enum.Forras.audiobarsi
+                    or (int)domain.Enum.Forras.audionapievangelium
+                    or (int)domain.Enum.Forras.audiopalferi
                     or (int)domain.Enum.Forras.audiotaize)
                 {
                     label = "audió " + label;

@@ -3,6 +3,7 @@ using androkat.domain.Model;
 using androkat.domain.Model.AdminPage;
 using androkat.domain.Model.WebResponse;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace androkat.domain;
 
@@ -17,10 +18,14 @@ public interface IAdminRepository
     bool InsertContent(ContentDetailsModel content);
     bool DeleteTempContentByNid(string nid);
     AdminAResult GetAdminAResult(bool isAdvent, bool isNagyBojt);
-    IEnumerable<AllRecordResult> GetAllContentByTipus(int tipus);
+    IOrderedQueryable<AllRecordResult> GetAllContentByTipus(int tipus);   
+    IOrderedQueryable<AllRecordResult> GetAllFixContentByTipus(int tipus); 
     ContentResult? LoadTodayContentByNid(string nid);
+    ContentResult? LoadTodayFixContentByNid(string nid);
     bool DeleteContent(string nid);
+    bool DeleteFixContent(string nid);
     bool UpdateContent(ContentDetailsModel content);
+    bool UpdateFixContent(ContentDetailsModel content);
     bool LogInUser(string email);
     IEnumerable<AllRecordResult> GetAllMaiSzentByMonthResult(string date);
     ContentResult? LoadMaiSzentByNid(string nid);
@@ -37,6 +42,7 @@ public interface IAdminRepository
     IEnumerable<ImgData> GetImgList();
     IEnumerable<FileData> GetAudioList();
     Dictionary<int, string> GetAllContentTipusFromDb();
+    Dictionary<int, string> GetAllFixContentTipusFromDb();
     bool InsertError(ErrorRequest content);
     List<SystemInfoData> GetIsAdventAndNagybojt();
 	IEnumerable<SystemInfoData> GetAllSystemInfo();
