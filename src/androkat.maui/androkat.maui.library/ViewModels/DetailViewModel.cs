@@ -9,7 +9,7 @@ namespace androkat.maui.library.ViewModels;
 
 [QueryProperty(nameof(Id), nameof(Id))]
 [QueryProperty(nameof(IsIma), nameof(IsIma))]
-public partial class DetailViewModel(IPageService _pageService, ISourceData _sourceData) : ViewModelBase
+public partial class DetailViewModel(IPageService pageService, ISourceData sourceData) : ViewModelBase
 {
     private Guid _contentGuid;
     private bool _isIma = false;
@@ -38,7 +38,7 @@ public partial class DetailViewModel(IPageService _pageService, ISourceData _sou
     {
         if (!_isIma)
         {
-            var item = await _pageService.GetContentEntityByIdAsync(_contentGuid);
+            var item = await pageService.GetContentEntityByIdAsync(_contentGuid);
 
             if (item == null)
             {
@@ -62,7 +62,7 @@ public partial class DetailViewModel(IPageService _pageService, ISourceData _sou
                                  "}});}});</script>" +
                                  "</head><body>" + item.Idezet + "</body></html>";
 
-            SourceData idezetSource = _sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
+            SourceData idezetSource = sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
             var origImg = item.Image;
             item.Image = idezetSource.Img;
             var viewModel = new ContentItemViewModel(item)
@@ -78,7 +78,7 @@ public partial class DetailViewModel(IPageService _pageService, ISourceData _sou
             return;
         }
 
-        var ima = await _pageService.GetImadsagEntityByIdAsync(_contentGuid);
+        var ima = await pageService.GetImadsagEntityByIdAsync(_contentGuid);
         if (ima == null)
         {
             await Shell.Current.DisplayAlert(
@@ -112,7 +112,7 @@ public partial class DetailViewModel(IPageService _pageService, ISourceData _sou
     [RelayCommand]
     async Task AddFavorite()
     {
-        _ = await _pageService.InsertFavoriteContentAsync(new FavoriteContentEntity
+        _ = await pageService.InsertFavoriteContentAsync(new FavoriteContentEntity
         {
             Cim = ContentView.ContentEntity.Cim,
             Datum = ContentView.ContentEntity.Datum,

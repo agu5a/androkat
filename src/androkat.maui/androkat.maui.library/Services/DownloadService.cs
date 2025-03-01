@@ -7,17 +7,17 @@ using androkat.maui.library.Models.Responses;
 
 namespace androkat.maui.library.Services;
 
-public class DownloadService(IAndrokatService _androkatService, IRepository _repository,
-    IHelperSharedPreferences _helperSharedPreferences, ISourceData _sourceData) : IDownloadService
+public class DownloadService(IAndrokatService androkatService, IRepository repository,
+    IHelperSharedPreferences helperSharedPreferences, ISourceData sourceData) : IDownloadService
 {
     private async Task DeleteOldItems()
     {
-        if (!int.TryParse(_helperSharedPreferences.GetSharedPreferencesstring("maxOffline", ConsValues.defMaxOffline.ToString()), out int max))
+        if (!int.TryParse(helperSharedPreferences.GetSharedPreferencesstring("maxOffline", ConsValues.defMaxOffline.ToString()), out int max))
         {
             max = ConsValues.defMaxOffline;
         }
 
-        var res = await _repository.GetContentsWithoutBook();
+        var res = await repository.GetContentsWithoutBook();
         int dbCount = res.Count;
 
         if (dbCount > max)
@@ -34,12 +34,12 @@ public class DownloadService(IAndrokatService _androkatService, IRepository _rep
                         if (activities == Activities.fokolare && IsSameAsToday(item.Datum, "MM"))
                             continue;
 
-                        await _repository.DeleteContentByNid(item.Nid);
+                        await repository.DeleteContentByNid(item.Nid);
                         numb--;
                     }
                     else
                     {
-                        await _repository.DeleteContentByNid(item.Nid);
+                        await repository.DeleteContentByNid(item.Nid);
                         numb--;
                     }
                 }
@@ -111,7 +111,7 @@ public class DownloadService(IAndrokatService _androkatService, IRepository _rep
         var count = 0;
         foreach (var activity in fooldalResources)
         {
-            int result = await StartUpdate(activity);
+            var result = await StartUpdate(activity);
             if (result == -1) //nem érhető el az androkat.hu
                 return -1;
 
@@ -135,7 +135,7 @@ public class DownloadService(IAndrokatService _androkatService, IRepository _rep
             //a mai szent-et, ajanlatokat, humort nem lehet letiltani a beállitásokban, így mindig ellenőrizzük
             if (act != Activities.maiszent && act != Activities.ajanlatweb
                 && act != Activities.humor
-                && !_helperSharedPreferences.GetSharedPreferencesBoolean(act.ToString(), true))// A többit csak ha kéri a beállításokban
+                && !helperSharedPreferences.GetSharedPreferencesBoolean(act.ToString(), true))// A többit csak ha kéri a beállításokban
                 return 0;
 
             int result = 0;
@@ -184,11 +184,11 @@ public class DownloadService(IAndrokatService _androkatService, IRepository _rep
                 foreach (ImadsagResponse imadsag in listSync)
                 {
                     //törölni, ha lesz fix API
-                    await _repository.DeleteImadsagByNid(imadsag.Nid);
+                    await repository.DeleteImadsagByNid(imadsag.Nid);
 
                     if (datum > DateTime.MinValue && datum < imadsag.RecordDate || datum == DateTime.MinValue)
                     {
-                        await _repository.InsertImadsag(new ImadsagEntity
+                        await repository.InsertImadsag(new ImadsagEntity
                         {
                             Cim = imadsag.Title.Replace("<b>", "").Replace("</b>", ""),
                             Content = imadsag.Content,
@@ -223,7 +223,7 @@ public class DownloadService(IAndrokatService _androkatService, IRepository _rep
         {
             if (type == Activities.group_ima)
             {
-                ImadsagEntity imadsag = await _repository.GetFirstImadsag();
+                ImadsagEntity imadsag = await repository.GetFirstImadsag();
                 if (imadsag != null)
                 {
                     return (imadsag.Nid, imadsag.Datum);
@@ -231,7 +231,7 @@ public class DownloadService(IAndrokatService _androkatService, IRepository _rep
             }
             else
             {
-                ContentEntity idezet = await _repository.GetContentsByTypeName(type.ToString());
+                ContentEntity idezet = await repository.GetContentsByTypeName(type.ToString());
                 if (idezet != null)
                     return (idezet.Nid, idezet.Datum);
             }
@@ -297,7 +297,7 @@ public class DownloadService(IAndrokatService _androkatService, IRepository _rep
 
         try
         {
-            ImaResponse response = await _androkatService.GetImadsag(date);
+            ImaResponse response = await androkatService.GetImadsag(date);
             if (response == null)
                 return result;
 
@@ -345,14 +345,14 @@ public class DownloadService(IAndrokatService _androkatService, IRepository _rep
 
         try
         {
-            var res = await _androkatService.GetContents(tipus, nid);
-            SourceData idezetSource = _sourceData.GetSourcesFromMemory(tipusId);
+            var res = await androkatService.GetContents(tipus, nid);
+            SourceData idezetSource = sourceData.GetSourcesFromMemory(tipusId);
             var count = 0;
             foreach (var item in res)
             {
                 try
                 {
-                    await _repository.InsertContent(new ContentEntity
+                    await repository.InsertContent(new ContentEntity
                     {
                         Cim = Helper.ReplaceUtf8(item.Cim.Replace("<b>", "").Replace("</b>", "")),
                         Nid = item.Nid,

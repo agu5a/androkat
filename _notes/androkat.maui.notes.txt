@@ -1,8 +1,10 @@
 Csinálni:
+ContentListPage:
+ - Olvasottak elrejtése: elmenteni Preferences-ben, beolvasni
 DetailsPage
- - Forrás nem kattintható
+ - Forrás nem kattintható 
 Könyvajánló:
- - kép nem látszik
+ - DONE: kép nem látszik
  - DONE: link nem kattintható
 
 Extensions:

@@ -4,10 +4,10 @@ using CommunityToolkit.Maui.Views;
 
 namespace androkat.hu.Pages;
 
-public partial class ContentListPage : ContentPage
+public partial class ContentListPage
 {
     private ContentListViewModel ViewModel => (BindingContext as ContentListViewModel)!;
-    private int _stackCount = 0;
+    private int _stackCount;
     private bool _showVisited = true;
 
     public ContentListPage(ContentListViewModel viewModel)
@@ -49,7 +49,7 @@ public partial class ContentListPage : ContentPage
     private async void OnFilterClicked(object sender, EventArgs e)
     {
         var filterView = new FilterView(_showVisited);
-        filterView.FilterChanged += async (s, showVisited) =>
+        filterView.FilterChanged += async (_, showVisited) =>
         {
             _showVisited = showVisited;
             await ViewModel.FetchAsync(_showVisited);
