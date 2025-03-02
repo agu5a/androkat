@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="androkat.hu.Pages.DetailAudio"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
+    x:Name="this"
+    Title=""
+    x:DataType="viewmodels:DetailViewModel"
+    Style="{StaticResource DetailPageStyle}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            IconImageSource="ic_send_24dp2"
+            Command="{Binding ShareContentCommand}"
+            Text="Küldés" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView Margin="5,0,5,0" VerticalOptions="Fill">
+        <Grid
+            Padding="{OnIdiom Phone=22}"
+            Background="{AppThemeBinding Light={StaticResource Grey1},
+                                         Dark={StaticResource Grey9}}"
+            ColumnDefinitions="auto, *"
+            ColumnSpacing="{OnIdiom Phone=10}"
+            RowDefinitions="auto,auto,auto,auto"
+            RowSpacing="{OnIdiom Phone=6}">
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,10"
+                HorizontalOptions="Start"
+                LineBreakMode="WordWrap"
+                Style="{OnIdiom Phone={StaticResource H6LabelStyle}}"
+                Text="{Binding ContentView.detailscim}"
+                VerticalOptions="Fill" />
+
+            <Image
+                Grid.Row="1"
+                Grid.Column="0"
+                Aspect="AspectFit"
+                HeightRequest="{OnIdiom Phone=48}"
+                HorizontalOptions="Center"
+                Source="{Binding ContentView.ContentEntity.Image}"
+                VerticalOptions="Start"
+                WidthRequest="{OnIdiom Phone=48}" />
+
+            <VerticalStackLayout Grid.Row="1" Grid.Column="1">
+                <Label Style="{OnIdiom Phone={StaticResource BodyMLabelStyle}}" Text="{Binding ContentView.ContentEntity.Cim}" />
+                <Label
+                    Style="{StaticResource BodyMLabelStyle}"
+                    Text="{Binding ContentView.forras}"
+                    TextType="Html" />
+                <Label
+                    Style="{StaticResource BodyMLabelStyle}"
+                    Text="{Binding ContentView.datum}"
+                    TextType="Html" />
+            </VerticalStackLayout>
+
+            <HorizontalStackLayout
+                Grid.Row="{OnIdiom Phone=3}"
+                Grid.Column="{OnIdiom Phone=0}"
+                Grid.ColumnSpan="{OnIdiom Phone=2}"
+                Margin="0,10,0,10">
+                <Button
+                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
+                    SemanticProperties.Description="LETÖLTÉS"
+                     Margin="10,10,5,0"
+                    ></Button>
+                <Button
+                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
+                    SemanticProperties.Description="TÖRLÉS"
+                    Margin="10,10,5,0"
+                ></Button>
+                <Button
+                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
+                    SemanticProperties.Description="LEJÁTSZÁS"
+                    Margin="10,10,5,0"
+                ></Button>
+            </HorizontalStackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>

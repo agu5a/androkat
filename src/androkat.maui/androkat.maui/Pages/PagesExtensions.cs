@@ -19,6 +19,8 @@ public static class PagesExtensions
 
         // pages that are navigated to
         builder.Services.AddTransient<DetailPage>();
+        builder.Services.AddTransient<DetailAudio>();
+        builder.Services.AddTransient<DetailBook>();
         builder.Services.AddTransient<GyonasNotesPage>();
         builder.Services.AddTransient<GyonasPrayPage>();
         builder.Services.AddTransient<GyonasFinishPage>();

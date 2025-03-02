@@ -9,5 +9,18 @@ public partial class ContentItemViewModel(ContentEntity contentEntity) : BaseVie
     public ContentEntity ContentEntity { get; set; } = contentEntity;
 
     [RelayCommand]
-    Task NavigateToDetail() => Shell.Current.GoToAsync($"DetailPage?Id={ContentEntity.Nid}");
+    Task NavigateToDetail()
+    {
+        return ContentEntity.Tipus switch
+        {
+            "6" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}"),
+            "15" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}"),
+            "28" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}"),
+            "38" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}"),
+            "39" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}"),
+            "60" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}"),
+            "46" => Shell.Current.GoToAsync($"DetailBook?Id={ContentEntity.Nid}"),
+            _ => Shell.Current.GoToAsync($"DetailPage?Id={ContentEntity.Nid}")
+        };
+    }
 }

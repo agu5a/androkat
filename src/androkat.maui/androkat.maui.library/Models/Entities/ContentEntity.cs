@@ -5,7 +5,6 @@ namespace androkat.maui.library.Models.Entities;
 
 [Table("napielmelkedesv1")]
 public class ContentEntity
-
 {
     [PrimaryKey]
     [DataMember(Name = "nid")]
