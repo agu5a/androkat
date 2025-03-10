@@ -22,64 +22,89 @@
             Padding="{OnIdiom Phone=22}"
             Background="{AppThemeBinding Light={StaticResource Grey1},
                                          Dark={StaticResource Grey9}}"
-            ColumnDefinitions="auto, *"
-            ColumnSpacing="{OnIdiom Phone=10}"
-            RowDefinitions="auto,auto,auto,auto"
+            ColumnDefinitions="*"
+            RowDefinitions="auto,auto,auto,auto,auto"
             RowSpacing="{OnIdiom Phone=6}">
 
+            <VerticalStackLayout Grid.Row="0" Margin="0,10,0,0" IsVisible="False">
+                <Label
+                    Margin="10,0,0,0"
+                    HorizontalOptions="Start"
+                    Style="{OnIdiom Phone={StaticResource BodyMLabelStyle}}"
+                    Text="Letöltés elindult"
+                    VerticalOptions="Start" />
+                <ProgressBar 
+                    x:Name="ProgressBar">
+                </ProgressBar>
+            </VerticalStackLayout>
+            
             <Label
-                Grid.Row="0"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Margin="0,10,0,10"
+                Grid.Row="1"
+                x:Name="Title"
+                Margin="0,10,0,0"
                 HorizontalOptions="Start"
                 LineBreakMode="WordWrap"
                 Style="{OnIdiom Phone={StaticResource H6LabelStyle}}"
-                Text="{Binding ContentView.detailscim}"
+                Text=""
+                VerticalOptions="Fill" />
+            
+            <Label
+                Grid.Row="2"
+                x:Name="Leiras1"
+                Margin="0,10,0,0"
+                HorizontalOptions="Start"
+                LineBreakMode="WordWrap"
+                Style="{OnIdiom Phone={StaticResource BodyMLabelStyle}}"
+                Text=""
+                VerticalOptions="Fill" />
+            
+            <Label
+                Grid.Row="3"
+                x:Name="Leiras2"
+                Margin="0,10,0,0"
+                HorizontalOptions="Start"
+                LineBreakMode="WordWrap"
+                Style="{OnIdiom Phone={StaticResource BodyMLabelStyle}}"
+                Text=""
+                VerticalOptions="Fill" />
+            
+            <Label
+                Grid.Row="4"
+                x:Name="Leiras3"
+                Margin="0,10,0,0"
+                HorizontalOptions="Start"
+                LineBreakMode="WordWrap"
+                Style="{OnIdiom Phone={StaticResource BodyMLabelStyle}}"
+                Text=""
                 VerticalOptions="Fill" />
 
-            <Image
-                Grid.Row="1"
-                Grid.Column="0"
-                Aspect="AspectFit"
-                HeightRequest="{OnIdiom Phone=48}"
-                HorizontalOptions="Center"
-                Source="{Binding ContentView.ContentEntity.Image}"
-                VerticalOptions="Start"
-                WidthRequest="{OnIdiom Phone=48}" />
-
-            <VerticalStackLayout Grid.Row="1" Grid.Column="1">
-                <Label Style="{OnIdiom Phone={StaticResource BodyMLabelStyle}}" Text="{Binding ContentView.ContentEntity.Cim}" />
-                <Label
-                    Style="{StaticResource BodyMLabelStyle}"
-                    Text="{Binding ContentView.forras}"
-                    TextType="Html" />
-                <Label
-                    Style="{StaticResource BodyMLabelStyle}"
-                    Text="{Binding ContentView.datum}"
-                    TextType="Html" />
-            </VerticalStackLayout>
-
             <HorizontalStackLayout
-                Grid.Row="{OnIdiom Phone=3}"
-                Grid.Column="{OnIdiom Phone=0}"
-                Grid.ColumnSpan="{OnIdiom Phone=2}"
-                Margin="0,10,0,10">
+                Grid.Row="5"
+                Margin="0,10,0,0">
                 <Button
-                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, 
+                    Dark={StaticResource PrimaryDark}}"
                     SemanticProperties.Description="LETÖLTÉS"
-                     Margin="10,10,5,0"
-                    ></Button>
+                    Text="LETÖLTÉS"
+                    Margin="10,10,5,0"
+                    Clicked="Letoltes_OnClicked">
+                </Button>
                 <Button
-                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, 
+                    Dark={StaticResource PrimaryDark}}"
                     SemanticProperties.Description="TÖRLÉS"
+                    Text="TÖRLÉS"
                     Margin="10,10,5,0"
-                ></Button>
+                    Clicked="Torles_OnClicked">
+                </Button>
                 <Button
-                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, 
+                    Dark={StaticResource PrimaryDark}}"
                     SemanticProperties.Description="LEJÁTSZÁS"
+                    Text="LEJÁTSZÁS"
                     Margin="10,10,5,0"
-                ></Button>
+                    Clicked="Lejatszas_OnClicked">
+                </Button>
             </HorizontalStackLayout>
         </Grid>
     </ScrollView>
