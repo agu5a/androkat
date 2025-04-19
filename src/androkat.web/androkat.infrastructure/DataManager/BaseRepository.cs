@@ -14,5 +14,5 @@ public class BaseRepository
         Ctx = ctx;
         Clock = clock;
         Mapper = mapper;
-    }
+    }    
 }

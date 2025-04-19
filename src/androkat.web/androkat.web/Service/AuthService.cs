@@ -34,7 +34,7 @@ public class AuthService : IAuthService
         {
             return true;
         }
-
+        
         _logger.LogError("Exception: wrong auth email {Email}", claim.Value);
         return false;
     }

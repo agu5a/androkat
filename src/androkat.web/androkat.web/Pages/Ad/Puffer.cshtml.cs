@@ -199,7 +199,7 @@ public class PufferModel : PageModel
         FileUrl = tipus switch
         {
             (int)domain.Enum.Forras.prayasyougo => string.IsNullOrWhiteSpace(FileUrl) ? $"https://androkat.hu/download/{DateTime.Now:MM_dd}.mp3" : FileUrl,
-            (int)domain.Enum.Forras.audiobarsi => string.IsNullOrWhiteSpace(FileUrl) ? "https://androkat.hu/download/" : FileUrl,
+            (int)domain.Enum.Forras.audiobarsi => string.IsNullOrWhiteSpace(FileUrl) ? $"https://androkat.hu/download/" : FileUrl,
             _ => FileUrl
         };
     }

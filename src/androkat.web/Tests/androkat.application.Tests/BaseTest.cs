@@ -39,30 +39,30 @@ public class BaseTest
 	}
 
 	public static DbContextOptions<AndrokatContext> GetDbContextOptions()
-	{
-		return new DbContextOptionsBuilder<AndrokatContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
-	}
+    {
+        return new DbContextOptionsBuilder<AndrokatContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+    }
 
 	public static IMemoryCache GetIMemoryCache()
-	{
-		var services = new ServiceCollection();
-		services.AddMemoryCache();
-		var serviceProvider = services.BuildServiceProvider();
-		var memoryCache = serviceProvider.GetService<IMemoryCache>();
-		return memoryCache;
-	}
+    {
+        var services = new ServiceCollection();
+        services.AddMemoryCache();
+        var serviceProvider = services.BuildServiceProvider();
+        var memoryCache = serviceProvider.GetService<IMemoryCache>();
+        return memoryCache;
+    }
 
-	public static Mock<ICacheService> GetCacheService(List<ContentModel> list)
-	{
-		Mock<ICacheService> repository = new();
-		repository.Setup(s => s.MainCacheFillUp()).Returns(new MainCache
-		{
-			ContentDetailsModels = new List<ContentDetailsModel>
-			{
-				list[0].ContentDetails
-			}
-		});
+    public static Mock<ICacheService> GetCacheService(List<ContentModel> list)
+    {
+        Mock<ICacheService> repository = new();
+        repository.Setup(s => s.MainCacheFillUp()).Returns(new MainCache
+        {
+            ContentDetailsModels = new List<ContentDetailsModel>
+            {
+                list[0].ContentDetails
+            }
+        });
 
-		return repository;
-	}
+        return repository;
+    }
 }

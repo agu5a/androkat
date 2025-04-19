@@ -18,11 +18,11 @@ public class BaseTest
         return new ContentMetaDataModel(tipusId ?? Forras.pio, tipusNev ?? "", forras ?? "", link ?? "", segedlink ?? "", image ?? "");
     }
 
-	/// <summary>
-	/// DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"
-	/// </summary>
-	/// <returns></returns>
-	public static Mock<IClock> GetToday()
+    /// <summary>
+    /// DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"
+    /// </summary>
+    /// <returns></returns>
+    public static Mock<IClock> GetToday()
 	{
 		var clock = new Mock<IClock>();
 		clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"));
@@ -30,16 +30,16 @@ public class BaseTest
 	}
 
 	public static IMemoryCache GetIMemoryCache()
-	{
-		var services = new ServiceCollection();
-		services.AddMemoryCache();
-		var serviceProvider = services.BuildServiceProvider();
-		var memoryCache = serviceProvider.GetService<IMemoryCache>();
-		return memoryCache;
-	}
+    {
+        var services = new ServiceCollection();
+        services.AddMemoryCache();
+        var serviceProvider = services.BuildServiceProvider();
+        var memoryCache = serviceProvider.GetService<IMemoryCache>();
+        return memoryCache;
+    }
 
 	public static DbContextOptions<AndrokatContext> GetDbContextOptions()
-	{
-		return new DbContextOptionsBuilder<AndrokatContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
-	}
+    {
+        return new DbContextOptionsBuilder<AndrokatContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+    }
 }

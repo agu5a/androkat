@@ -51,10 +51,10 @@ public class ApiRepository : BaseRepository, IApiRepository
             return false;
         }
 
-        Ctx.SystemInfo.First(w => w.Key == "radio").Value = value;
-        Ctx.SaveChanges();
-        return true;
-    }
+            Ctx.SystemInfo.First(w => w.Key == "radio").Value = value;
+            Ctx.SaveChanges();
+            return true;
+        }
 
     public IEnumerable<SystemInfoModel> GetSystemInfoModels()
     {
@@ -85,7 +85,7 @@ public class ApiRepository : BaseRepository, IApiRepository
     public bool AddTempContent(ContentDetailsModel contentDetailsModel)
     {
         var exist = Ctx.TempContent.FirstOrDefault(w => w.Tipus == contentDetailsModel.Tipus
-       && (w.Cim.Contains(contentDetailsModel.Cim) || w.Nid == contentDetailsModel.Nid));
+            && (w.Cim.Contains(contentDetailsModel.Cim) || w.Nid == contentDetailsModel.Nid));
         if (exist is not null)
         {
             return false;

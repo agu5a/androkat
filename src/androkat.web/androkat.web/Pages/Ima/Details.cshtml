@@ -15,7 +15,7 @@
 
     <div class="mb-4" style="border-radius: 0.25rem;padding: 15px;background-color: #ffffff;">
         <strong>Imák szűrése forrás szerint</strong>:<br /> <a href="/ima">Összes</a> ||
-        
+
         @foreach (var item in Model.ImaCsoportok)
         {
             var css = !string.IsNullOrWhiteSpace(Model.ImaModel.Csoport) && Model.ImaModel.Csoport == item.Value ? "class=\"bg-success text-white p-1\"" : "";

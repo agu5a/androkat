@@ -120,7 +120,7 @@ public class IndexTests : BaseTest
                                 "<br> 25 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Humor</a>" +
                                 "<br> 28 - <a href='https://www.katolikusradio.hu' target='_blank'>Napi evangélium</a>" +
                                 "<br> 38 - <a href='https://www.youtube.com/c/BarsiBal%C3%A1zsOFM/videos' target='_blank'>Barsi Balázs atya prédikációi</a>" +
-                                "<br> 39 - <a href='https://www.youtube.com/PalferiOnline/videos' target='_blank'>Pál Feri atya prédikációi</a>" +
+                                "<br> 39 - <a href='https://www.youtube.com/c/P%C3%A1lferiOnline/videos' target='_blank'>Pál Feri atya prédikációi</a>" +
                                 "<br> 42 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Vianney Szent János breviáriuma</a>" +
                                 "<br> 45 - <a href='https://regnumchristi.hu' target='_blank'>Regnum Christi Mozgalom napi elmélkedése</a>" +
                                 "<br> 47 - <a href='https://www.taize.fr' target='_blank'>Taizé</a>" +

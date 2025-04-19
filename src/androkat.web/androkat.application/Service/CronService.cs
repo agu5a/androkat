@@ -62,7 +62,7 @@ public class CronService : ICronService
             DeleteOldRows((int)Forras.taize, 4);
             DeleteOldRows((int)Forras.szentbernat, 3);
             DeleteOldRows((int)Forras.audiotaize, 2);
-            DeleteOldVideoRows(100);  
+            DeleteOldVideoRows(100);
         }
         catch (Exception ex)
         {

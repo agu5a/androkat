@@ -45,4 +45,4 @@ public enum Forras
     audiotaize = 60,
     sienaikatalin = 61,
     medjugorje = 62
-}
+} 

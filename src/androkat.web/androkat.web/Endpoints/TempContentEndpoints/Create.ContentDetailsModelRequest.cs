@@ -6,8 +6,8 @@ namespace androkat.web.Endpoints.TempContentEndpoints;
 
 public class ContentDetailsModelRequest
 {
-	[Required]
-	public ContentDetailsModel ContentDetailsModel { get; set; }
+    [Required]
+    public ContentDetailsModel ContentDetailsModel { get; set; }
     [FromHeader("X-API-Key")]
     [Required]
     public string ApiKey { get; set; }
