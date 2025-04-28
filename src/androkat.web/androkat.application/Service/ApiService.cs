@@ -174,8 +174,7 @@ public class ApiService : IApiService
         sb.Append("<div class=\"videoBox p-3 border bg-light\" style=\"border-radius: 0.25rem;\"><h5><a href=\"" + item.VideoLink + "\" target =\"_blank\">" + item.Cim + "</a></h5>");
         sb.Append("<div><strong>Forrás</strong>: " + item.Forras + "</div>");
         sb.Append("<div>" + item.Date + "</div>");
-        sb.Append("<div class=\"video-container\" ><iframe src=\"" + item.VideoLink.Replace("watch?v=", "embed/") + "\" width =\"310\" height =\"233\" title=\"YouTube video player\" " +
-            "frameborder =\"0\" allow=\"accelerometer;\"></iframe></div>");
+        sb.Append("<div class=\"video-container\" ><a href=\"" + item.VideoLink + "\" target =\"_blank\"><img src=\"" + item.Img + "\"></a></div>");
         sb.Append("</div></div>");
     }
 

@@ -101,7 +101,8 @@ public class UpdateFixContentModel : PageModel
             return;
         }
 
-        var res = _adminRepository.UpdateFixContent(new ContentDetailsModel(Guid.Parse(Nid), DateTime.Parse(Fulldatum, CultureInfo.CreateSpecificCulture("hu-HU")), Cim, Idezet, default,
+        var fullDate = GetNextNonLeapYear() + "-" + Fulldatum;
+        var res = _adminRepository.UpdateFixContent(new ContentDetailsModel(Guid.Parse(Nid), DateTime.Parse(fullDate, CultureInfo.CreateSpecificCulture("hu-HU")), Cim, Idezet, default,
                 DateTime.Parse(Inserted, CultureInfo.CreateSpecificCulture("hu-HU")), string.Empty, "", "", "")
                 );
 
@@ -159,5 +160,15 @@ public class UpdateFixContentModel : PageModel
         {
             _logger.LogError(ex, "Exception: ");
         }
+    }
+    
+    private static int GetNextNonLeapYear()
+    {
+        var year = DateTime.Now.Year;
+        while (!DateTime.IsLeapYear(year))
+        {
+            year++;
+        }
+        return year;
     }
 }

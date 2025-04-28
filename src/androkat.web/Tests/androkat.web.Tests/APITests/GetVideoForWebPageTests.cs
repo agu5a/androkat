@@ -52,7 +52,7 @@ public class GetVideoForWebPageTests : BaseTest
         dynamic sV1 = resV1.Result;
 
         string actual = sV1.Value.ToString();
-        actual.Should().Be("<div class='col mb-1'><div class=\"videoBox p-3 border bg-light\" style=\"border-radius: 0.25rem;\"><h5><a href=\"watch?v=\" target =\"_blank\">cim</a></h5><div><strong>Forrás</strong>: </div><div></div><div class=\"video-container\" ><iframe src=\"embed/\" width =\"310\" height =\"233\" title=\"YouTube video player\" frameborder =\"0\" allow=\"accelerometer;\"></iframe></div></div></div>");
+        actual.Should().Be("<div class='col mb-1'><div class=\"videoBox p-3 border bg-light\" style=\"border-radius: 0.25rem;\"><h5><a href=\"watch?v=\" target =\"_blank\">cim</a></h5><div><strong>Forrás</strong>: </div><div></div><div class=\"video-container\" ><a href=\"watch?v=\" target =\"_blank\"><img src=\"\"></a></div></div></div>");
     }
 
     [Fact]
