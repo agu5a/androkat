@@ -73,12 +73,12 @@
   },
   {
     "TipusId": 9,
-    "TipusNev": "Ferenc pápa twitter üzenete",
-    "Forras": "Magyar Kurír",
-    "Link": "https://www.magyarkurir.hu/ferenc-papa/ferenc-papa-twitter",
+    "TipusNev": "Pápa X üzenetei",
+    "Forras": "X",
+    "Link": "https://x.com/pontifex",
     "EnumString": "papaitwitter",
     "Segedlink": null,
-    "Image": "images/ferencpapa.png"
+    "Image": "images/pope.jpg"
   },
   {
     "TipusId": 10,

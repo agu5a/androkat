@@ -37,8 +37,8 @@ public class ContentServiceWithDbTests : BaseTest
 
         var result = contentService.GetHome().ToList();
 
-        result[0].MetaData.Image.Should().Be("images/ferencpapa.png");
-        result[0].MetaData.TipusNev.Should().Be("Ferenc pápa twitter üzenete");
+        result[0].MetaData.Image.Should().Be("images/pope.jpg");
+        result[0].MetaData.TipusNev.Should().Be("Pápa X üzenetei");
         result[0].MetaData.TipusId.Should().Be(Forras.papaitwitter);
         result[0].ContentDetails.Cim.Should().Be("Cím");
         result[0].ContentDetails.Tipus.Should().Be((int)Forras.papaitwitter);

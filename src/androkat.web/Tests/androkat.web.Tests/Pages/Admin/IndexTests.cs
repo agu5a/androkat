@@ -107,7 +107,7 @@ public class IndexTests : BaseTest
                                 "<br> 5 - <a href='http://karmelita.hu' target='_blank'>Kis Szent Teréz breviáriuma</a>" +
                                 "<br> 6 - <a href='https://www.evangelium365.hu' target='_blank'>Horváth István Sándor (evangélium365.hu)</a>" +
                                 "<br> 8 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Teréz Anya breviáriuma</a>" +
-                                "<br> 9 - <a href='https://www.magyarkurir.hu/ferenc-papa/ferenc-papa-twitter' target='_blank'>Ferenc pápa twitter üzenete</a>" +
+                                "<br> 9 - <a href='https://x.com/pontifex' target='_blank'>Pápa X üzenetei</a>" +
                                 "<br> 10 - <a href='http://orszagutiferencesek.hu' target='_blank'>Advent</a>" +
                                 "<br> 11 - <a href='https://igenaptar.katolikus.hu' target='_blank'>Napi Ige és olvasmányok</a>" +
                                 "<br> 12 - <a href='http://szikrak.jezsuita.hu' target='_blank'>Loyolai Szent Ignác válogatott gondolatai</a>" +
