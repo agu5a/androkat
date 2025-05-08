@@ -20,7 +20,7 @@ https://github.com/agu5a/androkat/wiki
 #### AndroKat a Facebook-on
 [facebook](https://www.facebook.com/androkat)
 
-#### AndroKat a Twitter-en
+#### AndroKat a X-en
 [![](https://img.shields.io/twitter/follow/AndroKat?style=social)](https://twitter.com/AndroKat)
 
 #### AndroKat a Youtube-on
