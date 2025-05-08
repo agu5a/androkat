@@ -16,6 +16,11 @@
             }
         }
 
+            // Auto-submit form when dropdown selection changes
+            $('#Nid').change(function() {
+                $(this).closest('form').submit();
+            });
+
             $('#tisztit').on('click', function () {
 
                 var temp2 = $('#musor').val().trim();
@@ -49,16 +54,12 @@
     <div class="py-5 text-center">
         <h3>Rádióműsor update</h3>
     </div>
-    <form method="post">
+    <form method="post" asp-page-handler="Search">
         <div class="row">
             <div class="m-6 me-2" style="width: 400px;">
                 @Html.DropDownListFor(model => model.Nid, Model.AllRecordResult, "--Nid--", new { @class = "form-control form-control-sm", style = "width: 400px;" })
             </div>
-            <div class="m-6" style="width: 100px;">
-                <button type="submit" class="btn btn-sm btn-primary" asp-page-handler="Search">
-                    keresés
-                </button>
-            </div>
+            <!-- Search button removed as it's no longer needed -->
         </div>
         <div class="row">
             <div class="col-md-12 order-md-1">
@@ -70,7 +71,7 @@
                     <div class="col-md-6 mb-3">
                         <div><span class="p-1 mb-3 bg-primary text-white">source:</span></div>
                         <div style="margin: 10px 0 0 0;">
-                            <input type="text" class="form-control" asp-for="Source" value="@Model.Source" />
+                            <input type="text" class="form-control" asp-for="Source" value="@Model.Source" readonly />
                         </div>
                     </div>
                 </div>

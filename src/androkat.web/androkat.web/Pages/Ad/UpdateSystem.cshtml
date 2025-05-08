@@ -16,24 +16,25 @@
             }
         }
 
+        // Add event listener for dropdown change to automatically submit the form
+        $("#Nid").change(function() {
+            $(this).closest("form").submit();
+        });
+
         });
     </script>
 }
 
 <div class="container-fluid">
     <div class="py-5 text-center">
-        <h3>Rádióműsor update</h3>
+        <h3>System data update</h3>
     </div>
-    <form method="post">
+    <form method="post" asp-page-handler="Search">
         <div class="row">
             <div class="m-6 me-2" style="width: 400px;">
                 @Html.DropDownListFor(model => model.Nid, Model.AllRecordResult, "--Key--", new { @class = "form-control form-control-sm", style = "width: 400px;" })
             </div>
-            <div class="m-6" style="width: 100px;">
-                <button type="submit" class="btn btn-sm btn-primary" asp-page-handler="Search">
-                    keresés
-                </button>
-            </div>
+            <!-- Removing the button as it's no longer needed -->
         </div>
         <div class="row">
             <div class="col-md-12 order-md-1">

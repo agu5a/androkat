@@ -53,13 +53,21 @@ public class UpdateMaiSzentModel : PageModel
 
         try
         {
+            // Set default month to current month
             CurrentMonth = _iClock.Now.ToString("MM");
-            AllRecordResult = [];
+            
+            // Always set type to 21
             Tipus = "21";
+            
+            // Automatically populate the third dropdown with data for the current month
+            var all = _adminRepository.GetAllMaiSzentByMonthResult(CurrentMonth).ToList();
+            AllRecordResult = all.Select(s => new SelectListItem { Text = s.Datum, Value = s.Nid.ToString() }).ToList();
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Exception: ");
+            Error = ex.Message;
+            ShowToast = true;
         }
     }
 
@@ -74,10 +82,8 @@ public class UpdateMaiSzentModel : PageModel
                 CurrentMonth = _iClock.Now.ToString("MM");
             }
 
-            if (string.IsNullOrWhiteSpace(Tipus))
-            {
-                Tipus = "21";
-            }
+            // Always set Tipus to 21
+            Tipus = "21";
 
             var all = _adminRepository.GetAllMaiSzentByMonthResult(CurrentMonth).ToList();
             AllRecordResult = all.Select(s => new SelectListItem { Text = s.Datum, Value = s.Nid.ToString() }).ToList();

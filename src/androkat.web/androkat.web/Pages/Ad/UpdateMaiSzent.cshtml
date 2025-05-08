@@ -16,6 +16,21 @@
             }
         }
 
+            // Auto-submit when month dropdown changes
+            $('#CurrentMonth').on('change', function() {
+                // Set default type
+                $('#Tipus').val('21');
+                // Submit the form with search handler
+                $('form').attr('action', '?handler=Search').submit();
+            });
+
+            // Auto-submit when date dropdown changes (only if it has items)
+            $('#Nid').on('change', function() {
+                if($(this).find('option').length > 1) {
+                    $('form').attr('action', '?handler=Search').submit();
+                }
+            });
+
             $('#maidatum').on('click', function () {
                 Date.prototype.yyyymmdd = function () {
                     var mm = this.getMonth() + 1; // getMonth() is zero-based
@@ -27,6 +42,9 @@
 
                 $('#datum').val(date.yyyymmdd());
             });
+
+            // Set the Tipus dropdown to default value and disable it
+            $('#Tipus').val('21').prop('disabled', true);
 
             $('#tisztit').on('click', function () {
                 var temp = $('#cim').val().trim();
@@ -80,16 +98,12 @@
             <div class="m-3" style="width: 100px;">
                 @Html.DropDownListFor(model => model.CurrentMonth, Model.Months, "--Hónap--", new { @class = "form-control form-control-sm", style = "width: 100px;" })
             </div>
-            <div class="m-3" style="width: 400px;">
+            <!-- Hide or disable the second dropdown since it's always set to 21 -->
+            <div class="m-3" style="width: 400px; display: none;">
                 @Html.DropDownListFor(model => model.Tipus, Model.Tipusok, "--Típus--", new { @class = "form-control form-control-sm", style = "width: 400px;" })
             </div>
             <div class="m-3" style="width: 100px;">
                 @Html.DropDownListFor(model => model.Nid, Model.AllRecordResult, "--Dátum--", new { @class = "form-control form-control-sm", style = "width: 100px;" })
-            </div>
-            <div class="m-3" style="width: 100px;">
-                <button type="submit" class="btn btn-sm btn-primary" asp-page-handler="Search">
-                    keresés
-                </button>
             </div>
         </div>
         <div class="row">

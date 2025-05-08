@@ -15,6 +15,20 @@
                 </text>
             }
         }
+            
+            // Auto-submit when Tipus changes
+            $('#Tipus').on('change', function() {
+                // Submit the form with the Search handler
+                $('form').attr('action', '?handler=Search').submit();
+            });
+
+            // Auto-submit when Nid changes (only if it has items)
+            $('#Nid').on('change', function() {
+                if ($(this).find('option').length > 1) {
+                    // Submit the form with the Search handler
+                    $('form').attr('action', '?handler=Search').submit();
+                }
+            });
 
             $('#maidatum').on('click', function () {
                 Date.prototype.yyyymmdd = function () {
@@ -82,11 +96,6 @@
             </div>
             <div class="m-4" style="width: 400px;">
                 @Html.DropDownListFor(model => model.Nid, Model.AllRecordResult, "--Nid--", new { @class = "form-control form-control-sm", style = "width: 400px;" })
-            </div>
-            <div class="m-4" style="width: 100px;">
-                <button type="submit" class="btn btn-sm btn-primary" asp-page-handler="Search">
-                    keresés
-                </button>
             </div>
         </div>
         <div class="row">
