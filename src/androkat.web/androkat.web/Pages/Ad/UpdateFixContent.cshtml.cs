@@ -123,7 +123,24 @@ public class UpdateFixContentModel : PageModel
 
         var res = _adminRepository.DeleteFixContent(Nid);
 
-        Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
+        // After deletion, repopulate the Nid dropdown with content from the selected Tipus
+        if (!string.IsNullOrWhiteSpace(Tipus))
+        {
+            var all = _adminRepository.GetAllFixContentByTipus(int.Parse(Tipus));
+            AllRecordResult = all.Select(s => new SelectListItem { Text = s.Datum, Value = s.Nid.ToString() }).ToList();
+        }
+        
+        // Clear form fields if deletion was successful
+        if (res)
+        {
+            Cim = string.Empty;
+            Idezet = string.Empty;
+            Fulldatum = string.Empty;
+            Inserted = string.Empty;
+            Nid = string.Empty; // Clear the Nid selection
+        }
+
+        Error = res ? "A törlés sikerült" : "Valamilyen hiba történt";
         ShowToast = true;
     }
 

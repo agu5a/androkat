@@ -128,8 +128,19 @@ public class UpdateImaModel : PageModel
 
         var all = _adminRepository.GetAllImaByCsoportResult(Tipus).ToList();
         AllRecordResult = all.Select(s => new SelectListItem { Text = s.Csoport.ToString(), Value = s.Nid.ToString() }).ToList();
+        
+        // Clear form fields if deletion was successful
+        if (res)
+        {
+            Cim = string.Empty;
+            Idezet = string.Empty;
+            Datum = string.Empty;
+            Inserted = string.Empty;
+            Img = string.Empty;
+            Nid = string.Empty; // Clear the Nid selection
+        }
 
-        Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
+        Error = res ? "A törlés sikerült" : "Valamilyen hiba történt";
         ShowToast = true;
     }
     private void GetDropDownData()

@@ -101,8 +101,17 @@ public class UpdateRadioModel : PageModel
 
         var all = _adminRepository.GetAllRadioResult().ToList();
         AllRecordResult = all.Select(s => new SelectListItem { Text = s.Csoport.ToString(), Value = s.Nid.ToString() }).ToList();
+        
+        // Clear form fields if deletion was successful
+        if (res)
+        {
+            Musor = string.Empty;
+            Source = string.Empty;
+            Inserted = string.Empty;
+            Nid = string.Empty; // Clear the Nid selection
+        }
 
-        Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
+        Error = res ? "A törlés sikerült" : "Valamilyen hiba történt";
         ShowToast = true;
     }
 }
