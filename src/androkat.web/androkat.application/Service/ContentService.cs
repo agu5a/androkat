@@ -41,7 +41,7 @@ public class ContentService : IContentService
             (int)Forras.bojte,
             (int)Forras.barsi,
             (int)Forras.laciatya,
-            (int)Forras.papaitwitter,
+            //(int)Forras.papaitwitter,
             (int)Forras.regnum,
             (int)Forras.fokolare,
             (int)Forras.prohaszka,

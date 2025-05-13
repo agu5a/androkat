@@ -27,7 +27,7 @@ public class ContentServiceWithDbTests : BaseTest
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
 
         using var context = new AndrokatContext(GetDbContextOptions());
-        content.Tipus = (int)Forras.papaitwitter;
+        content.Tipus = (int)Forras.szeretetujsag;
         context.Content.Add(content);
         context.SaveChanges();
 
@@ -37,11 +37,11 @@ public class ContentServiceWithDbTests : BaseTest
 
         var result = contentService.GetHome().ToList();
 
-        result[0].MetaData.Image.Should().Be("images/pope.jpg");
-        result[0].MetaData.TipusNev.Should().Be("Pápa X üzenetei");
-        result[0].MetaData.TipusId.Should().Be(Forras.papaitwitter);
+        result[0].MetaData.Image.Should().Be("images/szentgellertkiado.png");
+        result[0].MetaData.TipusNev.Should().Be("Szeretet-újság");
+        result[0].MetaData.TipusId.Should().Be(Forras.szeretetujsag);
         result[0].ContentDetails.Cim.Should().Be("Cím");
-        result[0].ContentDetails.Tipus.Should().Be((int)Forras.papaitwitter);
+        result[0].ContentDetails.Tipus.Should().Be((int)Forras.szeretetujsag);
         result.Count.Should().Be(1);
     }
 
