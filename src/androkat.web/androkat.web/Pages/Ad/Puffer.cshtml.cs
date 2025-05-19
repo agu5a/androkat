@@ -116,7 +116,14 @@ public class PufferModel : PageModel
         }
 
         LastTodayResult = _adminRepository.GetLastTodayContentByTipus(TipusId.Value);
-        var newContent = new ContentDetailsModel(Guid.Empty, DateTime.Parse(FullDatum + DateTime.Now.ToString(" HH:mm:ss"), CultureInfo.CreateSpecificCulture("hu-HU")),
+        // Check if FullDatum already has a time component
+        var dateToUse = FullDatum;
+        if (!FullDatum.Contains(':')) // If there's no time component (no colon character)
+        {
+            dateToUse += DateTime.Now.ToString(" HH:mm:ss");
+        }
+        
+        var newContent = new ContentDetailsModel(Guid.Empty, DateTime.Parse(dateToUse, CultureInfo.CreateSpecificCulture("hu-HU")),
             Cim, Idezet ?? "", TipusId.Value,
         _iClock.Now.Date, string.Empty, Image ?? "", FileUrl ?? "", Forras ?? "");
 

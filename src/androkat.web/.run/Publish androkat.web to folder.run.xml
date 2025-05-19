@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Publish androkat.web to folder" type="DotNetFolderPublish" factoryName="Publish to folder" editBeforeRun="true" focusToolWindowBeforeRun="true">
+    <riderPublish configuration="Release" delete_existing_files="true" platform="Any CPU" runtime="linux-x64" target_folder="$USER_HOME$/tmp/_newPublish/androkat" target_framework="net9.0" uuid_high="1903350361346886910" uuid_low="-7723925788908760974" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -30,19 +30,6 @@
                 }
             });
 
-            $('#maidatum').on('click', function () {
-                Date.prototype.yyyymmdd = function () {
-                    var yy = this.getUTCFullYear();
-                    var mm = this.getMonth() + 1; // getMonth() is zero-based
-                    var dd = this.getDate();
-
-                    return [yy, (mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join('-');
-                };
-                var date = new Date();
-
-                $('#fulldatum').val(date.yyyymmdd());
-            });
-
             $('#tisztit').on('click', function () {
                 var temp = $('#cim').val().trim();
                 temp = temp.replace(new RegExp("'", 'g'), "`");
@@ -119,9 +106,6 @@
                         </div>
                         <div style="margin: 10px 0 0 0;">
                             <input type="text" class="form-control" asp-for="Fulldatum" value="@Model.Fulldatum" />
-                            <button type="button" id="maidatum" style="margin-top: 10px;">
-                                mai dátum
-                            </button>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">

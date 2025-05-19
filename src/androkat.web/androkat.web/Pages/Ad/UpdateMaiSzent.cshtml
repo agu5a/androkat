@@ -31,18 +31,6 @@
                 }
             });
 
-            $('#maidatum').on('click', function () {
-                Date.prototype.yyyymmdd = function () {
-                    var mm = this.getMonth() + 1; // getMonth() is zero-based
-                    var dd = this.getDate();
-
-                    return [(mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join('-');
-                };
-                var date = new Date();
-
-                $('#datum').val(date.yyyymmdd());
-            });
-
             // Set the Tipus dropdown to default value and disable it
             $('#Tipus').val('21').prop('disabled', true);
 
@@ -126,9 +114,6 @@
                         </div>
                         <div style="margin: 10px 0 0 0;">
                             <input type="text" class="form-control" asp-for="Datum" value="@Model.Datum" />
-                            <button type="button" id="maidatum" style="margin-top: 10px;">
-                                mai dátum
-                            </button>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">

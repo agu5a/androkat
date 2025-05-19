@@ -31,15 +31,20 @@
             });
 
             $('#maidatum').on('click', function () {
-                Date.prototype.yyyymmdd = function () {
+                Date.prototype.yyyymmddhhmmss = function () {
+                    var yy = this.getUTCFullYear();
                     var mm = this.getMonth() + 1; // getMonth() is zero-based
                     var dd = this.getDate();
+                    var hh = this.getHours();
+                    var min = this.getMinutes();
+                    var ss = this.getSeconds();
 
-                    return [(mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join('-');
+                    return [yy, (mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join('-') + ' ' + 
+                           [(hh > 9 ? '' : '0') + hh, (min > 9 ? '' : '0') + min, (ss > 9 ? '' : '0') + ss].join(':');
                 };
                 var date = new Date();
 
-                $('#datum').val(date.yyyymmdd());
+                $('#Datum').val(date.yyyymmddhhmmss());
             });
 
             $('#tisztit').on('click', function () {
