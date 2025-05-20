@@ -14,4 +14,6 @@ public class EndPointConfiguration
     public string HealthCheckApiUrl { get; set; }
     [Required]
     public string GetContentsApiUrl { get; set; }
+    [Required]
+    public string Cron { get; set; }
 }

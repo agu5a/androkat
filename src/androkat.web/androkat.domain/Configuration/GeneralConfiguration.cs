@@ -6,4 +6,7 @@ public class GeneralConfiguration
 {
     [Required]
     public string HostUrl { get; set; }
+    
+    [Required]
+    public string Admin { get; set; }
 }

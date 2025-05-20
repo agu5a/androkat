@@ -1,6 +1,6 @@
-﻿using androkat.application.Contants;
-using androkat.application.Interfaces;
+﻿using androkat.application.Interfaces;
 using androkat.domain;
+using androkat.domain.Configuration;
 using androkat.domain.Enum;
 using androkat.domain.Model;
 using androkat.web.ViewModels;
@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,8 @@ using System.Text.Json;
 namespace androkat.web.Controllers;
 
 [EnableRateLimiting("fixed-by-ip")]
-[Route(ContantValues.Cron)]
+// Route is set from EndPointConfiguration.Cron environment variable
+[Route("{cron}")]
 [ApiController]
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S6960:Controllers should not have mixed responsibilities", Justification = "<Pending>")]
 public class Cron : ControllerBase
@@ -31,13 +33,16 @@ public class Cron : ControllerBase
         IApiRepository apiRepository,
         IClock iClock,
         ICronService cronService,
-        IWebHostEnvironment environment)
+        IWebHostEnvironment environment,
+        IOptions<EndPointConfiguration> endPointConfig)
     {
         _logger = logger;
         _apiRepository = apiRepository;
         _iClock = iClock;
         _cronService = cronService;
         _environment = environment;
+        
+        Console.WriteLine(endPointConfig.Value.Cron);
     }
 
     [Route("cron")]

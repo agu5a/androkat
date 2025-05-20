@@ -45,6 +45,7 @@ public static class DependencyInjection
                 options.UpdateRadioMusorModelApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_UPDATE_RADIO_MUSOR_API_URL");
                 options.HealthCheckApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_HEALTH_CHECK_API_URL");
                 options.GetContentsApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_GET_CONTENTS_API_URL");
+                options.Cron = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_CRON");
             })
             .ValidateDataAnnotations()
             .ValidateOnStart();
@@ -61,6 +62,7 @@ public static class DependencyInjection
             .Configure(options => 
             {
                 options.HostUrl = Environment.GetEnvironmentVariable("ANDROKAT_GENERAL_HOST_URL");
+                options.Admin = Environment.GetEnvironmentVariable("ANDROKAT_GENERAL_ADMIN");
             })
             .ValidateDataAnnotations()
             .ValidateOnStart();

@@ -87,7 +87,8 @@ public class IndexTests : BaseTest
 
 		var repo = new AdminRepository(context, loggerRepo.Object, clock.Object, idezetData, mapper);
 
-		var model = new IndexModel(logger.Object, repo, authService.Object)
+		var generalConfig = Options.Create(new GeneralConfiguration());
+		var model = new IndexModel(logger.Object, repo, authService.Object, generalConfig)
 		{
 			PageContext = pageContext,
 			TempData = tempData,
@@ -154,7 +155,8 @@ public class IndexTests : BaseTest
 		var authService = new Mock<IAuthService>();
 		authService.Setup(s => s.IsAuthenticated(It.IsAny<string>())).Returns(false);
 
-		var model = new IndexModel(logger.Object, adminRepository.Object, authService.Object)
+		var generalConfig = Options.Create(new GeneralConfiguration());
+		var model = new IndexModel(logger.Object, adminRepository.Object, authService.Object, generalConfig)
 		{
 			PageContext = pageContext,
 			TempData = tempData,

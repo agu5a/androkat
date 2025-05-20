@@ -50,7 +50,16 @@ public class CronTests : BaseTest
 
         var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
         var repository = new ApiRepository(context, clock.Object, mapper);
-        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object);
+        var endPointConfig = Options.Create(new EndPointConfiguration
+        {
+            Cron = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_CRON"),
+            SaveContentDetailsModelApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_SAVE_CONTENT_DETAILS_MODEL_API_URL"),
+            SaveTempContentApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_SAVE_CONTENT_API_URL"),
+            UpdateRadioMusorModelApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_UPDATE_RADIO_MUSOR_API_URL"),
+            HealthCheckApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_HEALTH_CHECK_API_URL"),
+            GetContentsApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_GET_CONTENTS_API_URL")
+        });
+        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object, endPointConfig);
         var resV1 = controller.GetKeresztenyelet();
         dynamic s2 = resV1.Result;
         List<string> result = s2.Value;
@@ -87,7 +96,16 @@ public class CronTests : BaseTest
 
         var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
         var repository = new ApiRepository(context, clock.Object, mapper);
-        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object);
+        var endPointConfig = Options.Create(new EndPointConfiguration
+        {
+            Cron = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_CRON"),
+            SaveContentDetailsModelApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_SAVE_CONTENT_DETAILS_MODEL_API_URL"),
+            SaveTempContentApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_SAVE_CONTENT_API_URL"),
+            UpdateRadioMusorModelApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_UPDATE_RADIO_MUSOR_API_URL"),
+            HealthCheckApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_HEALTH_CHECK_API_URL"),
+            GetContentsApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_GET_CONTENTS_API_URL")
+        });
+        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object, endPointConfig);
         var resV1 = controller.HasNapiolvasoByDate(2, date);
         dynamic s2 = resV1.Result;
         bool result = s2.Value;
@@ -117,7 +135,16 @@ public class CronTests : BaseTest
 
         var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
         var repository = new ApiRepository(context, clock.Object, mapper);
-        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object);
+        var endPointConfig = Options.Create(new EndPointConfiguration
+        {
+            Cron = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_CRON"),
+            SaveContentDetailsModelApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_SAVE_CONTENT_DETAILS_MODEL_API_URL"),
+            SaveTempContentApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_SAVE_CONTENT_API_URL"),
+            UpdateRadioMusorModelApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_UPDATE_RADIO_MUSOR_API_URL"),
+            HealthCheckApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_HEALTH_CHECK_API_URL"),
+            GetContentsApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_GET_CONTENTS_API_URL")
+        });
+        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object, endPointConfig);
         var resV1 = controller.GetSzentbernat();
         dynamic s2 = resV1.Result;
         DateTime result = s2.Value;
@@ -133,7 +160,16 @@ public class CronTests : BaseTest
 
         using var context = new AndrokatContext(GetDbContextOptions());
 
-        var controller = new Cron(loggerRepo.Object, new Mock<IApiRepository>().Object, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object);//todo
+        var controller = new Cron(loggerRepo.Object, new Mock<IApiRepository>().Object, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object,
+        Options.Create(new EndPointConfiguration
+        {
+            Cron = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_CRON"),
+            SaveContentDetailsModelApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_SAVE_CONTENT_DETAILS_MODEL_API_URL"),
+            SaveTempContentApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_SAVE_CONTENT_API_URL"),
+            UpdateRadioMusorModelApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_UPDATE_RADIO_MUSOR_API_URL"),
+            HealthCheckApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_HEALTH_CHECK_API_URL"),
+            GetContentsApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_GET_CONTENTS_API_URL")
+        }));
         var resV1 = controller.GetSzentbernat();
         dynamic s2 = resV1.Result;
         DateTime result = s2.Value;
@@ -164,7 +200,16 @@ public class CronTests : BaseTest
 
         var idezetData = Options.Create(new AndrokatConfiguration { ContentMetaDataList = new List<ContentMetaDataModel> { } });
         var repository = new ApiRepository(context, clock.Object, mapper);
-        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object);
+        var endPointConfig = Options.Create(new EndPointConfiguration
+        {
+            Cron = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_CRON"),
+            SaveContentDetailsModelApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_SAVE_CONTENT_DETAILS_MODEL_API_URL"),
+            SaveTempContentApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_SAVE_CONTENT_API_URL"),
+            UpdateRadioMusorModelApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_UPDATE_RADIO_MUSOR_API_URL"),
+            HealthCheckApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_HEALTH_CHECK_API_URL"),
+            GetContentsApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_GET_CONTENTS_API_URL")
+        });
+        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object, endPointConfig);
         var resV1 = controller.GetLastContentByTipus((int)Forras.kurir);
         dynamic s2 = resV1.Result;
         DateTime result = s2.Value;
@@ -180,7 +225,16 @@ public class CronTests : BaseTest
 
         using var context = new AndrokatContext(GetDbContextOptions());
 
-        var controller = new Cron(loggerRepo.Object, new Mock<IApiRepository>().Object, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object);//todo
+        var controller = new Cron(loggerRepo.Object, new Mock<IApiRepository>().Object, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object,
+        Options.Create(new EndPointConfiguration
+        {
+            Cron = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_CRON"),
+            SaveContentDetailsModelApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_SAVE_CONTENT_DETAILS_MODEL_API_URL"),
+            SaveTempContentApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_SAVE_CONTENT_API_URL"),
+            UpdateRadioMusorModelApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_UPDATE_RADIO_MUSOR_API_URL"),
+            HealthCheckApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_HEALTH_CHECK_API_URL"),
+            GetContentsApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_GET_CONTENTS_API_URL")
+        }));
         var resV1 = controller.GetLastContentByTipus((int)Forras.kurir);
         dynamic s2 = resV1.Result;
         DateTime result = s2.Value;
