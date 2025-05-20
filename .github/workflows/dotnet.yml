@@ -16,6 +16,15 @@ on:
 env:
   DOTNET_VERSION: '9.0.x'
   SOLUTION_FILE: './src/androkat.web/androkat.web.sln'
+  ANDROKAT_ENDPOINT_SAVE_CONTENT_DETAILS_API_URL: '/test/savecontentdetails'
+  ANDROKAT_ENDPOINT_SAVE_TEMP_CONTENT_API_URL: '/test/savetempontent'
+  ANDROKAT_ENDPOINT_UPDATE_RADIO_MUSOR_API_URL: '/test/updateradio'
+  ANDROKAT_ENDPOINT_HEALTH_CHECK_API_URL: '/health'
+  ANDROKAT_ENDPOINT_GET_CONTENTS_API_URL: '/test/contents'
+  ANDROKAT_CREDENTIAL_CRON_API_KEY: 'test-api-key-12345'
+  ANDROKAT_GOOGLE_CLIENT_ID: 'test-client-id.apps.googleusercontent.com'
+  ANDROKAT_GOOGLE_CLIENT_SECRET: 'test-client-secret-xyz'
+  ANDROKAT_GENERAL_HOST_URL: 'https://localhost:5001'
 
 jobs:
   build-and-test:
