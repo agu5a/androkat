@@ -84,8 +84,12 @@ public static class InfrastructureExtensions
         })
         .AddCookie().AddGoogle(googleOptions =>
         {
-            googleOptions.ClientId = configurationManager["GoogleClientId"]!;
-            googleOptions.ClientSecret = configurationManager["GoogleClientSecret"]!;
+            googleOptions.ClientId = configurationManager["GoogleClientId"] ?? 
+                                     Environment.GetEnvironmentVariable("ANDROKAT_GOOGLE_CLIENT_ID") ?? 
+                                     string.Empty;
+            googleOptions.ClientSecret = configurationManager["GoogleClientSecret"] ?? 
+                                         Environment.GetEnvironmentVariable("ANDROKAT_GOOGLE_CLIENT_SECRET") ?? 
+                                         string.Empty;
         });
     }
 

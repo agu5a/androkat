@@ -35,10 +35,44 @@ public static class DependencyInjection
         builder.Services.SetDatabase();
 
         builder.Services.AddSingleton<IConfigureOptions<AndrokatConfiguration>, AndrokatConfigurationOptions>();
-        builder.Services.AddOptions<EndPointConfiguration>().BindConfiguration("EndPointConfiguration").ValidateDataAnnotations().ValidateOnStart();
-        builder.Services.AddOptions<CredentialConfiguration>().BindConfiguration("CredentialConfiguration").ValidateDataAnnotations().ValidateOnStart();
-        builder.Services.AddOptions<GeneralConfiguration>().BindConfiguration("GeneralConfiguration").ValidateDataAnnotations().ValidateOnStart();
+        
+        // Bind configuration from environment variables only
+        builder.Services.AddOptions<EndPointConfiguration>()
+            .Configure(options => 
+            {
+                options.SaveContentDetailsModelApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_SAVE_CONTENT_DETAILS_API_URL");
+                options.SaveTempContentApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_SAVE_TEMP_CONTENT_API_URL");
+                options.UpdateRadioMusorModelApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_UPDATE_RADIO_MUSOR_API_URL");
+                options.HealthCheckApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_HEALTH_CHECK_API_URL");
+                options.GetContentsApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_GET_CONTENTS_API_URL");
+            })
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+            
+        builder.Services.AddOptions<CredentialConfiguration>()
+            .Configure(options => 
+            {
+                options.CronApiKey = Environment.GetEnvironmentVariable("ANDROKAT_CREDENTIAL_CRON_API_KEY");
+            })
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+            
+        builder.Services.AddOptions<GeneralConfiguration>()
+            .Configure(options => 
+            {
+                options.HostUrl = Environment.GetEnvironmentVariable("ANDROKAT_GENERAL_HOST_URL");
+            })
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+            
         builder.Services.AddSingleton<IContentMetaDataService, ContentMetaDataService>();
+        
+        // Use environment variables for Google auth
+        var googleClientId = Environment.GetEnvironmentVariable("ANDROKAT_GOOGLE_CLIENT_ID");
+        var googleClientSecret = Environment.GetEnvironmentVariable("ANDROKAT_GOOGLE_CLIENT_SECRET");
+        builder.Configuration["GoogleClientId"] = googleClientId;
+        builder.Configuration["GoogleClientSecret"] = googleClientSecret;
+        
         builder.Services.SetAuthentication(builder.Configuration);
         builder.Services.AddSingleton<ApiKeyAuthorizationFilter>();
         builder.Services.AddSingleton<IApiKeyValidator, ApiKeyValidator>();
