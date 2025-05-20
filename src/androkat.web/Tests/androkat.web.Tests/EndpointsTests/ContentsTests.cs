@@ -16,7 +16,7 @@ namespace androkat.web.Tests.EndpointsTests;
 public class ContentsTests : IClassFixture<ContentsWebApplicationFactory<IWebMarker>>
 {
     private readonly HttpClient _client;
-    private const string _url = Constants.GetContentsApiTestsUrl;
+    private readonly string _url = TestEnvironmentHelper.GetContentsApiTestsUrl();
 
     public ContentsTests(ContentsWebApplicationFactory<IWebMarker> factory)
     {

@@ -13,7 +13,7 @@ namespace androkat.web.Tests.EndpointsTests;
 public class HealthCheckTests : IClassFixture<CustomWebApplicationFactory<IWebMarker>>
 {
     private readonly HttpClient _client;
-    private const string _url = Constants.HealthCheckTestsUrl;
+    private readonly string _url = TestEnvironmentHelper.GetHealthCheckTestsUrl();
 
     public HealthCheckTests(CustomWebApplicationFactory<IWebMarker> factory)
     {

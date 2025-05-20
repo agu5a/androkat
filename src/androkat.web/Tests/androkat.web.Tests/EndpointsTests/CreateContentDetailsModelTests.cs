@@ -15,12 +15,12 @@ namespace androkat.web.Tests.EndpointsTests;
 public class CreateContentDetailsModelTests : IClassFixture<CustomWebApplicationFactory<IWebMarker>>
 {
     private readonly HttpClient _client;
-    private const string _url = Constants.CreateContentDetailsModelTestsUrl;
+    private readonly string _url = TestEnvironmentHelper.GetCreateContentDetailsModelTestsUrl();
 
     public CreateContentDetailsModelTests(CustomWebApplicationFactory<IWebMarker> factory)
     {
         _client = factory.CreateClient();
-        _client.DefaultRequestHeaders.Add("X-API-Key", Constants.XAPIKey);
+        _client.DefaultRequestHeaders.Add("X-API-Key", TestEnvironmentHelper.GetXAPIKey());
     }
 
     [Fact]
