@@ -21,10 +21,12 @@ env:
   ANDROKAT_ENDPOINT_UPDATE_RADIO_MUSOR_API_URL: '/test/updateradio'
   ANDROKAT_ENDPOINT_HEALTH_CHECK_API_URL: '/health'
   ANDROKAT_ENDPOINT_GET_CONTENTS_API_URL: '/test/contents'
+  ANDROKAT_ENDPOINT_CRON: 'testcron'
   ANDROKAT_CREDENTIAL_CRON_API_KEY: 'test-api-key-12345'
   ANDROKAT_GOOGLE_CLIENT_ID: 'test-client-id.apps.googleusercontent.com'
   ANDROKAT_GOOGLE_CLIENT_SECRET: 'test-client-secret-xyz'
   ANDROKAT_GENERAL_HOST_URL: 'https://localhost:5001'
+  ANDROKAT_GENERAL_ADMIN: 'test-admin@domain.com'
 
 jobs:
   build-and-test:
