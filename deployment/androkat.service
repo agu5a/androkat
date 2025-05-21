@@ -11,9 +11,20 @@ Restart=always
 RestartSec=10
 KillSignal=SIGINT
 SyslogIdentifier=androkat.service
-User=ubuntu
+User=androkat
 Environment=ASPNETCORE_ENVIRONMENT=Production
 Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+Environment=ANDROKAT_ENDPOINT_SAVE_CONTENT_DETAILS_API_URL=<value>
+Environment=ANDROKAT_ENDPOINT_SAVE_TEMP_CONTENT_API_URL=<value>
+Environment=ANDROKAT_ENDPOINT_UPDATE_RADIO_MUSOR_API_URL=<value>
+Environment=ANDROKAT_ENDPOINT_HEALTH_CHECK_API_URL=<value>
+Environment=ANDROKAT_ENDPOINT_GET_CONTENTS_API_URL=<value>
+Environment=ANDROKAT_ENDPOINT_CRON=<value>
+Environment=ANDROKAT_CREDENTIAL_CRON_API_KEY=<value>
+Environment=ANDROKAT_GOOGLE_CLIENT_ID=<value>
+Environment=ANDROKAT_GOOGLE_CLIENT_SECRET=<value>
+Environment=ANDROKAT_GENERAL_HOST_URL=<value>
+Environment=ANDROKAT_GENERAL_ADMIN=<value>
 
 [Install]
 WantedBy=multi-user.target

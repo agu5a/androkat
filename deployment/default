@@ -1,31 +1,25 @@
 server {
-    listen 7232 http2;
-    server_name	androkat.hu;
+        listen 80;
+        server_name androkat.hu www.androkat.hu;
+        add_header route httpsredirect;
+        return 301 https://$host$request_uri;
 }
 
 server {
         listen 80;
-        server_name androkat.hu;
-
-        location / {
-		
-		    if ($block_python) {
-                return 403;  # Forbidden response code
-            }
-            return 301 https://$host$request_uri;
-        }
-}
-
-server {
-        listen 80;
+        keepalive_timeout 75;
         server_name api.androkat.hu radio.androkat.hu;
+        add_header route apiradio;
+
+        access_log /var/log/nginx/access_androkat.log;
+        error_log /var/log/nginx/error_androkat.log;
 
         location / {
-		
-		    if ($block_python) {
-                return 403;  # Forbidden response code
+
+            if ($block_python) {
+                return 403;  
             }
-			
+
             proxy_pass         http://localhost:5000;
             proxy_http_version 1.1;
             proxy_set_header   Upgrade $http_upgrade;
@@ -34,30 +28,37 @@ server {
             proxy_cache_bypass $http_upgrade;
             proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header   X-Forwarded-Proto $scheme;    
-		    #proxy_set_header   X-Forwarded-Host $server_name;
-		    #proxy_set_header   Host $host;
-		    #proxy_redirect     off;
+            #proxy_set_header   X-Forwarded-Host $server_name;
+            #proxy_set_header   Host $host;
+            #proxy_redirect     off;
         }
 }
-	
+
 server {
     listen  443 ssl;  
     keepalive_timeout   70;
-    server_name androkat.hu *.androkat.hu;	
+    server_name androkat.hu www.androkat.hu;
+    add_header route ssl;
 
-    ssl_certificate      /etc/ssl/certs/certificate.crt; 
-    ssl_certificate_key  /etc/ssl/private/private.key; 
-    ssl_session_cache   shared:SSL:10m;
-    ssl_session_timeout 10m;
-    ssl_verify_client off;
+    ssl_certificate      /etc/letsencrypt/live/androkat.hu/fullchain.pem; 
+    ssl_certificate_key  /etc/letsencrypt/live/androkat.hu/privkey.pem; 
+    #ssl_session_cache   shared:SSL:10m;
+    #ssl_session_timeout 1440m;
+    #ssl_verify_client off;
+
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    access_log /var/log/nginx/access_androkat.log;
+    error_log /var/log/nginx/error_androkat.log;
 
     location     / {
-	
-	    if ($block_python) {
-                return 403;  # Forbidden response code
+
+        if ($block_python) {
+                return 403;  
         }
-			
-        proxy_pass         https://localhost:5001;
+
+        proxy_pass         http://localhost:5000;
         proxy_http_version 1.1;
         proxy_set_header   Upgrade $http_upgrade;
         proxy_set_header   Connection keep-alive;
@@ -65,8 +66,5 @@ server {
         proxy_cache_bypass $http_upgrade;
         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header   X-Forwarded-Proto $scheme;    
-		#proxy_set_header   X-Forwarded-Host $server_name;
-		#proxy_set_header   Host $host;
-		#proxy_redirect     off;
     }
 }
