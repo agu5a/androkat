@@ -3,7 +3,7 @@ Description=androkat
 
 [Service]
 TimeoutStartSec=0
-Type=notify
+Type=simple
 WorkingDirectory=/var/app
 ExecStart=/usr/bin/dotnet /var/app/androkat.web.dll
 Restart=always
