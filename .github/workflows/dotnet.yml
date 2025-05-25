@@ -163,7 +163,7 @@ jobs:
           echo "Attempt $(($RETRY_COUNT+1))/$MAX_RETRIES..."
           HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -m 30 "$HEALTH_CHECK_URL")
 
-          if [ "$HTTP_STATUS" -eq 302 ]; then
+          if [ "$HTTP_STATUS" -eq 200 ]; then
             echo "Health check successful! Service is up and running (HTTP Status: $HTTP_STATUS)"
             SUCCESS=true
             break
