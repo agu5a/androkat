@@ -2,16 +2,25 @@ name: build and test
 
 on:
   workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Trigger deploy job manually'
+        required: true
+        default: 'true'
   push:
     branches: [ "main" ]
     paths-ignore:
     - 'src/androkat.maui/**'
     - 'readme.md'
+    - '.gitignore'
+    - '.github/ISSUE_TEMPLATE/**'
   pull_request:
     branches: [ "main" ]
     paths-ignore:
     - 'src/androkat.maui/**'
     - 'readme.md'
+    - '.gitignore'
+    - '.github/ISSUE_TEMPLATE/**'
 
 env:
   DOTNET_VERSION: '9.0.x'
@@ -27,17 +36,22 @@ env:
   ANDROKAT_GOOGLE_CLIENT_SECRET: 'test-client-secret-xyz'
   ANDROKAT_GENERAL_HOST_URL: 'https://localhost:5001'
   ANDROKAT_GENERAL_ADMIN: 'test-admin@domain.com'
+  # DEPLOY
+  APP_PATH: '/var/app'
+  EC2_HOST: ${{ secrets.EC2_HOST }}
+  HEALTH_CHECK_URL: ${{ secrets.HEALTH_CHECK }}
 
 jobs:
   build-and-test:
+    if: github.event_name != 'workflow_dispatch' || github.event.inputs.deploy != 'true'
     name: build-and-test-ubuntu
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -49,3 +63,123 @@ jobs:
 
     - name: Test
       run: dotnet test ${{ env.SOLUTION_FILE }} --no-build --configuration Release
+
+  deploy:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.deploy == 'true'
+    name: Deploy to EC2
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.SOLUTION_FILE }}
+
+    - name: Publish application
+      run: dotnet publish ./src/androkat.web/androkat.web.csproj -c Release -o ./publish --self-contained false --runtime linux-x64 -p:PublishSingleFile=false
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-build
+        path: ./publish/
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: app-build
+        path: "./myapp-temp/"  # Temporary location in the runner's workspace
+
+    - name: Remove non-production files
+      run: |
+        rm -f ./myapp-temp/appsettings.json
+        rm -f ./myapp-temp/Data/androkat.db
+
+    - name: Create artifact tar file
+      run: tar -czvf app-package.tar.gz -C ./myapp-temp .
+
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        known_hosts: ${{ secrets.KNOWN_HOSTS }}
+
+    - name: Copy file to server
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        source: "app-package.tar.gz"
+        target: "~"
+
+    - name: Restart systemd service and deploy
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script_stop: true
+        command_timeout: "1m"
+        envs: APP_PATH
+        script: |
+          set -e
+
+          echo "Deploying new files..."
+          # Create a temporary directory for deployment
+          sudo mkdir -p ${APP_PATH}_temp
+
+          # Extract files to the temporary directory
+          sudo cp ~/app-package.tar.gz ${APP_PATH}_temp/
+          cd ${APP_PATH}_temp
+          sudo tar -xzvf app-package.tar.gz
+          sudo rm app-package.tar.gz
+
+          # Copy production files to the destination
+          sudo rsync -av ${APP_PATH}_temp/ ${APP_PATH}/
+
+          # Clean up temporary files
+          sudo rm -rf ${APP_PATH}_temp
+          rm ~/app-package.tar.gz
+
+          echo "Restarting service..."
+          sudo systemctl restart androkat.service
+
+    - name: Health Check
+      run: |
+        echo "Performing health check on $HEALTH_CHECK_URL"
+
+        # Health check with retries
+        MAX_RETRIES=3
+        RETRY_COUNT=0
+        SUCCESS=false
+
+        while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+          echo "Attempt $(($RETRY_COUNT+1))/$MAX_RETRIES..."
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -m 30 "$HEALTH_CHECK_URL")
+
+          if [ "$HTTP_STATUS" -eq 302 ]; then
+            echo "Health check successful! Service is up and running (HTTP Status: $HTTP_STATUS)"
+            SUCCESS=true
+            break
+          else
+            echo "Attempt $(($RETRY_COUNT+1)) failed with HTTP Status: $HTTP_STATUS"
+            RETRY_COUNT=$(($RETRY_COUNT+1))
+            if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+              echo "Waiting before next attempt..."
+              sleep 10
+            fi
+          fi
+        done
+
+        if [ "$SUCCESS" = true ]; then
+          exit 0
+        else
+          echo "Health check failed after $MAX_RETRIES attempts. Service may not be running properly."
+          exit 1

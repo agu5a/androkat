@@ -6,6 +6,7 @@
 		<IsPackable>false</IsPackable>
 		<NoWarn>$(NoWarn);S6967;</NoWarn>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+		<InvariantGlobalization>true</InvariantGlobalization>
 	</PropertyGroup>
 
 	<ItemGroup>
