@@ -182,3 +182,4 @@ jobs:
         else
           echo "Health check failed after $MAX_RETRIES attempts. Service may not be running properly."
           exit 1
+        fi
