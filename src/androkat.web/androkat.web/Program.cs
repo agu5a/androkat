@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Serilog.Expressions;
+using Serilog.Settings.Configuration;
 using System;
 
 Log.Logger = new LoggerConfiguration()
@@ -24,8 +26,13 @@ try
 
     builder.Host.UseSerilog((hostBuilderContext, loggerConfiguration) =>
     {
+        var options = new ConfigurationReaderOptions(
+            typeof(ConsoleLoggerConfigurationExtensions).Assembly,
+            typeof(SerilogExpression).Assembly
+        );
+        
         loggerConfiguration
-        .ReadFrom.Configuration(hostBuilderContext.Configuration)
+        .ReadFrom.Configuration(hostBuilderContext.Configuration, options)
         .Enrich.FromLogContext()
         .WriteTo.Console()
         .Enrich.WithProperty("MyApp", "AndroKatWeb");
