@@ -95,6 +95,8 @@ public class UpdateFixContentModel : PageModel
 
     public void OnPostSave()
     {
+        GetDropDownData();
+
         if (string.IsNullOrWhiteSpace(Nid) || string.IsNullOrWhiteSpace(Cim)
             || string.IsNullOrWhiteSpace(Fulldatum) || string.IsNullOrWhiteSpace(Idezet))
         {
@@ -106,7 +108,12 @@ public class UpdateFixContentModel : PageModel
                 DateTime.Parse(Inserted, CultureInfo.CreateSpecificCulture("hu-HU")), string.Empty, "", "", "")
                 );
 
-        GetDropDownData();
+        // After save, repopulate the Nid dropdown with content from the selected Tipus
+        if (!string.IsNullOrWhiteSpace(Tipus))
+        {
+            var all = _adminRepository.GetAllFixContentByTipus(int.Parse(Tipus));
+            AllRecordResult = all.Select(s => new SelectListItem { Text = s.Datum, Value = s.Nid.ToString() }).ToList();
+        }
 
         Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
         ShowToast = true;

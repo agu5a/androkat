@@ -109,6 +109,14 @@ public class UpdateModel : PageModel
         var res = _adminRepository.UpdateContent(new ContentDetailsModel(Guid.Parse(Nid), DateTime.Parse(Fulldatum, CultureInfo.CreateSpecificCulture("hu-HU")), Cim, Idezet ?? "", default,
         DateTime.Parse(Inserted, CultureInfo.CreateSpecificCulture("hu-HU")), string.Empty, Img ?? "", FileUrl ?? "", Forras ?? "")
         );
+
+        // After save, repopulate the Nid dropdown with content from the selected Tipus
+        if (!string.IsNullOrWhiteSpace(Tipus))
+        {
+            var all = _adminRepository.GetAllContentByTipus(int.Parse(Tipus));
+            AllRecordResult = all.Select(s => new SelectListItem { Text = s.Datum, Value = s.Nid.ToString() }).ToList();
+        }
+
         Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
         ShowToast = true;
     }

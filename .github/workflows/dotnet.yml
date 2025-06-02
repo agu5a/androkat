@@ -143,6 +143,11 @@ jobs:
           # Copy production files to the destination
           sudo rsync -av ${APP_PATH}_temp/ ${APP_PATH}/
 
+          # Set correct permissions and ownership
+          echo "Setting permissions and ownership..."
+          sudo chmod +x ${APP_PATH}/androkat.web
+          sudo chown ${{ secrets.EC2_USER }}:${{ secrets.EC2_USER }} -R ${APP_PATH}/
+
           # Clean up temporary files
           sudo rm -rf ${APP_PATH}_temp
           rm ~/app-package.tar.gz
