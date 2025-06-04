@@ -53,8 +53,8 @@ public class ContentsTodayTests : IClassFixture<ContentsTodayWebApplicationFacto
     }
 
     [Theory]
-    [InlineData(28, "dd1cd115-1289-11ea-8aa1-cbeb38570c35")]
-    [InlineData(28, "")]
+    [InlineData((int)Forras.audionapievangelium, "dd1cd115-1289-11ea-8aa1-cbeb38570c35")]
+    [InlineData((int)Forras.audionapievangelium, "")]
     public async Task API_GetContentsByTipusAndId(int tipus, string id)
     {
         var s = await _client.GetAndDeserializeAsync<IEnumerable<ContentResponse>>($"{_url}?tipus={tipus}&id={id}");

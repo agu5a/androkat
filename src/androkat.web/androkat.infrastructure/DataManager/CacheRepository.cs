@@ -162,7 +162,8 @@ public class CacheRepository : BaseRepository, ICacheRepository
             (int)Forras.audiohorvath, (int)Forras.audiotaize,
             (int)Forras.audiobarsi, (int)Forras.audionapievangelium,
             (int)Forras.ajanlatweb, (int)Forras.audiopalferi,
-            (int)Forras.prayasyougo, (int)Forras.gyonas
+            (int)Forras.prayasyougo, (int)Forras.gyonas,
+            (int)Forras.papaitwitter
         };
 
         var tomorrow = Clock.Now.AddDays(1).ToString("yyyy-MM-dd");

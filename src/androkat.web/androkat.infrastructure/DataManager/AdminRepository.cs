@@ -999,7 +999,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
         }
 
         var res = "[" + res2.Fulldatum + "] - " + res2.Cim;
-		if (item != 6 && item != 15 && item != 28 && item != 38 && item != 39 && item != 60)
+		if (item != 6 && item != 15 && item != (int)Forras.audionapievangelium && item != 38 && item != 39 && item != 60)
         {
             return res;
         }
@@ -1031,7 +1031,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 			sb.Append(" " + item.Tipus + " - <a href='" + data.Link + "' target='_blank'>" + data.TipusNev + "</a><br>");
 
 			sb.Append("[" + item.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss") + "] - " + item.Cim + "<br>");
-			if (item.Tipus is 6 or 15 or 28 or 38 or 39 or 60)
+			if (item.Tipus is 6 or 15 or (int)Forras.audionapievangelium or 38 or 39 or 60)
 			{
 				if (string.IsNullOrWhiteSpace(item.FileUrl))
                 {
