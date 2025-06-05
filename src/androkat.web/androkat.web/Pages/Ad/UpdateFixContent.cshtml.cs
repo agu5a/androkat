@@ -76,6 +76,8 @@ public class UpdateFixContentModel : PageModel
 
             if (string.IsNullOrWhiteSpace(Nid))
             {
+                // Reset form fields when Tipus changes but no Nid is selected
+                ClearFormFields();
                 return;
             }
 
@@ -194,5 +196,14 @@ public class UpdateFixContentModel : PageModel
             year++;
         }
         return year;
+    }
+
+    private void ClearFormFields()
+    {
+        Cim = string.Empty;
+        Idezet = string.Empty;
+        Fulldatum = string.Empty;
+        Inserted = string.Empty;
+        Nid = string.Empty;
     }
 }

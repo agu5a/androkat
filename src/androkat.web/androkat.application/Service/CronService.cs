@@ -45,7 +45,7 @@ public class CronService : ICronService
             DeleteOld((int)Forras.kurir, -1);
             DeleteOldRows((int)Forras.audiohorvath, 3);
             DeleteOldRows((int)Forras.fokolare, 1);
-            DeleteOldRows((int)Forras.papaitwitter, 4);
+            DeleteOldRows((int)Forras.papaitwitter, 3);
             DeleteOldRows((int)Forras.advent, 2);
             DeleteOldRows((int)Forras.maievangelium, 3);
             DeleteOldRows((int)Forras.ignac, 3);
@@ -54,7 +54,7 @@ public class CronService : ICronService
             DeleteOldRows((int)Forras.horvath, 3);
             DeleteOldRows((int)Forras.prayasyougo, 7);
             DeleteOldRows((int)Forras.nagybojt, 2);
-            DeleteOldRows((int)Forras.szeretetujsag, 5);
+            DeleteOldRows((int)Forras.szeretetujsag, 3);
             DeleteOldRows((int)Forras.audionapievangelium, 2);
             DeleteOldRows((int)Forras.audiobarsi, 3);
             DeleteOldRows((int)Forras.audiopalferi, 3);
@@ -97,18 +97,18 @@ public class CronService : ICronService
         }
 
         var mult = _clock.Now.DateTime.AddDays(days);
-        var torlendo = _apiRepository.GetContentDetailsModels().Where(w => w.Tipus == tipus && w.Fulldatum < mult).ToList();
-        if (torlendo.Count == 0)
+        var torlendo = _apiRepository.GetContentDetailsModels().Where(w => w.Tipus == tipus && w.Fulldatum < mult);
+        if (!torlendo.Any())
         {
             return;
         }
 
-        if (osszes <= torlendo.Count)
+        if (osszes <= torlendo.Count())
         {
             return;
         }
 
-        _logger.LogDebug("delete from Content. {Tipus} {Count}", tipus, torlendo.Count);
+        _logger.LogDebug("delete from Content. {Tipus} {Count}", tipus, torlendo.Count());
         foreach (var item in torlendo)
         {
             _apiRepository.DeleteContentDetailsByNid(item.Nid);
@@ -118,24 +118,23 @@ public class CronService : ICronService
 
     private void DeleteOldRows(int tipus, int max)
     {
-        var osszes = new List<ContentDetailsModel>();
+        IEnumerable<ContentDetailsModel> osszes;
 
-        if (_clock.Now.DateTime.ToString("MM") == "01") // törölni a tavalyit, egyébként a dátum sorrend miatt mindig az újakat törölné :((
+        if (_clock.Now.DateTime.ToString("MM") == "01") // törölni a tavalyit ha január hónapban vagyunk, egyébként a dátum sorrend miatt mindig az újakat törölné :((
         {
-            osszes = _apiRepository.GetContentDetailsModels().Where(w => w.Tipus == tipus && !w.Fulldatum.ToString("MM-dd").StartsWith("01-")).Skip(max).ToList();
+            osszes = _apiRepository.GetContentDetailsModels().Where(w => w.Tipus == tipus && !w.Fulldatum.ToString("MM-dd").StartsWith("01-")).Skip(max);
+        }
+        else
+        {
+            osszes = _apiRepository.GetContentDetailsModels().Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).Skip(max);
         }
 
-        if (osszes.Count == 0)
-        {
-            osszes = _apiRepository.GetContentDetailsModels().Where(w => w.Tipus == tipus).OrderByDescending(o => o.Fulldatum).Skip(max).ToList();
-        }
-
-        if (osszes!.Count == 0)
+        if (!osszes.Any())
         {
             return;
         }
 
-        foreach (var item in osszes!)
+        foreach (var item in osszes)
         {
             _apiRepository.DeleteContentDetailsByNid(item.Nid);
             _logger.LogDebug("delete from Content. {Tipus} {Datum}", item.Tipus, item.Fulldatum);
@@ -144,8 +143,8 @@ public class CronService : ICronService
 
     private void DeleteOldVideoRows(int max)
     {
-        var osszes = _apiRepository.GetVideoModels().OrderByDescending(o => o.Date).Skip(max).ToList();
-        if (osszes.Count == 0)
+        var osszes = _apiRepository.GetVideoModels().OrderByDescending(o => o.Date).Skip(max);
+        if (!osszes.Any())
         {
             return;
         }

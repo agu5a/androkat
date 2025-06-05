@@ -90,6 +90,8 @@ public class UpdateMaiSzentModel : PageModel
 
             if (string.IsNullOrWhiteSpace(Nid))
             {
+                // Reset form fields when month changes but no Nid is selected
+                ClearFormFields();
                 return;
             }
             
@@ -171,5 +173,15 @@ public class UpdateMaiSzentModel : PageModel
         {
             _logger.LogError(ex, "Exception: ");
         }
+    }
+
+    private void ClearFormFields()
+    {
+        Cim = string.Empty;
+        Idezet = string.Empty;
+        Datum = string.Empty;
+        Inserted = string.Empty;
+        Img = string.Empty;
+        Nid = string.Empty;
     }
 }

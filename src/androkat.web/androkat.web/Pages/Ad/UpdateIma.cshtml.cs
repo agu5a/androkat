@@ -68,6 +68,8 @@ public class UpdateImaModel : PageModel
 
             if (string.IsNullOrWhiteSpace(Nid))
             {
+                // Reset form fields when Tipus changes but no Nid is selected
+                ClearFormFields();
                 return;
             }
             
@@ -162,5 +164,15 @@ public class UpdateImaModel : PageModel
         {
             _logger.LogError(ex, "Exception: ");
         }
+    }
+
+    private void ClearFormFields()
+    {
+        Cim = string.Empty;
+        Idezet = string.Empty;
+        Datum = string.Empty;
+        Inserted = string.Empty;
+        Img = string.Empty;
+        Nid = string.Empty;
     }
 }

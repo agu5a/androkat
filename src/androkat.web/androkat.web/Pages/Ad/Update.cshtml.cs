@@ -76,6 +76,8 @@ public class UpdateModel : PageModel
 
             if (string.IsNullOrWhiteSpace(Nid))
             {
+                // Reset form fields when Tipus changes but no Nid is selected
+                ClearFormFields();
                 return;
             }
             
@@ -189,5 +191,17 @@ public class UpdateModel : PageModel
         {
             _logger.LogError(ex, "Exception: ");
         }
+    }
+
+    private void ClearFormFields()
+    {
+        Cim = string.Empty;
+        Idezet = string.Empty;
+        Forras = string.Empty;
+        Inserted = string.Empty;
+        Fulldatum = string.Empty;
+        Img = string.Empty;
+        FileUrl = string.Empty;
+        Nid = string.Empty;
     }
 }

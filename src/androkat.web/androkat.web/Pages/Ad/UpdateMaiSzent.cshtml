@@ -18,6 +18,8 @@
 
             // Auto-submit when month dropdown changes
             $('#CurrentMonth').on('change', function() {
+                // Reset Nid dropdown to default value when month changes
+                $('#Nid').val('');
                 // Set default type
                 $('#Tipus').val('21');
                 // Submit the form with search handler

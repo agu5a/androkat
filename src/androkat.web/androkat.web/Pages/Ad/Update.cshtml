@@ -18,6 +18,8 @@
 
             // Auto-submit when Tipus changes
             $('#Tipus').on('change', function() {
+                // Reset Nid dropdown to default value when Tipus changes
+                $('#Nid').val('');
                 // Submit the form with the Search handler
                 $('form').attr('action', '?handler=Search').submit();
             });
