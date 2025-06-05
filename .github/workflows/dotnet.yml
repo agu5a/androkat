@@ -1,26 +1,15 @@
 name: build and test
 
 on:
-  workflow_dispatch:
-    inputs:
-      deploy:
-        description: 'Trigger deploy job manually'
-        required: true
-        default: 'true'
   push:
     branches: [ "main" ]
-    paths-ignore:
-    - 'src/androkat.maui/**'
-    - 'readme.md'
-    - '.gitignore'
-    - '.github/ISSUE_TEMPLATE/**'
+    paths:
+    - 'src/androkat.web/**'
   pull_request:
     branches: [ "main" ]
-    paths-ignore:
-    - 'src/androkat.maui/**'
-    - 'readme.md'
-    - '.gitignore'
-    - '.github/ISSUE_TEMPLATE/**'
+    paths:
+    - 'src/androkat.web/**'
+  workflow_dispatch:
 
 env:
   DOTNET_VERSION: '9.0.x'
@@ -63,10 +52,9 @@ jobs:
     - name: Test
       run: dotnet test ${{ env.SOLUTION_FILE }} --no-build --configuration Release
 
-  deploy:
-    name: Deploy to EC2
+  publish:
+    name: Publish Application
     needs: build-and-test
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.deploy == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -77,11 +65,13 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Restore dependencies
-      run: dotnet restore ${{ env.SOLUTION_FILE }}
-
     - name: Publish application
       run: dotnet publish ./src/androkat.web/androkat.web/androkat.web.csproj -c Release -o ./publish --self-contained false --runtime linux-x64 -p:PublishSingleFile=true
+
+    - name: Remove non-production files
+      run: |
+        rm -f ./publish/appsettings.json
+        rm -f ./publish/Data/androkat.db
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
@@ -89,16 +79,17 @@ jobs:
         name: app-build
         path: ./publish/
 
+  deploy:
+    name: Deploy to EC2
+    needs: publish
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Download build artifacts
       uses: actions/download-artifact@v4
       with:
         name: app-build
         path: "./myapp-temp/"  # Temporary location in the runner's workspace
-
-    - name: Remove non-production files
-      run: |
-        rm -f ./myapp-temp/appsettings.json
-        rm -f ./myapp-temp/Data/androkat.db
 
     - name: Create artifact tar file
       run: tar -czvf app-package.tar.gz -C ./myapp-temp .

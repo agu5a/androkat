@@ -4,14 +4,12 @@ on:
   workflow_dispatch:
   #push:
   #  branches: [ "main" ]
-  #  paths-ignore:
-  #  - 'src/androkat.web/**'
-  #  - 'readme.md'
+  #  paths:
+  #  - 'src/androkat.maui/**'
   #pull_request:
   #  branches: [ "main" ]
-  #  paths-ignore:
-  #  - 'src/androkat.web/**'
-  #  - 'readme.md' 
+  #  paths:
+  #  - 'src/androkat.maui/**'
 
 env:
   DOTNET_VERSION: '8.0.x'
