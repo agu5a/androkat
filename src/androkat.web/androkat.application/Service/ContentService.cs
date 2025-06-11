@@ -195,7 +195,7 @@ public class ContentService : IContentService
             list.Add(new ContentModel(item, _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus)));
         }
 
-        return list.AsReadOnly();
+        return list.OrderBy(o => o.MetaData.TipusId).ThenByDescending(o => o.ContentDetails.Fulldatum).ToList().AsReadOnly();
     }
 
     private IEnumerable<ContentDetailsModel> Get(int[] tipusok)
