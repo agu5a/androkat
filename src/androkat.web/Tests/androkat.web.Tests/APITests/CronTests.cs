@@ -15,9 +15,11 @@ using Moq;
 using Xunit;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using androkat.web.Controllers;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 
 namespace androkat.web.Tests.APITests;
 
@@ -59,7 +61,7 @@ public class CronTests : BaseTest
             HealthCheckApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_HEALTH_CHECK_API_URL"),
             GetContentsApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_GET_CONTENTS_API_URL")
         });
-        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object, endPointConfig);
+        var controller = new Cron(loggerRepo.Object, repository, new Mock<IAdminRepository>().Object, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object, endPointConfig);
         var resV1 = controller.GetKeresztenyelet();
         dynamic s2 = resV1.Result;
         List<string> result = s2.Value;
@@ -105,7 +107,7 @@ public class CronTests : BaseTest
             HealthCheckApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_HEALTH_CHECK_API_URL"),
             GetContentsApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_GET_CONTENTS_API_URL")
         });
-        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object, endPointConfig);
+        var controller = new Cron(loggerRepo.Object, repository, new Mock<IAdminRepository>().Object, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object, endPointConfig);
         var resV1 = controller.HasNapiolvasoByDate(2, date);
         dynamic s2 = resV1.Result;
         bool result = s2.Value;
@@ -144,7 +146,7 @@ public class CronTests : BaseTest
             HealthCheckApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_HEALTH_CHECK_API_URL"),
             GetContentsApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_GET_CONTENTS_API_URL")
         });
-        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object, endPointConfig);
+        var controller = new Cron(loggerRepo.Object, repository, new Mock<IAdminRepository>().Object, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object, endPointConfig);
         var resV1 = controller.GetSzentbernat();
         dynamic s2 = resV1.Result;
         DateTime result = s2.Value;
@@ -160,7 +162,7 @@ public class CronTests : BaseTest
 
         using var context = new AndrokatContext(GetDbContextOptions());
 
-        var controller = new Cron(loggerRepo.Object, new Mock<IApiRepository>().Object, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object,
+        var controller = new Cron(loggerRepo.Object, new Mock<IApiRepository>().Object, new Mock<IAdminRepository>().Object, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object,
         Options.Create(new EndPointConfiguration
         {
             Cron = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_CRON"),
@@ -209,7 +211,7 @@ public class CronTests : BaseTest
             HealthCheckApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_HEALTH_CHECK_API_URL"),
             GetContentsApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_GET_CONTENTS_API_URL")
         });
-        var controller = new Cron(loggerRepo.Object, repository, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object, endPointConfig);
+        var controller = new Cron(loggerRepo.Object, repository, new Mock<IAdminRepository>().Object, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object, endPointConfig);
         var resV1 = controller.GetLastContentByTipus((int)Forras.kurir);
         dynamic s2 = resV1.Result;
         DateTime result = s2.Value;
@@ -225,7 +227,7 @@ public class CronTests : BaseTest
 
         using var context = new AndrokatContext(GetDbContextOptions());
 
-        var controller = new Cron(loggerRepo.Object, new Mock<IApiRepository>().Object, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object,
+        var controller = new Cron(loggerRepo.Object, new Mock<IApiRepository>().Object, new Mock<IAdminRepository>().Object, clock.Object, cronService.Object, new Mock<IWebHostEnvironment>().Object,
         Options.Create(new EndPointConfiguration
         {
             Cron = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_CRON"),
@@ -239,5 +241,206 @@ public class CronTests : BaseTest
         dynamic s2 = resV1.Result;
         DateTime result = s2.Value;
         result.ToString("yyyy-MM-dd HH:mm:ss").Should().Be("0001-01-01 00:00:00");
+    }
+
+    [Theory]
+    [InlineData(DayOfWeek.Saturday)]
+    [InlineData(DayOfWeek.Sunday)]
+    public void NapiUtravalo_Weekend_ShouldSkip(DayOfWeek dayOfWeek)
+    {
+        // Arrange
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var clock = new Mock<IClock>();
+        var testDate = new DateTimeOffset(2025, 6, dayOfWeek == DayOfWeek.Saturday ? 14 : 15, 10, 0, 0, TimeSpan.Zero); // Saturday or Sunday
+        clock.Setup(c => c.Now).Returns(testDate);
+
+        var loggerRepo = new Mock<ILogger<Cron>>();
+        var cronService = new Mock<ICronService>();
+        var webHostEnvironment = new Mock<IWebHostEnvironment>();
+        webHostEnvironment.Setup(w => w.WebRootPath).Returns("/test/wwwroot");
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        var apiRepository = new ApiRepository(context, clock.Object, mapper);
+        var adminRepository = new Mock<IAdminRepository>();
+
+        var endPointConfig = Options.Create(new EndPointConfiguration
+        {
+            Cron = "testcron"
+        });
+
+        var controller = new Cron(loggerRepo.Object, apiRepository, adminRepository.Object, clock.Object, cronService.Object, webHostEnvironment.Object, endPointConfig);
+
+        // Act
+        var result = controller.NapiUtravalo();
+
+        // Assert
+        result.Should().BeOfType<OkObjectResult>();
+        var okResult = result as OkObjectResult;
+        okResult.Value.Should().Be("Skipped - weekend");
+    }
+
+    [Fact]
+    public void NapiUtravalo_NoMp3File_ShouldReturnNotFound()
+    {
+        // Arrange
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var clock = new Mock<IClock>();
+        var testDate = new DateTimeOffset(2025, 6, 17, 10, 0, 0, TimeSpan.Zero); // Tuesday
+        clock.Setup(c => c.Now).Returns(testDate);
+
+        var loggerRepo = new Mock<ILogger<Cron>>();
+        var cronService = new Mock<ICronService>();
+        var webHostEnvironment = new Mock<IWebHostEnvironment>();
+        webHostEnvironment.Setup(w => w.WebRootPath).Returns("/nonexistent/path");
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        var apiRepository = new ApiRepository(context, clock.Object, mapper);
+        var adminRepository = new Mock<IAdminRepository>();
+
+        var endPointConfig = Options.Create(new EndPointConfiguration
+        {
+            Cron = "testcron"
+        });
+
+        var controller = new Cron(loggerRepo.Object, apiRepository, adminRepository.Object, clock.Object, cronService.Object, webHostEnvironment.Object, endPointConfig);
+
+        // Act
+        var result = controller.NapiUtravalo();
+
+        // Assert
+        result.Should().BeOfType<NotFoundObjectResult>();
+        var notFoundResult = result as NotFoundObjectResult;
+        notFoundResult.Value.Should().Be("File not found: 06_17.mp3");
+    }
+
+    [Fact]
+    public void NapiUtravalo_Mp3FileExists_NoDbRecord_ShouldAddRecord()
+    {
+        // Arrange
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var clock = new Mock<IClock>();
+        var testDate = new DateTimeOffset(2025, 6, 17, 10, 0, 0, TimeSpan.Zero); // Tuesday
+        clock.Setup(c => c.Now).Returns(testDate);
+
+        var loggerRepo = new Mock<ILogger<Cron>>();
+        var cronService = new Mock<ICronService>();
+        
+        // Create a temporary directory and file for testing
+        var tempDir = Path.Combine(Path.GetTempPath(), "androkat_test_" + Guid.NewGuid().ToString("N")[..8]);
+        var downloadDir = Path.Combine(tempDir, "download");
+        Directory.CreateDirectory(downloadDir);
+        var testFilePath = Path.Combine(downloadDir, "06_17.mp3");
+        System.IO.File.WriteAllText(testFilePath, "test audio content");
+
+        var webHostEnvironment = new Mock<IWebHostEnvironment>();
+        webHostEnvironment.Setup(w => w.WebRootPath).Returns(tempDir);
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+        var apiRepository = new ApiRepository(context, clock.Object, mapper);
+        
+        var adminRepository = new Mock<IAdminRepository>();
+        var mockLastTodayResult = new androkat.domain.Model.AdminPage.LastTodayResult
+        {
+            Cim = "Test Evangelium (Napi Ige)"
+        };
+        adminRepository.Setup(a => a.GetLastTodayContentByTipus((int)Forras.maievangelium))
+                      .Returns(mockLastTodayResult);
+
+        var endPointConfig = Options.Create(new EndPointConfiguration
+        {
+            Cron = "testcron"
+        });
+
+        var controller = new Cron(loggerRepo.Object, apiRepository, adminRepository.Object, clock.Object, cronService.Object, webHostEnvironment.Object, endPointConfig);
+
+        try
+        {
+            // Act
+            var result = controller.NapiUtravalo();
+
+            // Assert
+            result.Should().BeOfType<OkObjectResult>();
+            var okResult = result as OkObjectResult;
+            okResult.Value.Should().Be("File exists, DB record added for: 06_17.mp3");
+        }
+        finally
+        {
+            // Cleanup
+            if (Directory.Exists(tempDir))
+            {
+                Directory.Delete(tempDir, true);
+            }
+        }
+    }
+
+    [Fact]
+    public void NapiUtravalo_Mp3FileExists_DbRecordExists_ShouldReturnConflict()
+    {
+        // Arrange
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var mapper = config.CreateMapper();
+
+        var clock = new Mock<IClock>();
+        var testDate = new DateTimeOffset(2025, 6, 17, 10, 0, 0, TimeSpan.Zero); // Tuesday
+        clock.Setup(c => c.Now).Returns(testDate);
+
+        var loggerRepo = new Mock<ILogger<Cron>>();
+        var cronService = new Mock<ICronService>();
+        
+        // Create a temporary directory and file for testing
+        var tempDir = Path.Combine(Path.GetTempPath(), "androkat_test_" + Guid.NewGuid().ToString("N")[..8]);
+        var downloadDir = Path.Combine(tempDir, "download");
+        Directory.CreateDirectory(downloadDir);
+        var testFilePath = Path.Combine(downloadDir, "06_17.mp3");
+        System.IO.File.WriteAllText(testFilePath, "test audio content");
+
+        var webHostEnvironment = new Mock<IWebHostEnvironment>();
+        webHostEnvironment.Setup(w => w.WebRootPath).Returns(tempDir);
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        // Add existing content record with tipus 15 for the test date
+        var _fixture = new Fixture();
+        var existingContent = _fixture.Create<Content>();
+        existingContent.Tipus = 15;
+        existingContent.Fulldatum = "2025-06-17";
+        existingContent.Inserted = DateTime.Parse("2025-06-17 10:00:00");
+        context.Content.Add(existingContent);
+        context.SaveChanges();
+
+        var apiRepository = new ApiRepository(context, clock.Object, mapper);
+        var adminRepository = new Mock<IAdminRepository>();
+
+        var endPointConfig = Options.Create(new EndPointConfiguration
+        {
+            Cron = "testcron"
+        });
+
+        var controller = new Cron(loggerRepo.Object, apiRepository, adminRepository.Object, clock.Object, cronService.Object, webHostEnvironment.Object, endPointConfig);
+
+        try
+        {
+            // Act
+            var result = controller.NapiUtravalo();
+
+            // Assert
+            result.Should().BeOfType<ConflictObjectResult>();
+            var conflictResult = result as ConflictObjectResult;
+            conflictResult.Value.Should().Be("File and DB record already exist for: 06_17.mp3");
+        }
+        finally
+        {
+            // Cleanup
+            if (Directory.Exists(tempDir))
+            {
+                Directory.Delete(tempDir, true);
+            }
+        }
     }
 }

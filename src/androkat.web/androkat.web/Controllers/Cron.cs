@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 
@@ -25,12 +26,14 @@ public class Cron : ControllerBase
 {
     private readonly ILogger<Cron> _logger;
     private readonly IApiRepository _apiRepository;
+    private readonly IAdminRepository _adminRepository;
     private readonly IClock _iClock;
     private readonly ICronService _cronService;
     private readonly IWebHostEnvironment _environment;
 
     public Cron(ILogger<Cron> logger,
         IApiRepository apiRepository,
+        IAdminRepository adminRepository,
         IClock iClock,
         ICronService cronService,
         IWebHostEnvironment environment,
@@ -38,6 +41,7 @@ public class Cron : ControllerBase
     {
         _logger = logger;
         _apiRepository = apiRepository;
+        _adminRepository = adminRepository;
         _iClock = iClock;
         _cronService = cronService;
         _environment = environment;
@@ -73,6 +77,74 @@ public class Cron : ControllerBase
         {
             _logger.LogError(ex, "Exception: Failed to run {Name}", nameof(VatikanRadio));
             return BadRequest($"failed to run {nameof(VatikanRadio)}");
+        }
+    }
+
+    [Route("napiutravalo")]
+    [HttpGet]
+    [ProducesResponseType(typeof(string), 200)]
+    [ProducesResponseType(typeof(string), 404)]
+    [ProducesResponseType(typeof(string), 409)]
+    [ProducesResponseType(typeof(string), 400)]
+    public ActionResult NapiUtravalo()
+    {
+        try
+        {
+            var currentDay = _iClock.Now.DayOfWeek;
+            if (currentDay == DayOfWeek.Saturday || currentDay == DayOfWeek.Sunday)
+            {
+                return Ok("Skipped - weekend");
+            }
+
+            var currentDate = _iClock.Now.DateTime;
+            var fileName = $"{currentDate:MM_dd}.mp3";
+            var filePath = Path.Combine(_environment.WebRootPath, "download", fileName);
+            
+            if (System.IO.File.Exists(filePath))
+            {
+                var date = currentDate.ToString("yyyy-MM-dd");
+                var existingRecord = _apiRepository.GetContentDetailsModels().FirstOrDefault(w => w.Tipus == 15 && w.Fulldatum.ToString("yyyy-MM-dd").StartsWith(date));
+                
+                if (existingRecord == null)
+                {
+                    var res = _adminRepository.GetLastTodayContentByTipus((int)Forras.maievangelium);
+                    var cim = res.Cim.Replace(" (Napi Ige)", "");
+                    var fileUrl = $"https://androkat.hu/download/{DateTime.Now:MM_dd}.mp3";
+                    
+                    var contentDetails = new ContentDetailsModel(
+                        nid: Guid.NewGuid(),
+                        fulldatum: currentDate,
+                        cim: cim,
+                        idezet: string.Empty,
+                        tipus: 15,
+                        inserted: currentDate,
+                        fileUrl: fileUrl
+                    );
+                    
+                    var success = _apiRepository.AddTempContent(contentDetails);
+                    if (success)
+                    {
+                        return Ok($"File exists, DB record added for: {fileName}");
+                    }
+                    else
+                    {
+                        return BadRequest($"Failed to add DB record for: {fileName}");
+                    }
+                }
+                else
+                {
+                    return Conflict($"File and DB record already exist for: {fileName}");
+                }
+            }
+            else
+            {
+                return NotFound($"File not found: {fileName}");
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: Failed to run {Name}", nameof(NapiUtravalo));
+            return BadRequest($"failed to run {nameof(NapiUtravalo)}");
         }
     }
 
