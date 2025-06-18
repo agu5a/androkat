@@ -121,7 +121,7 @@ public class Cron : ControllerBase
                         fileUrl: fileUrl
                     );
                     
-                    var success = _apiRepository.AddTempContent(contentDetails);
+                    var success = _apiRepository.AddContentDetailsModel(contentDetails);
                     if (success)
                     {
                         return Ok($"File exists, DB record added for: {fileName}");

@@ -193,15 +193,14 @@ public class CronService : ICronService
             });
         }
 
-        if (shouldDelete)
+        if (!shouldDelete)
         {
-            foreach (var file in fileNames)
-            {
-                if (!file.Contains(".gitignore"))
-                {
-                    File.Delete(file);
-                }
-            }
+            return fileNames;
+        }
+
+        foreach (var file in fileNames.Where(file => !file.Contains(".gitignore")))
+        {
+            File.Delete(file);
         }
 
         return fileNames;

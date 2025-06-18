@@ -451,19 +451,16 @@ public class AdminRepository : BaseRepository, IAdminRepository
 				Nid = s.Nid.ToString()
 			}));
 
-			foreach (var tipus in AndrokatConfiguration.ContentTypeIds())
-			{
-				if (!temp.Exists(c => c.Tipus == tipus))
-				{
-					temp.Add(new AllTodayResult
-					{
-						Tipus = tipus,
-						Datum = string.Empty,
-						Nid = string.Empty,
-						TipusNev = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus).TipusNev
-					});
-				}
-			}
+            AndrokatConfiguration.ContentTypeIds()
+                .Where(tipus => !temp.Exists(c => c.Tipus == tipus))
+                .ToList()
+                .ForEach(tipus => temp.Add(new AllTodayResult
+                {
+                    Tipus = tipus,
+                    Datum = string.Empty,
+                    Nid = string.Empty,
+                    TipusNev = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus).TipusNev
+                }));
 
             if (!temp.Exists(c => c.Tipus == (int)Forras.gyonas))
             {
