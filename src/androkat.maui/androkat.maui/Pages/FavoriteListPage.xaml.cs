@@ -70,13 +70,6 @@ public partial class FavoriteListPage : ContentPage
 
     private async void Button_Clicked_1(object sender, EventArgs e)
     {
-        // Check if the platform supports file picking
-        //if (!await FilePicker.IsPickingSupportedAsync())
-        //
-        //    await DisplayAlert("Error", "File picking is not supported on this platform.", "OK")
-        //    return
-        //
-
         if (Build.VERSION.SdkInt < BuildVersionCodes.R)
         {
             var storagePermission = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
