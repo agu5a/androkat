@@ -1,11 +1,13 @@
 ﻿using androkat.maui.library.Models;
 using androkat.maui.library.ViewModels;
+using System.Net.Http;
 
 namespace androkat.hu.Pages;
 
 public partial class DetailAudio
 {
     private DetailViewModel ViewModel => (BindingContext as DetailViewModel)!;
+    private string _downloadedFilePath = string.Empty;
 
     public DetailAudio(DetailViewModel viewModel)
     {
@@ -17,8 +19,8 @@ public partial class DetailAudio
     {
         base.OnAppearing();
         await ViewModel.InitializeAsync();
-        TitleLabel.Text = "forrasTitle"; //Objects.requireNonNull(idezetSource).get_title()
-        Leiras1.Text = ViewModel.Title;
+        TitleLabel.Text = ViewModel.ContentView.detailscim;
+        Leiras1.Text = ViewModel.ContentView.ContentEntity.Cim;
         Leiras2.Text = ViewModel.ContentView.datum;
 
         var leiras = ViewModel.ContentView.type switch
@@ -39,6 +41,45 @@ public partial class DetailAudio
         };
         
         Leiras3.Text = leiras + "<br><br><b>Töltse le</b> vagy <b>hallgassa meg most</b>";
+        
+        // Check if file already exists and update button states
+        CheckFileExistsAndUpdateButtons();
+    }
+
+    private void CheckFileExistsAndUpdateButtons()
+    {
+        try
+        {
+            string? url = GetAudioUrl();
+            if (!string.IsNullOrEmpty(url))
+            {
+                string fileName = GetFileName(url, ViewModel!.ContentView.type);
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string androkatFolder = Path.Combine(documentsPath, "AndroKat");
+                string filePath = Path.Combine(androkatFolder, fileName);
+
+                if (File.Exists(filePath))
+                {
+                    _downloadedFilePath = filePath;
+                    DownloadButton.IsEnabled = false;
+                    DownloadButton.Text = "MÁR LETÖLTVE";
+                    DeleteButton.IsEnabled = true;
+                }
+                else
+                {
+                    DownloadButton.IsEnabled = true;
+                    DownloadButton.Text = "LETÖLTÉS";
+                    DeleteButton.IsEnabled = false;
+                }
+            }
+        }
+        catch (Exception)
+        {
+            // If there's an error checking files, just enable download
+            DownloadButton.IsEnabled = true;
+            DownloadButton.Text = "LETÖLTÉS";
+            DeleteButton.IsEnabled = false;
+        }
     }
 
     protected override void OnDisappearing()
@@ -47,19 +88,226 @@ public partial class DetailAudio
         base.OnDisappearing();
     }
 
-#pragma warning disable S2325 // Methods and properties that don't access instance data should be static
-    private void Letoltes_OnClicked(object? sender, EventArgs e)
+    private async void Letoltes_OnClicked(object? sender, EventArgs e)
     {
-        throw new NotImplementedException();
+        string? audioUrl = GetAudioUrl();
+        if (string.IsNullOrEmpty(audioUrl))
+        {
+            await DisplayAlert("Hiba", "Nincs elérhető hangfájl URL", "OK");
+            return;
+        }
+
+        try
+        {
+            // Show progress indicators
+            var progressLayoutControl = (VerticalStackLayout)this.FindByName("progressLayout");
+            if (progressLayoutControl != null)
+            {
+                progressLayoutControl.IsVisible = true;
+            }
+            ProgressBar.IsVisible = true;
+
+            string url = audioUrl;
+            string fileName = GetFileName(url, ViewModel!.ContentView.type);
+            
+            // Download file
+            using var httpClient = new HttpClient();
+            var response = await httpClient.GetAsync(url);
+            
+            if (response.IsSuccessStatusCode)
+            {
+                var bytes = await response.Content.ReadAsByteArrayAsync();
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string androkatFolder = Path.Combine(documentsPath, "AndroKat");
+                
+                // Create directory if it doesn't exist
+                Directory.CreateDirectory(androkatFolder);
+                
+                _downloadedFilePath = Path.Combine(androkatFolder, fileName);
+                await File.WriteAllBytesAsync(_downloadedFilePath, bytes);
+                
+                await DisplayAlert("Siker", $"Letöltés sikeres!\nHelye: {_downloadedFilePath}", "OK");
+                
+                    // Update button states
+                    var downloadButton = sender as Button;
+                    if (downloadButton != null)
+                    {
+                        downloadButton.IsEnabled = false;
+                        downloadButton.Text = "MÁR LETÖLTVE";
+                    }
+                
+                // Enable delete button
+                DeleteButton.IsEnabled = true;
+            }
+            else
+            {
+                await DisplayAlert("Hiba", "Nem sikerült letölteni a fájlt", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Hiba", $"Letöltési hiba: {ex.Message}", "OK");
+        }
+        finally
+        {
+            // Hide progress indicators
+            var progressLayoutControl = (VerticalStackLayout)this.FindByName("progressLayout");
+            if (progressLayoutControl != null)
+            {
+                progressLayoutControl.IsVisible = false;
+            }
+            ProgressBar.IsVisible = false;
+        }
     }
     
-    private void Torles_OnClicked(object? sender, EventArgs e)
+    private async void Torles_OnClicked(object? sender, EventArgs e)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (string.IsNullOrEmpty(_downloadedFilePath))
+            {
+                // Try to find the file
+                string? url = GetAudioUrl();
+                if (!string.IsNullOrEmpty(url))
+                {
+                    string fileName = GetFileName(url, ViewModel!.ContentView.type);
+                    string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    string androkatFolder = Path.Combine(documentsPath, "AndroKat");
+                    _downloadedFilePath = Path.Combine(androkatFolder, fileName);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(_downloadedFilePath) && File.Exists(_downloadedFilePath))
+            {
+                bool confirm = await DisplayAlert("Megerősítés", "Biztosan törli a letöltött fájlt?", "Igen", "Nem");
+                if (confirm)
+                {
+                    File.Delete(_downloadedFilePath);
+                    _downloadedFilePath = string.Empty;
+                    
+                    await DisplayAlert("Siker", "Fájl törölve", "OK");
+                    
+                    // Update button states
+                    DownloadButton.IsEnabled = true;
+                    DownloadButton.Text = "LETÖLTÉS";
+                    
+                    var deleteButton = sender as Button;
+                    if (deleteButton != null)
+                    {
+                        deleteButton.IsEnabled = false;
+                    }
+                }
+            }
+            else
+            {
+                await DisplayAlert("Hiba", "Nincs letöltött fájl", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Hiba", $"Törlési hiba: {ex.Message}", "OK");
+        }
     }
     
-    private void Lejatszas_OnClicked(object? sender, EventArgs e)
+    private async void Lejatszas_OnClicked(object? sender, EventArgs e)
     {
-        throw new NotImplementedException();
+        try
+        {
+            string? audioUrl = GetAudioUrl();
+            if (string.IsNullOrEmpty(audioUrl))
+            {
+                await DisplayAlert("Hiba", "Nincs elérhető hangfájl", "OK");
+                return;
+            }
+
+            // Check if we have a local file first
+            string fileName = GetFileName(audioUrl, ViewModel!.ContentView.type);
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string androkatFolder = Path.Combine(documentsPath, "AndroKat");
+            string localFilePath = Path.Combine(androkatFolder, fileName);
+
+            Uri playUri;
+            if (File.Exists(localFilePath))
+            {
+                // Play local file
+                playUri = new Uri($"file://{localFilePath}");
+            }
+            else
+            {
+                // Play from URL
+                playUri = new Uri(audioUrl);
+            }
+
+            // Use Launcher to open with default audio player
+            await Launcher.Default.OpenAsync(playUri);
+        }
+        catch (Exception ex)
+        {
+            // Fallback: try to open URL in browser/media player
+            try
+            {
+                string? audioUrl = GetAudioUrl();
+                if (!string.IsNullOrEmpty(audioUrl))
+                {
+                    await Launcher.Default.OpenAsync(audioUrl);
+                }
+            }
+            catch
+            {
+                await DisplayAlert("Hiba", $"Nem sikerült megnyitni a hangfájlt: {ex.Message}", "OK");
+            }
+        }
+    }
+
+    private string? GetAudioUrl()
+    {
+        var audioUrl = ViewModel?.ContentView?.ContentEntity?.KulsoLink;
+        if (!string.IsNullOrEmpty(audioUrl))
+        {
+            return audioUrl;
+        }        
+       
+        return null;
+    }
+
+    private static string GetFileName(string url, Activities activityType)
+    {
+        try
+        {
+            var uri = new Uri(url);
+            string originalFileName = Path.GetFileName(uri.LocalPath);
+            
+            if (string.IsNullOrEmpty(originalFileName))
+            {
+                originalFileName = "audio.mp3";
+            }
+            
+            // Remove extension to add prefix
+            string nameWithoutExt = Path.GetFileNameWithoutExtension(originalFileName);
+            string extension = Path.GetExtension(originalFileName);
+            
+            if (string.IsNullOrEmpty(extension))
+            {
+                extension = ".mp3";
+            }
+
+            // Add prefix based on activity type (same as Java implementation)
+            string prefix = activityType switch
+            {
+                Activities.audiobarsi => "Barsi",
+                Activities.prayasyougo => "NapiUtraValo", 
+                Activities.audiohorvath => "Horvath",
+                Activities.audiotaize => "Taize",
+                Activities.audionapievangelium => "Evangelium",
+                Activities.audiopalferi => "PalFeri",
+                _ => "Audio"
+            };
+
+            return $"{prefix}_{nameWithoutExt}{extension}";
+        }
+        catch
+        {
+            return $"audio_{DateTime.Now:yyyyMMdd_HHmmss}.mp3";
+        }
     }
 }

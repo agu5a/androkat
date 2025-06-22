@@ -48,7 +48,8 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
                           "Bezárás");
                 return;
             }
-            
+            item.KulsoLink = item.Idezet; // idejön a http link
+
             item.Idezet = "<html><!DOCTYPE html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />"
                                  + "<script type=\"text/javascript\">" +
                                  "document.addEventListener(\"DOMContentLoaded\", function() {" +
@@ -64,7 +65,7 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
 
             SourceData idezetSource = sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
             var origImg = item.Image;
-            item.Image = idezetSource.Img;
+            item.Image = idezetSource.Img;            
             var viewModel = new ContentItemViewModel(item)
             {
                 datum = $"<b>Dátum</b>: {item.Datum:yyyy-MM-dd}",
