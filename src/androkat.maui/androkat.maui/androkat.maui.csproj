@@ -54,11 +54,11 @@
 
 
 	<ItemGroup>
-		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.6.0.109712">
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.12.0.118525">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.40" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.80" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -66,8 +66,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.40" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.2" />
+		<PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.80" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.6" />
 	</ItemGroup>
 
 	<ItemGroup>

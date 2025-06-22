@@ -17,7 +17,7 @@ public partial class DetailAudio
     {
         base.OnAppearing();
         await ViewModel.InitializeAsync();
-        Title.Text = "forrasTitle"; //Objects.requireNonNull(idezetSource).get_title()
+        TitleLabel.Text = "forrasTitle"; //Objects.requireNonNull(idezetSource).get_title()
         Leiras1.Text = ViewModel.Title;
         Leiras2.Text = ViewModel.ContentView.datum;
 
@@ -47,6 +47,7 @@ public partial class DetailAudio
         base.OnDisappearing();
     }
 
+#pragma warning disable S2325 // Methods and properties that don't access instance data should be static
     private void Letoltes_OnClicked(object? sender, EventArgs e)
     {
         throw new NotImplementedException();

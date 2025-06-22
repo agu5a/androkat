@@ -1,10 +1,10 @@
 ﻿using androkat.hu.Views;
 using androkat.maui.library.ViewModels;
-using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Maui.Extensions;
 
 namespace androkat.hu.Pages;
 
-public partial class ContentListPage
+public partial class ContentListPage : ContentPage
 {
     private ContentListViewModel ViewModel => (BindingContext as ContentListViewModel)!;
     private int _stackCount;

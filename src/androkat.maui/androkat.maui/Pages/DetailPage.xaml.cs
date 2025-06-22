@@ -53,7 +53,8 @@ public partial class DetailPage
                     folder = "images/ajanlatok";
                 }
                 
-                imageUrl = "https://androkat.hu/" + folder + "/" + imageUrl;
+                #pragma warning disable S1075 // URIs should not be concatenated
+                imageUrl = "https://androkat.hu/" + folder + '/' + imageUrl;
                 var imageData = await httpClient.GetByteArrayAsync(imageUrl);
                 
                 ContentImage.Source = ImageSource.FromStream(() => new MemoryStream(imageData));

@@ -15,6 +15,6 @@ public partial class FilterView : Popup
     private void OnApplyClicked(object sender, EventArgs e)
     {
         FilterChanged?.Invoke(this, ShowVisitedCheckbox.IsChecked);
-        Close();
+        CloseAsync();
     }
 }
