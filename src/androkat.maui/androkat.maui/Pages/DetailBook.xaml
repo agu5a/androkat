@@ -7,7 +7,7 @@
     xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
     x:Name="this"
     Title=""
-    x:DataType="viewmodels:DetailViewModel"
+    x:DataType="viewmodels:BookDetailViewModel"
     Style="{StaticResource DetailPageStyle}">
 
     <ContentPage.ToolbarItems>
@@ -60,22 +60,72 @@
                     TextType="Html" />
             </VerticalStackLayout>
 
+            <!-- Progress Bar Section -->
+            <VerticalStackLayout
+                x:Name="ProgressBarSection"
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,10"
+                IsVisible="{Binding IsDownloading}">
+                <Label
+                    Text="Letöltés elindult"
+                    Style="{StaticResource BodyMLabelStyle}"
+                    Margin="0,0,0,10" />
+                <ProgressBar
+                    x:Name="DownloadProgressBar"
+                    Progress="{Binding DownloadProgress}"
+                    Margin="0,0,0,10" />
+            </VerticalStackLayout>
+
             <VerticalStackLayout
                 Grid.Row="{OnIdiom Phone=3}"
                 Grid.Column="{OnIdiom Phone=0}"
                 Grid.ColumnSpan="{OnIdiom Phone=2}"
                 Margin="0,10,0,10">
-                <Image
-                    x:Name="ContentImage"
-                    Margin="0, 0, 0, 10"
-                    IsVisible="False"
-                    Aspect="AspectFit"
-                    HeightRequest="300"
-                    HorizontalOptions="Center"                    
-                    VerticalOptions="Center"
-                    WidthRequest="300" />
+                
+                <!-- Description Text for ePUB readers -->
+                <Label
+                    x:Name="DescriptionLabel"
+                    Margin="0,0,0,15"
+                    Style="{StaticResource BodyMLabelStyle}"
+                    Text="{Binding BookDescription}"
+                    TextType="Html" />
+
+                <!-- Action Buttons -->
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="5">
+                    <Button
+                        x:Name="DownloadButton"
+                        Grid.Column="0"
+                        Text="{Binding DownloadButtonText}"
+                        Command="{Binding DownloadBookCommand}"
+                        IsEnabled="{Binding CanDownload}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}"
+                        TextColor="White" />
+                    
+                    <Button
+                        x:Name="DeleteButton"
+                        Grid.Column="1"
+                        Text="Törlés"
+                        Command="{Binding DeleteBookCommand}"
+                        IsEnabled="{Binding CanDelete}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Grey6}, Dark={StaticResource Grey7}}"
+                        TextColor="White" />
+                    
+                    <Button
+                        x:Name="ReadButton"
+                        Grid.Column="2"
+                        Text="Olvasás"
+                        Command="{Binding ReadBookCommand}"
+                        IsEnabled="{Binding CanRead}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}"
+                        TextColor="White" />
+                </Grid>
+
+                <!-- WebView for fallback content -->
                 <WebView
                     x:Name="MyWebView"
+                    IsVisible="{Binding ShowWebView}"
                     android:WebView.DisplayZoomControls="false"
                     android:WebView.EnableZoomControls="false"
                     android:WebView.MixedContentMode="AlwaysAllow">

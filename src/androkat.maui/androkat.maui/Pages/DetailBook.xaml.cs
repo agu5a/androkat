@@ -4,9 +4,9 @@ namespace androkat.hu.Pages;
 
 public partial class DetailBook
 {
-    private DetailViewModel ViewModel => (BindingContext as DetailViewModel)!;
+    private BookDetailViewModel ViewModel => (BindingContext as BookDetailViewModel)!;
 
-    public DetailBook(DetailViewModel viewModel)
+    public DetailBook(BookDetailViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;
@@ -15,7 +15,7 @@ public partial class DetailBook
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await ViewModel.InitializeAsync();
+        await ViewModel.InitializeBookAsync();
     }
 
     protected override void OnDisappearing()
