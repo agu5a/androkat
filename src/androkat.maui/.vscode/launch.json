@@ -5,15 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "C#: androkat.maui",
-            "type": "coreclr",
+            "name": "Android: androkat.maui",
+            "type": "dotnet",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/androkat.maui/bin/Debug/net9.0-android/androkat.maui.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopAtEntry": false
-        }
+            "projectPath": "${workspaceFolder}/androkat.maui/androkat.maui.csproj"
+            
+                 }
     ]
 }
