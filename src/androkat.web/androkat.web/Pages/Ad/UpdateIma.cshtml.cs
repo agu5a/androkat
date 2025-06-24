@@ -1,4 +1,5 @@
-﻿using androkat.domain;
+﻿using androkat.application.Interfaces;
+using androkat.domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,11 +18,13 @@ public class UpdateImaModel : PageModel
 {
     private readonly ILogger<UpdateImaModel> _logger;
     private readonly IAdminRepository _adminRepository;
+    private readonly IClock _iClock;
 
-    public UpdateImaModel(ILogger<UpdateImaModel> logger, IAdminRepository adminRepository)
+    public UpdateImaModel(ILogger<UpdateImaModel> logger, IAdminRepository adminRepository, IClock iClock)
     {
         _logger = logger;
         _adminRepository = adminRepository;
+        _iClock = iClock;
     }
 
     public string Cim { get; set; }
@@ -149,6 +152,8 @@ public class UpdateImaModel : PageModel
     {
         try
         {
+            Today = _iClock.Now.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.CreateSpecificCulture("hu-HU"));
+
             var imacsoportok = new Dictionary<string, string> {{ "Alapimák", "11" }, {"Napi imák","9" }, {"Kérő és felajánló imák","12" },
             {"Hála és dicsőítő imák","7"}, {"Litániák","4"}, {"Szentmise","3"},
             {"Szűz Mária","10"}, {"Rózsafüzér","2"}, {"Szentek imái","1"},

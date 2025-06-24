@@ -162,7 +162,7 @@ public class UpdateModel : PageModel
     {
         try
         {
-            Today = _iClock.Now.ToString("MM-dd");
+            Today = _iClock.Now.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.CreateSpecificCulture("hu-HU"));
 
             var result = new List<AllTipusResult>();
             foreach (var item in _adminRepository.GetAllContentTipusFromDb())

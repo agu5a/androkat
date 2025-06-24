@@ -86,7 +86,7 @@ public class PufferModel : PageModel
             FullDatum = obj?.FullDatum;
             Image = obj?.Img;
             Nid = obj?.Nid;
-            Today = _iClock.Now.ToString("yyyy-MM-dd");
+            Today = _iClock.Now.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.CreateSpecificCulture("hu-HU"));
         }
         catch (Exception ex)
         {
