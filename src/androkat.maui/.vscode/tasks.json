@@ -2,17 +2,20 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+			"label": "build",
+			"command": "dotnet",
 			"type": "process",
 			"args": [
 				"build",
 				"${workspaceFolder}/androkat.maui/androkat.maui.csproj",
+				"--configuration",
+				"Debug",
 				"-t:Run",
-				"-f", "net9.0-android",
+				"-f",
+				"net9.0-android",
 				"/p:AndroidDevice=True"
 			],
-			"command": "dotnet",
-			"problemMatcher": "$msCompile",
-			"label": "build"
+			"problemMatcher": "$msCompile"
 		}
 	]
 }

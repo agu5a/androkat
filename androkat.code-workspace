@@ -10,9 +10,6 @@
 			"path": "deployment"
 		},
 		{
-			"path": "src/androkat.web"
-		},
-		{
 			"path": "src/androkat.maui"
 		}
 	],

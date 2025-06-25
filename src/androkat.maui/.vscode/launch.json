@@ -9,8 +9,7 @@
             "type": "dotnet",
             "request": "launch",
             "preLaunchTask": "build",
-            "projectPath": "${workspaceFolder}/androkat.maui/androkat.maui.csproj"
-            
-                 }
+            // "projectPath": "${workspaceFolder}/androkat.maui/androkat.maui.csproj"
+        }
     ]
 }
