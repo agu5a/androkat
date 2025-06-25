@@ -4,33 +4,32 @@
                       x:Class="androkat.hu.Views.VideoItemView"
                       xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
                       x:DataType="viewmodels:VideoItemViewModel"
-                      x:Name="self"
-                      >
+                      x:Name="self">
     <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource CardviewbackDark}, Light={StaticResource Cardviewback}}">
         <Grid>
             <Grid.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding OpenVideoInBrowserCommand}" />
+                <TapGestureRecognizer Command="{Binding OpenVideoInBrowserCommand}"/>
             </Grid.GestureRecognizers>
             <VerticalStackLayout VerticalOptions="FillAndExpand">
-                <Image 
-                       Source="{Binding VideoEntity.Image}"
-                       Loaded="Image_Loaded"
-                       VerticalOptions="Center"
-                       Margin="0,0,0,9" />
+                <Image
+                    Source="{Binding VideoEntity.Image}"
+                    Loaded="Image_Loaded"
+                    VerticalOptions="Center"
+                    Margin="0,0,0,9"/>
                 <Label Text="{Binding VideoEntity.Cim}"
                        MaxLines="1"
                        HorizontalOptions="Start"
                        LineBreakMode="WordWrap"
                        MaximumWidthRequest="{x:OnIdiom Phone=250}"
-                       Style="{OnIdiom Default={StaticResource BodyXLLabelStyle},Phone={StaticResource BodyLLabelStyle}}" />
+                       Style="{OnIdiom Default={StaticResource BodyXLLabelStyle},Phone={StaticResource BodyLLabelStyle}}"/>
                 <Label Text="{Binding VideoEntity.Forras}"
                        LineBreakMode="TailTruncation"
                        MaxLines="1"
-                       Style="{OnIdiom Default={StaticResource BodyMLabelStyle},Phone={StaticResource BodySLabelStyle}}" />
-                <Label Text="{Binding VideoEntity.Datum}"
+                       Style="{OnIdiom Default={StaticResource BodyMLabelStyle},Phone={StaticResource BodySLabelStyle}}"/>
+                <Label Text="{Binding FormattedDate}"
                        LineBreakMode="TailTruncation"
                        MaxLines="1"
-                       Style="{OnIdiom Default={StaticResource BodyMLabelStyle},Phone={StaticResource BodySLabelStyle}}" />
+                       Style="{OnIdiom Default={StaticResource BodyMLabelStyle},Phone={StaticResource BodySLabelStyle}}"/>
             </VerticalStackLayout>
         </Grid>
 

@@ -64,6 +64,18 @@ public class AndrokatService : IAndrokatService
         return JsonSerializer.Deserialize<List<ContentResponse>>(response, Helper.BuildSerializerOptions());
     }
 
+    public async Task<List<VideoResponse>> GetVideos(int offset = 0)
+    {
+        if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            return [];
+
+        client = GetClient();
+
+        var response = await client.GetStringAsync($"v2/video?offset={offset}");
+
+        return JsonSerializer.Deserialize<List<VideoResponse>>(response); //, Helper.BuildSerializerOptions()
+    }
+
     private HttpClient GetClient()
     {
         if (client != null)

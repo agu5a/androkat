@@ -7,4 +7,5 @@ public interface IAndrokatService
     Task<List<ContentResponse>> GetContents(string tipus, string nid);
     Task<ImaResponse> GetImadsag(DateTime date);
     Task<List<ServerInfoResponse>> GetServerInfo();
+    Task<List<VideoResponse>> GetVideos(int offset = 0);
 }
