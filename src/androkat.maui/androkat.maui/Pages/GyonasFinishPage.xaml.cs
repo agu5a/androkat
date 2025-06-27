@@ -17,9 +17,4 @@ public partial class GyonasFinishPage : ContentPage
         base.OnAppearing();
         await ViewModel.InitializeAsync();
     }
-
-    private async void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
-    {
-        await ViewModel.InitializeAsync();
-    }
 }
