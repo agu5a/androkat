@@ -6,5 +6,5 @@ public interface ICronService
 {
     void DeleteCaches();
     List<string> DeleteFiles(string webRootPath, bool shouldDelete = false);
-    void Start();
+    int Start();
 }

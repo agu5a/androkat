@@ -19,17 +19,20 @@ public class IndexModel : PageModel
     private readonly ILogger<IndexModel> _logger;
     private readonly IAdminRepository _adminRepository;
     private readonly IAuthService _authService;
+    private readonly ICronService _cronService;
     private readonly string _adminEmail;
 
     public IndexModel(
-        ILogger<IndexModel> logger, 
-        IAdminRepository adminRepository, 
+        ILogger<IndexModel> logger,
+        IAdminRepository adminRepository,
         IAuthService authService,
+        ICronService cronService,
         IOptions<GeneralConfiguration> generalConfig)
     {
         _logger = logger;
         _adminRepository = adminRepository;
         _authService = authService;
+        _cronService = cronService;
         _adminEmail = generalConfig.Value.Admin;
     }
 
@@ -39,19 +42,27 @@ public class IndexModel : PageModel
 
     public bool IsAdvent { get; set; }
     public bool IsNagyBojt { get; set; }
+    public bool ShowToast { get; set; }
+    public string ToastMessage { get; set; }
 
     public IActionResult OnGet()
     {
+        if (!_authService.IsAuthenticated(_adminEmail))
+        {
+            return Redirect("/");
+        }
+
+        _logger.LogInformation("Login RemoteIpAddress {IP}", Request.HttpContext.Connection.RemoteIpAddress?.ToString());
+        _adminRepository.LogInUser(_adminEmail);
+        GetData();
+
+        return Page();
+    }
+
+    private void GetData()
+    {
         try
         {
-            if (!_authService.IsAuthenticated(_adminEmail))
-            {
-                return Redirect("/");
-            }
-
-            _logger.LogInformation("Login RemoteIpAddress {IP}", Request.HttpContext.Connection.RemoteIpAddress?.ToString());
-            _adminRepository.LogInUser(_adminEmail);
-
             var res = _adminRepository.GetIsAdventAndNagybojt();
             res.ForEach(x =>
             {
@@ -69,13 +80,46 @@ public class IndexModel : PageModel
         catch (Exception ex)
         {
             _logger.LogError(ex, "Exception: ");
-            return Redirect("/");
+            Redirect("/");
         }
 
         AdminResult = _adminRepository.GetAdminResult();
         AdminAResult = _adminRepository.GetAdminAResult(IsAdvent, IsNagyBojt);
         AdminBResult = _adminRepository.GetAdminBResult();
+    }
 
-        return Page();
+
+    public IActionResult OnPostDeleteOld()
+    {
+        try
+        {
+            if (!_authService.IsAuthenticated(_adminEmail))
+            {
+                return Redirect("/");
+            }
+
+            var deletedCount = _cronService.Start();
+            _cronService.DeleteCaches();
+
+            ShowToast = true;
+            ToastMessage = $"Successfully deleted {deletedCount} old items and cleared caches.";
+
+            GetData();
+            return Page();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception in OnPostDeleteOld: ");
+
+            ShowToast = true;
+            ToastMessage = "An error occurred while deleting old items.";
+
+            // Still try to load the data
+            AdminResult = _adminRepository.GetAdminResult();
+            AdminAResult = _adminRepository.GetAdminAResult(IsAdvent, IsNagyBojt);
+            AdminBResult = _adminRepository.GetAdminBResult();
+
+            return Page();
+        }
     }
 }

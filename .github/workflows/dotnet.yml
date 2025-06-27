@@ -109,7 +109,7 @@ jobs:
         source: "app-package.tar.gz"
         target: "~"
 
-    - name: Restart systemd service and deploy
+    - name: Deploy and restart systemd service
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.EC2_HOST }}

@@ -83,9 +83,10 @@ public class PufferTests : BaseTest
 		var authService = new Mock<IAuthService>();
 		authService.Setup(s => s.IsAuthenticated(It.IsAny<string>())).Returns(false);
 
+		var cronService = new Mock<ICronService>();
 		var generalConfig = Options.Create(new GeneralConfiguration());
 
-		var model = new IndexModel(_logger.Object, adminRepository.Object, authService.Object, generalConfig)
+		var model = new IndexModel(_logger.Object, adminRepository.Object, authService.Object, cronService.Object, generalConfig)
 		{
 			PageContext = pageContext,
 			TempData = tempData,

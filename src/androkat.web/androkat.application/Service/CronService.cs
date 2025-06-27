@@ -33,40 +33,43 @@ public class CronService : ICronService
         _adminRepository = adminRepository;
     }
 
-    public void Start()
+    public int Start()
     {
         try
         {
-            DeleteOld((int)Forras.keresztenyelet, -3);
-            DeleteOld((int)Forras.b777, -2);
-            DeleteOld((int)Forras.bonumtv, -1);
-            DeleteOld((int)Forras.bzarandokma, -2);
-            DeleteOld((int)Forras.jezsuitablog, -3);
-            DeleteOld((int)Forras.kurir, -1);
-            DeleteOldRows((int)Forras.audiohorvath, 3);
-            DeleteOldRows((int)Forras.fokolare, 1);
-            DeleteOldRows((int)Forras.papaitwitter, 3);
-            DeleteOldRows((int)Forras.advent, 2);
-            DeleteOldRows((int)Forras.maievangelium, 3);
-            DeleteOldRows((int)Forras.ignac, 3);
-            DeleteOldRows((int)Forras.barsi, 3);
-            DeleteOldRows((int)Forras.laciatya, 3);
-            DeleteOldRows((int)Forras.horvath, 3);
-            DeleteOldRows((int)Forras.prayasyougo, 7);
-            DeleteOldRows((int)Forras.nagybojt, 2);
-            DeleteOldRows((int)Forras.szeretetujsag, 3);
-            DeleteOldRows((int)Forras.audionapievangelium, 2);
-            DeleteOldRows((int)Forras.audiobarsi, 3);
-            DeleteOldRows((int)Forras.audiopalferi, 3);
-            DeleteOldRows((int)Forras.regnum, 3);
-            DeleteOldRows((int)Forras.taize, 4);
-            DeleteOldRows((int)Forras.szentbernat, 3);
-            DeleteOldRows((int)Forras.audiotaize, 2);
+            var totalDeleted = 0;
+            totalDeleted += DeleteOld((int)Forras.keresztenyelet, -3);
+            totalDeleted += DeleteOld((int)Forras.b777, -2);
+            totalDeleted += DeleteOld((int)Forras.bonumtv, -1);
+            totalDeleted += DeleteOld((int)Forras.bzarandokma, -2);
+            totalDeleted += DeleteOld((int)Forras.jezsuitablog, -3);
+            totalDeleted += DeleteOld((int)Forras.kurir, -1);
+            totalDeleted += DeleteOldRows((int)Forras.audiohorvath, 3);
+            totalDeleted += DeleteOldRows((int)Forras.fokolare, 1);
+            totalDeleted += DeleteOldRows((int)Forras.papaitwitter, 3);
+            totalDeleted += DeleteOldRows((int)Forras.advent, 2);
+            totalDeleted += DeleteOldRows((int)Forras.maievangelium, 3);
+            totalDeleted += DeleteOldRows((int)Forras.ignac, 3);
+            totalDeleted += DeleteOldRows((int)Forras.barsi, 3);
+            totalDeleted += DeleteOldRows((int)Forras.laciatya, 3);
+            totalDeleted += DeleteOldRows((int)Forras.horvath, 3);
+            totalDeleted += DeleteOldRows((int)Forras.prayasyougo, 7);
+            totalDeleted += DeleteOldRows((int)Forras.nagybojt, 2);
+            totalDeleted += DeleteOldRows((int)Forras.szeretetujsag, 3);
+            totalDeleted += DeleteOldRows((int)Forras.audionapievangelium, 2);
+            totalDeleted += DeleteOldRows((int)Forras.audiobarsi, 3);
+            totalDeleted += DeleteOldRows((int)Forras.audiopalferi, 3);
+            totalDeleted += DeleteOldRows((int)Forras.regnum, 3);
+            totalDeleted += DeleteOldRows((int)Forras.taize, 4);
+            totalDeleted += DeleteOldRows((int)Forras.szentbernat, 3);
+            totalDeleted += DeleteOldRows((int)Forras.audiotaize, 2);
             DeleteOldVideoRows(100);
+            return totalDeleted;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Exception: Failed to run {Name}", nameof(Start));
+            return 0;
         }
     }
 
@@ -88,35 +91,38 @@ public class CronService : ICronService
         }
     }
 
-    private void DeleteOld(int tipus, int days)
+    private int DeleteOld(int tipus, int days)
     {
         var osszes = _apiRepository.GetContentDetailsModels().Count(w => w.Tipus == tipus);
         if (osszes == 0)
         {
-            return;
+            return 0;
         }
 
         var mult = _clock.Now.DateTime.AddDays(days);
         var torlendo = _apiRepository.GetContentDetailsModels().Where(w => w.Tipus == tipus && w.Fulldatum < mult);
         if (!torlendo.Any())
         {
-            return;
+            return 0;
         }
 
         if (osszes <= torlendo.Count())
         {
-            return;
+            return 0;
         }
 
+        var deletedCount = 0;
         _logger.LogDebug("delete from Content. {Tipus} {Count}", tipus, torlendo.Count());
         foreach (var item in torlendo)
         {
             _apiRepository.DeleteContentDetailsByNid(item.Nid);
             _logger.LogDebug("delete from Content. {Tipus} {Time}", item.Tipus, item.Fulldatum);
+            deletedCount++;
         }
+        return deletedCount;
     }
 
-    private void DeleteOldRows(int tipus, int max)
+    private int DeleteOldRows(int tipus, int max)
     {
         IEnumerable<ContentDetailsModel> osszes;
 
@@ -131,14 +137,17 @@ public class CronService : ICronService
 
         if (!osszes.Any())
         {
-            return;
+            return 0;
         }
 
+        var deletedCount = 0;
         foreach (var item in osszes)
         {
             _apiRepository.DeleteContentDetailsByNid(item.Nid);
             _logger.LogDebug("delete from Content. {Tipus} {Datum}", item.Tipus, item.Fulldatum);
+            deletedCount++;
         }
+        return deletedCount;
     }
 
     private void DeleteOldVideoRows(int max)

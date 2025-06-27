@@ -4,6 +4,18 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @section meta_extra {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @{
+                if (Model.ShowToast)
+                {
+                    <text>
+                        $("#myToast").toast("show");
+                    </text>
+                }
+            }
+        });
+    </script>
 }
 @section scripts {
 }
@@ -34,6 +46,9 @@
             </div>
             <div class="border" *ngIf="bl.adminBResult">
                 <strong>Tipusok mennyiségileg</strong><br>
+                <form method="post" asp-page-handler="DeleteOld" style="margin-top: 10px;">
+                    <button type="submit">Régiek törlése</button>
+                </form><br>
                 <span>@Html.Raw(Model.AdminBResult.CountOfTipusok)</span>
             </div>           
             <div class="border" style="word-break: break-all;">
@@ -41,5 +56,13 @@
                 <span>@Html.Raw(Model.AdminBResult.SysTable)</span>
             </div>
         </div>
+    </div>
+</div>
+<div id="myToast" class="toast position-fixed top-0 start-0 m-5 p-3" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+        <div class="toast-body">
+            @Html.Raw(Model.ToastMessage)
+        </div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
 </div>
