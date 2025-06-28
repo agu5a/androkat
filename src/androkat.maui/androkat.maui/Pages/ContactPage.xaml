@@ -1,65 +1,90 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Kapcsolat"
-    x:Name="this"
-    
-    xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
-    Style="{StaticResource MainSectionStyle}"    
-    x:Class="androkat.hu.Pages.ContactPage"
-    x:DataType="viewmodels:ContactViewModel">
-    <ContentPage.Content>
-        <StackLayout Orientation="Vertical" Padding="10" Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}">
-            <HorizontalStackLayout>
-                <Image 
-                Source="appicon.png"
-                Aspect="AspectFit"                                
-                WidthRequest="50" />
-                <VerticalStackLayout>
-                    <Label Text="AndroKat"
-                        Style="{StaticResource BodyLLabelStyle}"
-                       VerticalOptions="Center" 
-                       HorizontalOptions="Start" />
-                    <Label Text="{Binding Version}" Style="{StaticResource BodyMLabelStyle}"
-                       VerticalOptions="Center" 
-                       HorizontalOptions="Start" />
-                </VerticalStackLayout>
-            </HorizontalStackLayout>
-            <Label Text="{Binding Text1}" Style="{StaticResource BodyMLabelStyle}"
-               VerticalOptions="Center" 
-               TextType="Html"
-               Margin="5"
-               HorizontalOptions="Start" />
-            <Label Text="{Binding Text2}" Style="{StaticResource BodyMLabelStyle}"
-               VerticalOptions="Center" 
-               TextType="Html"
-               Margin="5"
-               HorizontalOptions="Start" />
-            <Label Text="Bármi észrevétele, ötlete van, örömmel fogadjuk:" Style="{StaticResource BodyMLabelStyle}"
-               Margin="5"
-               VerticalOptions="Center" 
-               HorizontalOptions="Start" />
-            <Label Text="{Binding Text3}" Style="{StaticResource BodyMLabelStyle}"
-               VerticalOptions="Center" 
-               TextType="Html"
-               Margin="3"
-               HorizontalOptions="Start" />
-            <Label Text="{Binding Text4}" Style="{StaticResource BodyMLabelStyle}"
-               VerticalOptions="Center" 
-               TextType="Html"
-               Margin="3"
-               HorizontalOptions="Start" />
-            <Label Text="{Binding Text5}" Style="{StaticResource BodyMLabelStyle}"
-               VerticalOptions="Center" 
-               TextType="Html"
-               Margin="3"
-               HorizontalOptions="Start" />
-            <Label Text="{Binding Text6}" Style="{StaticResource BodyMLabelStyle}"
-               VerticalOptions="Center" 
-               TextType="Html"
-               Margin="3"
-               HorizontalOptions="Start" />
-        </StackLayout>
-    </ContentPage.Content>
+<ContentPage
+   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+   Title="Kapcsolat"
+   x:Name="this"
+   xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
+   Style="{StaticResource MainSectionStyle}"
+   x:Class="androkat.hu.Pages.ContactPage"
+   x:DataType="viewmodels:ContactViewModel">
+   <ContentPage.Content>
+      <StackLayout Orientation="Vertical"
+                   Padding="10"
+                   Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}">
+         <HorizontalStackLayout>
+            <Image
+               Source="ic_launcher"
+               Aspect="AspectFit"
+               WidthRequest="50"/>
+            <VerticalStackLayout Margin="10,0,0,10">
+               <Label Text="AndroKat"
+                      Style="{StaticResource BodyLLabelStyle}"
+                      VerticalOptions="Center"
+                      HorizontalOptions="Start"/>
+               <Label Text="{Binding Version}"
+                      Style="{StaticResource BodyMLabelStyle}"
+                      VerticalOptions="Center"
+                      HorizontalOptions="Start"/>
+            </VerticalStackLayout>
+         </HorizontalStackLayout>
+         <Label Text="Android és Katolikus"
+                Style="{StaticResource BodyLLabelStyle}"
+                Margin="5,15,5,10"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"/>
+         <Label Text="{Binding Text1}"
+                Style="{StaticResource BodyMLabelStyle}"
+                VerticalOptions="Center"
+                TextType="Html"
+                Margin="5"
+                HorizontalOptions="Start"/>
+         <Label Text="{Binding Text2}"
+                Style="{StaticResource BodyMLabelStyle}"
+                VerticalOptions="Center"
+                TextType="Html"
+                Margin="5"
+                HorizontalOptions="Start"/>
+         <Label Text="Bármi észrevétele, ötlete van, örömmel fogadjuk:"
+                Style="{StaticResource BodyMLabelStyle}"
+                Margin="5"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"/>
+         <Button Text="Facebook"
+                 BackgroundColor="Transparent"
+                 TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                 FontSize="14"
+                 HorizontalOptions="Start"
+                 Margin="3,0"
+                 Clicked="OnFacebookClicked"/>
+         <Button Text="uzenet@androkat.hu"
+                 BackgroundColor="Transparent"
+                 TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                 FontSize="14"
+                 HorizontalOptions="Start"
+                 Margin="3,0"
+                 Clicked="OnEmailClicked"/>
+         <Button Text="X (a volt Twitter)"
+                 BackgroundColor="Transparent"
+                 TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                 FontSize="14"
+                 HorizontalOptions="Start"
+                 Margin="3,0"
+                 Clicked="OnTwitterClicked"/>
+         <Button Text="YouTube"
+                 BackgroundColor="Transparent"
+                 TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                 FontSize="14"
+                 HorizontalOptions="Start"
+                 Margin="3,0"
+                 Clicked="OnYouTubeClicked"/>
+         <Button Text="Instagram"
+                 BackgroundColor="Transparent"
+                 TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                 FontSize="14"
+                 HorizontalOptions="Start"
+                 Margin="3,0"
+                 Clicked="OnInstagramClicked"/>
+      </StackLayout>
+   </ContentPage.Content>
 </ContentPage>
