@@ -16,25 +16,39 @@
             Background="{AppThemeBinding Light={StaticResource Grey1},
                                          Dark={StaticResource Grey9}}"
             VerticalOptions="FillAndExpand">
-            <CarouselView ItemsSource="{Binding Contents}" VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <CarouselView
+                x:Name="carouselView"
+                Grid.Row="0"
+                ItemsSource="{Binding Contents}"
+                VerticalOptions="FillAndExpand"
+                IndicatorView="indicatorView"
+                Loop="False">
                 <CarouselView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodels:KeresztutView">
-                        <ScrollView Margin="0,0,0,0" VerticalOptions="FillAndExpand">
+                        <ScrollView Margin="0,0,0,0"
+                                VerticalOptions="FillAndExpand">
                             <Frame
                                 Margin="8"
                                 BorderColor="DarkGray"
                                 CornerRadius="5"
                                 HasShadow="True"
                                 HorizontalOptions="Center"
-                                VerticalOptions="CenterAndExpand">
+                                VerticalOptions="CenterAndExpand"
+                                BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Grey8}}">
                                 <WebView
                                     x:Name="MyWebView"
                                     Margin="0,0,0,0"
                                     android:WebView.DisplayZoomControls="false"
                                     android:WebView.EnableZoomControls="false"
-                                    VerticalOptions="FillAndExpand">
+                                    VerticalOptions="FillAndExpand"
+                                    BackgroundColor="Transparent">
                                     <WebView.Source>
-                                        <HtmlWebViewSource Html="{Binding Path=Html}" />
+                                        <HtmlWebViewSource Html="{Binding Path=Html}"/>
                                     </WebView.Source>
                                 </WebView>
                             </Frame>
@@ -42,6 +56,14 @@
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
             </CarouselView>
+
+            <IndicatorView
+                x:Name="indicatorView"
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                Margin="0,10,0,10"
+                IndicatorColor="LightGray"
+                SelectedIndicatorColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

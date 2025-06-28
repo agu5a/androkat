@@ -74,10 +74,10 @@
     },
     {
       "id": 9,
-      "title": "Ferenc pápa twitter üzenete",
-      "source": "Magyar Kurír",
-      "sourcelink": "https://www.magyarkurir.hu/ferenc-papa/ferenc-papa-twitter",
-      "img": "ferencpapa",
+      "title": "Pápa X üzenete",
+      "source": "X",
+      "sourcelink": "https://x.com/pontifex",
+      "img": "pope",
       "group": "group_napiolvaso",
       "active": true
     },
@@ -319,7 +319,7 @@
       "id": 49,
       "title": "Zarándok.Ma",
       "source": "Zarándok.Ma",
-      "sourcelink": "https://zarandok.ma",
+      "sourcelink": "https://katolikus.ma",
       "img": "katolikusma",
       "group": "group_blog",
       "active": true
@@ -392,7 +392,7 @@
       "title": "Medjugorje üzenetek",
       "source": "Marija Pavlović-Lunetti",
       "sourcelink": "https://www.libri.hu/konyv/beke-kiralynojenek-365-uzenete-medjugorjebol.html",
-      "img": "medjugorje.png",
+      "img": "medjugorje",
       "group": "group_napiolvaso",
       "active": true
     }
