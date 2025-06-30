@@ -10,7 +10,7 @@ public interface IPageService
     Task<int> DeleteUserGyonas(bool jegyzet, bool bun);
     Task<int> DownloadAll();
     Task<ContentEntity> GetContentEntityByIdAsync(Guid id);
-    Task<List<ContentEntity>> GetContentsAsync(string pageTypeId, bool returnVisited = true);
+    Task<List<ContentEntity>> GetContentsAsync(string pageTypeId, bool returnVisited = true, List<string>? enabledSources = null);
     Task<int> GetContentsCount();
     Task<List<FavoriteContentEntity>> GetFavoriteContentsAsync();
     Task<int> GetFavoriteCountAsync();

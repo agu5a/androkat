@@ -3,18 +3,44 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
            x:Class="androkat.hu.Views.FilterView">
-    <VerticalStackLayout Spacing="20"
-            BackgroundColor="{AppThemeBinding Light={StaticResource Cardviewback}, Dark={StaticResource CardviewbackDark}}"
-                         Padding="20"
-            WidthRequest="300"
-            HeightRequest="200">
-        <HorizontalStackLayout Spacing="10">
-            <CheckBox x:Name="ShowVisitedCheckbox"/>
-            <Label Text="Olvasottak megjelenítése"
-                   VerticalOptions="Center"/>
-        </HorizontalStackLayout>
-        <Button Text="Bezárás"
-                Clicked="OnApplyClicked"
-                HorizontalOptions="End"/>
-    </VerticalStackLayout>
+    <Border BackgroundColor="{AppThemeBinding Light={StaticResource Cardviewback}, Dark={StaticResource CardviewbackDark}}"
+            StrokeThickness="0"
+            Padding="0"
+            WidthRequest="350"
+            HeightRequest="500">
+        <Grid RowDefinitions="Auto,*,Auto">
+            <!-- Header -->
+            <Label Grid.Row="0"
+                   Text="Források"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="0,15,0,10"/>
+
+            <!-- Scrollable Content -->
+            <ScrollView Grid.Row="1"
+                    Margin="20,0">
+                <VerticalStackLayout Spacing="15">
+                    <HorizontalStackLayout Spacing="10">
+                        <CheckBox x:Name="ShowVisitedCheckbox"/>
+                        <Label Text="Olvasottak elrejtése"
+                               VerticalOptions="Center"
+                               FontSize="14"/>
+                    </HorizontalStackLayout>
+
+                    <StackLayout x:Name="SourceFiltersContainer"
+                                 Spacing="12"/>
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!-- Footer with Button -->
+            <Button Grid.Row="2"
+                    Text="Bezárás"
+                    Clicked="OnApplyClicked"
+                    Margin="20,10,20,15"
+                    HorizontalOptions="Fill"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                    TextColor="White"/>
+        </Grid>
+    </Border>
 </mct:Popup>

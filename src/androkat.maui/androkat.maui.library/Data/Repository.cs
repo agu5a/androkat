@@ -183,7 +183,7 @@ public class Repository : IRepository
         return new();
     }
 
-    public async Task<List<ContentEntity>> GetContentsByTypeId(string typeId, bool returnVisited = true)
+    public async Task<List<ContentEntity>> GetContentsByTypeId(string typeId, bool returnVisited = true, List<string>? enabledSources = null)
     {
         try
         {
@@ -191,12 +191,10 @@ public class Repository : IRepository
             var query = _conn!.Table<ContentEntity>()
                 .Where(w => w.Tipus == typeId);
 
-            if (!returnVisited)
-            {
-                query = query.Where(w => !w.IsRead);
-            }
+            var results = await query.OrderByDescending(o => o.Datum).ToListAsync();
 
-            return await query.OrderByDescending(o => o.Datum).ToListAsync();
+            // Apply combined filtering logic
+            return ApplyFilters(results, returnVisited, enabledSources);
         }
         catch (Exception ex)
         {
@@ -225,7 +223,7 @@ public class Repository : IRepository
         return [];
     }
 
-    public async Task<List<ContentEntity>> GetContentsByGroupName(string groupName, bool returnVisited = true)
+    public async Task<List<ContentEntity>> GetContentsByGroupName(string groupName, bool returnVisited = true, List<string>? enabledSources = null)
     {
         try
         {
@@ -233,12 +231,10 @@ public class Repository : IRepository
             var query = _conn!.Table<ContentEntity>()
                 .Where(w => w.GroupName == groupName);
 
-            if (!returnVisited)
-            {
-                query = query.Where(w => !w.IsRead);
-            }
+            var results = await query.OrderByDescending(o => o.Datum).ToListAsync();
 
-            return await query.OrderByDescending(o => o.Datum).ToListAsync();
+            // Apply combined filtering logic
+            return ApplyFilters(results, returnVisited, enabledSources);
         }
         catch (Exception ex)
         {
@@ -496,5 +492,90 @@ public class Repository : IRepository
         }
 
         return -1;
+    }
+
+    private static List<ContentEntity> ApplyFilters(List<ContentEntity> results, bool returnVisited, List<string>? enabledSources)
+    {
+        var filteredResults = results;
+
+        // Debug logging to see what data we're working with
+        Debug.WriteLine($"ApplyFilters called with {results.Count} results, returnVisited: {returnVisited}");
+        if (enabledSources != null)
+        {
+            Debug.WriteLine($"EnabledSources: [{string.Join(", ", enabledSources)}]");
+        }
+        else
+        {
+            Debug.WriteLine("EnabledSources: null");
+        }
+
+        // Log some sample TypeName values to see what's in the database
+        var sampleEntries = results.Take(20).Select(r => new { r.TypeName, r.Tipus, r.GroupName }).ToList();
+        Debug.WriteLine($"=== DATABASE CONTENT ANALYSIS ===");
+        Debug.WriteLine($"Total results: {results.Count}");
+        Debug.WriteLine($"Sample database entries (first 20):");
+        foreach (var entry in sampleEntries)
+        {
+            Debug.WriteLine($"  TypeName: '{entry.TypeName}', Tipus: '{entry.Tipus}', GroupName: '{entry.GroupName}'");
+        }
+
+        // Show unique TypeName values
+        var uniqueTypeNames = results.Select(r => r.TypeName).Distinct().OrderBy(x => x).ToList();
+        Debug.WriteLine($"All unique TypeName values in results ({uniqueTypeNames.Count} total):");
+        Debug.WriteLine($"  [{string.Join(", ", uniqueTypeNames.Select(x => $"'{x}'"))}]");
+        Debug.WriteLine($"=== END DATABASE ANALYSIS ===");
+
+        // Apply source filtering first (if enabled sources are specified)
+        // If enabledSources is provided but empty, show nothing
+        // If enabledSources is null, it means no filtering should be applied (show all sources)
+        if (enabledSources != null)
+        {
+            if (enabledSources.Count == 0)
+            {
+                // No sources enabled, return empty list
+                Debug.WriteLine("No sources enabled, returning empty list");
+                return new List<ContentEntity>();
+            }
+            else
+            {
+                // Filter to only enabled sources
+                var beforeCount = filteredResults.Count;
+
+                // Debug: Log detailed comparison information
+                Debug.WriteLine("=== DETAILED SOURCE FILTERING DEBUG ===");
+                foreach (var source in enabledSources)
+                {
+                    var matchingByTipus = filteredResults.Where(content =>
+                        content.Tipus.Equals(source, StringComparison.OrdinalIgnoreCase)).ToList();
+
+                    Debug.WriteLine($"Source '{source}' matches {matchingByTipus.Count} items by Tipus");
+
+                    if (matchingByTipus.Count > 0)
+                    {
+                        Debug.WriteLine($"  Tipus matches: {string.Join(", ", matchingByTipus.Take(3).Select(m => $"'{m.Tipus}'"))}");
+                    }
+                }
+
+                Debug.WriteLine("=== END DETAILED DEBUG ===");
+
+                // Filter by Tipus field (contains integer activity IDs)
+                filteredResults = filteredResults.Where(content =>
+                    enabledSources.Any(source =>
+                        content.Tipus.Equals(source, StringComparison.OrdinalIgnoreCase))).ToList();
+                Debug.WriteLine($"Source filtering: {beforeCount} -> {filteredResults.Count}");
+            }
+        }
+
+        // Then apply read/unread filtering
+        // If returnVisited is false, hide read items (show only unread)
+        if (!returnVisited)
+        {
+            var beforeCount = filteredResults.Count;
+            filteredResults = filteredResults.Where(content => !content.IsRead).ToList();
+            Debug.WriteLine($"Read/unread filtering: {beforeCount} -> {filteredResults.Count}");
+        }
+
+        Debug.WriteLine($"Final result count: {filteredResults.Count}");
+        return filteredResults;
     }
 }

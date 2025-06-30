@@ -16,7 +16,7 @@ namespace androkat.maui.unittest.Services;
 
 public class PageServiceTests
 {
-    private readonly IServiceScopeFactory? _factory;
+    private readonly IServiceScopeFactory _factory;
     private readonly Mock<ISourceData> _sourceDataMock = new();
     private readonly Mock<IAndrokatService> _androkatServiceMock = new();
     private readonly Mock<IDownloadService> _downloadServiceMock = new();
@@ -178,19 +178,19 @@ public class PageServiceTests
             case "GetContentsByTypeId":
                 if (pageTypeId == "1")
                 {
-                    repositoryMock.Verify(x => x.GetContentsByTypeId(((int)Activities.ajanlatweb).ToString(), It.IsAny<bool>(), It.IsAny<List<string>?>()), Times.Once);
+                    repositoryMock.Verify(x => x.GetContentsByTypeId(((int)Activities.ajanlatweb).ToString()), Times.Once);
                 }
                 else if (pageTypeId == "2")
                 {
-                    repositoryMock.Verify(x => x.GetContentsByTypeId(((int)Activities.maiszent).ToString(), It.IsAny<bool>(), It.IsAny<List<string>?>()), Times.Once);
+                    repositoryMock.Verify(x => x.GetContentsByTypeId(((int)Activities.maiszent).ToString()), Times.Once);
                 }
                 else if (pageTypeId == "11")
                 {
-                    repositoryMock.Verify(x => x.GetContentsByTypeId(((int)Activities.book).ToString(), It.IsAny<bool>(), It.IsAny<List<string>?>()), Times.Once);
+                    repositoryMock.Verify(x => x.GetContentsByTypeId(((int)Activities.book).ToString()), Times.Once);
                 }
                 else if (pageTypeId == "34")
                 {
-                    repositoryMock.Verify(x => x.GetContentsByTypeId(((int)Activities.gyonas).ToString(), It.IsAny<bool>(), It.IsAny<List<string>?>()), Times.Once);
+                    repositoryMock.Verify(x => x.GetContentsByTypeId(((int)Activities.gyonas).ToString()), Times.Once);
                 }
                 break;
             case "GetContentsByGroupName":
@@ -219,8 +219,7 @@ public class PageServiceTests
                     repositoryMock.Verify(x => x.GetContentsByGroupName("group_news", It.IsAny<bool>(), It.IsAny<List<string>?>()), Times.Once);
                 }
                 break;
-        }
-        ;
+        };
 
         Assert.IsType<List<ContentEntity>>(result);
         Assert.Equal(expectedContents, result);

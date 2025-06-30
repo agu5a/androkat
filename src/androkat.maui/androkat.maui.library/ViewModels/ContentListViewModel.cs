@@ -100,9 +100,9 @@ public partial class ContentListViewModel : ViewModelBase
         }
     }
 
-    public async Task FetchAsync(bool returnVisited)
+    public async Task FetchAsync(bool returnVisited, List<string>? enabledSources = null)
     {
-        var contentsTemp = await _pageService.GetContentsAsync(Id!, returnVisited);
+        var contentsTemp = await _pageService.GetContentsAsync(Id!, returnVisited, enabledSources);
 
         if (contentsTemp == null)
         {

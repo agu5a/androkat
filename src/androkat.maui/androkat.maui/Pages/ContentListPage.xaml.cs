@@ -54,11 +54,11 @@ public partial class ContentListPage : ContentPage
 
     private async void OnFilterClicked(object sender, EventArgs e)
     {
-        var filterView = new FilterView(_showVisited);
-        filterView.FilterChanged += async (_, showVisited) =>
+        var filterView = new FilterView(_showVisited, ViewModel.Id ?? "0");
+        filterView.FilterChanged += async (_, args) =>
         {
-            Settings.ShowVisited = showVisited;
-            await ViewModel.FetchAsync(_showVisited);
+            Settings.ShowVisited = args.ShowVisited;
+            await ViewModel.FetchAsync(args.ShowVisited, args.EnabledSources);
         };
 
         await this.ShowPopupAsync(filterView);
