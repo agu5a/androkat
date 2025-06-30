@@ -183,16 +183,24 @@ public class Repository : IRepository
         return new();
     }
 
-    public async Task<List<ContentEntity>> GetContentsByTypeId(string typeId)
+    public async Task<List<ContentEntity>> GetContentsByTypeId(string typeId, bool returnVisited = true)
     {
         try
         {
             Init();
-            return await _conn!.Table<ContentEntity>().Where(w => w.Tipus == typeId).OrderByDescending(o => o.Datum).ToListAsync();
+            var query = _conn!.Table<ContentEntity>()
+                .Where(w => w.Tipus == typeId);
+
+            if (!returnVisited)
+            {
+                query = query.Where(w => !w.IsRead);
+            }
+
+            return await query.OrderByDescending(o => o.Datum).ToListAsync();
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"********************************** Repository EXCEPTION! {ex}");
+            Debug.WriteLine($"********************************** Repository GetContentsByTypeId EXCEPTION! {ex}");
         }
 
         return [];
@@ -224,12 +232,12 @@ public class Repository : IRepository
             Init();
             var query = _conn!.Table<ContentEntity>()
                 .Where(w => w.GroupName == groupName);
-            
+
             if (!returnVisited)
             {
                 query = query.Where(w => !w.IsRead);
             }
-            
+
             return await query.OrderByDescending(o => o.Datum).ToListAsync();
         }
         catch (Exception ex)
@@ -295,7 +303,7 @@ public class Repository : IRepository
 
         return -1;
     }
-        
+
     public async Task<int> InsertImadsag(ImadsagEntity entity)
     {
         try
@@ -331,7 +339,7 @@ public class Repository : IRepository
 
         return -1;
     }
-    
+
     public async Task<int> DeleteContentByNid(Guid nid)
     {
         try
@@ -446,7 +454,7 @@ public class Repository : IRepository
         }
 
         return -1;
-    }    
+    }
 
     public async Task<int> SetContentAsReadById(Guid nid)
     {

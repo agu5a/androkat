@@ -3,15 +3,18 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
            x:Class="androkat.hu.Views.FilterView">
-    <VerticalStackLayout Spacing="20" BackgroundColor="{AppThemeBinding Light={StaticResource Cardviewback}, Dark={StaticResource CardviewbackDark}}"
-           Padding="20" WidthRequest="300" HeightRequest="200">
+    <VerticalStackLayout Spacing="20"
+            BackgroundColor="{AppThemeBinding Light={StaticResource Cardviewback}, Dark={StaticResource CardviewbackDark}}"
+                         Padding="20"
+            WidthRequest="300"
+            HeightRequest="200">
         <HorizontalStackLayout Spacing="10">
-            <CheckBox x:Name="ShowVisitedCheckbox" />
-            <Label Text="Olvasottak elrejtése"
-                       VerticalOptions="Center" />
+            <CheckBox x:Name="ShowVisitedCheckbox"/>
+            <Label Text="Olvasottak megjelenítése"
+                   VerticalOptions="Center"/>
         </HorizontalStackLayout>
-        <Button Text="Bezárás" 
-                    Clicked="OnApplyClicked"
-                    HorizontalOptions="End" />
+        <Button Text="Bezárás"
+                Clicked="OnApplyClicked"
+                HorizontalOptions="End"/>
     </VerticalStackLayout>
 </mct:Popup>

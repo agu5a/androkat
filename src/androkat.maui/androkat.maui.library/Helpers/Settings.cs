@@ -16,4 +16,10 @@ public static class Settings
         }
         set => Preferences.Set(nameof(Theme), value.ToString());
     }
+
+    public static bool ShowVisited
+    {
+        get => Preferences.Get(nameof(ShowVisited), true);
+        set => Preferences.Set(nameof(ShowVisited), value);
+    }
 }

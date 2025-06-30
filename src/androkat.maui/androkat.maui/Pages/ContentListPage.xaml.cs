@@ -1,5 +1,6 @@
 ﻿using androkat.hu.Views;
 using androkat.maui.library.ViewModels;
+using androkat.maui.library.Helpers;
 using CommunityToolkit.Maui.Extensions;
 
 namespace androkat.hu.Pages;
@@ -8,7 +9,7 @@ public partial class ContentListPage : ContentPage
 {
     private ContentListViewModel ViewModel => (BindingContext as ContentListViewModel)!;
     private int _stackCount;
-    private bool _showVisited = true;
+    private static bool _showVisited => Settings.ShowVisited;
 
     public ContentListPage(ContentListViewModel viewModel)
     {
@@ -26,6 +27,11 @@ public partial class ContentListPage : ContentPage
         {
             //Nem DetailPage-ről jöttünk viszsa, így üres oldallal indulunk
             ViewModel.Contents.Clear();
+        }
+        else
+        {
+            // Visszajövünk DetailPage-ről, újra fetcheljük az adatokat hogy a read status frissüljön
+            Task.Run(async () => await ViewModel.FetchAsync(_showVisited));
         }
         base.OnNavigatedTo(args);
     }
@@ -51,7 +57,7 @@ public partial class ContentListPage : ContentPage
         var filterView = new FilterView(_showVisited);
         filterView.FilterChanged += async (_, showVisited) =>
         {
-            _showVisited = showVisited;
+            Settings.ShowVisited = showVisited;
             await ViewModel.FetchAsync(_showVisited);
         };
 

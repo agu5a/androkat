@@ -9,7 +9,7 @@
     <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource CardviewbackDark}, Light={StaticResource Cardviewback}}">
         <Grid>
             <Grid.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NavigateToDetailCommand}" />
+                <TapGestureRecognizer Command="{Binding NavigateToDetailCommand}"/>
             </Grid.GestureRecognizers>
             <HorizontalStackLayout>
 
@@ -23,29 +23,32 @@
                     MinimumHeightRequest="{x:OnIdiom Phone=48}"
                     MinimumWidthRequest="{x:OnIdiom Phone=48}"
                     Source="{Binding ContentEntity.Image}"
-                    VerticalOptions="Center" />
+                    VerticalOptions="Center"/>
 
                 <VerticalStackLayout VerticalOptions="Fill">
                     <Label
+                        FontAttributes="{Binding TextFontAttributes}"
                         HorizontalOptions="Start"
                         LineBreakMode="WordWrap"
                         MaxLines="2"
                         MaximumWidthRequest="{x:OnIdiom Phone=250}"
-                        Style="{OnIdiom Default={StaticResource BodyXLLabelStyle},
-                                        Phone={StaticResource BodyLLabelStyle}}"
-                        Text="{Binding ContentEntity.Cim}" />
+                        Style="{OnIdiom Default={StaticResource BodyXLLabelNormalStyle},
+                                        Phone={StaticResource BodyLLabelNormalStyle}}"
+                        Text="{Binding ContentEntity.Cim}"/>
                     <Label
+                        FontAttributes="{Binding TextFontAttributes}"
                         LineBreakMode="TailTruncation"
                         MaxLines="1"
                         Style="{OnIdiom Default={StaticResource BodyMLabelStyle},
                                         Phone={StaticResource BodySLabelStyle}}"
-                        Text="{Binding datum}" />
+                        Text="{Binding datum}"/>
                     <Label
+                        FontAttributes="{Binding TextFontAttributes}"
                         LineBreakMode="TailTruncation"
                         MaxLines="1"
                         Style="{OnIdiom Default={StaticResource BodyMLabelStyle},
                                         Phone={StaticResource BodySLabelStyle}}"
-                        Text="{Binding forras}" />
+                        Text="{Binding forras}"/>
                 </VerticalStackLayout>
 
             </HorizontalStackLayout>
