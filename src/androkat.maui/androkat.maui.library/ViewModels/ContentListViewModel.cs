@@ -39,13 +39,13 @@ public partial class ContentListViewModel : ViewModelBase
     [ObservableProperty]
     ObservableRangeCollection<List<ContentItemViewModel>> contents;
 
-    public async Task InitializeAsync(bool returnVisited)
+    public async Task InitializeAsync(bool returnVisited, List<string>? enabledSources = null)
     {
         //Delay on first load until window loads
         await Task.Delay(1000);
         await UpdateData();
         await CheckNewVersion();
-        await FetchAsync(returnVisited);
+        await FetchAsync(returnVisited, enabledSources);
     }
 
     private async Task UpdateData()

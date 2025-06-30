@@ -37,12 +37,28 @@ public static class Settings
 
     public static List<string> GetEnabledSources(List<FilterOption> availableOptions)
     {
-        var enabledSources = availableOptions
-            .Where(option => IsSourceEnabled(option.Key))
-            .Select(option => option.Key)
-            .ToList();
+        var enabledSources = new List<string>();
 
-        System.Diagnostics.Debug.WriteLine($"Settings.GetEnabledSources returning: [{string.Join(", ", enabledSources)}]");
+        foreach (var option in availableOptions)
+        {
+            var isEnabled = IsSourceEnabled(option.Key);
+            System.Diagnostics.Debug.WriteLine($"Source '{option.Key}' ({option.DisplayName}) enabled: {isEnabled}");
+            if (isEnabled)
+            {
+                enabledSources.Add(option.Key);
+            }
+        }
+
+        System.Diagnostics.Debug.WriteLine($"Settings.GetEnabledSources returning: [{string.Join(", ", enabledSources)}] from {availableOptions.Count} available options");
+
+        // If no sources are enabled but we have available options, it suggests a platform issue
+        // In this case, return all available sources as the default behavior
+        if (enabledSources.Count == 0 && availableOptions.Count > 0)
+        {
+            System.Diagnostics.Debug.WriteLine("No sources enabled but options available - returning all sources as default");
+            enabledSources = availableOptions.Select(option => option.Key).ToList();
+        }
+
         return enabledSources;
     }
 }

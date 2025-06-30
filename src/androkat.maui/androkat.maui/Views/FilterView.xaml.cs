@@ -67,12 +67,17 @@ public partial class FilterView : Popup
             Settings.SetSourceEnabled(kvp.Key, kvp.Value.IsChecked);
         }
 
+        var enabledSources = _sourceCheckBoxes
+            .Where(kvp => kvp.Value.IsChecked)
+            .Select(kvp => kvp.Key)
+            .ToList();
+
         var args = new FilterChangedEventArgs
         {
             // Invert the logic: if hideVisited is checked, showVisited should be false
             ShowVisited = !ShowVisitedCheckbox.IsChecked,
             // Only pass enabled sources if there are filterable options available
-            EnabledSources = _filterOptions.Count > 0 ? Settings.GetEnabledSources(_filterOptions) : null
+            EnabledSources = _filterOptions.Count > 0 ? enabledSources : null
         };
 
         FilterChanged?.Invoke(this, args);

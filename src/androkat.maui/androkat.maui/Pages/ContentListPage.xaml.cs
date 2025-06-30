@@ -1,15 +1,16 @@
 ﻿using androkat.hu.Views;
 using androkat.maui.library.ViewModels;
 using androkat.maui.library.Helpers;
+using androkat.maui.library.Models;
 using CommunityToolkit.Maui.Extensions;
 
 namespace androkat.hu.Pages;
 
-public partial class ContentListPage : ContentPage
+public partial class ContentListPage
 {
     private ContentListViewModel ViewModel => (BindingContext as ContentListViewModel)!;
     private int _stackCount;
-    private static bool _showVisited => Settings.ShowVisited;
+    private static bool ShowVisited => Settings.ShowVisited;
 
     public ContentListPage(ContentListViewModel viewModel)
     {
@@ -31,7 +32,9 @@ public partial class ContentListPage : ContentPage
         else
         {
             // Visszajövünk DetailPage-ről, újra fetcheljük az adatokat hogy a read status frissüljön
-            Task.Run(async () => await ViewModel.FetchAsync(_showVisited));
+            var filterOptions = FilterOptionsHelper.GetFilterOptionsForPageId(ViewModel.Id);
+            var enabledSources = filterOptions.Count > 0 ? Settings.GetEnabledSources(filterOptions) : null;
+            Task.Run(async () => await ViewModel.FetchAsync(ShowVisited, enabledSources));
         }
         base.OnNavigatedTo(args);
     }
@@ -47,14 +50,16 @@ public partial class ContentListPage : ContentPage
         base.OnAppearing();
         activityIndicator.IsRunning = true;
         activityIndicator.IsVisible = true;
-        await ViewModel.InitializeAsync(_showVisited);
+        var filterOptions = FilterOptionsHelper.GetFilterOptionsForPageId(ViewModel.Id);
+        var enabledSources = filterOptions.Count > 0 ? Settings.GetEnabledSources(filterOptions) : null;
+        await ViewModel.InitializeAsync(ShowVisited, enabledSources);
         activityIndicator.IsRunning = false;
         activityIndicator.IsVisible = false;
     }
 
     private async void OnFilterClicked(object sender, EventArgs e)
     {
-        var filterView = new FilterView(_showVisited, ViewModel.Id ?? "0");
+        var filterView = new FilterView(ShowVisited, ViewModel.Id ?? "0");
         filterView.FilterChanged += async (_, args) =>
         {
             Settings.ShowVisited = args.ShowVisited;

@@ -108,7 +108,7 @@ public class PageService(IDownloadService downloadService, IRepository repositor
             "4" => await repository.GetContentsByGroupName("group_news", returnVisited, enabledSources),
             "5" => await repository.GetContentsByGroupName("group_blog", returnVisited, enabledSources),
             "6" => await repository.GetContentsByGroupName("group_humor", returnVisited, enabledSources),
-            //"7" => ima
+            // "7" => Prayers handled by ImaListPage, not through ContentListPage
             "8" => await repository.GetContentsByGroupName("group_audio", returnVisited, enabledSources),
             "11" => await repository.GetContentsByTypeId(((int)Activities.book).ToString(), returnVisited, enabledSources),
             "34" => await repository.GetContentsByTypeId(((int)Activities.gyonas).ToString(), returnVisited, enabledSources),
