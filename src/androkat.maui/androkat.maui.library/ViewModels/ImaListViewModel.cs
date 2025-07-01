@@ -17,7 +17,7 @@ public partial class ImaListViewModel : ViewModelBase
 #pragma warning restore S1104 // Fields should not have public accessibility
 
     [ObservableProperty]
-    ObservableRangeCollection<List<ImaContentViewModel>> contents;
+    ObservableRangeCollection<ImaContentViewModel> contents;
 
     public ImaListViewModel(IPageService pageService)
     {
@@ -47,8 +47,7 @@ public partial class ImaListViewModel : ViewModelBase
         }
 
         var temp = ConvertToViewModels(imaContents);
-        var s = new List<List<ImaContentViewModel>> { temp.ToList() };
-        Contents.AddRange(s);
+        Contents.AddRange(temp);
     }
 
     private static List<ImaContentViewModel> ConvertToViewModels(IEnumerable<ImadsagEntity> items)
@@ -61,7 +60,8 @@ public partial class ImaListViewModel : ViewModelBase
                 datum = $"Dátum: {item.Datum:yyyy-MM-dd}",
                 detailscim = "Imádságok",
                 isFav = false,
-                type = Activities.ima
+                type = Activities.ima,
+                forras = string.Empty // IMA items don't have a source
             };
             viewmodels.Add(viewModel);
         }

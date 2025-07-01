@@ -14,13 +14,14 @@
             x:Key="ListTitleStyle"
             BasedOn="{OnIdiom Phone={StaticResource H6LabelStyle}}"
             TargetType="Label">
-            <Setter Property="Padding" Value="{OnIdiom Phone='0,0,0,0'}" />
+            <Setter Property="Padding"
+                    Value="{OnIdiom Phone='0,0,0,0'}"/>
         </Style>
     </ContentPage.Resources>
     <Grid Background="{AppThemeBinding Light={StaticResource BackgroundActivity}, Dark={StaticResource BackgroundActivityDark}}">
         <CollectionView
             Margin="{OnIdiom Phone='10,10,10,0'}"
-            IsGrouped="True"
+            IsGrouped="False"
             ItemsSource="{Binding Contents}"
             RemainingItemsThreshold="10"
             RemainingItemsThresholdReached="CollectionView_RemainingItemsThresholdReached"
@@ -31,14 +32,14 @@
                     Orientation="Vertical"
                     Span="{OnIdiom Phone=1,
                                    Tablet=2}"
-                    VerticalItemSpacing="5" />
+                    VerticalItemSpacing="5"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <view:ContentItemView
+                <DataTemplate x:DataType="viewmodels:ImaContentViewModel">
+                    <view:ImaItemView
                         SemanticProperties.Description="Description"
-                        SubscriptionCommand="{Binding SubscribeCommand, Source={RelativeSource AncestorType={x:Type viewmodels:ContentListViewModel}}}"
-                        SubscriptionCommandParameter="{Binding}" />
+                        SubscriptionCommand="{Binding SubscribeCommand, Source={RelativeSource AncestorType={x:Type viewmodels:ImaListViewModel}}}"
+                        SubscriptionCommandParameter="{Binding}"/>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

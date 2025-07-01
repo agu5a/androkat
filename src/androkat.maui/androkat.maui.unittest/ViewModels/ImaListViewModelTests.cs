@@ -42,7 +42,7 @@ public class ImaListViewModelTests
         //Assert
         Assert.NotNull(viewModel.Contents);
         Assert.NotEmpty(viewModel.Contents);
-        Assert.Equal("Imádságok", viewModel.Contents.First().First().detailscim);
+        Assert.Equal("Imádságok", viewModel.Contents.First().detailscim);
 
         _pageServiceMock.Verify(x => x.GetImaContents(1, 10), Times.Once);
     }

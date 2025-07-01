@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<VerticalStackLayout
+    x:Class="androkat.hu.Views.ImaItemView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
+    xmlns:converters="clr-namespace:androkat.maui.library.Converters;assembly=androkat.maui.library"
+    x:Name="self"
+    x:DataType="viewmodels:ImaContentViewModel">
+    <VerticalStackLayout.Resources>
+        <ResourceDictionary>
+            <converters:StringToBooleanConverter x:Key="StringToBooleanConverter"/>
+        </ResourceDictionary>
+    </VerticalStackLayout.Resources>
+    <Border BackgroundColor="{AppThemeBinding Dark={StaticResource CardviewbackDark}, Light={StaticResource Cardviewback}}"
+            Stroke="{AppThemeBinding Dark={StaticResource CardviewbackDark}, Light={StaticResource Cardviewback}}"
+            StrokeThickness="0">
+        <Grid>
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateToDetailCommand}"/>
+            </Grid.GestureRecognizers>
+            <HorizontalStackLayout>
+
+                <VerticalStackLayout VerticalOptions="Fill">
+                    <Label
+                        FontAttributes="{Binding TextFontAttributes}"
+                        HorizontalOptions="Start"
+                        LineBreakMode="WordWrap"
+                        MaxLines="2"
+                        MaximumWidthRequest="{x:OnIdiom Phone=300}"
+                        Style="{OnIdiom Default={StaticResource BodyXLLabelNormalStyle},
+                                        Phone={StaticResource BodyLLabelNormalStyle}}"
+                        Text="{Binding ContentEntity.Cim}"
+                        Padding="20,20,35,20"/>
+                </VerticalStackLayout>
+
+            </HorizontalStackLayout>
+        </Grid>
+
+    </Border>
+</VerticalStackLayout>
