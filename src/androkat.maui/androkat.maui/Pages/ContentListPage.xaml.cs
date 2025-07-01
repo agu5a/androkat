@@ -50,7 +50,10 @@ public partial class ContentListPage
         base.OnAppearing();
         activityIndicator.IsRunning = true;
         activityIndicator.IsVisible = true;
-        var filterOptions = FilterOptionsHelper.GetFilterOptionsForPageId(ViewModel.Id);
+        // Get the current page ID from route to ensure we have the correct ID
+        var currentPageId = GetCategoryIdFromRoute();
+        var pageId = string.IsNullOrEmpty(currentPageId) ? "34" : currentPageId;
+        var filterOptions = FilterOptionsHelper.GetFilterOptionsForPageId(pageId);
         var enabledSources = filterOptions.Count > 0 ? Settings.GetEnabledSources(filterOptions) : null;
         await ViewModel.InitializeAsync(ShowVisited, enabledSources);
         activityIndicator.IsRunning = false;
