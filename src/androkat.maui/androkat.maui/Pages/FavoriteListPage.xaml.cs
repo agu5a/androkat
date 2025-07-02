@@ -43,14 +43,19 @@ public partial class FavoriteListPage : ContentPage
     {
         base.OnAppearing();
         await ViewModel.InitializeAsync();
+        ViewModel.PageTitle = GetPageTitle(); // Update title after initialization
     }
 
     private string GetPageTitle()
     {
         if (ViewModel.FavoriteCount > 0)
+        {
             return $"Kedvencek ({ViewModel.FavoriteCount})";
+        }
         else
+        {
             return $"Kedvencek";
+        }
     }
 
     private async void Button_Clicked(object sender, EventArgs e)
@@ -59,8 +64,8 @@ public partial class FavoriteListPage : ContentPage
         if (isDelete)
         {
             await _pageService.DeleteAllFavorite();
-            ViewModel.PageTitle = "Kedvencek";
             await ViewModel.InitializeAsync();
+            ViewModel.PageTitle = GetPageTitle();
 
             using var cancellationTokenSource = new CancellationTokenSource();
             var toast = Toast.Make("Kedvencek adatbázis sikeresen törölve", ToastDuration.Short, 14d);
