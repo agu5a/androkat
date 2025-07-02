@@ -8,6 +8,7 @@ public partial class DetailAudio
 {
     private DetailViewModel ViewModel => (BindingContext as DetailViewModel)!;
     private string _downloadedFilePath = string.Empty;
+    private ToolbarItem? _deleteFavoriteToolbarItem;
 
     public DetailAudio(DetailViewModel viewModel)
     {
@@ -22,6 +23,9 @@ public partial class DetailAudio
         TitleLabel.Text = ViewModel.ContentView.detailscim;
         Leiras1.Text = ViewModel.ContentView.ContentEntity.Cim;
         Leiras2.Text = ViewModel.ContentView.datum;
+
+        // Control toolbar item visibility
+        UpdateToolbarItems();
 
         var leiras = ViewModel.ContentView.type switch
         {
@@ -39,9 +43,9 @@ public partial class DetailAudio
                 "A <a href=\"https://www.katolikusradio.hu/evangelium\">katolikusradio.hu</a> által közétett napi evangélium hanganyagként.",
             _ => ""
         };
-        
+
         Leiras3.Text = leiras + "<br><br><b>Töltse le</b> vagy <b>hallgassa meg most</b>";
-        
+
         // Check if file already exists and update button states
         CheckFileExistsAndUpdateButtons();
     }
@@ -109,33 +113,33 @@ public partial class DetailAudio
 
             string url = audioUrl;
             string fileName = GetFileName(url, ViewModel!.ContentView.type);
-            
+
             // Download file
             using var httpClient = new HttpClient();
             var response = await httpClient.GetAsync(url);
-            
+
             if (response.IsSuccessStatusCode)
             {
                 var bytes = await response.Content.ReadAsByteArrayAsync();
                 string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 string androkatFolder = Path.Combine(documentsPath, "AndroKat");
-                
+
                 // Create directory if it doesn't exist
                 Directory.CreateDirectory(androkatFolder);
-                
+
                 _downloadedFilePath = Path.Combine(androkatFolder, fileName);
                 await File.WriteAllBytesAsync(_downloadedFilePath, bytes);
-                
+
                 await DisplayAlert("Siker", $"Letöltés sikeres!\nHelye: {_downloadedFilePath}", "OK");
-                
-                    // Update button states
-                    var downloadButton = sender as Button;
-                    if (downloadButton != null)
-                    {
-                        downloadButton.IsEnabled = false;
-                        downloadButton.Text = "MÁR LETÖLTVE";
-                    }
-                
+
+                // Update button states
+                var downloadButton = sender as Button;
+                if (downloadButton != null)
+                {
+                    downloadButton.IsEnabled = false;
+                    downloadButton.Text = "MÁR LETÖLTVE";
+                }
+
                 // Enable delete button
                 DeleteButton.IsEnabled = true;
             }
@@ -159,7 +163,7 @@ public partial class DetailAudio
             ProgressBar.IsVisible = false;
         }
     }
-    
+
     private async void Torles_OnClicked(object? sender, EventArgs e)
     {
         try
@@ -184,13 +188,13 @@ public partial class DetailAudio
                 {
                     File.Delete(_downloadedFilePath);
                     _downloadedFilePath = string.Empty;
-                    
+
                     await DisplayAlert("Siker", "Fájl törölve", "OK");
-                    
+
                     // Update button states
                     DownloadButton.IsEnabled = true;
                     DownloadButton.Text = "LETÖLTÉS";
-                    
+
                     var deleteButton = sender as Button;
                     if (deleteButton != null)
                     {
@@ -208,7 +212,7 @@ public partial class DetailAudio
             await DisplayAlert("Hiba", $"Törlési hiba: {ex.Message}", "OK");
         }
     }
-    
+
     private async void Lejatszas_OnClicked(object? sender, EventArgs e)
     {
         try
@@ -265,8 +269,8 @@ public partial class DetailAudio
         if (!string.IsNullOrEmpty(audioUrl))
         {
             return audioUrl;
-        }        
-       
+        }
+
         return null;
     }
 
@@ -276,16 +280,16 @@ public partial class DetailAudio
         {
             var uri = new Uri(url);
             string originalFileName = Path.GetFileName(uri.LocalPath);
-            
+
             if (string.IsNullOrEmpty(originalFileName))
             {
                 originalFileName = "audio.mp3";
             }
-            
+
             // Remove extension to add prefix
             string nameWithoutExt = Path.GetFileNameWithoutExtension(originalFileName);
             string extension = Path.GetExtension(originalFileName);
-            
+
             if (string.IsNullOrEmpty(extension))
             {
                 extension = ".mp3";
@@ -295,7 +299,7 @@ public partial class DetailAudio
             string prefix = activityType switch
             {
                 Activities.audiobarsi => "Barsi",
-                Activities.prayasyougo => "NapiUtraValo", 
+                Activities.prayasyougo => "NapiUtraValo",
                 Activities.audiohorvath => "Horvath",
                 Activities.audiotaize => "Taize",
                 Activities.audionapievangelium => "Evangelium",
@@ -308,6 +312,36 @@ public partial class DetailAudio
         catch
         {
             return $"audio_{DateTime.Now:yyyyMMdd_HHmmss}.mp3";
+        }
+    }
+
+    private void UpdateToolbarItems()
+    {
+        if (ViewModel.ShowDeleteFavoriteButton)
+        {
+            // Create and add the delete toolbar item if it doesn't exist
+            if (_deleteFavoriteToolbarItem == null)
+            {
+                _deleteFavoriteToolbarItem = new ToolbarItem
+                {
+                    IconImageSource = "delete",
+                    Text = "Törlés kedvencekből"
+                };
+                _deleteFavoriteToolbarItem.SetBinding(ToolbarItem.CommandProperty, "DeleteFavoriteCommand");
+            }
+
+            if (!ToolbarItems.Contains(_deleteFavoriteToolbarItem))
+            {
+                ToolbarItems.Insert(0, _deleteFavoriteToolbarItem); // Insert before send
+            }
+        }
+        else
+        {
+            // Remove the delete toolbar item if it exists
+            if (_deleteFavoriteToolbarItem != null)
+            {
+                ToolbarItems.Remove(_deleteFavoriteToolbarItem);
+            }
         }
     }
 }

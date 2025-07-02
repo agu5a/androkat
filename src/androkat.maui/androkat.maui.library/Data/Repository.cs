@@ -336,6 +336,21 @@ public class Repository : IRepository
         return -1;
     }
 
+    public async Task<int> DeleteFavoriteContentByNid(Guid nid)
+    {
+        try
+        {
+            Init();
+            return await _conn!.Table<FavoriteContentEntity>().DeleteAsync(d => d.Nid == nid);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"********************************** DeleteFavoriteContentByNid EXCEPTION! {ex}");
+        }
+
+        return -1;
+    }
+
     public async Task<int> DeleteContentByNid(Guid nid)
     {
         try

@@ -9,6 +9,7 @@ namespace androkat.maui.library.ViewModels;
 
 [QueryProperty(nameof(Id), nameof(Id))]
 [QueryProperty(nameof(IsIma), nameof(IsIma))]
+[QueryProperty(nameof(FromFavorites), nameof(FromFavorites))]
 public partial class DetailViewModel(IPageService pageService, ISourceData sourceData) : ViewModelBase
 {
     private Guid _contentGuid;
@@ -16,9 +17,13 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
 
     public string Id { get; set; }
     public string IsIma { get; set; }
+    public string FromFavorites { get; set; }
 
     [ObservableProperty]
     ContentItemViewModel contentView;
+
+    [ObservableProperty]
+    bool showDeleteFavoriteButton;
 
     public async Task InitializeAsync()
     {
@@ -29,6 +34,10 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
         if (IsIma != null)
         {
             _isIma = bool.Parse(IsIma);
+        }
+        if (FromFavorites != null)
+        {
+            ShowDeleteFavoriteButton = bool.Parse(FromFavorites);
         }
 
         await FetchAsync();
@@ -65,7 +74,7 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
 
             SourceData idezetSource = sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
             var origImg = item.Image;
-            item.Image = idezetSource.Img;            
+            item.Image = idezetSource.Img;
             var viewModel = new ContentItemViewModel(item)
             {
                 datum = $"<b>Dátum</b>: {item.Datum:yyyy-MM-dd}",
@@ -125,6 +134,23 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
             Tipus = ContentView.ContentEntity.Tipus,
             TypeName = ContentView.ContentEntity.TypeName
         });
+    }
+
+    [RelayCommand]
+    async Task DeleteFavorite()
+    {
+        var result = await Shell.Current.DisplayAlert(
+            "Törlés megerősítése",
+            "Biztosan törölni szeretnéd ezt a kedvencet?",
+            "Igen", "Nem");
+
+        if (result)
+        {
+            _ = await pageService.DeleteFavoriteContentByNid(_contentGuid);
+
+            // Navigate back to favorites page
+            await Shell.Current.GoToAsync("..");
+        }
     }
 
     [RelayCommand]

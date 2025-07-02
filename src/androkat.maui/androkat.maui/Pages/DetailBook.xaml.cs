@@ -5,6 +5,7 @@ namespace androkat.hu.Pages;
 public partial class DetailBook
 {
     private BookDetailViewModel ViewModel => (BindingContext as BookDetailViewModel)!;
+    private ToolbarItem? _deleteFavoriteToolbarItem;
 
     public DetailBook(BookDetailViewModel viewModel)
     {
@@ -16,11 +17,44 @@ public partial class DetailBook
     {
         base.OnAppearing();
         await ViewModel.InitializeBookAsync();
+
+        // Control toolbar item visibility
+        UpdateToolbarItems();
     }
 
     protected override void OnDisappearing()
     {
         ViewModel.CancelSpeech();
         base.OnDisappearing();
+    }
+
+    private void UpdateToolbarItems()
+    {
+        if (ViewModel.ShowDeleteFavoriteButton)
+        {
+            // Create and add the delete toolbar item if it doesn't exist
+            if (_deleteFavoriteToolbarItem == null)
+            {
+                _deleteFavoriteToolbarItem = new ToolbarItem
+                {
+                    IconImageSource = "delete",
+                    Text = "Törlés kedvencekből"
+                };
+                _deleteFavoriteToolbarItem.SetBinding(ToolbarItem.CommandProperty, "DeleteFavoriteCommand");
+            }
+
+            if (!ToolbarItems.Contains(_deleteFavoriteToolbarItem))
+            {
+                ToolbarItems.Insert(0, _deleteFavoriteToolbarItem); // Insert before send
+            }
+        }
+        else
+        {
+            // Remove the delete toolbar item if it exists
+            if (_deleteFavoriteToolbarItem != null)
+            {
+                ToolbarItems.Remove(_deleteFavoriteToolbarItem);
+            }
+        }
     }
 }

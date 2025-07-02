@@ -20,6 +20,7 @@ public interface IRepository
     Task<int> SetContentAsReadById(Guid nid);
     Task<List<FavoriteContentEntity>> GetFavoriteContents();
     Task<int> InsertFavoriteContent(FavoriteContentEntity entity);
+    Task<int> DeleteFavoriteContentByNid(Guid nid);
     Task<int> GetFavoriteCount();
     Task<ImadsagEntity?> GetFirstImadsag();
     Task<int> DeleteImadsagByNid(Guid nid);

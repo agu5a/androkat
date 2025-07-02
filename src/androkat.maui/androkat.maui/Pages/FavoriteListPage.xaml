@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Title="{Binding PageTitle}"
              x:Name="this"
              xmlns:view="clr-namespace:androkat.hu.Views"
              xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
-             Style="{StaticResource MainSectionStyle}"             
+             Style="{StaticResource MainSectionStyle}"
              x:DataType="viewmodels:FavoriteListViewModel"
              x:Class="androkat.hu.Pages.FavoriteListPage">
     <ContentPage.Resources>
@@ -13,54 +13,82 @@
                TargetType="Label"
                BasedOn="{OnIdiom Phone={StaticResource H6LabelStyle}}">
             <Setter Property="Padding"
-                    Value="{OnIdiom Phone='0,0,0,0'}" />
+                    Value="{OnIdiom Phone='0,0,0,0'}"/>
+        </Style>
+
+        <Style x:Key="DeleteButtonStyle"
+                TargetType="Button">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"/>
+            <Setter Property="HeightRequest"
+                    Value="44"/>
+            <Setter Property="WidthRequest"
+                    Value="44"/>
+            <Setter Property="Margin"
+                    Value="0,0,5,0"/>
+            <Setter Property="IsEnabled"
+                    Value="True"/>
+            <Setter Property="Opacity"
+                    Value="1"/>
+            <Style.Triggers>
+                <DataTrigger TargetType="Button"
+                        Binding="{Binding FavoriteCount}"
+                        Value="0">
+                    <Setter Property="IsEnabled"
+                            Value="False"/>
+                    <Setter Property="Opacity"
+                            Value="0.5"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ImportButtonStyle"
+                TargetType="Button">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"/>
+            <Setter Property="HeightRequest"
+                    Value="44"/>
+            <Setter Property="WidthRequest"
+                    Value="44"/>
+            <Setter Property="Margin"
+                    Value="0,0,5,0"/>
         </Style>
     </ContentPage.Resources>
-    <ScrollView VerticalOptions="FillAndExpand" Margin="5,0,5,0">
+    <ScrollView VerticalOptions="FillAndExpand"
+                Margin="5,0,5,0">
         <VerticalStackLayout>
             <HorizontalStackLayout Margin="0,10,0,10">
-                <Button BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
-                        SemanticProperties.Description="Kedvencek törlése"
-                        HeightRequest="44"
-                        WidthRequest="44"
-                        Margin="0,0,5,0"
-                        Clicked="Button_Clicked"    
-                        ImageSource="delete">                    
+                <Button Style="{StaticResource DeleteButtonStyle}"
+                        SemanticProperties.Description="Összes kedvencek törlése"
+                        Clicked="Button_Clicked"
+                        ImageSource="delete">
                 </Button>
-                <Button BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
-                        HeightRequest="44"
-                        WidthRequest="44"
-                        Margin="0,0,5,0"
+                <Button Style="{StaticResource ImportButtonStyle}"
                         SemanticProperties.Description="Kedvencek import"
                         Clicked="Button_Clicked_2"
                         ImageSource="ic_import">
                 </Button>
-                <Button BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
+                <Button Style="{StaticResource DeleteButtonStyle}"
                         SemanticProperties.Description="Kedvencek export"
-                        HeightRequest="44"
-                        WidthRequest="44"
-                        Margin="0,0,5,0"
                         Clicked="Button_Clicked_1"
-                        ImageSource="ic_export">                    
+                        ImageSource="ic_export">
                 </Button>
-                <Button BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
+                <Button Style="{StaticResource DeleteButtonStyle}"
                         SemanticProperties.Description="Kedvencek küldése"
-                        HeightRequest="44"
-                        WidthRequest="44"
-                        Margin="0,0,5,0"
+                        Clicked="Button_Clicked_3"
                         ImageSource="ic_send_24dp2">
                 </Button>
             </HorizontalStackLayout>
             <Grid Background="{AppThemeBinding Light={StaticResource BackgroundActivity}, Dark={StaticResource BackgroundActivityDark}}">
                 <CollectionView ItemsSource="{Binding Contents}"
-                        Margin="{OnIdiom Phone='10,10,10,0'}"
-                        SelectionMode="None"
-                        IsGrouped="True">
+                                Margin="{OnIdiom Phone='10,10,10,0'}"
+                                SelectionMode="None"
+                                IsGrouped="True">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical"
-                            Span="{OnIdiom Phone=1, Tablet=2}"
-                            HorizontalItemSpacing="5"
-                            VerticalItemSpacing="5" />
+                                         Span="{OnIdiom Phone=1, Tablet=2}"
+                                         HorizontalItemSpacing="5"
+                                         VerticalItemSpacing="5"/>
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="viewmodels:FavoriteContentViewModel">
@@ -68,7 +96,7 @@
                                 <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource CardviewbackDark}, Light={StaticResource Cardviewback}}">
                                     <Grid>
                                         <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding NavigateToDetailCommand}" />
+                                            <TapGestureRecognizer Command="{Binding NavigateToDetailCommand}"/>
                                         </Grid.GestureRecognizers>
                                         <HorizontalStackLayout>
                                             <Image
@@ -80,7 +108,7 @@
                                                 MinimumHeightRequest="{x:OnIdiom Phone=48}"
                                                 MinimumWidthRequest="{x:OnIdiom Phone=48}"
                                                 Source="{Binding ContentEntity.Image}"
-                                                VerticalOptions="Center" />
+                                                VerticalOptions="Center"/>
                                             <VerticalStackLayout VerticalOptions="Fill">
                                                 <Label
                                                     HorizontalOptions="Start"
@@ -89,19 +117,19 @@
                                                     MaximumWidthRequest="{x:OnIdiom Phone=250}"
                                                     Style="{OnIdiom Default={StaticResource BodyXLLabelStyle},
                                                                     Phone={StaticResource BodyLLabelStyle}}"
-                                                    Text="{Binding ContentEntity.Cim}" />
+                                                    Text="{Binding ContentEntity.Cim}"/>
                                                 <Label
                                                     LineBreakMode="TailTruncation"
                                                     MaxLines="1"
                                                     Style="{OnIdiom Default={StaticResource BodyMLabelStyle},
                                                                     Phone={StaticResource BodySLabelStyle}}"
-                                                    Text="{Binding datum}" />
+                                                    Text="{Binding datum}"/>
                                                 <Label
                                                     LineBreakMode="TailTruncation"
                                                     MaxLines="1"
                                                     Style="{OnIdiom Default={StaticResource BodyMLabelStyle},
                                                                     Phone={StaticResource BodySLabelStyle}}"
-                                                    Text="{Binding forras}" />
+                                                    Text="{Binding forras}"/>
                                             </VerticalStackLayout>
                                         </HorizontalStackLayout>
                                     </Grid>

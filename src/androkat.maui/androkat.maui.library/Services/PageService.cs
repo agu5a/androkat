@@ -83,6 +83,11 @@ public class PageService(IDownloadService downloadService, IRepository repositor
         return await repository.DeleteAllFavorite();
     }
 
+    public async Task<int> DeleteFavoriteContentByNid(Guid nid)
+    {
+        return await repository.DeleteFavoriteContentByNid(nid);
+    }
+
     public async Task<int> DeleteBunokByIds(int bunId, int parancsId)
     {
         return await repository.DeleteBunokByIds(bunId, parancsId);

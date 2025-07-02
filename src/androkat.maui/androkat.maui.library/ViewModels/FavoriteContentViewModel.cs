@@ -9,18 +9,18 @@ public partial class FavoriteContentViewModel(FavoriteContentEntity contentEntit
     public FavoriteContentEntity ContentEntity { get; set; } = contentEntity;
 
     [RelayCommand]
-    Task NavigateToDetail() 
+    Task NavigateToDetail()
     {
         return ContentEntity.Tipus switch
         {
-            "6" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}"),
-            "15" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}"),
-            "28" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}"),
-            "38" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}"),
-            "39" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}"),
-            "60" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}"),
-            "46" => Shell.Current.GoToAsync($"DetailBook?Id={ContentEntity.Nid}"),
-            _ => Shell.Current.GoToAsync($"DetailPage?Id={ContentEntity.Nid}")
+            "6" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}&FromFavorites=true"),
+            "15" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}&FromFavorites=true"),
+            "28" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}&FromFavorites=true"),
+            "38" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}&FromFavorites=true"),
+            "39" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}&FromFavorites=true"),
+            "60" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}&FromFavorites=true"),
+            "46" => Shell.Current.GoToAsync($"DetailBook?Id={ContentEntity.Nid}&FromFavorites=true"),
+            _ => Shell.Current.GoToAsync($"DetailPage?Id={ContentEntity.Nid}&FromFavorites=true")
         };
     }
 }

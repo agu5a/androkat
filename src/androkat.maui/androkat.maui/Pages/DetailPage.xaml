@@ -14,7 +14,7 @@
         <ToolbarItem
             IconImageSource="voice"
             Command="{Binding StartTextToSpeechCommand}"
-            Text="Hangos felolvasás" />
+            Text="Hangos felolvasás"/>
         <ToolbarItem
             IconImageSource="favorite2"
             Command="{Binding AddFavoriteCommand}"
@@ -23,10 +23,11 @@
         <ToolbarItem
             IconImageSource="ic_send_24dp2"
             Command="{Binding ShareContentCommand}"
-            Text="Küldés" />
+            Text="Küldés"/>
     </ContentPage.ToolbarItems>
 
-    <ScrollView Margin="5,0,5,0" VerticalOptions="Fill">
+    <ScrollView Margin="5,0,5,0"
+            VerticalOptions="Fill">
         <Grid
             Padding="{OnIdiom Phone=22}"
             Background="{AppThemeBinding Light={StaticResource Grey1},
@@ -45,7 +46,7 @@
                 LineBreakMode="WordWrap"
                 Style="{OnIdiom Phone={StaticResource H6LabelStyle}}"
                 Text="{Binding ContentView.detailscim}"
-                VerticalOptions="Fill" />
+                VerticalOptions="Fill"/>
 
             <Image
                 Grid.Row="1"
@@ -55,18 +56,20 @@
                 HorizontalOptions="Center"
                 Source="{Binding ContentView.ContentEntity.Image}"
                 VerticalOptions="Start"
-                WidthRequest="{OnIdiom Phone=48}" />
+                WidthRequest="{OnIdiom Phone=48}"/>
 
-            <VerticalStackLayout Grid.Row="1" Grid.Column="1">
-                <Label Style="{OnIdiom Phone={StaticResource BodyMLabelStyle}}" Text="{Binding ContentView.ContentEntity.Cim}" />
+            <VerticalStackLayout Grid.Row="1"
+                    Grid.Column="1">
+                <Label Style="{OnIdiom Phone={StaticResource BodyMLabelStyle}}"
+                        Text="{Binding ContentView.ContentEntity.Cim}"/>
                 <Label
                     Style="{StaticResource BodyMLabelStyle}"
                     Text="{Binding ContentView.forras}"
-                    TextType="Html" />
+                    TextType="Html"/>
                 <Label
                     Style="{StaticResource BodyMLabelStyle}"
                     Text="{Binding ContentView.datum}"
-                    TextType="Html" />
+                    TextType="Html"/>
             </VerticalStackLayout>
 
             <VerticalStackLayout
@@ -80,16 +83,17 @@
                     IsVisible="False"
                     Aspect="AspectFit"
                     HeightRequest="300"
-                    HorizontalOptions="Center"                    
+                    HorizontalOptions="Center"
                     VerticalOptions="Center"
-                    WidthRequest="300" />
+                    WidthRequest="300"/>
                 <WebView
                     x:Name="MyWebView"
                     android:WebView.DisplayZoomControls="false"
                     android:WebView.EnableZoomControls="false"
                     android:WebView.MixedContentMode="AlwaysAllow">
                     <WebView.Source>
-                        <HtmlWebViewSource android:WebView.MixedContentMode="AlwaysAllow" Html="{Binding ContentView.ContentEntity.Idezet}" />
+                        <HtmlWebViewSource android:WebView.MixedContentMode="AlwaysAllow"
+                                Html="{Binding ContentView.ContentEntity.Idezet}"/>
                     </WebView.Source>
                 </WebView>
             </VerticalStackLayout>

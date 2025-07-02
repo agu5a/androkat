@@ -134,10 +134,64 @@ public partial class FavoriteListPage : ContentPage
         if (fileResult != null)
         {
             string fileContent = await File.ReadAllTextAsync(fileResult.FullPath);
-            var o = System.Text.Json.JsonSerializer.Deserialize<List<FavoriteContentEntity>>(fileContent);
+            var importedFavorites = System.Text.Json.JsonSerializer.Deserialize<List<FavoriteContentEntity>>(fileContent);
 
+            if (importedFavorites != null && importedFavorites.Count > 0)
+            {
+                // Import the favorites
+                int importedCount = 0;
+                foreach (var favorite in importedFavorites)
+                {
+                    var result = await _pageService.InsertFavoriteContentAsync(favorite);
+                    if (result > 0)
+                    {
+                        importedCount++;
+                    }
+                }
+
+                // Refresh the list
+                await ViewModel.InitializeAsync();
+                ViewModel.PageTitle = GetPageTitle();
+
+                using var cancellationTokenSource = new CancellationTokenSource();
+                var toast = Toast.Make($"Import sikerült: {importedCount} kedvenc importálva", ToastDuration.Short, 14d);
+                await toast.Show(cancellationTokenSource.Token);
+            }
+            else
+            {
+                using var cancellationTokenSource = new CancellationTokenSource();
+                var toast = Toast.Make("Nincs importálható adat a fájlban", ToastDuration.Short, 14d);
+                await toast.Show(cancellationTokenSource.Token);
+            }
+        }
+    }
+
+    private async void Button_Clicked_3(object sender, EventArgs e)
+    {
+        try
+        {
+            var list = await ViewModel.GetFavContentsAsync();
+            if (list != null && list.Count > 0)
+            {
+                string json = System.Text.Json.JsonSerializer.Serialize(list, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
+
+                await Share.RequestAsync(new ShareTextRequest
+                {
+                    Title = "AndroKat Kedvencek",
+                    Text = json
+                });
+            }
+            else
+            {
+                using var cancellationTokenSource = new CancellationTokenSource();
+                var toast = Toast.Make("Nincs kedvenc a küldéshez", ToastDuration.Short, 14d);
+                await toast.Show(cancellationTokenSource.Token);
+            }
+        }
+        catch (Exception ex)
+        {
             using var cancellationTokenSource = new CancellationTokenSource();
-            var toast = Toast.Make("Olvasás: " + o!.Count, ToastDuration.Short, 14d);
+            var toast = Toast.Make($"Hiba történt a küldés során: {ex.Message}", ToastDuration.Short, 14d);
             await toast.Show(cancellationTokenSource.Token);
         }
     }
