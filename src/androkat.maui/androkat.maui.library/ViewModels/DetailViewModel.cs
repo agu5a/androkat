@@ -3,6 +3,7 @@ using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace androkat.maui.library.ViewModels;
@@ -25,6 +26,12 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
     [ObservableProperty]
     bool showDeleteFavoriteButton;
 
+    [ObservableProperty]
+    bool isAlreadyFavorited;
+
+    [ObservableProperty]
+    bool isFavoriteCheckCompleted;
+
     public async Task InitializeAsync()
     {
         if (Id != null)
@@ -41,6 +48,16 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
         }
 
         await FetchAsync();
+        await CheckIfAlreadyFavoritedAsync();
+    }
+    private async Task CheckIfAlreadyFavoritedAsync()
+    {
+        var favorites = await pageService.GetFavoriteContentsAsync();
+        IsAlreadyFavorited = favorites.Any(f => f.Nid == _contentGuid);
+        IsFavoriteCheckCompleted = true;
+
+        // Notify the command that its CanExecute state has changed
+        AddFavoriteCommand.NotifyCanExecuteChanged();
     }
 
     async Task FetchAsync()
@@ -119,10 +136,10 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
         ContentView = viewModelIma;
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanAddFavorite))]
     async Task AddFavorite()
     {
-        _ = await pageService.InsertFavoriteContentAsync(new FavoriteContentEntity
+        var result = await pageService.InsertFavoriteContentAsync(new FavoriteContentEntity
         {
             Cim = ContentView.ContentEntity.Cim,
             Datum = ContentView.ContentEntity.Datum,
@@ -134,6 +151,24 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
             Tipus = ContentView.ContentEntity.Tipus,
             TypeName = ContentView.ContentEntity.TypeName
         });
+
+        if (result > 0)
+        {
+            IsAlreadyFavorited = true;
+            AddFavoriteCommand.NotifyCanExecuteChanged();
+
+            await Shell.Current.DisplayAlert(
+                "Sikeres művelet",
+                "A tartalom sikeresen hozzáadva a kedvencekhez!",
+                "OK");
+        }
+    }
+
+    private bool CanAddFavorite()
+    {
+        // Disable the button until we've checked if it's already favorited
+        // and only enable it if it's not already favorited
+        return IsFavoriteCheckCompleted && !IsAlreadyFavorited;
     }
 
     [RelayCommand]
@@ -147,6 +182,10 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
         if (result)
         {
             _ = await pageService.DeleteFavoriteContentByNid(_contentGuid);
+
+            // Update favorited status
+            IsAlreadyFavorited = false;
+            AddFavoriteCommand.NotifyCanExecuteChanged();
 
             // Navigate back to favorites page
             await Shell.Current.GoToAsync("..");

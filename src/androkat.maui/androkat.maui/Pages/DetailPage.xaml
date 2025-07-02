@@ -5,10 +5,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
     xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
+    xmlns:converters="clr-namespace:androkat.maui.library.Converters;assembly=androkat.maui.library"
     x:Name="this"
     Title=""
     x:DataType="viewmodels:DetailViewModel"
     Style="{StaticResource DetailPageStyle}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToTextConverter x:Key="FavoriteTextConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem
@@ -18,7 +25,7 @@
         <ToolbarItem
             IconImageSource="favorite2"
             Command="{Binding AddFavoriteCommand}"
-            Text="Hozzáadás kedvencekhez">
+            Text="{Binding IsAlreadyFavorited, Converter={StaticResource FavoriteTextConverter}, ConverterParameter='Hozzáadás kedvencekhez|Már a kedvencekben'}">
         </ToolbarItem>
         <ToolbarItem
             IconImageSource="ic_send_24dp2"
@@ -27,7 +34,7 @@
     </ContentPage.ToolbarItems>
 
     <ScrollView Margin="5,0,5,0"
-            VerticalOptions="Fill">
+                VerticalOptions="Fill">
         <Grid
             Padding="{OnIdiom Phone=22}"
             Background="{AppThemeBinding Light={StaticResource Grey1},
@@ -59,9 +66,9 @@
                 WidthRequest="{OnIdiom Phone=48}"/>
 
             <VerticalStackLayout Grid.Row="1"
-                    Grid.Column="1">
+                                 Grid.Column="1">
                 <Label Style="{OnIdiom Phone={StaticResource BodyMLabelStyle}}"
-                        Text="{Binding ContentView.ContentEntity.Cim}"/>
+                       Text="{Binding ContentView.ContentEntity.Cim}"/>
                 <Label
                     Style="{StaticResource BodyMLabelStyle}"
                     Text="{Binding ContentView.forras}"
@@ -93,7 +100,7 @@
                     android:WebView.MixedContentMode="AlwaysAllow">
                     <WebView.Source>
                         <HtmlWebViewSource android:WebView.MixedContentMode="AlwaysAllow"
-                                Html="{Binding ContentView.ContentEntity.Idezet}"/>
+                                           Html="{Binding ContentView.ContentEntity.Idezet}"/>
                     </WebView.Source>
                 </WebView>
             </VerticalStackLayout>
