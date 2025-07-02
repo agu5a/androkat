@@ -50,87 +50,37 @@ public partial class IgeNaptarViewModel : ViewModelBase
 
     public void SetPosition(DateTime day)
     {
+        // Always select the first item to work around MAUI CarouselView positioning issues
         if (Contents.Count > 0)
         {
-            var item = Contents.IndexOf(Contents.FirstOrDefault(f => f.Html.Contains(day.ToString("MM-dd")), Contents[0]));
-            Position = item;
-            CurrentItem = Contents[item];
-            //OnPropertyChanged(nameof(Position))
-            //Position="{Binding Position, Mode=TwoWay}"
+            Position = 0;
+            CurrentItem = Contents[0];
         }
     }
 
     private static List<IgeNaptarView> StartCheck(DateTime date, Dictionary<string, string> dayContents)
     {
-        string tegnapelott2 = date.AddDays(-4).ToString("MM-dd");
-        string tegnapelott1 = date.AddDays(-3).ToString("MM-dd");
-        string tegnapelott = date.AddDays(-2).ToString("MM-dd");
-        string tegnap = date.AddDays(-1).ToString("MM-dd");
-        string ma = date.ToString("MM-dd");
-        string holnap = date.AddDays(1).ToString("MM-dd");
-        string holnaputan = date.AddDays(2).ToString("MM-dd");
-        string holnaputan1 = date.AddDays(3).ToString("MM-dd");
-        string holnaputan2 = date.AddDays(4).ToString("MM-dd");
-
         var s = new List<IgeNaptarView>();
 
         try
         {
             if (dayContents.Count > 0)
             {
-                foreach (var keyValue in dayContents)
+                // Show only today and 3 future days (4 items total)
+                for (int i = 0; i <= 3; i++)
                 {
-                    string key = keyValue.Key;
-                    if (
-                            key.Equals(tegnapelott2)
-                                    || key.Equals(tegnapelott1)
-                                    || key.Equals(tegnapelott)
-                                    || key.Equals(tegnap)
-                                    || key.Equals(ma)
-                    )
+                    var currentDate = date.AddDays(i);
+                    var key = currentDate.ToString("MM-dd");
+
+                    // Skip year boundary crossings (December to January)
+                    if (date.ToString("MM-dd").StartsWith("12-") && key.StartsWith("01-"))
                     {
-                        s.Add(new() { Html = keyValue.Value });
+                        continue;
                     }
-                    if (key.Equals(holnap))
+
+                    if (dayContents.ContainsKey(key))
                     {
-                        if (ma.StartsWith("12-") && key.StartsWith("01-"))
-                        {
-                            continue;
-                        }
-                        s.Add(new() { Html = keyValue.Value });
-                    }
-                    if (key.Equals(holnaputan))
-                    {
-                        if (ma.StartsWith("12-") && key.StartsWith("01-"))
-                        {
-                            continue;
-                        }
-                        s.Add(new() { Html = keyValue.Value });
-                        if (!dayContents.ContainsKey(holnaputan1) && !dayContents.ContainsKey(holnaputan2))
-                        {
-                            break;
-                        }
-                    }
-                    if (key.Equals(holnaputan1))
-                    {
-                        if (ma.StartsWith("12-") && key.StartsWith("01-"))
-                        {
-                            continue;
-                        }
-                        s.Add(new() { Html = keyValue.Value });
-                        if (!dayContents.ContainsKey(holnaputan2))
-                        {
-                            break;
-                        }
-                    }
-                    if (key.Equals(holnaputan2))
-                    {
-                        if (ma.StartsWith("12-") && key.StartsWith("01-"))
-                        {
-                            continue;
-                        }
-                        s.Add(new() { Html = keyValue.Value });
-                        break;
+                        s.Add(new() { Html = dayContents[key] });
                     }
                 }
             }
