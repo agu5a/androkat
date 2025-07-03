@@ -22,7 +22,6 @@ App.cs
     - Contents : List<ContentItemViewModel> ( ContentEntity, NavigateToDetail() ) 
     - InitializeAsync
        PageService.GetContentsAsync(Id);
-    - Subscribe(ContentItemViewModel)
    
    View: ContentItemView (ContentItemViewModel)
     XAML:

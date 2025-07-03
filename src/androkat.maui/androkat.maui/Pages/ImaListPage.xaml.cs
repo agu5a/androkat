@@ -16,12 +16,17 @@ public partial class ImaListPage : ContentPage
     }
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
-    {        
+    {
         ViewModel.PageTitle = "Imádságok";
         if (_stackCount != 2)
         {
             //Nem DetailPage-ről jöttünk viszsa, így üres oldallal indulunk
             ViewModel.Contents.Clear();
+        }
+        else
+        {
+            // Visszajövünk DetailPage-ről, újra fetcheljük az adatokat hogy a read status frissüljön
+            Task.Run(async () => await ViewModel.InitializeAsync(_pageNumber, _pageSize));
         }
         base.OnNavigatedTo(args);
     }
@@ -34,8 +39,8 @@ public partial class ImaListPage : ContentPage
 
     protected override async void OnAppearing()
     {
+        base.OnAppearing();
         await ViewModel.InitializeAsync(_pageNumber, _pageSize);
-        base.OnAppearing();        
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S1186:Methods should not be empty", Justification = "<Pending>")]

@@ -66,17 +66,4 @@ public class FavoriteListViewModelTests
         //    It.IsAny<string>()), Times.Once);
         Assert.Empty(_viewModel.Contents);
     }
-
-    [Fact]
-    public async Task Subscribe_ShouldDoNothing()
-    {
-        //arrange
-        var itemViewModelMock = new FavoriteContentViewModel(new FavoriteContentEntity());
-
-        //act
-        await _viewModel.Subscribe(itemViewModelMock);
-
-        //assert
-        
-    }
 }

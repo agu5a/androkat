@@ -93,8 +93,4 @@ public partial class FavoriteListViewModel : ViewModelBase
 
         return viewmodels;
     }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
-    [RelayCommand]
-    public Task Subscribe(FavoriteContentViewModel viewModel) => Task.Run(() => { });
 }

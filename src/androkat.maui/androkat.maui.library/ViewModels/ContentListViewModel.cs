@@ -138,10 +138,6 @@ public partial class ContentListViewModel : ViewModelBase
         return viewmodels;
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
-    [RelayCommand]
-    public Task Subscribe(ContentItemViewModel viewModel) => Task.Run(() => { });
-
     //Ensure Observable Collection is thread-safe https://codetraveler.io/2019/09/11/using-observablecollection-in-a-multi-threaded-xamarin-forms-application/
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1172:Unused method parameters should be removed", Justification = "<Pending>")]
     void ObservableCollectionCallback(IEnumerable collection, object context, Action accessMethod, bool writeAccess)

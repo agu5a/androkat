@@ -46,18 +46,4 @@ public class ImaListViewModelTests
 
         _pageServiceMock.Verify(x => x.GetImaContents(1, 10), Times.Once);
     }
-
-    [Fact]
-    public async Task Subscribe_ShouldDoNothing()
-    {
-        //arrange
-        var itemViewModelMock = new ImaContentViewModel(new ImadsagEntity());
-        var viewModel = new ImaListViewModel(_pageServiceMock.Object);
-
-        //act
-        await viewModel.Subscribe(itemViewModelMock);
-
-        //assert
-
-    }
 }

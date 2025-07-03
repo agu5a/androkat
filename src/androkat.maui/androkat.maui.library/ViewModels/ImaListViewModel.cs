@@ -2,7 +2,6 @@
 using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using MvvmHelpers;
 
 namespace androkat.maui.library.ViewModels;
@@ -68,8 +67,4 @@ public partial class ImaListViewModel : ViewModelBase
 
         return viewmodels;
     }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
-    [RelayCommand]
-    public Task Subscribe(ImaContentViewModel viewModel) => Task.Run(() => { });
 }

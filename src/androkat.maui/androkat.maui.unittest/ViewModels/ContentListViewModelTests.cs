@@ -73,18 +73,4 @@ public class ContentListViewModelTests
         _pageServiceMock.Verify(x => x.GetContentsAsync(It.IsAny<string>(), true, It.IsAny<List<string>>()), Times.Once);
         _sourceDataMock.Verify(x => x.GetSourcesFromMemory(It.IsAny<int>()), Times.Once);
     }
-
-    [Fact]
-    public async Task Subscribe_ShouldDoNothing()
-    {
-        //arrange
-        var itemViewModelMock = new ContentItemViewModel(new ContentEntity());
-        var viewModel = new ContentListViewModel(_dispatcherMock.Object, _pageServiceMock.Object, _sourceDataMock.Object, _androkatService.Object);
-
-        //act
-        await viewModel.Subscribe(itemViewModelMock);
-
-        //assert
-
-    }
 }
