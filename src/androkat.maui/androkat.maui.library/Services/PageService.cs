@@ -93,9 +93,9 @@ public class PageService(IDownloadService downloadService, IRepository repositor
         return await repository.DeleteBunokByIds(bunId, parancsId);
     }
 
-    public async Task<List<ImadsagEntity>> GetImaContents(int pageNumber, int pageSize)
+    public async Task<List<ImadsagEntity>> GetImaContents(int pageNumber, int pageSize, int? categoryId = null)
     {
-        return await repository.GetImaContents(pageNumber, pageSize);
+        return await repository.GetImaContents(pageNumber, pageSize, categoryId);
     }
 
     public async Task<int> GetFavoriteCountAsync()

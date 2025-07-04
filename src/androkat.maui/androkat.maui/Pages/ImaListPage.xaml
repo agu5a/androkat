@@ -19,13 +19,36 @@
         </Style>
     </ContentPage.Resources>
     <Grid Background="{AppThemeBinding Light={StaticResource BackgroundActivity}, Dark={StaticResource BackgroundActivityDark}}">
-        <CollectionView
-            Margin="{OnIdiom Phone='10,10,10,0'}"
-            IsGrouped="False"
-            ItemsSource="{Binding Contents}"
-            RemainingItemsThreshold="10"
-            RemainingItemsThresholdReached="CollectionView_RemainingItemsThresholdReached"
-            SelectionMode="None">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Prayer Category Picker -->
+        <Border Grid.Row="0"
+                Margin="10,10,10,5"
+                BackgroundColor="{AppThemeBinding Light=White, Dark=#2D2D30}"
+                Stroke="{AppThemeBinding Light=LightGray, Dark=Gray}"
+                StrokeThickness="1">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="8"/>
+            </Border.StrokeShape>
+            <Picker x:Name="CategoryPicker"
+                    Title="Válassz kategóriát"
+                    ItemsSource="{Binding Categories}"
+                    SelectedItem="{Binding SelectedCategory}"
+                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                    TitleColor="{AppThemeBinding Light=Gray, Dark=LightGray}"
+                    Margin="10,5"/>
+        </Border>
+
+        <CollectionView Grid.Row="1"
+                        Margin="{OnIdiom Phone='10,10,10,0'}"
+                        IsGrouped="False"
+                        ItemsSource="{Binding Contents}"
+                        RemainingItemsThreshold="10"
+                        RemainingItemsThresholdReached="CollectionView_RemainingItemsThresholdReached"
+                        SelectionMode="None">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout
                     HorizontalItemSpacing="5"

@@ -62,6 +62,13 @@ public partial class ImaListPage
         _isInitialized = true;
     }
 
+    public async Task RefreshForCategoryChange()
+    {
+        ResetPagination();
+        ViewModel.Contents.Clear();
+        await ViewModel.FetchAsync(_pageNumber, PageSize);
+    }
+
     private async Task RefreshCurrentData()
     {
         // Clear and reload all current pages to refresh read status
@@ -85,8 +92,12 @@ public partial class ImaListPage
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S1186:Methods should not be empty", Justification = "<Pending>")]
     private async void CollectionView_RemainingItemsThresholdReached(object sender, EventArgs e)
     {
-        // Load next page for infinite scroll
-        _pageNumber++;
-        await ViewModel.FetchAsync(_pageNumber, PageSize);
+        // Only load more if we're not filtered by category or if we have more items
+        if (ViewModel.SelectedCategory?.Id == -1 || ViewModel.SelectedCategory?.Id == null)
+        {
+            // Load next page for infinite scroll
+            _pageNumber++;
+            await ViewModel.FetchAsync(_pageNumber, PageSize);
+        }
     }
 }

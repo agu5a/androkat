@@ -204,13 +204,20 @@ public class Repository : IRepository
         return [];
     }
 
-    public async Task<List<ImadsagEntity>> GetImaContents(int pageNumber, int pageSize)
+    public async Task<List<ImadsagEntity>> GetImaContents(int pageNumber, int pageSize, int? categoryId = null)
     {
         try
         {
             Init();
-            return await _conn!.Table<ImadsagEntity>()
-                .Where(w => !w.IsHided).OrderBy(o => o.Cim)
+            var query = _conn!.Table<ImadsagEntity>()
+                .Where(w => !w.IsHided);
+
+            if (categoryId.HasValue && categoryId.Value > -1)
+            {
+                query = query.Where(w => w.Csoport == categoryId.Value);
+            }
+
+            return await query.OrderBy(o => o.Cim)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();

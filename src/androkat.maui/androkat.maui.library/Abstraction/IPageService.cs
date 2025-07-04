@@ -15,7 +15,7 @@ public interface IPageService
     Task<int> GetContentsCount();
     Task<List<FavoriteContentEntity>> GetFavoriteContentsAsync();
     Task<int> GetFavoriteCountAsync();
-    Task<List<ImadsagEntity>> GetImaContents(int pageNumber, int pageSize);
+    Task<List<ImadsagEntity>> GetImaContents(int pageNumber, int pageSize, int? categoryId = null);
     Task<ImadsagEntity> GetImadsagEntityByIdAsync(Guid id);
     int GetVersion();
     Task<GyonasiJegyzet?> GetGyonasiJegyzet();

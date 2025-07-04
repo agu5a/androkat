@@ -121,12 +121,12 @@ public class PageServiceTests
                 new() {Nid = Guid.NewGuid(), Cim = "Test Cim 2", Content = "Test Content 2", Csoport = 2 },
                 new() {Nid = Guid.NewGuid(), Cim = "Test Cim 3", Content = "Test Content 3", Csoport = 3 }
             };
-        repositoryMock.Setup(repo => repo.GetImaContents(1, 10)).ReturnsAsync(expectedContents).Verifiable();
+        repositoryMock.Setup(repo => repo.GetImaContents(1, 10, It.IsAny<int?>())).ReturnsAsync(expectedContents).Verifiable();
         var pageService = new PageService(_downloadServiceMock.Object, repositoryMock.Object);
 
         var result = await pageService.GetImaContents(1, 10);
 
-        repositoryMock.Verify(repo => repo.GetImaContents(1, 10), Times.Once);
+        repositoryMock.Verify(repo => repo.GetImaContents(1, 10, It.IsAny<int?>()), Times.Once);
         Assert.Equal(expectedContents, result);
     }
 

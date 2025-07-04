@@ -32,7 +32,7 @@ public class ImaListViewModelTests
             }
         };
 
-        _pageServiceMock.Setup(service => service.GetImaContents(1, 10)).ReturnsAsync(contents);
+        _pageServiceMock.Setup(service => service.GetImaContents(1, 10, It.IsAny<int?>())).ReturnsAsync(contents);
 
         var viewModel = new ImaListViewModel(_pageServiceMock.Object);
 
@@ -44,6 +44,6 @@ public class ImaListViewModelTests
         Assert.NotEmpty(viewModel.Contents);
         Assert.Equal("Imádságok", viewModel.Contents.First().detailscim);
 
-        _pageServiceMock.Verify(x => x.GetImaContents(1, 10), Times.Once);
+        _pageServiceMock.Verify(x => x.GetImaContents(1, 10, It.IsAny<int?>()), Times.Once);
     }
 }
