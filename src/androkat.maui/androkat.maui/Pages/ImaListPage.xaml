@@ -9,6 +9,17 @@
     Title="{Binding PageTitle}"
     x:DataType="viewmodels:ImaListViewModel"
     Style="{StaticResource MainSectionStyle}">
+
+    <!-- Add Toolbar Items for three dots menu -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Saját ima hozzáadás"
+                     Command="{Binding AddCustomPrayerCommand}"
+                     IconImageSource="ic_add_circle_outline_24px.svg"/>
+        <ToolbarItem Text="Saját ima importálás"
+                     Command="{Binding ImportCustomPrayerCommand}"
+                     IconImageSource="ic_import.svg"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <Style
             x:Key="ListTitleStyle"

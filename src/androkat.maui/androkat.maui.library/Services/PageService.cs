@@ -93,6 +93,11 @@ public class PageService(IDownloadService downloadService, IRepository repositor
         return await repository.DeleteBunokByIds(bunId, parancsId);
     }
 
+    public async Task<int> SaveCustomPrayerAsync(ImadsagEntity customPrayer)
+    {
+        return await repository.InsertImadsag(customPrayer);
+    }
+
     public async Task<List<ImadsagEntity>> GetImaContents(int pageNumber, int pageSize, int? categoryId = null)
     {
         return await repository.GetImaContents(pageNumber, pageSize, categoryId);

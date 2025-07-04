@@ -5,6 +5,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MvvmHelpers;
 using System.Collections.ObjectModel;
+using System.Text.Json;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 
 namespace androkat.maui.library.ViewModels;
 
@@ -171,5 +174,195 @@ public partial class ImaListViewModel : ViewModelBase
         }
 
         return viewmodels;
+    }
+
+    // Add new commands for custom prayer functionality
+    [RelayCommand]
+    async Task AddCustomPrayer()
+    {
+        try
+        {
+            await ShowAddPrayerDialog();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error in AddCustomPrayer: {ex}");
+            await Shell.Current.DisplayAlert("Hiba", $"Hiba történt: {ex.Message}", "OK");
+        }
+    }
+
+    [RelayCommand]
+    async Task ImportCustomPrayer()
+    {
+        try
+        {
+            await ImportPrayersFromFile();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error in ImportCustomPrayer: {ex}");
+            await Shell.Current.DisplayAlert("Hiba", $"Hiba történt: {ex.Message}", "OK");
+        }
+    }
+
+    private async Task ShowAddPrayerDialog()
+    {
+        string prayerTitle = await Shell.Current.DisplayPromptAsync("Saját ima hozzáadás",
+            "Add meg az ima címét:",
+            "OK", "Mégse",
+            maxLength: 100);
+
+        if (string.IsNullOrWhiteSpace(prayerTitle))
+            return;
+
+        string prayerContent = await Shell.Current.DisplayPromptAsync("Saját ima hozzáadás",
+            "Add meg az ima szövegét:",
+            "OK", "Mégse",
+            maxLength: 1000);
+
+        if (string.IsNullOrWhiteSpace(prayerContent))
+            return;
+
+        await SaveCustomPrayer(prayerTitle, prayerContent);
+    }
+
+    private async Task SaveCustomPrayer(string title, string content)
+    {
+        try
+        {
+            // Create custom prayer entity
+            var customPrayer = new ImadsagEntity
+            {
+                Nid = Guid.NewGuid(),
+                Cim = title,
+                Content = content,
+                Datum = DateTime.Now,
+                TypeName = Activities.ima.ToString(),
+                IsRead = 0,
+                IsHided = false,
+                GroupName = "group_ima",
+                Csoport = 5 // Custom prayers category
+            };
+
+            // Save to database
+            await _pageService.SaveCustomPrayerAsync(customPrayer);
+
+            // Create JSON for export
+            var customPrayerForExport = new
+            {
+                title = customPrayer.Cim,
+                content = customPrayer.Content,
+                typeName = customPrayer.TypeName,
+                recorddate = ((DateTimeOffset)customPrayer.Datum).ToUnixTimeSeconds(),
+                isread = 1,
+                nid = customPrayer.Nid.ToString(),
+                groupName = customPrayer.GroupName,
+                csoport = customPrayer.Csoport
+            };
+
+            string json = JsonSerializer.Serialize(new[] { customPrayerForExport }, new JsonSerializerOptions { WriteIndented = true });
+
+            // Share/Export the JSON
+            await Share.RequestAsync(new ShareTextRequest
+            {
+                Title = "Saját ima exportálás",
+                Text = json
+            });
+
+            // Refresh the list if we're showing custom prayers
+            if (SelectedCategory?.Id == 5 || SelectedCategory?.Id == -1)
+            {
+                Contents.Clear();
+                await FetchAsync(1, 10);
+            }
+
+            using var cancellationTokenSource = new CancellationTokenSource();
+            var toast = Toast.Make("Saját ima sikeresen mentve és exportálva", ToastDuration.Short, 14d);
+            await toast.Show(cancellationTokenSource.Token);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error saving custom prayer: {ex}");
+            await Shell.Current.DisplayAlert("Hiba", $"Hiba történt a mentés során: {ex.Message}", "OK");
+        }
+    }
+
+    private async Task ImportPrayersFromFile()
+    {
+        try
+        {
+            var jsonFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+            {
+                { DevicePlatform.Android, new[] { "application/json" } },
+                { DevicePlatform.iOS, new[] { "public.json" } }
+            });
+
+            var fileResult = await FilePicker.PickAsync(new PickOptions
+            {
+                FileTypes = jsonFileType,
+                PickerTitle = "Válasszd ki az ima.json fájlt"
+            });
+
+            if (fileResult != null)
+            {
+                string fileContent = await File.ReadAllTextAsync(fileResult.FullPath);
+                var importedPrayers = JsonSerializer.Deserialize<JsonElement[]>(fileContent);
+
+                if (importedPrayers != null && importedPrayers.Length > 0)
+                {
+                    int importedCount = 0;
+                    foreach (var prayer in importedPrayers)
+                    {
+                        try
+                        {
+                            var customPrayer = new ImadsagEntity
+                            {
+                                Nid = prayer.TryGetProperty("nid", out var nidProp) && Guid.TryParse(nidProp.GetString(), out var nid) ? nid : Guid.NewGuid(),
+                                Cim = prayer.TryGetProperty("title", out var titleProp) ? titleProp.GetString() ?? "" : "",
+                                Content = prayer.TryGetProperty("content", out var contentProp) ? contentProp.GetString() ?? "" : "",
+                                TypeName = Activities.ima.ToString(),
+                                IsRead = 0,
+                                IsHided = false,
+                                GroupName = "group_ima",
+                                Csoport = 5, // Custom prayers
+                                Datum = DateTime.Now
+                            };
+
+                            if (!string.IsNullOrWhiteSpace(customPrayer.Cim) && !string.IsNullOrWhiteSpace(customPrayer.Content))
+                            {
+                                await _pageService.SaveCustomPrayerAsync(customPrayer);
+                                importedCount++;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Error importing single prayer: {ex}");
+                        }
+                    }
+
+                    // Refresh the list if we're showing custom prayers
+                    if (SelectedCategory?.Id == 5 || SelectedCategory?.Id == -1)
+                    {
+                        Contents.Clear();
+                        await FetchAsync(1, 10);
+                    }
+
+                    using var cancellationTokenSource = new CancellationTokenSource();
+                    var toast = Toast.Make($"Import sikerült: {importedCount} ima importálva", ToastDuration.Short, 14d);
+                    await toast.Show(cancellationTokenSource.Token);
+                }
+                else
+                {
+                    using var cancellationTokenSource = new CancellationTokenSource();
+                    var toast = Toast.Make("Nincs importálható adat a fájlban", ToastDuration.Short, 14d);
+                    await toast.Show(cancellationTokenSource.Token);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error importing prayers: {ex}");
+            await Shell.Current.DisplayAlert("Hiba", $"Hiba történt az importálás során: {ex.Message}", "OK");
+        }
     }
 }

@@ -24,4 +24,5 @@ public interface IPageService
     Task<int> InsertBunok(Bunok entity);
     Task<int> DeleteBunokByIds(int bunId, int parancsId);
     Task<List<Bunok>> GetBunok();
+    Task<int> SaveCustomPrayerAsync(ImadsagEntity customPrayer);
 }
