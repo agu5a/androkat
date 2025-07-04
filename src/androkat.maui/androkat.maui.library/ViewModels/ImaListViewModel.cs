@@ -31,15 +31,14 @@ public partial class ImaListViewModel : ViewModelBase
         await FetchAsync(pageNumber, pageSize);
     }
 
-    private async Task FetchAsync(int pageNumber, int pageSize)
+    public async Task FetchAsync(int pageNumber, int pageSize)
     {
         var imaContents = await _pageService.GetImaContents(pageNumber, pageSize);
-
-        if (imaContents == null)
+        if (imaContents.Count == 0)
         {
             await Shell.Current.DisplayAlert(
-               "Hiba",
-                "Nincs adat",
+               "Program hiba",
+                "Imák lekérdezése sikertelen, kérjük próbálja újra később.",
                 "Bezárás");
 
             return;

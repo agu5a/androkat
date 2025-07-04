@@ -515,14 +515,9 @@ public class Repository : IRepository
 
         // Debug logging to see what data we're working with
         Debug.WriteLine($"ApplyFilters called with {results.Count} results, returnVisited: {returnVisited}");
-        if (enabledSources != null)
-        {
-            Debug.WriteLine($"EnabledSources: [{string.Join(", ", enabledSources)}]");
-        }
-        else
-        {
-            Debug.WriteLine("EnabledSources: null");
-        }
+        Debug.WriteLine(enabledSources != null
+            ? $"EnabledSources: [{string.Join(", ", enabledSources)}]"
+            : "EnabledSources: null");
 
         // Log some sample TypeName values to see what's in the database
         var sampleEntries = results.Take(20).Select(r => new { r.TypeName, r.Tipus, r.GroupName }).ToList();
@@ -551,34 +546,32 @@ public class Repository : IRepository
                 Debug.WriteLine("No sources enabled, returning empty list");
                 return new List<ContentEntity>();
             }
-            else
+
+            // Filter to only enabled sources
+            var beforeCount = filteredResults.Count;
+
+            // Debug: Log detailed comparison information
+            Debug.WriteLine("=== DETAILED SOURCE FILTERING DEBUG ===");
+            foreach (var source in enabledSources)
             {
-                // Filter to only enabled sources
-                var beforeCount = filteredResults.Count;
+                var matchingByTipus = filteredResults.Where(content =>
+                    content.Tipus.Equals(source, StringComparison.OrdinalIgnoreCase)).ToList();
 
-                // Debug: Log detailed comparison information
-                Debug.WriteLine("=== DETAILED SOURCE FILTERING DEBUG ===");
-                foreach (var source in enabledSources)
+                Debug.WriteLine($"Source '{source}' matches {matchingByTipus.Count} items by Tipus");
+
+                if (matchingByTipus.Count > 0)
                 {
-                    var matchingByTipus = filteredResults.Where(content =>
-                        content.Tipus.Equals(source, StringComparison.OrdinalIgnoreCase)).ToList();
-
-                    Debug.WriteLine($"Source '{source}' matches {matchingByTipus.Count} items by Tipus");
-
-                    if (matchingByTipus.Count > 0)
-                    {
-                        Debug.WriteLine($"  Tipus matches: {string.Join(", ", matchingByTipus.Take(3).Select(m => $"'{m.Tipus}'"))}");
-                    }
+                    Debug.WriteLine($"  Tipus matches: {string.Join(", ", matchingByTipus.Take(3).Select(m => $"'{m.Tipus}'"))}");
                 }
-
-                Debug.WriteLine("=== END DETAILED DEBUG ===");
-
-                // Filter by Tipus field (contains integer activity IDs)
-                filteredResults = filteredResults.Where(content =>
-                    enabledSources.Any(source =>
-                        content.Tipus.Equals(source, StringComparison.OrdinalIgnoreCase))).ToList();
-                Debug.WriteLine($"Source filtering: {beforeCount} -> {filteredResults.Count}");
             }
+
+            Debug.WriteLine("=== END DETAILED DEBUG ===");
+
+            // Filter by Tipus field (contains integer activity IDs)
+            filteredResults = filteredResults.Where(content =>
+                enabledSources.Any(source =>
+                    content.Tipus.Equals(source, StringComparison.OrdinalIgnoreCase))).ToList();
+            Debug.WriteLine($"Source filtering: {beforeCount} -> {filteredResults.Count}");
         }
 
         // Then apply read/unread filtering
