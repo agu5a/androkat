@@ -10,21 +10,6 @@ public partial class ViewModelBase : ObservableObject
     [ObservableProperty]
     string title;
 
-    [ObservableProperty]
-    string subtitle;
-
-    [ObservableProperty]
-    string icon;
-
-    [ObservableProperty]
-    bool canLoadMore;
-
-    [ObservableProperty]
-    string header;
-
-    [ObservableProperty]
-    string footer;
-
     public void OnDisappearing()
     {
         _cancellationTokenSource.Dispose();

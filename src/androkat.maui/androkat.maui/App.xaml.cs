@@ -15,6 +15,7 @@ public partial class App : Application
 
         Routing.RegisterRoute(nameof(ContentListPage), typeof(ContentListPage));
         Routing.RegisterRoute(nameof(DetailPage), typeof(DetailPage));
+        Routing.RegisterRoute(nameof(PrayDetailPage), typeof(PrayDetailPage));
         Routing.RegisterRoute(nameof(DetailAudio), typeof(DetailAudio));
         Routing.RegisterRoute(nameof(DetailBook), typeof(DetailBook));
         Routing.RegisterRoute(nameof(GyonasNotesPage), typeof(GyonasNotesPage));
@@ -22,7 +23,7 @@ public partial class App : Application
         Routing.RegisterRoute(nameof(GyonasFinishPage), typeof(GyonasFinishPage));
         Routing.RegisterRoute(nameof(GyonasMirrorPage), typeof(GyonasMirrorPage));
     }
-    
+
     protected override Window CreateWindow(IActivationState? activationState)
     {
         window = new Window(new MobileShell());

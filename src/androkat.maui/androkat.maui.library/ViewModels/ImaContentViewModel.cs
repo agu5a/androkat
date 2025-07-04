@@ -19,5 +19,5 @@ public partial class ImaContentViewModel(ImadsagEntity contentEntity) : BaseView
     }
 
     [RelayCommand]
-    Task NavigateToDetail() => Shell.Current.GoToAsync($"DetailPage?Id={ContentEntity.Nid}&IsIma=true");
+    Task NavigateToDetail() => Shell.Current.GoToAsync($"PrayDetailPage?Id={ContentEntity.Nid}");
 }

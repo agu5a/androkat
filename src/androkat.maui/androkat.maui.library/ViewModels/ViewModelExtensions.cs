@@ -12,6 +12,7 @@ public static class ViewModelExtensions
         builder.Services.AddSingleton<SettingsViewModel>();
         builder.Services.AddSingleton<ShellViewModel>();
         builder.Services.AddTransient<DetailViewModel>();
+        builder.Services.AddTransient<PrayDetailViewModel>();
         builder.Services.AddTransient<BookDetailViewModel>();
         builder.Services.AddTransient<IgeNaptarViewModel>();
         builder.Services.AddTransient<KeresztutViewModel>();

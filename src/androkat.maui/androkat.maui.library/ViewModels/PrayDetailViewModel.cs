@@ -1,4 +1,4 @@
-﻿using androkat.maui.library.Abstraction;
+using androkat.maui.library.Abstraction;
 using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -10,7 +10,7 @@ namespace androkat.maui.library.ViewModels;
 
 [QueryProperty(nameof(Id), nameof(Id))]
 [QueryProperty(nameof(FromFavorites), nameof(FromFavorites))]
-public partial class DetailViewModel(IPageService pageService, ISourceData sourceData) : ViewModelBase
+public partial class PrayDetailViewModel(IPageService pageService) : ViewModelBase
 {
     private Guid _contentGuid;
 
@@ -43,6 +43,7 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
         await FetchAsync();
         await CheckIfAlreadyFavoritedAsync();
     }
+
     private async Task CheckIfAlreadyFavoritedAsync()
     {
         var favorites = await pageService.GetFavoriteContentsAsync();
@@ -53,46 +54,39 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
         AddFavoriteCommand.NotifyCanExecuteChanged();
     }
 
-    async Task FetchAsync()
+    private async Task FetchAsync()
     {
-        var item = await pageService.GetContentEntityByIdAsync(_contentGuid);
-
-        if (item == null)
+        var ima = await pageService.GetImadsagEntityByIdAsync(_contentGuid);
+        if (ima == null)
         {
-            await Shell.Current.DisplayAlert(
-                      "Hiba",
-                      "Nincs tartalom",
-                      "Bezárás");
+            if (Shell.Current != null)
+            {
+                await Shell.Current.DisplayAlert(
+                              "Hiba",
+                              "Nincs tartalom",
+                              "Bezárás");
+            }
             return;
         }
-        item.KulsoLink = item.Idezet; // idejön a http link
 
-        item.Idezet = "<html><!DOCTYPE html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />"
-                             + "<script type=\"text/javascript\">" +
-                             "document.addEventListener(\"DOMContentLoaded\", function() {" +
-                             "var links = document.getElementsByTagName(\"a\");" +
-                             "for (var i = 0; i < links.length; i++) {" +
-                             "links[i].addEventListener(\"click\", function(event) {" +
-                             "event.preventDefault(); " +
-                             "var href = this.getAttribute(\"href\");" +
-                             "if (href && href !== \"#\") {" +
-                             "window.location.href = \"appscheme://\" + href;" +
-                             "}});}});</script>" +
-                             "</head><body>" + item.Idezet + "</body></html>";
-
-        SourceData idezetSource = sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
-        var origImg = item.Image;
-        item.Image = idezetSource.Img;
-        var viewModel = new ContentItemViewModel(item)
+        var viewModelIma = new ContentItemViewModel(new ContentEntity
         {
-            datum = $"<b>Dátum</b>: {item.Datum:yyyy-MM-dd}",
-            detailscim = idezetSource.Title,
-            contentImg = origImg,
+            Cim = ima.Cim,
+            Idezet = ima.Content,
+            Tipus = ((int)Activities.ima).ToString(),
+            Nid = ima.Nid,
+            Datum = ima.Datum,
+            TypeName = Activities.ima.ToString()
+        })
+        {
+            datum = "",
+            detailscim = ima.Cim,
             isFav = false,
-            forras = $"<b>Forrás</b>: {idezetSource.Forrasszoveg}",
-            type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus))
+            forras = "",
+            type = Activities.ima
         };
-        ContentView = viewModel;
+
+        ContentView = viewModelIma;
     }
 
     [RelayCommand(CanExecute = nameof(CanAddFavorite))]
@@ -116,10 +110,13 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
             IsAlreadyFavorited = true;
             AddFavoriteCommand.NotifyCanExecuteChanged();
 
-            await Shell.Current.DisplayAlert(
-                "Sikeres művelet",
-                "A tartalom sikeresen hozzáadva a kedvencekhez!",
-                "OK");
+            if (Shell.Current != null)
+            {
+                await Shell.Current.DisplayAlert(
+                    "Sikeres művelet",
+                    "A tartalom sikeresen hozzáadva a kedvencekhez!",
+                    "OK");
+            }
         }
     }
 
@@ -133,6 +130,8 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
     [RelayCommand]
     async Task DeleteFavorite()
     {
+        if (Shell.Current == null) return;
+
         var result = await Shell.Current.DisplayAlert(
             "Törlés megerősítése",
             "Biztosan törölni szeretnéd ezt a kedvencet?",
@@ -154,17 +153,6 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
     [RelayCommand]
     async Task StartTextToSpeech()
     {
-        /* if (item.getItemId() R.id.speak)
-            
-                string toSpeak = forrasTitle.getText().toString() + ". " + titleTW.getText().toString() + ". " + contentTw.getText().toString()
-                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null, null)
-            
-            drawable = menu.findItem(R.id.speak).getIcon()
-                drawable = DrawableCompat.wrap(drawable)
-                DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.secondary))
-                menu.findItem(R.id.speak).setIcon(drawable)*/
-
-
         var title = TitleRegex().Replace(ContentView.ContentEntity.Cim, String.Empty);
         var idezet = IdezetRegex().Replace(ContentView.ContentEntity.Idezet, String.Empty);
         IEnumerable<Locale> locales = await TextToSpeech.Default.GetLocalesAsync();
@@ -189,12 +177,10 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
             return;
         }
 
-        /*isBusy true*/
-
         var task = new List<Task>
-            {
-                TextToSpeech.Default.SpeakAsync(title, new SpeechOptions { Locale = locale }, cancelToken: _cancellationTokenSource.Token)
-            };
+        {
+            TextToSpeech.Default.SpeakAsync(title, new SpeechOptions { Locale = locale }, cancelToken: _cancellationTokenSource.Token)
+        };
 
         if (idezet.Contains('.'))
         {
