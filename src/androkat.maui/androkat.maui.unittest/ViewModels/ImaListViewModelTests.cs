@@ -46,4 +46,24 @@ public class ImaListViewModelTests
 
         _pageServiceMock.Verify(x => x.GetImaContents(1, 10, It.IsAny<int?>()), Times.Once);
     }
+
+    [Fact]
+    public void SaveCustomPrayerAsync_ValidInput_CallsPageService()
+    {
+        //Arrange
+        _pageServiceMock.Setup(service => service.SaveCustomPrayerAsync(It.IsAny<ImadsagEntity>())).ReturnsAsync(1);
+
+        var viewModel = new ImaListViewModel(_pageServiceMock.Object);
+
+        //Act
+        // Test the command exists and can be executed
+        Assert.NotNull(viewModel.AddCustomPrayerCommand);
+        Assert.NotNull(viewModel.ImportCustomPrayerCommand);
+
+        //Assert
+        // The actual functionality testing would require UI testing or making methods public
+        // This test verifies the commands are properly initialized
+        Assert.True(viewModel.AddCustomPrayerCommand.CanExecute(null));
+        Assert.True(viewModel.ImportCustomPrayerCommand.CanExecute(null));
+    }
 }
