@@ -25,6 +25,7 @@ Environment=ANDROKAT_GOOGLE_CLIENT_ID=<value>
 Environment=ANDROKAT_GOOGLE_CLIENT_SECRET=<value>
 Environment=ANDROKAT_GENERAL_HOST_URL=<value>
 Environment=ANDROKAT_GENERAL_ADMIN=<value>
+Environment=ANDROKAT_CREDENTIAL_AUTOMAPPER_API_KEY=<value>
 
 [Install]
 WantedBy=multi-user.target

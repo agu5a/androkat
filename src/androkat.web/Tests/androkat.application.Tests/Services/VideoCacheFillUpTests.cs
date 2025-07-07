@@ -19,7 +19,12 @@ public class VideoCacheFillUpTests : BaseTest
 	[Fact]
 	public void VideoCacheFillUp_Happy_test()
 	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+		var config = new MapperConfiguration(cfg =>
+		{
+			cfg.LicenseKey = "<License Key Here>";
+			cfg.AddProfile<AutoMapperProfile>();
+		}, loggerFactory);
 		var mapper = config.CreateMapper();
 
 		var clock = new Mock<IClock>();
@@ -46,7 +51,12 @@ public class VideoCacheFillUpTests : BaseTest
 	[Fact]
 	public void VideoCacheFillUp_Throws_Exception()
 	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+		var config = new MapperConfiguration(cfg =>
+		{
+			cfg.LicenseKey = "<License Key Here>";
+			cfg.AddProfile<AutoMapperProfile>();
+		}, loggerFactory);
 		var mapper = config.CreateMapper();
 
 		var clock = new Mock<IClock>();

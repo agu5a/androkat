@@ -5,6 +5,7 @@ using AutoMapper;
 using FluentAssertions;
 using Xunit;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace androkat.infrastructure.Tests;
 
@@ -13,7 +14,12 @@ public class AutoMapperProfileTests
 	[Fact]
 	public void Map_Video_VideoModel()
 	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+		var config = new MapperConfiguration(cfg =>
+		{
+			cfg.LicenseKey = "<License Key Here>";
+			cfg.AddProfile<AutoMapperProfile>();
+		}, loggerFactory);
 		var mapper = config.CreateMapper();
 
 		var nid = Guid.NewGuid();
@@ -37,7 +43,12 @@ public class AutoMapperProfileTests
 	[Fact]
 	public void Map_VideoSource_VideoSourceModel()
 	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+		var config = new MapperConfiguration(cfg =>
+		{
+			cfg.LicenseKey = "<License Key Here>";
+			cfg.AddProfile<AutoMapperProfile>();
+		}, loggerFactory);
 		var mapper = config.CreateMapper();
 
 		var nid = Guid.NewGuid();
@@ -55,7 +66,12 @@ public class AutoMapperProfileTests
 	[Fact]
 	public void Map_Ima_ImaModel()
 	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+		var config = new MapperConfiguration(cfg =>
+		{
+			cfg.LicenseKey = "<License Key Here>";
+			cfg.AddProfile<AutoMapperProfile>();
+		}, loggerFactory);
 		var mapper = config.CreateMapper();
 
 		var nid = Guid.NewGuid();
@@ -76,7 +92,12 @@ public class AutoMapperProfileTests
 	[Fact]
 	public void Map_Content_ContentDetailsModel()
 	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+		var config = new MapperConfiguration(cfg =>
+		{
+			cfg.LicenseKey = "<License Key Here>";
+			cfg.AddProfile<AutoMapperProfile>();
+		}, loggerFactory);
 		var mapper = config.CreateMapper();
 
 		var result = mapper.Map<Content, ContentDetailsModel>(new Content
@@ -91,18 +112,28 @@ public class AutoMapperProfileTests
 	[Fact]
 	public void Map_ContentDetailsModel_Content()
 	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+		var config = new MapperConfiguration(cfg =>
+		{
+			cfg.LicenseKey = "<License Key Here>";
+			cfg.AddProfile<AutoMapperProfile>();
+		}, loggerFactory);
 		var mapper = config.CreateMapper();
-        var result = mapper.Map<ContentDetailsModel, Content>(new ContentDetailsModel(Guid.Empty, DateTime.Parse("2022-12-15 01:02:03"), null, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
-        );
-        result.Cim.Should().BeNull();
-        result.Fulldatum.Should().Be("2022-12-15 01:02:03");
-    }
+		var result = mapper.Map<ContentDetailsModel, Content>(new ContentDetailsModel(Guid.Empty, DateTime.Parse("2022-12-15 01:02:03"), null, string.Empty, default, DateTime.MinValue, string.Empty, string.Empty, string.Empty, string.Empty)
+		);
+		result.Cim.Should().BeNull();
+		result.Fulldatum.Should().Be("2022-12-15 01:02:03");
+	}
 
-    [Fact]
+	[Fact]
 	public void Map_FixContent_ContentDetailsModel()
 	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+		var config = new MapperConfiguration(cfg =>
+		{
+			cfg.LicenseKey = "<License Key Here>";
+			cfg.AddProfile<AutoMapperProfile>();
+		}, loggerFactory);
 		var mapper = config.CreateMapper();
 
 		var result = mapper.Map<FixContent, ContentDetailsModel>(new FixContent
@@ -118,7 +149,12 @@ public class AutoMapperProfileTests
 	[Fact]
 	public void Map_Maiszent_ContentDetailsModel()
 	{
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+		var config = new MapperConfiguration(cfg =>
+		{
+			cfg.LicenseKey = "<License Key Here>";
+			cfg.AddProfile<AutoMapperProfile>();
+		}, loggerFactory);
 		var mapper = config.CreateMapper();
 
 		var result = mapper.Map<Maiszent, ContentDetailsModel>(new Maiszent

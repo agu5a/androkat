@@ -45,9 +45,13 @@ public static class InfrastructureExtensions
         services.AddHostedService<Warmup>();
     }
 
-    public static void SetAutoMapper(this IServiceCollection services)
+    public static void SetAutoMapper(this IServiceCollection services, ConfigurationManager configurationManager)
     {
-        services.AddAutoMapper(typeof(AutoMapperProfile));
+        services.AddAutoMapper(cfg =>
+        {
+            cfg.LicenseKey = Environment.GetEnvironmentVariable("ANDROKAT_CREDENTIAL_AUTOMAPPER_API_KEY");
+            cfg.AddProfile<AutoMapperProfile>();
+        });
     }
 
     public static void SetSession(this IServiceCollection services)
@@ -84,11 +88,11 @@ public static class InfrastructureExtensions
         })
         .AddCookie().AddGoogle(googleOptions =>
         {
-            googleOptions.ClientId = configurationManager["GoogleClientId"] ?? 
-                                     Environment.GetEnvironmentVariable("ANDROKAT_GOOGLE_CLIENT_ID") ?? 
+            googleOptions.ClientId = configurationManager["GoogleClientId"] ??
+                                     Environment.GetEnvironmentVariable("ANDROKAT_GOOGLE_CLIENT_ID") ??
                                      string.Empty;
-            googleOptions.ClientSecret = configurationManager["GoogleClientSecret"] ?? 
-                                         Environment.GetEnvironmentVariable("ANDROKAT_GOOGLE_CLIENT_SECRET") ?? 
+            googleOptions.ClientSecret = configurationManager["GoogleClientSecret"] ??
+                                         Environment.GetEnvironmentVariable("ANDROKAT_GOOGLE_CLIENT_SECRET") ??
                                          string.Empty;
         });
     }

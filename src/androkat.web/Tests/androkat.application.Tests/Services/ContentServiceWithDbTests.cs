@@ -22,13 +22,18 @@ public class ContentServiceWithDbTests : BaseTest
     [Theory, AutoDataWithCustomData]
     public void GetHome_Happy(List<Content> contents)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
 
         using var context = new AndrokatContext(GetDbContextOptions());
-        
+
         // Set both content items to papaitwitter type and add to context
         foreach (var content in contents)
         {
@@ -45,14 +50,14 @@ public class ContentServiceWithDbTests : BaseTest
 
         // Check that we have 2 items
         result.Count.Should().Be(2);
-        
+
         // Check first content item
         result[0].MetaData.Image.Should().Be("images/pope.png");
         result[0].MetaData.TipusNev.Should().Be("Pápa X üzenetei");
         result[0].MetaData.TipusId.Should().Be(Forras.papaitwitter);
         result[0].ContentDetails.Cim.Should().Be("Cím");
         result[0].ContentDetails.Tipus.Should().Be((int)Forras.papaitwitter);
-        
+
         // Check second content item
         result[1].MetaData.Image.Should().Be("images/pope.png");
         result[1].MetaData.TipusNev.Should().Be("Pápa X üzenetei");
@@ -64,7 +69,12 @@ public class ContentServiceWithDbTests : BaseTest
     [Theory, AutoDataWithCustomData]
     public void GetAjanlat_Happy(Content content)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
@@ -91,7 +101,12 @@ public class ContentServiceWithDbTests : BaseTest
     [Theory, AutoDataWithCustomData]
     public void GetAjanlat_Details_Happy(Content content)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
@@ -117,7 +132,12 @@ public class ContentServiceWithDbTests : BaseTest
     [Theory, AutoDataWithCustomData]
     public void GetAjanlat_Details_No_Result(Content content)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
@@ -138,7 +158,12 @@ public class ContentServiceWithDbTests : BaseTest
     [Theory, AutoDataWithCustomData]
     public void GetSzentek_Happy(FixContent fixContent)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
@@ -165,7 +190,12 @@ public class ContentServiceWithDbTests : BaseTest
     [Theory, AutoDataWithCustomData]
     public void GetImaPage_Happy_No_Csoport(ImaContent ima)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
@@ -187,7 +217,12 @@ public class ContentServiceWithDbTests : BaseTest
     [Theory, AutoDataWithCustomData]
     public void GetImaPage_Happy_Has_Csoport(ImaContent ima, ImaContent ima2)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
@@ -214,7 +249,12 @@ public class ContentServiceWithDbTests : BaseTest
     [Theory, AutoDataWithCustomData]
     public void GetImaDetailsPage_Happy(ImaContent ima)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
@@ -238,7 +278,12 @@ public class ContentServiceWithDbTests : BaseTest
     [Theory, AutoData]
     public void GetAudio_Happy(Content content, Content content2)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var now = DateTimeOffset.Parse("2012-02-03T04:05:06");
@@ -282,7 +327,12 @@ public class ContentServiceWithDbTests : BaseTest
     [Theory, AutoData]
     public void GetVideoSource_Happy(VideoContent video)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
@@ -315,7 +365,12 @@ public class ContentServiceWithDbTests : BaseTest
     [InlineData(0)]
     public void GetBlog_Happy(int tipus)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
@@ -352,7 +407,12 @@ public class ContentServiceWithDbTests : BaseTest
     [InlineData(0)]
     public void GetBlog_NotFound(int tipus)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
@@ -373,7 +433,12 @@ public class ContentServiceWithDbTests : BaseTest
     [InlineData(0)]
     public void GetHirek_Happy(int tipus)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
@@ -416,7 +481,12 @@ public class ContentServiceWithDbTests : BaseTest
     [InlineData(0)]
     public void GetHirek_NotFound(int tipus)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
@@ -435,7 +505,12 @@ public class ContentServiceWithDbTests : BaseTest
     [Theory, AutoDataWithCustomData]
     public void GetHumor_Happy(FixContent fixContent)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
@@ -462,7 +537,12 @@ public class ContentServiceWithDbTests : BaseTest
     [Theory, AutoData]
     public void GetRadioPage_Happy(SystemInfo systeminfo)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
@@ -490,7 +570,12 @@ public class ContentServiceWithDbTests : BaseTest
     [Fact]
     public void GetRadioPage_NotFound()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();
@@ -509,7 +594,12 @@ public class ContentServiceWithDbTests : BaseTest
     [Theory, AutoData]
     public void GetSzent_Happy(Maiszent maiszent)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var loggerRepo = new Mock<ILogger<CacheRepository>>();

@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace androkat.web.Tests;
 
@@ -29,7 +30,7 @@ public class BaseTest
 
     public static IMapper GetMapper()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>(), (ILoggerFactory)null);
         return config.CreateMapper();
     }
 
@@ -52,22 +53,22 @@ public class BaseTest
     public static Mock<IContentService> GetContentService(int tipus)
     {
         var contentService = new Mock<IContentService>();
-		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.maiszent)).Returns(
+        contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.maiszent)).Returns(
             new ContentModel(
                  new ContentDetailsModel(Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
-                 GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))                
+                 GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))
             ));
-		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.szentbernat)).Returns(
-			new ContentModel
-			(
-				new ContentDetailsModel(Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, string.Empty, string.Empty, "Forras"),                
-				GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))
+        contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.szentbernat)).Returns(
+            new ContentModel
+            (
+                new ContentDetailsModel(Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, string.Empty, string.Empty, "Forras"),
+                GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))
             ));
-		contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.ajanlatweb)).Returns(
-			new ContentModel
-			(
-				new ContentDetailsModel(Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),                
-				GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))
+        contentService.Setup(s => s.GetContentDetailsModelByNid(It.IsAny<Guid>(), (int)Forras.ajanlatweb)).Returns(
+            new ContentModel
+            (
+                new ContentDetailsModel(Guid.Empty, DateTime.MinValue, "Cim", string.Empty, tipus, DateTime.MinValue, string.Empty, "Image", string.Empty, string.Empty),
+                GetContentMetaDataModel(image: "Image", link: "MetaLink", forras: "MetaForras", tipusId: (Forras)Enum.ToObject(typeof(Forras), tipus))
             ));
         contentService.Setup(s => s.GetHumor()).Returns(new List<ContentModel>
         {

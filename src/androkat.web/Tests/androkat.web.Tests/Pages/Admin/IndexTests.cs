@@ -32,7 +32,12 @@ public class IndexTests : BaseTest
 	{
 		var fixture = new Fixture();
 
-		var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+		using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+		var config = new MapperConfiguration(cfg =>
+		{
+			cfg.LicenseKey = "<License Key Here>";
+			cfg.AddProfile<AutoMapperProfile>();
+		}, loggerFactory);
 		var mapper = config.CreateMapper();
 
 		var (pageContext, tempData, actionContext) = GetPreStuff();

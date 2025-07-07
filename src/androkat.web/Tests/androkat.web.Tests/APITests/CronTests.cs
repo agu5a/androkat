@@ -30,7 +30,12 @@ public class CronTests : BaseTest
     [InlineData(-1, 0)]
     public void GetKeresztenyelet(int tipus, int count)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var cache = GetIMemoryCache();
@@ -77,7 +82,12 @@ public class CronTests : BaseTest
     [InlineData("2022-01-01", "2021-12-31", false)]
     public void HasNapiolvasoByDate(string date, string dbDate, bool expectedResult)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var cache = GetIMemoryCache();
@@ -117,7 +127,12 @@ public class CronTests : BaseTest
     [Fact]
     public void GetSzentbernat()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var cache = GetIMemoryCache();
@@ -181,7 +196,12 @@ public class CronTests : BaseTest
     [Fact]
     public void GetLastContentByTipus()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var cache = GetIMemoryCache();
@@ -249,7 +269,12 @@ public class CronTests : BaseTest
     public void NapiUtravalo_Weekend_ShouldSkip(DayOfWeek dayOfWeek)
     {
         // Arrange
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -285,7 +310,12 @@ public class CronTests : BaseTest
     public void NapiUtravalo_NoMp3File_ShouldReturnNotFound()
     {
         // Arrange
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -321,7 +351,12 @@ public class CronTests : BaseTest
     public void NapiUtravalo_Mp3FileExists_NoDbRecord_ShouldAddRecord()
     {
         // Arrange
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -330,7 +365,7 @@ public class CronTests : BaseTest
 
         var loggerRepo = new Mock<ILogger<Cron>>();
         var cronService = new Mock<ICronService>();
-        
+
         // Create a temporary directory and file for testing
         var tempDir = Path.Combine(Path.GetTempPath(), "androkat_test_" + Guid.NewGuid().ToString("N")[..8]);
         var downloadDir = Path.Combine(tempDir, "download");
@@ -343,7 +378,7 @@ public class CronTests : BaseTest
 
         using var context = new AndrokatContext(GetDbContextOptions());
         var apiRepository = new ApiRepository(context, clock.Object, mapper);
-        
+
         var adminRepository = new Mock<IAdminRepository>();
         var mockLastTodayResult = new androkat.domain.Model.AdminPage.LastTodayResult
         {
@@ -383,7 +418,12 @@ public class CronTests : BaseTest
     public void NapiUtravalo_Mp3FileExists_DbRecordExists_ShouldReturnConflict()
     {
         // Arrange
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -392,7 +432,7 @@ public class CronTests : BaseTest
 
         var loggerRepo = new Mock<ILogger<Cron>>();
         var cronService = new Mock<ICronService>();
-        
+
         // Create a temporary directory and file for testing
         var tempDir = Path.Combine(Path.GetTempPath(), "androkat_test_" + Guid.NewGuid().ToString("N")[..8]);
         var downloadDir = Path.Combine(tempDir, "download");

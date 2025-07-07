@@ -67,7 +67,12 @@ public class CronServiceTests : BaseTest
     [Fact]
     public void DeleteOldRowsTest()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -102,7 +107,12 @@ public class CronServiceTests : BaseTest
     [Fact]
     public void DeleteOldRowsTest_Tavalyi_de_van_mar_idei()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -147,7 +157,12 @@ public class CronServiceTests : BaseTest
     [Fact]
     public void DeleteOldRowsTest_Tavalyi_de_nincs_meg_idei()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -183,7 +198,12 @@ public class CronServiceTests : BaseTest
     [Fact]
     public void DeleteOldVideoRowsTest()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var date = DateTimeOffset.Now;
@@ -216,7 +236,12 @@ public class CronServiceTests : BaseTest
     [Fact]
     public void DeleteOldTest_NoDelete()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -255,7 +280,12 @@ public class CronServiceTests : BaseTest
     [Fact]
     public void DeleteOldTest_NoDelete_LessAsMinimum()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -291,7 +321,12 @@ public class CronServiceTests : BaseTest
     [Fact]
     public void DeleteOldTest()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var now = DateTimeOffset.Parse("2022-02-03 05:02:02");

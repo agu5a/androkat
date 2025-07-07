@@ -21,7 +21,12 @@ public class PartnerRepositoryTests : BaseTest
     {
         var logger = new Mock<ILogger<PartnerRepository>>();
 
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = GetToday();
@@ -37,7 +42,12 @@ public class PartnerRepositoryTests : BaseTest
     {
         var logger = new Mock<ILogger<PartnerRepository>>();
 
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = GetToday();
@@ -53,7 +63,12 @@ public class PartnerRepositoryTests : BaseTest
     {
         var logger = new Mock<ILogger<PartnerRepository>>();
 
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = GetToday();
@@ -71,7 +86,12 @@ public class PartnerRepositoryTests : BaseTest
     {
         var logger = new Mock<ILogger<PartnerRepository>>();
 
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = GetToday();
@@ -93,7 +113,12 @@ public class PartnerRepositoryTests : BaseTest
     {
         var logger = new Mock<ILogger<PartnerRepository>>();
 
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = GetToday();
@@ -115,7 +140,12 @@ public class PartnerRepositoryTests : BaseTest
     {
         var logger = new Mock<ILogger<PartnerRepository>>();
 
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = GetToday();
@@ -125,10 +155,10 @@ public class PartnerRepositoryTests : BaseTest
         mock.Setup(x => x.Find(guid)).Throws(new Exception());
 
         var contextMock = new Mock<AndrokatContext>();
-        contextMock.Setup(x => x.TempContent).Returns(mock.Object);        
+        contextMock.Setup(x => x.TempContent).Returns(mock.Object);
 
         var repo = new PartnerRepository(contextMock.Object, logger.Object, clock.Object, mapper);
-        
+
         var result = repo.DeleteTempContentByNid(guid.ToString());
         result.Should().BeFalse();
     }
@@ -138,7 +168,12 @@ public class PartnerRepositoryTests : BaseTest
     {
         var logger = new Mock<ILogger<PartnerRepository>>();
 
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = GetToday();
@@ -157,7 +192,12 @@ public class PartnerRepositoryTests : BaseTest
     {
         var logger = new Mock<ILogger<PartnerRepository>>();
 
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = GetToday();

@@ -19,7 +19,12 @@ public class BookRadioSysCacheFillUpTests : BaseTest
     [Fact]
     public void BookRadioSysCacheFillUp_Happy_test()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -35,7 +40,7 @@ public class BookRadioSysCacheFillUpTests : BaseTest
         cacheRepository.Setup(s => s.GetRadioToCache()).Returns(new List<RadioMusorModel>
         {
             new(radioNid, string.Empty, string.Empty, string.Empty)
-        }); 
+        });
         cacheRepository.Setup(s => s.GetSystemInfoToCache()).Returns(new List<SystemInfoModel>
         {
             new(1, default, default)
@@ -55,7 +60,12 @@ public class BookRadioSysCacheFillUpTests : BaseTest
     [Fact]
     public void BookRadioSysCacheFillUp_Throws_Exception()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();

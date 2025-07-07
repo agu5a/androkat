@@ -23,7 +23,12 @@ public class MainCacheFillUpTests : BaseTest
     [Fact]
     public void MainCacheFillUp_GetHirekBlogokToCache_Happy_test()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -61,7 +66,12 @@ public class MainCacheFillUpTests : BaseTest
     [Fact]
     public void MainCacheFillUp_GetHirekBlogokToCache_Throws_Exception()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -79,7 +89,12 @@ public class MainCacheFillUpTests : BaseTest
     [Fact]
     public void MainCacheFillUpNapiutravaloWeboldalTest()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -125,7 +140,12 @@ public class MainCacheFillUpTests : BaseTest
     [Fact]
     public void MainCacheFillUpFirstSelect()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -173,7 +193,12 @@ public class MainCacheFillUpTests : BaseTest
     [Fact(DisplayName = "Where(w => w.tipus == tipus).OrderByDescending(o => o.fulldatum).Take(1)")]
     public void MainCacheFillUpLastSelect()
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -208,7 +233,12 @@ public class MainCacheFillUpTests : BaseTest
     [InlineData(6, "2012-01-02T04:05:06", "2011-12-31T03:05:06", "2011-12-31", "2011-12-31 00:00:00")]//tavalyi
     public void GetContentByTipusAndNidV2Test(int tipus, string today, string insertedInDb, string datumInDb, string resultDatum)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
@@ -243,7 +273,12 @@ public class MainCacheFillUpTests : BaseTest
     [InlineData(false)]
     public void GetContentByTipusAndNidV2_MaiIge_Test(bool twoItems)
     {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+        using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.LicenseKey = "<License Key Here>";
+            cfg.AddProfile<AutoMapperProfile>();
+        }, loggerFactory);
         var mapper = config.CreateMapper();
 
         var clock = new Mock<IClock>();
