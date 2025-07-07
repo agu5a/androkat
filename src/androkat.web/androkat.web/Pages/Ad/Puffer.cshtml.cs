@@ -116,13 +116,26 @@ public class PufferModel : PageModel
         }
 
         LastTodayResult = _adminRepository.GetLastTodayContentByTipus(TipusId.Value);
+
+        // Check for duplicate content if TipusId is laciatya
+        if (TipusId.Value == (int)domain.Enum.Forras.laciatya)
+        {
+            var hasDuplicate = _adminRepository.HasDuplicateContentByIdezet(Idezet ?? "", TipusId.Value);
+            if (hasDuplicate)
+            {
+                Error = "Ez az idézet már létezik az adatbázisban!";
+                ShowToast = true;
+                return Page();
+            }
+        }
+
         // Check if FullDatum already has a time component
         var dateToUse = FullDatum;
         if (!FullDatum.Contains(':')) // If there's no time component (no colon character)
         {
             dateToUse += DateTime.Now.ToString(" HH:mm:ss");
         }
-        
+
         var newContent = new ContentDetailsModel(Guid.Empty, DateTime.Parse(dateToUse, CultureInfo.CreateSpecificCulture("hu-HU")),
             Cim, Idezet ?? "", TipusId.Value,
         _iClock.Now.Date, string.Empty, Image ?? "", FileUrl ?? "", Forras ?? "");

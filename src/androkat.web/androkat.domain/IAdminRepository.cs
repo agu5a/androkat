@@ -18,8 +18,8 @@ public interface IAdminRepository
     bool InsertContent(ContentDetailsModel content);
     bool DeleteTempContentByNid(string nid);
     AdminAResult GetAdminAResult(bool isAdvent, bool isNagyBojt);
-    IOrderedQueryable<AllRecordResult> GetAllContentByTipus(int tipus);   
-    IOrderedQueryable<AllRecordResult> GetAllFixContentByTipus(int tipus); 
+    IOrderedQueryable<AllRecordResult> GetAllContentByTipus(int tipus);
+    IOrderedQueryable<AllRecordResult> GetAllFixContentByTipus(int tipus);
     ContentResult? LoadTodayContentByNid(string nid);
     ContentResult? LoadTodayFixContentByNid(string nid);
     bool DeleteContent(string nid);
@@ -45,7 +45,8 @@ public interface IAdminRepository
     Dictionary<int, string> GetAllFixContentTipusFromDb();
     bool InsertError(ErrorRequest content);
     List<SystemInfoData> GetIsAdventAndNagybojt();
-	IEnumerable<SystemInfoData> GetAllSystemInfo();
-	bool UpdateSystemInfo(SystemInfoData systemInfoData);
+    IEnumerable<SystemInfoData> GetAllSystemInfo();
+    bool UpdateSystemInfo(SystemInfoData systemInfoData);
     (bool isSuccess, string? message) InsertFixContent(string cim, string idezet, int tipus, string datum);
+    bool HasDuplicateContentByIdezet(string idezet, int tipus);
 }

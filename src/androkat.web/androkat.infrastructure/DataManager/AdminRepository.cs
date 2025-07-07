@@ -49,14 +49,14 @@ public class AdminRepository : BaseRepository, IAdminRepository
 			if (res is not null)
 			{
 				res.LastLogin = Clock.Now.DateTime;
-            }
+			}
 			else
 			{
 				Ctx.Admin.Add(new Admin { Email = email, LastLogin = Clock.Now.DateTime });
-            }
+			}
 
-            Ctx.SaveChanges();
-            return true;
+			Ctx.SaveChanges();
+			return true;
 		}
 		catch (Exception ex)
 		{
@@ -180,7 +180,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 		return false;
 	}
 
-    public (bool isSuccess, string? message) InsertIma(ImaModel imaModel)
+	public (bool isSuccess, string? message) InsertIma(ImaModel imaModel)
 	{
 		_logger.LogDebug("InsertIma was called, {Nid}", imaModel.Nid);
 
@@ -188,46 +188,46 @@ public class AdminRepository : BaseRepository, IAdminRepository
 		{
 			Ctx.ImaContent.Add(Mapper.Map<ImaContent>(imaModel));
 			Ctx.SaveChanges();
-            return (true, null);
+			return (true, null);
 		}
 		catch (Exception ex)
 		{
 			_logger.LogError(ex, "Exception: ");
-            return (false, ex.Message);
+			return (false, ex.Message);
 		}
 	}
 
-    public (bool isSuccess, string? message) InsertFixContent(string cim, string idezet, int tipus, string datum)
-    {
-        _logger.LogDebug("InsertFixContent was called, {Cim} {Tipus}", cim, tipus);
+	public (bool isSuccess, string? message) InsertFixContent(string cim, string idezet, int tipus, string datum)
+	{
+		_logger.LogDebug("InsertFixContent was called, {Cim} {Tipus}", cim, tipus);
 
-        try
-        {
-            var res = Ctx.FixContent.FirstOrDefault(f => f.Datum == datum && f.Tipus == tipus);
-            if (res is not null)
-            {
-                return (false, "the record already exists with the same date and tipus");
-            }
+		try
+		{
+			var res = Ctx.FixContent.FirstOrDefault(f => f.Datum == datum && f.Tipus == tipus);
+			if (res is not null)
+			{
+				return (false, "the record already exists with the same date and tipus");
+			}
 
-            Ctx.FixContent.Add(new FixContent
+			Ctx.FixContent.Add(new FixContent
 			{
 				Cim = cim.Replace("\n", " ").Replace("\r", " "),
-                Idezet = idezet.Replace("\n", " ").Replace("\r", " "),
+				Idezet = idezet.Replace("\n", " ").Replace("\r", " "),
 				Tipus = tipus,
-                Datum = datum,
+				Datum = datum,
 				Nid = Guid.NewGuid()
-            });
-            Ctx.SaveChanges();
-            return (true, null);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Exception: ");
-            return (false, ex.Message);
-        }        
-    }
+			});
+			Ctx.SaveChanges();
+			return (true, null);
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Exception: ");
+			return (false, ex.Message);
+		}
+	}
 
-    public bool InsertContent(ContentDetailsModel content)
+	public bool InsertContent(ContentDetailsModel content)
 	{
 		_logger.LogDebug("InsertContent was called, {Cim} {Tipus}", content.Cim, content.Tipus);
 
@@ -261,6 +261,22 @@ public class AdminRepository : BaseRepository, IAdminRepository
 		return false;
 	}
 
+	public bool HasDuplicateContentByIdezet(string idezet, int tipus)
+	{
+		_logger.LogDebug("HasDuplicateContentByIdezet was called, {Idezet}, {Tipus}", idezet, tipus);
+
+		try
+		{
+			var exists = Ctx.Content.Any(c => c.Idezet == idezet && c.Tipus == tipus);
+			return exists;
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Exception in HasDuplicateContentByIdezet: ");
+		}
+		return false;
+	}
+
 	public bool UpdateContent(ContentDetailsModel content)
 	{
 		_logger.LogDebug("UpdateContent was called, {Nid}", content.Nid);
@@ -271,11 +287,11 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
 			var res = Ctx.Content.FirstOrDefault(f => f.Nid == content.Nid);
 			if (res is null)
-            {
-                return false;
-            }
+			{
+				return false;
+			}
 
-            res.Idezet = idezet;
+			res.Idezet = idezet;
 			res.FileUrl = content.FileUrl;
 			res.Img = content.Img;
 			res.Cim = content.Cim;
@@ -304,11 +320,11 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
 			var res = Ctx.FixContent.FirstOrDefault(f => f.Nid == content.Nid);
 			if (res is null)
-            {
-                return false;
-            }
+			{
+				return false;
+			}
 
-            res.Idezet = idezet;
+			res.Idezet = idezet;
 			res.Cim = content.Cim;
 			//res.Tipus = content.Tipus
 			res.Datum = content.Fulldatum.ToString("MM-dd");
@@ -334,11 +350,11 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
 			var res = Ctx.MaiSzent.FirstOrDefault(f => f.Nid == maiszent.Nid);
 			if (res is null)
-            {
-                return false;
-            }
+			{
+				return false;
+			}
 
-            res.Idezet = maiszent.Idezet;
+			res.Idezet = maiszent.Idezet;
 			res.Img = maiszent.Img;
 			res.Cim = maiszent.Cim;
 			res.Datum = maiszent.Datum;
@@ -365,11 +381,11 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
 			var res = Ctx.ImaContent.FirstOrDefault(f => f.Nid == imaModel.Nid);
 			if (res is null)
-            {
-                return false;
-            }
+			{
+				return false;
+			}
 
-            res.Szoveg = szoveg;
+			res.Szoveg = szoveg;
 			res.Cim = imaModel.Cim;
 			res.Datum = imaModel.Datum;
 			res.Csoport = imaModel.Csoport;
@@ -393,11 +409,11 @@ public class AdminRepository : BaseRepository, IAdminRepository
 		{
 			var res = Ctx.RadioMusor.FirstOrDefault(f => f.Nid == radioMusorModel.Nid);
 			if (res is null)
-            {
-                return false;
-            }
+			{
+				return false;
+			}
 
-            res.Musor = radioMusorModel.Musor;
+			res.Musor = radioMusorModel.Musor;
 			res.Inserted = radioMusorModel.Inserted;
 			Ctx.SaveChanges();
 
@@ -419,11 +435,11 @@ public class AdminRepository : BaseRepository, IAdminRepository
 		{
 			var res = Ctx.SystemInfo.FirstOrDefault(f => f.Id == systemInfoData.Id);
 			if (res is null)
-            {
-                return false;
-            }
+			{
+				return false;
+			}
 
-            res.Value = systemInfoData.Value;
+			res.Value = systemInfoData.Value;
 			Ctx.SaveChanges();
 
 			return true;
@@ -451,28 +467,28 @@ public class AdminRepository : BaseRepository, IAdminRepository
 				Nid = s.Nid.ToString()
 			}));
 
-            AndrokatConfiguration.ContentTypeIds()
-                .Where(tipus => !temp.Exists(c => c.Tipus == tipus))
-                .ToList()
-                .ForEach(tipus => temp.Add(new AllTodayResult
-                {
-                    Tipus = tipus,
-                    Datum = string.Empty,
-                    Nid = string.Empty,
-                    TipusNev = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus).TipusNev
-                }));
+			AndrokatConfiguration.ContentTypeIds()
+				.Where(tipus => !temp.Exists(c => c.Tipus == tipus))
+				.ToList()
+				.ForEach(tipus => temp.Add(new AllTodayResult
+				{
+					Tipus = tipus,
+					Datum = string.Empty,
+					Nid = string.Empty,
+					TipusNev = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus).TipusNev
+				}));
 
-            if (!temp.Exists(c => c.Tipus == (int)Forras.gyonas))
-            {
-                temp.Add(new AllTodayResult
-                {
-                    Tipus = (int)Forras.gyonas,
-                    Datum = string.Empty,
-                    Nid = string.Empty,
-                    TipusNev = _androkatConfiguration.Value.GetContentMetaDataModelByTipus((int)Forras.gyonas).TipusNev
-                });
-            }
-        }
+			if (!temp.Exists(c => c.Tipus == (int)Forras.gyonas))
+			{
+				temp.Add(new AllTodayResult
+				{
+					Tipus = (int)Forras.gyonas,
+					Datum = string.Empty,
+					Nid = string.Empty,
+					TipusNev = _androkatConfiguration.Value.GetContentMetaDataModelByTipus((int)Forras.gyonas).TipusNev
+				});
+			}
+		}
 		catch (Exception ex)
 		{
 			_logger.LogError(ex, "Exception: ");
@@ -491,22 +507,22 @@ public class AdminRepository : BaseRepository, IAdminRepository
 			var res = Ctx.TempContent.FirstOrDefault(g => g.Nid == guid);
 
 			if (res is not null)
-            {
-                return new ContentResult
-                {
-                    Cim = res.Cim,
-                    FullDatum = res.Fulldatum,
-                    Forras = res.Forras,
-                    Idezet = res.Idezet,
-                    Img = res.Img,
-                    Nid = res.Nid.ToString(),
-                    Def = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(res.Tipus).TipusNev,
-                    FileUrl = res.FileUrl,
-                    Inserted = res.Inserted.ToString("yyyy-MM-dd HH:mm:ss"),
-                    Tipus = res.Tipus
-                };
-            }
-        }
+			{
+				return new ContentResult
+				{
+					Cim = res.Cim,
+					FullDatum = res.Fulldatum,
+					Forras = res.Forras,
+					Idezet = res.Idezet,
+					Img = res.Img,
+					Nid = res.Nid.ToString(),
+					Def = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(res.Tipus).TipusNev,
+					FileUrl = res.FileUrl,
+					Inserted = res.Inserted.ToString("yyyy-MM-dd HH:mm:ss"),
+					Tipus = res.Tipus
+				};
+			}
+		}
 		catch (Exception ex)
 		{
 			_logger.LogError(ex, "Exception: ");
@@ -573,34 +589,34 @@ public class AdminRepository : BaseRepository, IAdminRepository
 			{
 				var firstByDateAndTipus = Ctx.Content.FirstOrDefault(g => g.Tipus == tipus && g.Fulldatum.StartsWith(date));
 				if (firstByDateAndTipus is not null)
-                {
-                    res = Mapper.Map<ContentDetailsModel>(firstByDateAndTipus);
-                }
-            }
+				{
+					res = Mapper.Map<ContentDetailsModel>(firstByDateAndTipus);
+				}
+			}
 			else
 			{
 				var fix = Ctx.FixContent.FirstOrDefault(g => g.Tipus == tipus && g.Datum == hoNap);
 				if (fix is not null)
-                {
-                    res = Mapper.Map<ContentDetailsModel>(fix);
-                }
-            }
+				{
+					res = Mapper.Map<ContentDetailsModel>(fix);
+				}
+			}
 
 			if (res is null)
 			{
 				var firstByTipus = Ctx.Content.Where(g => g.Tipus == tipus).OrderByDescending(o => o.Fulldatum).FirstOrDefault();
 				if (firstByTipus is not null)
-                {
-                    res = Mapper.Map<ContentDetailsModel>(firstByTipus);
-                }
-            }
+				{
+					res = Mapper.Map<ContentDetailsModel>(firstByTipus);
+				}
+			}
 
 			if (res is null)
-            {
-                return new LastTodayResult();
-            }
+			{
+				return new LastTodayResult();
+			}
 
-            var meta = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus);
+			var meta = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus);
 
 			return new LastTodayResult
 			{
@@ -890,16 +906,16 @@ public class AdminRepository : BaseRepository, IAdminRepository
 			osszesTipus.AddRange(AndrokatConfiguration.FixContentTypeIds());
 
 			if (!isAdvent)
-            {
-                osszesTipus.Remove((int)Forras.advent);
-            }
+			{
+				osszesTipus.Remove((int)Forras.advent);
+			}
 
-            if (!isNagyBojt)
-            {
-                osszesTipus.Remove((int)Forras.nagybojt);
-            }
+			if (!isNagyBojt)
+			{
+				osszesTipus.Remove((int)Forras.nagybojt);
+			}
 
-            var maiHianyzok = osszesTipus.Except(maiAnyagok.OrderBy(o => o)).ToList();
+			var maiHianyzok = osszesTipus.Except(maiAnyagok.OrderBy(o => o)).ToList();
 
 			var hianyzokHtml = GetMaiHianyzok(date, focolareDate, maiHianyzok);
 
@@ -941,14 +957,14 @@ public class AdminRepository : BaseRepository, IAdminRepository
 			});
 		}
 		else
-        {
-            rows.ToList().ForEach(row =>
+		{
+			rows.ToList().ForEach(row =>
 			{
 				list.Add(Mapper.Map<ContentDetailsModel>(row));
 			});
-        }
+		}
 
-        return list;
+		return list;
 	}
 
 	private string GetMaiHianyzok(string date, string focolareDate, List<int> list)
@@ -975,10 +991,10 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
 			var result = GetHianyzokAdatai(date, focolareDate, item);
 			if (!string.IsNullOrWhiteSpace(result))
-            {
-                sb.Append(result + "<br><br>");
-            }
-        }
+			{
+				sb.Append(result + "<br><br>");
+			}
+		}
 
 		return sb.ToString();
 	}
@@ -991,26 +1007,26 @@ public class AdminRepository : BaseRepository, IAdminRepository
 		//ezek nem mindig naponta jelennek meg, igy visszaadjuk a legutobbit, ha van                
 		res2 ??= Ctx.Content.Where(w => w.Tipus == item).OrderByDescending(o => o.Inserted).FirstOrDefault();
 		if (res2 is null)
-        {
-            return "";
-        }
+		{
+			return "";
+		}
 
-        var res = "[" + res2.Fulldatum + "] - " + res2.Cim;
+		var res = "[" + res2.Fulldatum + "] - " + res2.Cim;
 		if (item != 6 && item != 15 && item != (int)Forras.audionapievangelium && item != 38 && item != 39 && item != 60)
-        {
-            return res;
-        }
+		{
+			return res;
+		}
 
-        if (string.IsNullOrWhiteSpace(res2.FileUrl))
-        {
-            res += "<br><a href='" + res2.Idezet + "'>" + res2.Idezet + "</a>";
-        }
-        else
-        {
-            res += "<br><a href='" + res2.FileUrl + "'>" + res2.FileUrl + "</a>";
-        }
+		if (string.IsNullOrWhiteSpace(res2.FileUrl))
+		{
+			res += "<br><a href='" + res2.Idezet + "'>" + res2.Idezet + "</a>";
+		}
+		else
+		{
+			res += "<br><a href='" + res2.FileUrl + "'>" + res2.FileUrl + "</a>";
+		}
 
-        return res;
+		return res;
 	}
 
 	private string GetMaiAnyagok(IEnumerable<ContentDetailsModel> res, List<int> list1, string resString1)
@@ -1020,25 +1036,25 @@ public class AdminRepository : BaseRepository, IAdminRepository
 		foreach (var item in res.OrderBy(o => o.Tipus))
 		{
 			if (list1.Contains(item.Tipus))
-            {
-                continue;
-            }
+			{
+				continue;
+			}
 
-            var data = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus);
+			var data = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item.Tipus);
 			sb.Append(" " + item.Tipus + " - <a href='" + data.Link + "' target='_blank'>" + data.TipusNev + "</a><br>");
 
 			sb.Append("[" + item.Fulldatum.ToString("yyyy-MM-dd HH:mm:ss") + "] - " + item.Cim + "<br>");
 			if (item.Tipus is 6 or 15 or (int)Forras.audionapievangelium or 38 or 39 or 60)
 			{
 				if (string.IsNullOrWhiteSpace(item.FileUrl))
-                {
-                    sb.Append("<a href='" + item.Idezet + "'>" + item.Idezet + "</a><br>");
-                }
-                else
-                {
-                    sb.Append("<a href='" + item.FileUrl + "'>" + item.FileUrl + "</a><br>");
-                }
-            }
+				{
+					sb.Append("<a href='" + item.Idezet + "'>" + item.Idezet + "</a><br>");
+				}
+				else
+				{
+					sb.Append("<a href='" + item.FileUrl + "'>" + item.FileUrl + "</a><br>");
+				}
+			}
 
 			sb.Append("<br>");
 
@@ -1078,9 +1094,9 @@ public class AdminRepository : BaseRepository, IAdminRepository
 			var radios = JsonSerializer.Deserialize<Dictionary<string, string>>(vatikan!)!;
 
 			var sb = new StringBuilder();
-            foreach (var item in radios.Where(item => item.Key == "vatikan"))
+			foreach (var item in radios.Where(item => item.Key == "vatikan"))
 			{
-			   sb.Append(item.Key + " (" + item.Value + ")");
+				sb.Append(item.Key + " (" + item.Value + ")");
 			}
 			adminResult.RadioList += sb.ToString();
 
@@ -1112,11 +1128,11 @@ public class AdminRepository : BaseRepository, IAdminRepository
 			var sysRes = Ctx.SystemInfo.ToList();
 
 			if (sysRes.Count == 0)
-            {
-                return adminResult;
-            }
+			{
+				return adminResult;
+			}
 
-            adminResult.SysTable = GetSysTable(sysRes);
+			adminResult.SysTable = GetSysTable(sysRes);
 
 			return adminResult;
 		}
@@ -1159,10 +1175,10 @@ public class AdminRepository : BaseRepository, IAdminRepository
 				sys.Append("'<br>");
 			}
 			else
-            {
-                sys.Append("[" + value.Id + "] - " + value.Key + " - " + value.Value + "<br>");
-            }
-        }
+			{
+				sys.Append("[" + value.Id + "] - " + value.Key + " - " + value.Value + "<br>");
+			}
+		}
 
 		return sys.ToString();
 	}
