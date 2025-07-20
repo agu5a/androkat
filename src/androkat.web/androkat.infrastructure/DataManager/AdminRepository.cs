@@ -872,7 +872,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 		return null;
 	}
 
-	public AdminAResult GetAdminAResult(bool isAdvent, bool isNagyBojt)
+	public AdminAResult GetAdminAResult()
 	{
 		_logger.LogDebug("GetAdminAResult was called");
 
@@ -880,44 +880,12 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
 		try
 		{
-			var date = Clock.Now.ToString("yyyy-MM-dd");
-			var hoNap = Clock.Now.ToString("MM-dd");
-
-			var focolareDate = Clock.Now.ToString("yyyy-MM-01");
-
-			var res = new List<ContentDetailsModel>();
-			Ctx.Content.Where(w => w.Fulldatum.StartsWith(date) || w.Tipus == 7 && w.Fulldatum.StartsWith(focolareDate)).OrderBy(o => o.Tipus).ToList()
-				.ForEach(f => res.Add(Mapper.Map<ContentDetailsModel>(f)));
-
-			var fix = Ctx.FixContent.Where(w => w.Datum == hoNap).OrderBy(o => o.Tipus).ToList();
-			fix.ForEach(f => { res.Add(Mapper.Map<ContentDetailsModel>(f)); });
-
-			var maiszent = Ctx.MaiSzent.Where(w => w.Datum == hoNap).ToList();
-			maiszent.ForEach(f =>
-			{
-				res.Add(Mapper.Map<ContentDetailsModel>(f));
-			});
+			var res = GetAllMaiAnyagok();
 
 			var maiAnyagok = new List<int>();
 			var maiAnyagokHtml = GetMaiAnyagok(res, maiAnyagok, "<strong>Mai anyagok</strong><br>");
 
-			var osszesTipus = new List<int>();
-			osszesTipus.AddRange(AndrokatConfiguration.ContentTypeIds());
-			osszesTipus.AddRange(AndrokatConfiguration.FixContentTypeIds());
-
-			if (!isAdvent)
-			{
-				osszesTipus.Remove((int)Forras.advent);
-			}
-
-			if (!isNagyBojt)
-			{
-				osszesTipus.Remove((int)Forras.nagybojt);
-			}
-
-			var maiHianyzok = osszesTipus.Except(maiAnyagok.OrderBy(o => o)).ToList();
-
-			var hianyzokHtml = GetMaiHianyzok(date, focolareDate, maiHianyzok);
+			var hianyzokHtml = GetMaiHianyzok();
 
 			result.MaiAnyagok = hianyzokHtml + maiAnyagokHtml;
 		}
@@ -927,6 +895,29 @@ public class AdminRepository : BaseRepository, IAdminRepository
 		}
 
 		return result;
+	}
+
+	private List<ContentDetailsModel> GetAllMaiAnyagok()
+	{
+		var date = Clock.Now.ToString("yyyy-MM-dd");
+		var hoNap = Clock.Now.ToString("MM-dd");
+
+		var focolareDate = Clock.Now.ToString("yyyy-MM-01");
+
+		var res = new List<ContentDetailsModel>();
+		Ctx.Content.Where(w => w.Fulldatum.StartsWith(date) || w.Tipus == 7 && w.Fulldatum.StartsWith(focolareDate)).OrderBy(o => o.Tipus).ToList()
+			.ForEach(f => res.Add(Mapper.Map<ContentDetailsModel>(f)));
+
+		var fix = Ctx.FixContent.Where(w => w.Datum == hoNap).OrderBy(o => o.Tipus).ToList();
+		fix.ForEach(f => { res.Add(Mapper.Map<ContentDetailsModel>(f)); });
+
+		var maiszent = Ctx.MaiSzent.Where(w => w.Datum == hoNap).ToList();
+		maiszent.ForEach(f =>
+		{
+			res.Add(Mapper.Map<ContentDetailsModel>(f));
+		});
+
+		return res;
 	}
 
 	private List<ContentDetailsModel> GetActualMaiSzent()
@@ -967,12 +958,50 @@ public class AdminRepository : BaseRepository, IAdminRepository
 		return list;
 	}
 
-	private string GetMaiHianyzok(string date, string focolareDate, List<int> list)
+	public string GetMaiHianyzok()
 	{
+		var isAdvent = false;
+		var isNagyBojt = false;
+
+		var res = GetIsAdventAndNagybojt();
+		res.ForEach(x =>
+		{
+			switch (x.Key)
+			{
+				case Constants.IsAdvent:
+					isAdvent = Convert.ToBoolean(x.Value);
+					break;
+				case Constants.IsNagyBojt:
+					isNagyBojt = Convert.ToBoolean(x.Value);
+					break;
+			}
+		});
+
+		var osszesTipus = new List<int>();
+		osszesTipus.AddRange(AndrokatConfiguration.ContentTypeIds());
+		osszesTipus.AddRange(AndrokatConfiguration.FixContentTypeIds());
+
+		if (!isAdvent)
+		{
+			osszesTipus.Remove((int)Forras.advent);
+		}
+
+
+		if (!isNagyBojt)
+		{
+			osszesTipus.Remove((int)Forras.nagybojt);
+		}
+
+		var allMai = GetAllMaiAnyagok();
+		var maiAnyagok = new List<int>();
+		_ = GetMaiAnyagok(allMai, maiAnyagok, "<strong>Mai anyagok</strong><br>");
+
+		var maiHianyzok = osszesTipus.Except(maiAnyagok.OrderBy(o => o)).ToList();
+
 		var sb = new StringBuilder();
 		sb.Append("<strong>Ma hiányzó anyagok</strong><br>");
 
-		if (list.Contains((int)Forras.maiszent))
+		if (maiHianyzok.Contains((int)Forras.maiszent))
 		{
 			var szent = GetActualMaiSzent().FirstOrDefault();
 			if (szent is not null)
@@ -983,7 +1012,10 @@ public class AdminRepository : BaseRepository, IAdminRepository
 			}
 		}
 
-		foreach (var item in list.Where(w => w != (int)Forras.maiszent).OrderBy(o => o))
+		var date = Clock.Now.ToString("yyyy-MM-dd");
+		var focolareDate = Clock.Now.ToString("yyyy-MM-01");
+
+		foreach (var item in maiHianyzok.Where(w => w != (int)Forras.maiszent).OrderBy(o => o))
 		{
 			var data = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(item);
 

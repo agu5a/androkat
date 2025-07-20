@@ -17,7 +17,7 @@ public interface IAdminRepository
     LastTodayResult GetLastTodayContentByTipus(int tipus);
     bool InsertContent(ContentDetailsModel content);
     bool DeleteTempContentByNid(string nid);
-    AdminAResult GetAdminAResult(bool isAdvent, bool isNagyBojt);
+    AdminAResult GetAdminAResult();
     IOrderedQueryable<AllRecordResult> GetAllContentByTipus(int tipus);
     IOrderedQueryable<AllRecordResult> GetAllFixContentByTipus(int tipus);
     ContentResult? LoadTodayContentByNid(string nid);
@@ -49,4 +49,5 @@ public interface IAdminRepository
     bool UpdateSystemInfo(SystemInfoData systemInfoData);
     (bool isSuccess, string? message) InsertFixContent(string cim, string idezet, int tipus, string datum);
     bool HasDuplicateContentByIdezet(string idezet, int tipus);
+    string GetMaiHianyzok();
 }

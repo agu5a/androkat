@@ -1,14 +1,11 @@
-﻿using androkat.domain.Model;
 using FastEndpoints;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace androkat.web.Endpoints.TempContentEndpoints;
 
-public class ContentDetailsModelRequest
+public class MissingContentRequest
 {
-    [Required]
-    public ContentDetailsModel ContentDetailsModel { get; set; }
-
     [FromHeader("X-API-Key")]
     [Required]
     public string ApiKey { get; set; }

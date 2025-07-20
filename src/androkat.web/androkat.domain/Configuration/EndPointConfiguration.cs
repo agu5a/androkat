@@ -16,4 +16,7 @@ public class EndPointConfiguration
     public string GetContentsApiUrl { get; set; }
     [Required]
     public string Cron { get; set; }
+
+    [Required]
+    public string MissingContentUrl { get; set; }
 }

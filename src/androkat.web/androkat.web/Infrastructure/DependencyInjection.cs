@@ -46,6 +46,7 @@ public static class DependencyInjection
                 options.HealthCheckApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_HEALTH_CHECK_API_URL");
                 options.GetContentsApiUrl = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_GET_CONTENTS_API_URL");
                 options.Cron = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_CRON");
+                options.MissingContentUrl = Environment.GetEnvironmentVariable("ANDROKAT_ENDPOINT_MISSING_CONTENT_URL");
             })
             .ValidateDataAnnotations()
             .ValidateOnStart();

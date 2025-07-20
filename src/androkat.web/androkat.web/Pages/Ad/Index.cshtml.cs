@@ -84,7 +84,7 @@ public class IndexModel : PageModel
         }
 
         AdminResult = _adminRepository.GetAdminResult();
-        AdminAResult = _adminRepository.GetAdminAResult(IsAdvent, IsNagyBojt);
+        AdminAResult = _adminRepository.GetAdminAResult();
         AdminBResult = _adminRepository.GetAdminBResult();
     }
 
@@ -116,7 +116,7 @@ public class IndexModel : PageModel
 
             // Still try to load the data
             AdminResult = _adminRepository.GetAdminResult();
-            AdminAResult = _adminRepository.GetAdminAResult(IsAdvent, IsNagyBojt);
+            AdminAResult = _adminRepository.GetAdminAResult();
             AdminBResult = _adminRepository.GetAdminBResult();
 
             return Page();

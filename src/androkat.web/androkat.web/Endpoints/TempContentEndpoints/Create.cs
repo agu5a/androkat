@@ -18,7 +18,10 @@ public class Create : Endpoint<ContentDetailsModelRequest, ContentDetailsModelRe
     private readonly string _route;
     private readonly IApiKeyValidator _apiKeyValidator;
 
-    public Create(IApiRepository apiRepository, ILogger<Create> logger, IOptions<EndPointConfiguration> endPointsCongfig, IApiKeyValidator apiKeyValidator)
+    public Create(IApiRepository apiRepository,
+    ILogger<Create> logger,
+    IOptions<EndPointConfiguration> endPointsCongfig,
+    IApiKeyValidator apiKeyValidator)
     {
         _apiRepository = apiRepository;
         _logger = logger;
