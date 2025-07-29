@@ -16,6 +16,27 @@
 				"/p:AndroidDevice=True"
 			],
 			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "publish-android-aab",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"publish",
+				"-f",
+				"net9.0-android",
+				"-c",
+				"Release",
+				"-p:AndroidPackageFormat=aab"
+			],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"problemMatcher": "$msCompile"
 		}
 	]
 }

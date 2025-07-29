@@ -4,11 +4,14 @@
 		<TargetFrameworks>net9.0-android;</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>androkat.hu</RootNamespace>
+		<TargetSdkVersion>36</TargetSdkVersion>
+		<AndroidTargetSdkVersion>36</AndroidTargetSdkVersion>
+  		<AndroidCompileSDKVersion>36</AndroidCompileSDKVersion>
 		<UseMaui>true</UseMaui>
 		<Nullable>enable</Nullable>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<WarningsNotAsErrors>CS8785,NU1603,XUA1001,XC0024,XC0045,IDE0290,AD0001</WarningsNotAsErrors>
+		<WarningsNotAsErrors>CS8785,NU1603,XUA1001,XC0024,XC0045,IDE0290,AD0001,IL2026</WarningsNotAsErrors>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<!-- <TrimMode>partial</TrimMode> -->
 		<IsPackable>false</IsPackable>
@@ -22,13 +25,12 @@
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>03.57</ApplicationDisplayVersion>
-		<ApplicationVersion>320</ApplicationVersion>
+		<ApplicationVersion>327</ApplicationVersion>
 
 		<!-- Required for C# Hot Reload -->
 		<UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
-		<TargetSdkVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">36</TargetSdkVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
