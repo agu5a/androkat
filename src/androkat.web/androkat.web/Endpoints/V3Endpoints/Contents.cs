@@ -39,13 +39,13 @@ public class Contents : Endpoint<ContentRequest, IEnumerable<ContentResponse>>
             Guid.TryParse(request.Id, out var guid);
 
             var response = _apiService.GetContentByTipusAndId(request.Tipus, guid, default, default);
-            await SendAsync(response, StatusCodes.Status200OK, ct);
+            await Send.ResponseAsync(response, StatusCodes.Status200OK, ct);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Exception: Failed to run {Name}", nameof(HandleAsync));
 
-            await SendAsync([], StatusCodes.Status500InternalServerError, ct);
+            await Send.ResponseAsync([], StatusCodes.Status500InternalServerError, ct);
         }
     }
 }

@@ -36,7 +36,7 @@ public class Update : Endpoint<RadioMusorModelRequest, RadioMusorModelResponse>
 	{
         if (!_apiKeyValidator.IsValid(request.ApiKey))
         {
-            await SendAsync(new RadioMusorModelResponse(false), StatusCodes.Status401Unauthorized, ct);
+            await Send.ResponseAsync(new RadioMusorModelResponse(false), StatusCodes.Status401Unauthorized, ct);
             return;
         }
         
@@ -50,13 +50,13 @@ public class Update : Endpoint<RadioMusorModelRequest, RadioMusorModelResponse>
 			var result = _apiRepository.UpdateRadioMusor(new domain.Model.RadioMusorModel(Guid.Empty, request.Source, request.Musor, request.Inserted));
 			var response = new RadioMusorModelResponse(result);
 
-			await SendAsync(response, result ? StatusCodes.Status200OK : StatusCodes.Status409Conflict, ct);
+			await Send.ResponseAsync(response, result ? StatusCodes.Status200OK : StatusCodes.Status409Conflict, ct);
 		}
 		catch (Exception ex)
 		{
 			_logger.LogError(ex, "Exception: Failed to run {Name}", nameof(HandleAsync));
 
-			await SendAsync(new RadioMusorModelResponse(false), StatusCodes.Status500InternalServerError, ct);
+			await Send.ResponseAsync(new RadioMusorModelResponse(false), StatusCodes.Status500InternalServerError, ct);
 		}
 	}
 }

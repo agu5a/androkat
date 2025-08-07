@@ -34,11 +34,11 @@ public class GetMissingContent : Endpoint<MissingContentRequest, MissingContentR
     {
         if (!_apiKeyValidator.IsValid(request.ApiKey))
         {
-            await SendAsync(new MissingContentResponse("Invalid API Key"), StatusCodes.Status401Unauthorized, ct);
+            await Send.ResponseAsync(new MissingContentResponse("Invalid API Key"), StatusCodes.Status401Unauthorized, ct);
             return;
         }
 
         var result = _adminRepository.GetMaiHianyzok();
-        await SendAsync(new MissingContentResponse(result), StatusCodes.Status200OK, ct);
+        await Send.ResponseAsync(new MissingContentResponse(result), StatusCodes.Status200OK, ct);
     }
 }

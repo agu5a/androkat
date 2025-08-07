@@ -39,7 +39,7 @@ public class Create : Endpoint<ContentDetailsModelRequest, ContentDetailsModelRe
     {
         if (!_apiKeyValidator.IsValid(request.ApiKey))
         {
-            await SendAsync(new ContentDetailsModelResponse(false), StatusCodes.Status401Unauthorized, ct);
+            await Send.ResponseAsync(new ContentDetailsModelResponse(false), StatusCodes.Status401Unauthorized, ct);
             return;
         }
 
@@ -47,13 +47,13 @@ public class Create : Endpoint<ContentDetailsModelRequest, ContentDetailsModelRe
         {
             var result = _apiRepository.AddTempContent(request.ContentDetailsModel);
             var response = new ContentDetailsModelResponse(result);
-            await SendAsync(response, result ? StatusCodes.Status200OK : StatusCodes.Status409Conflict, ct);
+            await Send.ResponseAsync(response, result ? StatusCodes.Status200OK : StatusCodes.Status409Conflict, ct);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Exception: Failed to run {Name}", nameof(HandleAsync));
 
-            await SendAsync(new ContentDetailsModelResponse(false), StatusCodes.Status500InternalServerError, ct);
+            await Send.ResponseAsync(new ContentDetailsModelResponse(false), StatusCodes.Status500InternalServerError, ct);
         }
     }
 }
