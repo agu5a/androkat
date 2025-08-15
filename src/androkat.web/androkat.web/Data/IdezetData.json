@@ -293,7 +293,7 @@
     "Forras": "Taizé",
     "Link": "https://www.taize.fr",
     "EnumString": "taize",
-    "Segedlink": "https://www.taize.fr/tz_readings.php?lang=hu",
+    "Segedlink": "https://www.taize.fr/en/prayer-and-reflection",
     "Image": "images/taize.png"
   },
   {
@@ -365,7 +365,7 @@
     "Forras": "Taizé",
     "Link": "https://www.taize.fr",
     "EnumString": "audiotaize",
-    "Segedlink": "https://www.taize.fr/hu_article29660.html",
+    "Segedlink": "https://www.taize.fr/en/prayer-and-reflection",
     "Image": "images/taize.png"
   },
   {

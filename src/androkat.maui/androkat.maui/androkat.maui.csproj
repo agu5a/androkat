@@ -24,8 +24,8 @@
 		<ApplicationIdGuid>0BE13A10-A7E4-44D6-AFF1-12038428A25C</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>03.57</ApplicationDisplayVersion>
-		<ApplicationVersion>327</ApplicationVersion>
+		<ApplicationDisplayVersion>03.58</ApplicationDisplayVersion>
+		<ApplicationVersion>328</ApplicationVersion>
 
 		<!-- Required for C# Hot Reload -->
 		<UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>

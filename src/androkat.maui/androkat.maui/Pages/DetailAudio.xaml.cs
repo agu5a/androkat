@@ -38,7 +38,7 @@ public partial class DetailAudio
             Activities.prayasyougo =>
                 "A <a href=\"https://open.spotify.com/show/4f2oWtBVw0jnTmeDrHh7ey\">jezsuiták minden napra összeállítanak</a> egy 10-15 perces elmélkedést, mely a napi olvasmányhoz kapcsolódik. Ezeket a hanganyagokat - a mai kor igényeihez és lehet&#x0151;ségeihez igazodva - mobiltelefonra, vagy bármilyen MP3-lejátszóra letöltve akár utazás közben is hallgathatjuk.",
             Activities.audiotaize =>
-                "<a href=\"https://www.taize.fr/hu_article29660.html\">www.taize.fr/hu_article29660.html</a>",
+                "<a href=\"https://www.taize.fr/en/prayer-and-reflection\">www.taize.fr/en/prayer-and-reflection</a>",
             Activities.audionapievangelium =>
                 "A <a href=\"https://www.katolikusradio.hu/evangelium\">katolikusradio.hu</a> által közétett napi evangélium hanganyagként.",
             _ => ""
