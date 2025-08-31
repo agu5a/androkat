@@ -9,7 +9,7 @@ public static class ConsValues
     public const string ApiUrl = "http://api.androkat.hu/";
     public const string Szentistvanradio = "http://online.szentistvanradio.hu:7000/adas";
     public const string Katolikusradio = "http://katolikusradio.hu:9000/live_hi.mp3";
-    public const string Vaticannews = "https://media.vaticannews.va/media/audio/program/1900/ungherese_100623.mp3";
+    public const string Vaticannews = "https://media.vaticannews.va/media2/audio/program/1900/ungherese_300825.mp3";
     public const string EzAzANap = "https://www.radioking.com/play/ez-az-a-nap-radio";
     public const string Mariaradio = "http://www.mariaradio.hu:8000/mr";
     public const string Katekizmus = "https://archiv.katolikus.hu/kek/";

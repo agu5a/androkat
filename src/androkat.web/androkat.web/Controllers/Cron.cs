@@ -69,7 +69,7 @@ public class Cron : ControllerBase
             var yesterday = _iClock.Now.DateTime.AddDays(-1).ToString("ddMMyy");
             var res = _apiRepository.GetSystemInfoModels().Where(w => w.Key == "radio").Select(s => s.Value).First();
             var web = JsonSerializer.Deserialize<Dictionary<string, string>>(res)!;
-            var newDic = web.ToDictionary(item => item.Key, item => item.Key == "vatikan" ? $"https://media.vaticannews.va/media/audio/program/1900/ungherese_{yesterday}.mp3" : item.Value);
+            var newDic = web.ToDictionary(item => item.Key, item => item.Key == "vatikan" ? $"https://media.vaticannews.va/media2/audio/program/1900/ungherese_{yesterday}.mp3" : item.Value);
             _apiRepository.UpdateRadioSystemInfo(JsonSerializer.Serialize(newDic));
             return Ok();
         }
