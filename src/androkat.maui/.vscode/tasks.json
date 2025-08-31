@@ -2,41 +2,81 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+			"type": "shell",
 			"label": "build",
 			"command": "dotnet",
-			"type": "process",
 			"args": [
 				"build",
-				"${workspaceFolder}/androkat.maui/androkat.maui.csproj",
+				"--configuration",
+				"Debug"
+			],
+			"group": "build",
+			"presentation": {
+				"reveal": "silent"
+			},
+			"problemMatcher": "$msCompile",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			}
+		},
+		{
+			"type": "shell",
+			"label": "build-android",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"androkat.maui/androkat.maui.csproj",
+				"--configuration",
+				"Debug",
+				"--framework",
+				"net9.0-android"
+			],
+			"group": "build",
+			"presentation": {
+				"reveal": "always"
+			},
+			"problemMatcher": "$msCompile",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			}
+		},
+		{
+			"type": "shell",
+			"label": "run-android",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"androkat.maui/androkat.maui.csproj",
 				"--configuration",
 				"Debug",
 				"-t:Run",
 				"-f",
-				"net9.0-android",
-				"/p:AndroidDevice=True"
-			],
-			"problemMatcher": "$msCompile"
-		},
-		{
-			"label": "publish-android-aab",
-			"type": "shell",
-			"command": "dotnet",
-			"args": [
-				"publish",
-				"-f",
-				"net9.0-android",
-				"-c",
-				"Release",
-				"-p:AndroidPackageFormat=aab"
+				"net9.0-android"
 			],
 			"group": "build",
 			"presentation": {
-				"echo": true,
-				"reveal": "always",
-				"focus": false,
-				"panel": "shared"
+				"reveal": "always"
 			},
-			"problemMatcher": "$msCompile"
+			"problemMatcher": "$msCompile",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			}
+		},
+		{
+			"type": "shell",
+			"label": "clean",
+			"command": "dotnet",
+			"args": [
+				"clean"
+			],
+			"group": "build",
+			"presentation": {
+				"reveal": "silent"
+			},
+			"problemMatcher": "$msCompile",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			}
 		}
 	]
 }

@@ -14,59 +14,57 @@
             Background="{AppThemeBinding Light={StaticResource Grey1},
                                          Dark={StaticResource Grey9}}"
             Orientation="Vertical">
-            <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
-                <Label
-                    Grid.Row="7"
-                    Grid.ColumnSpan="2"
-                    Margin="0,11,0,0"
-                    SemanticProperties.Description="Version"
-                    Style="{StaticResource BodySLabelStyle}"
-                    VerticalOptions="Center">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Style="{StaticResource BodySLabelStyle}" Text="Version" />
-                            <Span Style="{StaticResource BodySLabelStyle}" Text=" - " />
-                            <Span Style="{StaticResource BodySLabelStyle}" Text="{Binding AppVersion}" />
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-            </Frame>
-            <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
+            <Frame Margin="0,0,0,10"
+                   BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
                 <HorizontalStackLayout>
                     <Label
                         Margin="0,0,20,0"
-                        FontSize="Large"
+                        FontSize="Small"
                         HorizontalOptions="Start"
                         Text="Éjszakai téma"
-                        VerticalOptions="Center" />
-                    <Switch IsToggled="{Binding IsDarkModeEnabled}" Toggled="Switch_Toggled" />
+                        VerticalOptions="Center"/>
+                    <Switch IsToggled="{Binding IsDarkModeEnabled}"
+                            Toggled="Switch_Toggled"/>
 
                 </HorizontalStackLayout>
             </Frame>
-            <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
+            <Frame Margin="0,0,0,10"
+                   BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
+                <HorizontalStackLayout>
+                    <Label
+                        Margin="0,0,20,0"
+                        FontSize="Small"
+                        HorizontalOptions="Start"
+                        Text="Képernyő bekapcsolva tartása"
+                        VerticalOptions="Center"/>
+                    <Switch IsToggled="{Binding IsKeepScreenOnEnabled}"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame Margin="0,0,0,10"
+                   BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
                 <HorizontalStackLayout>
                     <Label
                         Margin="0,0,20,0"
                         FontSize="Small"
                         HorizontalOptions="Start"
                         Text="Max. tárolt offline elem"
-                        VerticalOptions="Center" />
+                        VerticalOptions="Center"/>
                     <Entry
                         x:Name="maxOffline"
                         Keyboard="Numeric"
                         MaxLength="4"
                         Placeholder="max 1000"
                         Text="{Binding MaxOffline}"
-                        TextChanged="MaxOffline_TextChanged" />
+                        TextChanged="MaxOffline_TextChanged"/>
                 </HorizontalStackLayout>
             </Frame>
-            <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
-                <Button Clicked="Button_Clicked" Text="Frissítés" />
+            <Frame Margin="0,0,0,10"
+                   BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
+                <Button Clicked="Button_Clicked"
+                        Text="Frissítés"/>
             </Frame>
-            <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
-                <Button Clicked="Button_Clicked_1" Text="Db" />
-            </Frame>
-            <Frame Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
+            <Frame Margin="0,0,0,10"
+                   BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
                 <Grid
                     Padding="{OnIdiom Phone=10}"
                     ColumnDefinitions="auto, *"
@@ -81,21 +79,21 @@
                         Style="{OnIdiom Default={StaticResource BodyXLLabelStyle},
                                         Phone={StaticResource BodyLLabelStyle}}"
                         Text="Offline adattörlés"
-                        VerticalOptions="Center" />
+                        VerticalOptions="Center"/>
                     <Button
                         x:Name="DbDeleteButton"
                         Grid.Row="0"
                         Grid.Column="1"
                         Clicked="Button_Clicked_2"
                         HorizontalOptions="Fill"
-                        Text="Törlés" />
+                        Text="Törlés"/>
                     <Label
                         Grid.Row="1"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
                         FontSize="Small"
                         LineBreakMode="WordWrap"
-                        Text="Offline adatbázisból minden korábban tárolt anyag törlése. A legközelebbi szinkronizáláskor az offline adatbázis fel lesz töltve a szerveren található legfrissebb anyagokkal. A Kedvencekben tárolt anyagok maradnak." />
+                        Text="Offline adatbázisból minden korábban tárolt anyag törlése. A legközelebbi szinkronizáláskor az offline adatbázis fel lesz töltve a szerveren található legfrissebb anyagokkal. A Kedvencekben tárolt anyagok maradnak."/>
                 </Grid>
             </Frame>
         </StackLayout>

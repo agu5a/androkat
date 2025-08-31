@@ -5,11 +5,31 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Android: androkat.maui",
-            "type": "dotnet",
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
+        },
+        {
+            "name": "Launch .NET MAUI (Android)",
+            "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
-            "projectPath": "${workspaceFolder}/androkat.maui/androkat.maui.csproj"
+            "preLaunchTask": "build-android",
+            "program": "${workspaceFolder}/androkat.maui/bin/Debug/net9.0-android/androkat.maui.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Run .NET MAUI (Android)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "run-android",
+            "program": "${workspaceFolder}/androkat.maui/bin/Debug/net9.0-android/androkat.maui.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
         }
     ]
 }

@@ -25,6 +25,12 @@ public static class Settings
         set => Preferences.Set(nameof(ShowVisited), value);
     }
 
+    public static bool KeepScreenOn
+    {
+        get => Preferences.Get(nameof(KeepScreenOn), false);
+        set => Preferences.Set(nameof(KeepScreenOn), value);
+    }
+
     public static bool IsSourceEnabled(string sourceKey)
     {
         return Preferences.Get($"source_{sourceKey}", true);

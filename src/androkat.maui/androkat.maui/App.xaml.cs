@@ -1,5 +1,7 @@
 ﻿using androkat.hu.Helpers;
 using androkat.hu.Pages;
+using androkat.maui.library.Abstraction;
+using androkat.maui.library.Helpers;
 
 namespace androkat.hu;
 
@@ -22,11 +24,34 @@ public partial class App : Application
         Routing.RegisterRoute(nameof(GyonasPrayPage), typeof(GyonasPrayPage));
         Routing.RegisterRoute(nameof(GyonasFinishPage), typeof(GyonasFinishPage));
         Routing.RegisterRoute(nameof(GyonasMirrorPage), typeof(GyonasMirrorPage));
+
+        // Apply keep screen on setting
+        ApplyKeepScreenOnSetting();
+    }
+
+    private void ApplyKeepScreenOnSetting()
+    {
+        try
+        {
+            if (Settings.KeepScreenOn)
+            {
+                var deviceDisplayService = Handler?.MauiContext?.Services?.GetService<IDeviceDisplayService>();
+                deviceDisplayService?.KeepScreenOn(true);
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error applying keep screen on setting: {ex.Message}");
+        }
     }
 
     protected override Window CreateWindow(IActivationState? activationState)
     {
         window = new Window(new MobileShell());
+
+        // Apply keep screen on setting when window is created
+        window.Created += (s, e) => ApplyKeepScreenOnSetting();
+
         return window;
     }
 

@@ -1,4 +1,6 @@
-﻿namespace androkat.hu.Pages;
+﻿using androkat.maui.library.Abstraction;
+
+namespace androkat.hu.Pages;
 
 public static class PagesExtensions
 {
@@ -26,6 +28,8 @@ public static class PagesExtensions
         builder.Services.AddTransient<GyonasPrayPage>();
         builder.Services.AddTransient<GyonasFinishPage>();
         builder.Services.AddTransient<GyonasMirrorPage>();
+
+        builder.Services.AddSingleton<IDeviceDisplayService, Platforms.Android.Services.AndroidDeviceDisplayService>();
 
         return builder;
     }
