@@ -1,5 +1,7 @@
-﻿<!doctype html>
+﻿@using System.Reflection
+<!doctype html>
 <html lang="hu">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,12 +14,13 @@
     <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
     @await RenderSectionAsync("meta_extra", false)
 </head>
+
 <body>
     <div class="container">
         <nav id="navbarAdmin" class="navbar navbar-expand-xl navbar-light bg-white">
             <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarmain" aria-controls="navbarmain"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarmain"
+                    aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarmain">
@@ -79,6 +82,8 @@
         @RenderBody()
     </main>
     <footer class="container">
+        <p>@(".NET verzió: " + Environment.Version.ToString()) :: @("verzió: " +
+                        Assembly.GetEntryAssembly()!.GetName().Version)</p>
     </footer>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js?v=1"></script>
     <script src="~/js/dynamic-menu.js?v=3"></script>
@@ -87,4 +92,5 @@
     </script>
     @await RenderSectionAsync("scripts", false)
 </body>
+
 </html>

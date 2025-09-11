@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "name": "androkat Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/androkat.web/androkat.web.csproj"
+        },
+        {
+            "name": "androkat PROD",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build Release",
+            "program": "${workspaceFolder}/androkat.web/bin/Release/net9.0/androkat.web.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/androkat.web",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Production"
+            }
+        }
+    ]
+}
