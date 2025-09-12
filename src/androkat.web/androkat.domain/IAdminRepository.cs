@@ -10,6 +10,8 @@ namespace androkat.domain;
 public interface IAdminRepository
 {
     AdminResult GetAdminResult();
+    string GetNewsInfo();
+    string GetBlogInfo();
     AdminBResult GetAdminBResult();
     (bool isSuccess, string? message) InsertIma(ImaModel imaModel);
     IEnumerable<AllTodayResult> LoadAllTodayResult();

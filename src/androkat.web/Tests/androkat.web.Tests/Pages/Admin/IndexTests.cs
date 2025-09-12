@@ -104,7 +104,7 @@ public class IndexTests : BaseTest
 		};
 
 		model.OnGet();
-		model.AdminResult.Header.Should().Be(" | blog: <span style='color:red;'>NOT OK</span> #: 0 | video: #: 1 | ima: #: 1 | ");
+		model.AdminResult.Header.Should().Be("video összes: 1 | ima összes: 1");
 
 		const string expected = "<strong>Ma hiányzó anyagok</strong>" +
 								"<br> 1 - <a href='https://androkat.hu' target='_blank'>Mello</a>" +

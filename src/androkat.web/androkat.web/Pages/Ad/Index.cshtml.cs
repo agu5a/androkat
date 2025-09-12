@@ -39,6 +39,8 @@ public class IndexModel : PageModel
     public AdminResult AdminResult { get; set; }
     public AdminAResult AdminAResult { get; set; }
     public AdminBResult AdminBResult { get; set; }
+    public string NewsInfo { get; set; }
+    public string BlogInfo { get; set; }
 
     public bool IsAdvent { get; set; }
     public bool IsNagyBojt { get; set; }
@@ -86,6 +88,8 @@ public class IndexModel : PageModel
         AdminResult = _adminRepository.GetAdminResult();
         AdminAResult = _adminRepository.GetAdminAResult();
         AdminBResult = _adminRepository.GetAdminBResult();
+        NewsInfo = _adminRepository.GetNewsInfo();
+        BlogInfo = _adminRepository.GetBlogInfo();
     }
 
 
@@ -118,6 +122,8 @@ public class IndexModel : PageModel
             AdminResult = _adminRepository.GetAdminResult();
             AdminAResult = _adminRepository.GetAdminAResult();
             AdminBResult = _adminRepository.GetAdminBResult();
+            NewsInfo = _adminRepository.GetNewsInfo();
+            BlogInfo = _adminRepository.GetBlogInfo();
 
             return Page();
         }

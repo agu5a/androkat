@@ -1223,6 +1223,30 @@ public class AdminRepository : BaseRepository, IAdminRepository
 
 		try
 		{
+			var res = 0;
+
+			res = Ctx.VideoContent.Count();
+			adminResult.Header += "video összes: " + res + " | ";
+
+			res = Ctx.ImaContent.Count();
+			adminResult.Header += "ima összes: " + res;
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Exception: ");
+		}
+
+		return adminResult;
+	}
+
+	public string GetNewsInfo()
+	{
+		_logger.LogDebug("GetNewsInfo was called");
+
+		var sb = new StringBuilder();
+
+		try
+		{
 			var today = Clock.Now.DateTime.ToString("yyyy-MM-dd");
 
 			var list = new List<int>
@@ -1233,30 +1257,62 @@ public class AdminRepository : BaseRepository, IAdminRepository
 			};
 
 			var res = Ctx.Content.Count(w => list.Contains(w.Tipus) && w.Fulldatum.Contains(today));
-			adminResult.Header += res == 0 ? "news: <span style='color:red;'>NOT OK</span> #: " + res + " | " : "";
+			sb.Append(res == 0 ? "<span style='color:red;'>NOT OK</span> #: " + res + "<br>" : "news: OK #: " + res + "<br>");
 
-			list =
-			[
-				(int)Forras.bzarandokma,
-				(int)Forras.b777,
-				(int)Forras.jezsuitablog
-			];
-
-			res = Ctx.Content.Count(w => list.Contains(w.Tipus) && w.Fulldatum.Contains(today));
-			adminResult.Header += res == 0 ? " | blog: <span style='color:red;'>NOT OK</span> #: " + res + " | " : "";
-
-			res = Ctx.VideoContent.Count();
-			adminResult.Header += "video: #: " + res + " | ";
-
-			res = Ctx.ImaContent.Count();
-			adminResult.Header += "ima: #: " + res + " | ";
+			foreach (var tipus in list)
+			{
+				var latest = Ctx.Content.Where(w => w.Tipus == tipus).OrderByDescending(w => w.Fulldatum).FirstOrDefault()?.Fulldatum;
+				if (latest != null)
+				{
+					var name = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus).TipusNev;
+					sb.Append(name + " (" + latest + ")<br>");
+				}
+			}
 		}
 		catch (Exception ex)
 		{
-			_logger.LogError(ex, "Exception: ");
+			_logger.LogError(ex, "Exception in GetNewsInfo: ");
 		}
 
-		return adminResult;
+		return sb.ToString();
+	}
+
+	public string GetBlogInfo()
+	{
+		_logger.LogDebug("GetBlogInfo was called");
+
+		var sb = new StringBuilder();
+
+		try
+		{
+			var today = Clock.Now.DateTime.ToString("yyyy-MM-dd");
+
+			var list = new List<int>
+			{
+				(int)Forras.bzarandokma,
+				(int)Forras.b777,
+				(int)Forras.jezsuitablog
+			};
+
+			var res = Ctx.Content.Count(w => list.Contains(w.Tipus) && w.Fulldatum.Contains(today));
+			sb.Append(res == 0 ? "<span style='color:red;'>NOT OK</span> #: " + res + "<br>" : "blog: OK #: " + res + "<br>");
+
+			foreach (var tipus in list)
+			{
+				var latest = Ctx.Content.Where(w => w.Tipus == tipus).OrderByDescending(w => w.Fulldatum).FirstOrDefault()?.Fulldatum;
+				if (latest != null)
+				{
+					var name = _androkatConfiguration.Value.GetContentMetaDataModelByTipus(tipus).TipusNev;
+					sb.Append(name + " (" + latest + ")<br>");
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Exception in GetBlogInfo: ");
+		}
+
+		return sb.ToString();
 	}
 
 	public List<SystemInfoData> GetIsAdventAndNagybojt()

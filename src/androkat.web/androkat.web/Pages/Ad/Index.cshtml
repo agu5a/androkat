@@ -7,14 +7,14 @@
     <script type="text/javascript">
         $(document).ready(function () {
             @{
-                if (Model.ShowToast)
-                {
-                    <text>
-                        $("#myToast").toast("show");
-                    </text>
+                    if (Model.ShowToast)
+                    {
+                        <text>
+                            $("#myToast").toast("show");
+                        </text>
                 }
-            }
-        });
+                }
+                    });
     </script>
 }
 @section scripts {
@@ -29,18 +29,26 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6" data="left">
             <div class="border" style="word-break: break-all;">
-                <div style="margin-bottom: 5px;">  @Html.Raw(Model.AdminAResult.MaiAnyagok)    </div>
+                <div style="margin-bottom: 5px;"> @Html.Raw(Model.AdminAResult.MaiAnyagok) </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" data="right">
             <div class="border">
+                <strong>News Info</strong><br>
+                @Html.Raw(Model.NewsInfo)
+            </div>
+            <div class="border">
+                <strong>Blog Info</strong><br>
+                @Html.Raw(Model.BlogInfo)
+            </div>
+            <div class="border" data="radio">
                 <strong>Rádió műsorok</strong><br>
                 <div style="margin-bottom: 5px;">
                     @Html.Raw(Model.AdminBResult.Radio)
                 </div>
-                    <div style="margin-bottom: 5px; word-break: break-all;">
+                <div style="margin-bottom: 5px; word-break: break-all;">
                     @Html.Raw(Model.AdminBResult.RadioList)
                 </div>
             </div>
@@ -50,7 +58,7 @@
                     <button type="submit">Régiek törlése</button>
                 </form><br>
                 <span>@Html.Raw(Model.AdminBResult.CountOfTipusok)</span>
-            </div>           
+            </div>
             <div class="border" style="word-break: break-all;">
                 <strong>system tábla</strong> (cache-ből)<br>
                 <span>@Html.Raw(Model.AdminBResult.SysTable)</span>
@@ -58,7 +66,8 @@
         </div>
     </div>
 </div>
-<div id="myToast" class="toast position-fixed top-0 start-0 m-5 p-3" role="alert" aria-live="assertive" aria-atomic="true">
+<div id="myToast" class="toast position-fixed top-0 start-0 m-5 p-3" role="alert" aria-live="assertive"
+    aria-atomic="true">
     <div class="d-flex">
         <div class="toast-body">
             @Html.Raw(Model.ToastMessage)

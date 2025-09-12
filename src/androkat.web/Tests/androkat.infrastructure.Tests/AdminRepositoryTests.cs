@@ -169,4 +169,172 @@ public class AdminRepositoryTests : BaseTest
             }
         };
     }
+
+    [Fact]
+    public void GetNewsInfo_WithData_Happy()
+    {
+        var clock = new Mock<IClock>();
+        clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"));
+
+        var loggerRepo = new Mock<ILogger<AdminRepository>>();
+
+        var idezetData = Options.Create(new AndrokatConfiguration
+        {
+            ContentMetaDataList = new List<ContentMetaDataModel>
+            {
+                GetContentMetaDataModel(Forras.keresztenyelet, tipusNev: "Keresztény élet"),
+                GetContentMetaDataModel(Forras.kurir, tipusNev: "Kurír"),
+                GetContentMetaDataModel(Forras.bonumtv, tipusNev: "Bonum TV")
+            }
+        });
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var content1 = new Content
+        {
+            Cim = "kurir cím",
+            Tipus = (int)Forras.kurir,
+            Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03 04:05:06",
+            Nid = Guid.NewGuid()
+        };
+
+        var content2 = new Content
+        {
+            Cim = "keresztény élet cím",
+            Tipus = (int)Forras.keresztenyelet,
+            Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03 04:05:06",
+            Nid = Guid.NewGuid()
+        };
+
+        var content3 = new Content
+        {
+            Cim = "bonumtv cím",
+            Tipus = (int)Forras.bonumtv,
+            Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03 04:05:06",
+            Nid = Guid.NewGuid()
+        };
+
+        context.Content.Add(content1);
+        context.Content.Add(content2);
+        context.Content.Add(content3);
+        context.SaveChanges();
+
+        var repo = new AdminRepository(context, loggerRepo.Object, clock.Object, idezetData, null);
+        var result = repo.GetNewsInfo();
+
+        result.Should().Contain("news: OK #: 3<br>");
+        result.Should().Contain("Kurír (" + DateTime.Now.ToString("yyyy") + "-02-03 04:05:06)<br>");
+        result.Should().Contain("Keresztény élet (" + DateTime.Now.ToString("yyyy") + "-02-03 04:05:06)<br>");
+        result.Should().Contain("Bonum TV (" + DateTime.Now.ToString("yyyy") + "-02-03 04:05:06)<br>");
+    }
+
+    [Fact]
+    public void GetNewsInfo_NoData_Happy()
+    {
+        var clock = new Mock<IClock>();
+        clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"));
+
+        var loggerRepo = new Mock<ILogger<AdminRepository>>();
+
+        var idezetData = Options.Create(new AndrokatConfiguration
+        {
+            ContentMetaDataList = new List<ContentMetaDataModel>
+            {
+                GetContentMetaDataModel(Forras.keresztenyelet, tipusNev: "Keresztény élet"),
+                GetContentMetaDataModel(Forras.kurir, tipusNev: "Kurír"),
+                GetContentMetaDataModel(Forras.bonumtv, tipusNev: "Bonum TV")
+            }
+        });
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var repo = new AdminRepository(context, loggerRepo.Object, clock.Object, idezetData, null);
+        var result = repo.GetNewsInfo();
+
+        result.Should().Be("<span style='color:red;'>NOT OK</span> #: 0<br>");
+    }
+
+    [Fact]
+    public void GetBlogInfo_WithData_Happy()
+    {
+        var clock = new Mock<IClock>();
+        clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"));
+
+        var loggerRepo = new Mock<ILogger<AdminRepository>>();
+
+        var idezetData = Options.Create(new AndrokatConfiguration
+        {
+            ContentMetaDataList = new List<ContentMetaDataModel>
+            {
+                GetContentMetaDataModel(Forras.bzarandokma, tipusNev: "Buzgó zarándokma"),
+                GetContentMetaDataModel(Forras.b777, tipusNev: "777"),
+                GetContentMetaDataModel(Forras.jezsuitablog, tipusNev: "Jezsuita blog")
+            }
+        });
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var content1 = new Content
+        {
+            Cim = "bzarandokma cím",
+            Tipus = (int)Forras.bzarandokma,
+            Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03 04:05:06",
+            Nid = Guid.NewGuid()
+        };
+
+        var content2 = new Content
+        {
+            Cim = "b777 cím",
+            Tipus = (int)Forras.b777,
+            Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03 04:05:06",
+            Nid = Guid.NewGuid()
+        };
+
+        var content3 = new Content
+        {
+            Cim = "jezsuitablog cím",
+            Tipus = (int)Forras.jezsuitablog,
+            Fulldatum = DateTime.Now.ToString("yyyy") + "-02-03 04:05:06",
+            Nid = Guid.NewGuid()
+        };
+
+        context.Content.Add(content1);
+        context.Content.Add(content2);
+        context.Content.Add(content3);
+        context.SaveChanges();
+
+        var repo = new AdminRepository(context, loggerRepo.Object, clock.Object, idezetData, null);
+        var result = repo.GetBlogInfo();
+
+        result.Should().Contain("blog: OK #: 3<br>");
+        result.Should().Contain("Buzgó zarándokma (" + DateTime.Now.ToString("yyyy") + "-02-03 04:05:06)<br>");
+        result.Should().Contain("777 (" + DateTime.Now.ToString("yyyy") + "-02-03 04:05:06)<br>");
+        result.Should().Contain("Jezsuita blog (" + DateTime.Now.ToString("yyyy") + "-02-03 04:05:06)<br>");
+    }
+
+    [Fact]
+    public void GetBlogInfo_NoData_Happy()
+    {
+        var clock = new Mock<IClock>();
+        clock.Setup(c => c.Now).Returns(DateTimeOffset.Parse(DateTime.Now.ToString("yyyy") + "-02-03T04:05:06"));
+
+        var loggerRepo = new Mock<ILogger<AdminRepository>>();
+
+        var idezetData = Options.Create(new AndrokatConfiguration
+        {
+            ContentMetaDataList = new List<ContentMetaDataModel>
+            {
+                GetContentMetaDataModel(Forras.bzarandokma, tipusNev: "Buzgó zarándokma"),
+                GetContentMetaDataModel(Forras.b777, tipusNev: "777"),
+                GetContentMetaDataModel(Forras.jezsuitablog, tipusNev: "Jezsuita blog")
+            }
+        });
+
+        using var context = new AndrokatContext(GetDbContextOptions());
+
+        var repo = new AdminRepository(context, loggerRepo.Object, clock.Object, idezetData, null);
+        var result = repo.GetBlogInfo();
+
+        result.Should().Be("<span style='color:red;'>NOT OK</span> #: 0<br>");
+    }
 }
