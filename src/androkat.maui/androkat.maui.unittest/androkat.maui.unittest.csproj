@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0;</TargetFrameworks>
+		<TargetFrameworks>net10.0;</TargetFrameworks>
 		<UseMaui>true</UseMaui>
 		<IsPackable>false</IsPackable>
 		<WarningsNotAsErrors>XUA1001,AD0001</WarningsNotAsErrors>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.9" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
 		<PackageReference Include="Moq" Version="4.20.72" />
 		<PackageReference Include="coverlet.collector" Version="6.0.4">
@@ -16,11 +16,11 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="xunit" Version="2.9.3" />
-		<PackageReference Include="xunit.runner.visualstudio" Version="3.1.1">
+		<PackageReference Include="xunit.runner.visualstudio" Version="3.1.4">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.81" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.110" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -28,8 +28,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.81" />
-		<PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.81" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.110" />
+		<PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.110" />
 	</ItemGroup>
 
 </Project>

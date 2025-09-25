@@ -42,7 +42,7 @@ public static class FilterOptionsHelper
             new() { Key = ((int)Activities.horvath).ToString(), DisplayName = "Horváth István Sándor atya", Activity = Activities.horvath },
             new() { Key = ((int)Activities.fokolare).ToString(), DisplayName = "fokolare.hu", Activity = Activities.fokolare },
             new() { Key = ((int)Activities.maievangelium).ToString(), DisplayName = "Napi Ige és olvasmányok", Activity = Activities.maievangelium },
-            new() { Key = ((int)Activities.papaitwitter).ToString(), DisplayName = "Ferenc pápa twitter üzenete", Activity = Activities.papaitwitter },
+            new() { Key = ((int)Activities.papaitwitter).ToString(), DisplayName = "Pápa twitter üzenete", Activity = Activities.papaitwitter },
             new() { Key = ((int)Activities.advent).ToString(), DisplayName = "Adventi elmélkedések", Activity = Activities.advent },
             new() { Key = ((int)Activities.nagybojt).ToString(), DisplayName = "Nagyböjti elmélkedések", Activity = Activities.nagybojt },
             new() { Key = ((int)Activities.bojte).ToString(), DisplayName = "Böjte Csaba gondolatai", Activity = Activities.bojte },
@@ -89,7 +89,7 @@ public static class FilterOptionsHelper
         return new List<FilterOption>
         {
             new() { Key = ((int)Activities.prayasyougo).ToString(), DisplayName = "Pray-as-you-go", Activity = Activities.prayasyougo },
-            new() { Key = ((int)Activities.audiopalferi).ToString(), DisplayName = "Pálfy Pál Ferenc", Activity = Activities.audiopalferi },
+            new() { Key = ((int)Activities.audiopalferi).ToString(), DisplayName = "Pál Feri atya", Activity = Activities.audiopalferi },
             new() { Key = ((int)Activities.audiobarsi).ToString(), DisplayName = "Barsi Balázs", Activity = Activities.audiobarsi },
             new() { Key = ((int)Activities.audiohorvath).ToString(), DisplayName = "Horváth István Sándor atya", Activity = Activities.audiohorvath },
             new() { Key = ((int)Activities.audiotaize).ToString(), DisplayName = "Taizé", Activity = Activities.audiotaize },
