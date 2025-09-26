@@ -7,7 +7,7 @@ public interface IRepository
 {
     void Init(bool tableCheck = false);
 
-    Task<int> InsertContent(ContentEntity entity);
+    Task<(int, string?)> InsertContent(ContentEntity entity);
     Task<int> DeleteContentByNid(Guid nid);
 
     Task<ContentEntity?> GetContentsByTypeName(string typeName);

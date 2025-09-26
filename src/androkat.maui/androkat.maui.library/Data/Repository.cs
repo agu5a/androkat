@@ -3,6 +3,7 @@ using System.Diagnostics;
 using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
 using SQLite;
+using SQLitePCL;
 
 namespace androkat.maui.library.Data;
 
@@ -289,7 +290,7 @@ public class Repository : IRepository
         return -1;
     }
 
-    public async Task<int> InsertContent(ContentEntity entity)
+    public async Task<(int, string?)> InsertContent(ContentEntity entity)
     {
         try
         {
@@ -297,14 +298,15 @@ public class Repository : IRepository
             var exists = await _conn!.Table<ContentEntity>()
                 .Where(w => w.Nid == entity.Nid && w.Tipus == entity.Tipus).FirstOrDefaultAsync();
             if (exists is null)
-                return await _conn.InsertAsync(entity);
+                return (await _conn.InsertAsync(entity), null);
+
+            return (-1, "Már létezik ilyen tartalom a helyi adatbázisban.");
         }
         catch (Exception ex)
         {
             Debug.WriteLine($"********************************** InsertContent EXCEPTION! {ex}");
+            return (-1, ex.Message);
         }
-
-        return -1;
     }
 
     public async Task<int> InsertImadsag(ImadsagEntity entity)

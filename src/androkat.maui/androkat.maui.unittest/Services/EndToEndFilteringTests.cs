@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -16,22 +17,13 @@ namespace androkat.maui.unittest.Services;
 /// End-to-end filtering scenario tests that simulate real user interactions
 /// These tests verify that the complete filtering pipeline works as expected
 /// </summary>
-public class EndToEndFilteringTests : IDisposable
+public class EndToEndFilteringTests
 {
-    private readonly string _testDbPath;
-    private readonly Repository _repository;
-
-    public EndToEndFilteringTests()
-    {
-        _testDbPath = Path.Combine(Path.GetTempPath(), $"test_androkat_e2e_{Guid.NewGuid():N}.db");
-        _repository = new Repository(_testDbPath);
-    }
-
     [Fact]
     public async Task EndToEnd_NapiOlvaso_ShowOnlyBarsiContent_ShouldFilterCorrectly()
     {
         // Arrange - Seed the database with realistic data
-        await SeedNapiOlvasoData();
+        var (path, repository) = await SeedNapiOlvasoData();
 
         // Get filter options for Napi Olvasmány page (page ID "0")
         var filterOptions = FilterOptionsHelper.GetFilterOptionsForPageId("0");
@@ -43,7 +35,7 @@ public class EndToEndFilteringTests : IDisposable
 
         // Act - Apply Barsi filter (user selects only Barsi checkbox)
         var enabledSources = new List<string> { barsiOption.Key };
-        var result = await _repository.GetContentsByGroupName("group_napiolvaso", returnVisited: true, enabledSources);
+        var result = await repository.GetContentsByGroupName("group_napiolvaso", returnVisited: true, enabledSources);
 
         // Assert - Should only return Barsi content
         Assert.Equal(3, result.Count); // 3 Barsi items
@@ -53,28 +45,32 @@ public class EndToEndFilteringTests : IDisposable
             Assert.Equal("barsi", item.TypeName);
             Assert.Equal("group_napiolvaso", item.GroupName);
         });
+
+        DeleteTestDatabase(path);
     }
 
     [Fact]
     public async Task EndToEnd_NapiOlvaso_HideReadItems_ShouldFilterCorrectly()
     {
         // Arrange
-        await SeedNapiOlvasoData();
+        var (path, repository) = await SeedNapiOlvasoData();
 
         // Act - Hide read items (user unchecks "Show read items")
-        var result = await _repository.GetContentsByGroupName("group_napiolvaso", returnVisited: false);
+        var result = await repository.GetContentsByGroupName("group_napiolvaso", returnVisited: false);
 
         // Assert - Should only return unread items
         var expectedUnreadCount = 4; // Based on seeded data
         Assert.Equal(expectedUnreadCount, result.Count);
         Assert.All(result, item => Assert.False(item.IsRead));
+
+        DeleteTestDatabase(path);
     }
 
     [Fact]
     public async Task EndToEnd_NapiOlvaso_BarsiAndHorvathUnreadOnly_ShouldApplyBothFilters()
     {
         // Arrange
-        await SeedNapiOlvasoData();
+        var (path, repository) = await SeedNapiOlvasoData();
 
         // Get filter options
         var filterOptions = FilterOptionsHelper.GetFilterOptionsForPageId("0");
@@ -83,7 +79,7 @@ public class EndToEndFilteringTests : IDisposable
 
         // Act - User selects Barsi and Horvath, and hides read items
         var enabledSources = new List<string> { barsiKey, horvathKey };
-        var result = await _repository.GetContentsByGroupName("group_napiolvaso", returnVisited: false, enabledSources);
+        var result = await repository.GetContentsByGroupName("group_napiolvaso", returnVisited: false, enabledSources);
 
         // Assert - Should return only unread Barsi and Horvath items
         Assert.Equal(2, result.Count); // 1 unread Barsi + 1 unread Horvath
@@ -92,13 +88,15 @@ public class EndToEndFilteringTests : IDisposable
             Assert.Contains(item.Tipus, enabledSources);
             Assert.False(item.IsRead);
         });
+
+        DeleteTestDatabase(path);
     }
 
     [Fact]
     public async Task EndToEnd_Szentek_ShowOnlyPioContent_ShouldFilterCorrectly()
     {
         // Arrange
-        await SeedSzentekData();
+        var (path, repository) = await SeedSzentekData();
 
         // Get filter options for Szentek page (page ID "3")
         var filterOptions = FilterOptionsHelper.GetFilterOptionsForPageId("3");
@@ -110,7 +108,7 @@ public class EndToEndFilteringTests : IDisposable
 
         // Act - Apply Pio filter
         var enabledSources = new List<string> { pioOption.Key };
-        var result = await _repository.GetContentsByGroupName("group_szentek", returnVisited: true, enabledSources);
+        var result = await repository.GetContentsByGroupName("group_szentek", returnVisited: true, enabledSources);
 
         // Assert - Should only return Pio content
         Assert.Equal(2, result.Count); // 2 Pio items
@@ -120,37 +118,43 @@ public class EndToEndFilteringTests : IDisposable
             Assert.Equal("pio", item.TypeName);
             Assert.Equal("group_szentek", item.GroupName);
         });
+
+        DeleteTestDatabase(path);
     }
 
     [Fact]
     public async Task EndToEnd_NoFiltersSelected_ShouldReturnEmptyList()
     {
         // Arrange
-        await SeedNapiOlvasoData();
+        var (path, repository) = await SeedNapiOlvasoData();
 
         // Act - User deselects all source filters (empty list)
         var enabledSources = new List<string>(); // No sources enabled
-        var result = await _repository.GetContentsByGroupName("group_napiolvaso", returnVisited: true, enabledSources);
+        var result = await repository.GetContentsByGroupName("group_napiolvaso", returnVisited: true, enabledSources);
 
         // Assert - Should return empty list
         Assert.Empty(result);
+
+        DeleteTestDatabase(path);
     }
 
     [Fact]
     public async Task EndToEnd_AllFiltersEnabled_ShouldReturnAllItems()
     {
         // Arrange
-        await SeedNapiOlvasoData();
+        var (path, repository) = await SeedNapiOlvasoData();
 
         // Get all available filter options
         var filterOptions = FilterOptionsHelper.GetFilterOptionsForPageId("0");
         var allSourceKeys = filterOptions.Select(o => o.Key).ToList();
 
         // Act - User selects all source filters
-        var result = await _repository.GetContentsByGroupName("group_napiolvaso", returnVisited: true, allSourceKeys);
+        var result = await repository.GetContentsByGroupName("group_napiolvaso", returnVisited: true, allSourceKeys);
 
         // Assert - Should return all items  
         Assert.Equal(7, result.Count); // All seeded items that match filter options
+
+        DeleteTestDatabase(path);
     }
 
     [Theory]
@@ -181,17 +185,14 @@ public class EndToEndFilteringTests : IDisposable
         }
     }
 
-    private async Task SeedNapiOlvasoData()
+    private async Task<(string testDbPath, Repository repository)> SeedNapiOlvasoData()
     {
-        // Clear existing data to ensure test isolation
-        await _repository.DeleteAllContent();
-
         var entities = new List<ContentEntity>
         {
             // Barsi content (3 items)
             new()
             {
-                Nid = Guid.NewGuid(),
+                Nid = Guid.Parse("a1111111-1111-1111-1111-111111111114"),
                 Cim = "Barsi 1 - Read",
                 Tipus = "13",
                 TypeName = "barsi",
@@ -202,7 +203,7 @@ public class EndToEndFilteringTests : IDisposable
             },
             new()
             {
-                Nid = Guid.NewGuid(),
+                Nid = Guid.Parse("a1111111-1111-1111-1111-111111111115"),
                 Cim = "Barsi 2 - Unread",
                 Tipus = "13",
                 TypeName = "barsi",
@@ -213,7 +214,7 @@ public class EndToEndFilteringTests : IDisposable
             },
             new()
             {
-                Nid = Guid.NewGuid(),
+                Nid = Guid.Parse("a1111111-1111-1111-1111-111111111116"),
                 Cim = "Barsi 3 - Read",
                 Tipus = "13",
                 TypeName = "barsi",
@@ -226,7 +227,7 @@ public class EndToEndFilteringTests : IDisposable
             // Horvath content (2 items)
             new()
             {
-                Nid = Guid.NewGuid(),
+                Nid = Guid.Parse("a1111111-1111-1111-1111-111111111117"),
                 Cim = "Horvath 1 - Unread",
                 Tipus = "14",
                 TypeName = "horvath",
@@ -237,7 +238,7 @@ public class EndToEndFilteringTests : IDisposable
             },
             new()
             {
-                Nid = Guid.NewGuid(),
+                Nid = Guid.Parse("a1111111-1111-1111-1111-111111111118"),
                 Cim = "Horvath 2 - Read",
                 Tipus = "14",
                 TypeName = "horvath",
@@ -250,7 +251,7 @@ public class EndToEndFilteringTests : IDisposable
             // Fokolare content (2 items)
             new()
             {
-                Nid = Guid.NewGuid(),
+                Nid = Guid.Parse("a1111111-1111-1111-1111-111111111119"),
                 Cim = "Fokolare 1 - Unread",
                 Tipus = "7",
                 TypeName = "fokolare",
@@ -261,7 +262,7 @@ public class EndToEndFilteringTests : IDisposable
             },
             new()
             {
-                Nid = Guid.NewGuid(),
+                Nid = Guid.Parse("a1111111-1111-1111-1111-111111111121"),
                 Cim = "Fokolare 2 - Unread",
                 Tipus = "7",
                 TypeName = "fokolare",
@@ -274,7 +275,7 @@ public class EndToEndFilteringTests : IDisposable
             // Zsinagoga content (1 item)
             new()
             {
-                Nid = Guid.NewGuid(),
+                Nid = Guid.Parse("a1111111-1111-1111-1111-111111111122"),
                 Cim = "Zsinagoga 1 - Read",
                 Tipus = "34",
                 TypeName = "zsinagoga",
@@ -285,23 +286,39 @@ public class EndToEndFilteringTests : IDisposable
             }
         };
 
+        string userTmpFolder = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+            "tmp"
+        );
+
+        // Make sure the folder exists
+        Directory.CreateDirectory(userTmpFolder);
+
+        var testDbPath = Path.Combine(userTmpFolder, $"test_androkat_{Guid.NewGuid()}.db");
+        var repository = new Repository(testDbPath);
+
+        Thread.Sleep(100);
+
         foreach (var entity in entities)
         {
-            await _repository.InsertContent(entity);
+            var result = await repository.InsertContent(entity);
+            if (result.Item1 < 1)
+            {
+                throw new Exception("Failed to insert test entity into the database. " + result.Item2);
+            }
         }
+
+        return (testDbPath, repository);
     }
 
-    private async Task SeedSzentekData()
+    private async Task<(string testDbPath, Repository repository)> SeedSzentekData()
     {
-        // Clear existing data to ensure test isolation
-        await _repository.DeleteAllContent();
-
         var entities = new List<ContentEntity>
         {
             // Pio content (2 items)
             new()
             {
-                Nid = Guid.NewGuid(),
+                Nid = Guid.Parse("a1111111-1111-1111-1111-111111111111"),
                 Cim = "Pio 1 - Read",
                 Tipus = "2",
                 TypeName = "pio",
@@ -312,7 +329,7 @@ public class EndToEndFilteringTests : IDisposable
             },
             new()
             {
-                Nid = Guid.NewGuid(),
+                Nid = Guid.Parse("a1111111-1111-1111-1111-111111111112"),
                 Cim = "Pio 2 - Unread",
                 Tipus = "2",
                 TypeName = "pio",
@@ -325,7 +342,7 @@ public class EndToEndFilteringTests : IDisposable
             // Vianney content (1 item)
             new()
             {
-                Nid = Guid.NewGuid(),
+                Nid = Guid.Parse("a1111111-1111-1111-1111-111111111113"),
                 Cim = "Vianney 1 - Unread",
                 Tipus = "20",
                 TypeName = "vianney",
@@ -336,24 +353,43 @@ public class EndToEndFilteringTests : IDisposable
             }
         };
 
+        string userTmpFolder = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+            "tmp"
+        );
+
+        // Make sure the folder exists
+        Directory.CreateDirectory(userTmpFolder);
+
+        var testDbPath = Path.Combine(userTmpFolder, $"test_androkat_{Guid.NewGuid()}.db");
+        var repository = new Repository(testDbPath);
+
+        Thread.Sleep(100);
+
         foreach (var entity in entities)
         {
-            await _repository.InsertContent(entity);
+            var result = await repository.InsertContent(entity);
+            if (result.Item1 < 1)
+            {
+                throw new Exception("Failed to insert test entity into the database. " + result.Item2);
+            }
         }
+
+        return (testDbPath, repository);
     }
 
-    public void Dispose()
+    public void DeleteTestDatabase(string testDbPath)
     {
         try
         {
-            if (File.Exists(_testDbPath))
+            if (File.Exists(testDbPath))
             {
-                File.Delete(_testDbPath);
+                File.Delete(testDbPath);
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // Ignore cleanup errors
+            throw new Exception("Failed to delete test database file: " + ex.Message);
         }
     }
 }
