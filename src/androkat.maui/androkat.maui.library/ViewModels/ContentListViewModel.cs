@@ -102,6 +102,15 @@ public partial class ContentListViewModel : ViewModelBase
 
     public async Task FetchAsync(bool returnVisited, List<string>? enabledSources = null)
     {
+        if (enabledSources is null)
+        {
+            var filterOptions = FilterOptionsHelper.GetFilterOptionsForPageId(Id ?? "0");
+            if (filterOptions.Count > 0)
+            {
+                enabledSources = Settings.GetEnabledSources(filterOptions);
+            }
+        }
+
         var contentsTemp = await _pageService.GetContentsAsync(Id!, returnVisited, enabledSources);
         if (contentsTemp == null)
         {

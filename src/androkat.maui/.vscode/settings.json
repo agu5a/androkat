@@ -7,12 +7,12 @@
     },
     "editor.formatOnSave": true,
     "dotnet.defaultSolution": "androkat.maui.sln",
-    "omnisharp.enableImportCompletion": true,
     "omnisharp.enableRoslynAnalyzers": true,
     "files.exclude": {
         "**/bin": true,
         "**/obj": true
     },
     "omnisharp.projectLoadTimeout": 120,
-    "omnisharp.useGlobalMono": "never"
+    "omnisharp.useGlobalMono": "never",
+    "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true
 }

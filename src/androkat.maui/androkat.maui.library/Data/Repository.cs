@@ -520,28 +520,6 @@ public class Repository : IRepository
     {
         var filteredResults = results;
 
-        // Debug logging to see what data we're working with
-        Debug.WriteLine($"ApplyFilters called with {results.Count} results, returnVisited: {returnVisited}");
-        Debug.WriteLine(enabledSources != null
-            ? $"EnabledSources: [{string.Join(", ", enabledSources)}]"
-            : "EnabledSources: null");
-
-        // Log some sample TypeName values to see what's in the database
-        var sampleEntries = results.Take(20).Select(r => new { r.TypeName, r.Tipus, r.GroupName }).ToList();
-        Debug.WriteLine($"=== DATABASE CONTENT ANALYSIS ===");
-        Debug.WriteLine($"Total results: {results.Count}");
-        Debug.WriteLine($"Sample database entries (first 20):");
-        foreach (var entry in sampleEntries)
-        {
-            Debug.WriteLine($"  TypeName: '{entry.TypeName}', Tipus: '{entry.Tipus}', GroupName: '{entry.GroupName}'");
-        }
-
-        // Show unique TypeName values
-        var uniqueTypeNames = results.Select(r => r.TypeName).Distinct().OrderBy(x => x).ToList();
-        Debug.WriteLine($"All unique TypeName values in results ({uniqueTypeNames.Count} total):");
-        Debug.WriteLine($"  [{string.Join(", ", uniqueTypeNames.Select(x => $"'{x}'"))}]");
-        Debug.WriteLine($"=== END DATABASE ANALYSIS ===");
-
         // Apply source filtering first (if enabled sources are specified)
         // If enabledSources is provided but empty, show nothing
         // If enabledSources is null, it means no filtering should be applied (show all sources)
@@ -556,23 +534,6 @@ public class Repository : IRepository
 
             // Filter to only enabled sources
             var beforeCount = filteredResults.Count;
-
-            // Debug: Log detailed comparison information
-            Debug.WriteLine("=== DETAILED SOURCE FILTERING DEBUG ===");
-            foreach (var source in enabledSources)
-            {
-                var matchingByTipus = filteredResults.Where(content =>
-                    content.Tipus.Equals(source, StringComparison.OrdinalIgnoreCase)).ToList();
-
-                Debug.WriteLine($"Source '{source}' matches {matchingByTipus.Count} items by Tipus");
-
-                if (matchingByTipus.Count > 0)
-                {
-                    Debug.WriteLine($"  Tipus matches: {string.Join(", ", matchingByTipus.Take(3).Select(m => $"'{m.Tipus}'"))}");
-                }
-            }
-
-            Debug.WriteLine("=== END DETAILED DEBUG ===");
 
             // Filter by Tipus field (contains integer activity IDs)
             filteredResults = filteredResults.Where(content =>
