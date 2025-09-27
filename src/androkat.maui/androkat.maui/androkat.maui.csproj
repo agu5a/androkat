@@ -15,6 +15,7 @@
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 		<!-- <TrimMode>partial</TrimMode> -->
 		<IsPackable>false</IsPackable>
+		<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
 
 		<!-- Display name -->
 		<ApplicationTitle>AndroKat</ApplicationTitle>

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net10.0;</TargetFrameworks>
+		<TargetFrameworks>net10.0;net10.0-android;</TargetFrameworks>
 		<UseMaui>true</UseMaui>
 		<IsPackable>false</IsPackable>
 		<WarningsNotAsErrors>XUA1001,AD0001</WarningsNotAsErrors>

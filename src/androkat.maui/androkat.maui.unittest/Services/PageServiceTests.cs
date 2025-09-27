@@ -159,16 +159,16 @@ public class PageServiceTests
     {
         var repositoryMock = new Mock<IRepository>();
         var expectedContents = Activator.CreateInstance(typeof(List<ContentEntity>)) as List<ContentEntity>;
-        repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.ajanlatweb).ToString(), It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.maiszent).ToString(), It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.gyonas).ToString(), It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_szentek", It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_news", It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_blog", It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_humor", It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_audio", It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.book).ToString(), It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents).Verifiable();
-        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_napiolvaso", It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.ajanlatweb).ToString(), It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents!).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.maiszent).ToString(), It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents!).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.gyonas).ToString(), It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents!).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_szentek", It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents!).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_news", It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents!).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_blog", It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents!).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_humor", It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents!).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_audio", It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents!).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByTypeId(((int)Activities.book).ToString(), It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents!).Verifiable();
+        repositoryMock.Setup(repo => repo.GetContentsByGroupName("group_napiolvaso", It.IsAny<bool>(), It.IsAny<List<string>>())).ReturnsAsync(expectedContents!).Verifiable();
         var pageService = new PageService(_downloadServiceMock.Object, repositoryMock.Object);
 
         var result = await pageService.GetContentsAsync(pageTypeId);

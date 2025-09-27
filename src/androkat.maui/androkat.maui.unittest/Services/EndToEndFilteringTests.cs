@@ -378,7 +378,9 @@ public class EndToEndFilteringTests
         return (testDbPath, repository);
     }
 
+#pragma warning disable xUnit1013 // Public method should be marked as test
     public void DeleteTestDatabase(string testDbPath)
+#pragma warning restore xUnit1013 // Public method should be marked as test
     {
         try
         {
