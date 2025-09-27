@@ -1106,7 +1106,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 		{
 			var today = Clock.Now.DateTime.ToString("MM-dd");
 			var res = Ctx.RadioMusor.Count(w => w.Inserted.Contains(today));
-			adminResult.Radio = res == 3 ? "radio: OK" : "radio: <span style='color:red;'>NOT OK</span> #: " + res;
+			adminResult.Radio = res == 3 ? "" : "<span style='color:red;'>nincs mai rádió műsor</span>";
 
 			Ctx.RadioMusor.ToList().ForEach(w =>
 			{
@@ -1226,10 +1226,10 @@ public class AdminRepository : BaseRepository, IAdminRepository
 			var res = 0;
 
 			res = Ctx.VideoContent.Count();
-			adminResult.Header += "video összes: " + res + " | ";
+			adminResult.Header += "video összes #: " + res + "<br>";
 
 			res = Ctx.ImaContent.Count();
-			adminResult.Header += "ima összes: " + res;
+			adminResult.Header += "ima összes #: " + res;
 		}
 		catch (Exception ex)
 		{
@@ -1257,7 +1257,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 			};
 
 			var res = Ctx.Content.Count(w => list.Contains(w.Tipus) && w.Fulldatum.Contains(today));
-			sb.Append(res == 0 ? "<span style='color:red;'>NOT OK</span> #: " + res + "<br>" : "news: OK #: " + res + "<br>");
+			sb.Append(res == 0 ? "<span style='color:red;'>nincs mai hír</span><br>" : "összes mai hírek: " + res + "<br>");
 
 			foreach (var tipus in list)
 			{
@@ -1295,7 +1295,7 @@ public class AdminRepository : BaseRepository, IAdminRepository
 			};
 
 			var res = Ctx.Content.Count(w => list.Contains(w.Tipus) && w.Fulldatum.Contains(today));
-			sb.Append(res == 0 ? "<span style='color:red;'>NOT OK</span> #: " + res + "<br>" : "blog: OK #: " + res + "<br>");
+			sb.Append(res == 0 ? "<span style='color:red;'>nincs mai blog</span><br>" : "összes mai blog: " + res + "<br>");
 
 			foreach (var tipus in list)
 			{

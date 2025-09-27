@@ -104,7 +104,7 @@ public class IndexTests : BaseTest
 		};
 
 		model.OnGet();
-		model.AdminResult.Header.Should().Be("video összes: 1 | ima összes: 1");
+		model.AdminResult.Header.Should().Be("video összes #: 1<br>ima összes #: 1");
 
 		const string expected = "<strong>Ma hiányzó anyagok</strong>" +
 								"<br> 1 - <a href='https://androkat.hu' target='_blank'>Mello</a>" +
@@ -147,7 +147,7 @@ public class IndexTests : BaseTest
 		model.AdminBResult.CountOfTipusok.Should().Be("7 Fokoláre: életige #: 1<br>18 magyarkurir.hu #: 1<br>21 Mai Szent #: 0<br>");
 		model.AdminBResult.RadioList.Should().Be("source (" + DateTime.Now.ToString("yyyy") + "-02-03T04:05:06)<br>");
 		model.AdminBResult.SysTable.Should().Be("[1] - radio<br>&nbsp;&nbsp;&nbsp;<a href=url target=\"_blank\">url</a>'<br>[3] - isNagyBojt - false<br>[2] - isAdvent - true<br>");
-		model.AdminBResult.Radio.Should().Be("radio: <span style='color:red;'>NOT OK</span> #: 1");
+		model.AdminBResult.Radio.Should().Be("<span style='color:red;'>nincs mai rádió műsor</span>");
 	}
 
 	[Fact]

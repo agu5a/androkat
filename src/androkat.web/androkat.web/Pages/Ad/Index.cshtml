@@ -14,20 +14,13 @@
                         </text>
                 }
                 }
-                    });
+                                    });
     </script>
 }
 @section scripts {
 }
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="border">
-                <div style="margin-bottom: 5px;">@Html.Raw(Model.AdminResult.Header)</div>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-6" data="left">
             <div class="border" style="word-break: break-all;">
@@ -36,15 +29,15 @@
         </div>
         <div class="col-md-6" data="right">
             <div class="border">
-                <strong>News Info</strong><br>
+                <strong>Hírek</strong><br>
                 @Html.Raw(Model.NewsInfo)
             </div>
             <div class="border">
-                <strong>Blog Info</strong><br>
+                <strong>Blogok</strong><br>
                 @Html.Raw(Model.BlogInfo)
             </div>
             <div class="border" data="radio">
-                <strong>Rádió műsorok</strong><br>
+                <strong>Mai rádió műsorok</strong><br>
                 <div style="margin-bottom: 5px;">
                     @Html.Raw(Model.AdminBResult.Radio)
                 </div>
@@ -57,6 +50,7 @@
                 <form method="post" asp-page-handler="DeleteOld" style="margin-top: 10px;">
                     <button type="submit">Régiek törlése</button>
                 </form><br>
+                <div style="margin-bottom: 5px;">@Html.Raw(Model.AdminResult.Header)</div>
                 <span>@Html.Raw(Model.AdminBResult.CountOfTipusok)</span>
             </div>
             <div class="border" style="word-break: break-all;">

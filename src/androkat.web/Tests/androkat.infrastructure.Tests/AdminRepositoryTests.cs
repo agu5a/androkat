@@ -222,7 +222,7 @@ public class AdminRepositoryTests : BaseTest
         var repo = new AdminRepository(context, loggerRepo.Object, clock.Object, idezetData, null);
         var result = repo.GetNewsInfo();
 
-        result.Should().Contain("news: OK #: 3<br>");
+        result.Should().Contain("összes mai hírek: 3<br>");
         result.Should().Contain("Kurír (" + DateTime.Now.ToString("yyyy") + "-02-03 04:05:06)<br>");
         result.Should().Contain("Keresztény élet (" + DateTime.Now.ToString("yyyy") + "-02-03 04:05:06)<br>");
         result.Should().Contain("Bonum TV (" + DateTime.Now.ToString("yyyy") + "-02-03 04:05:06)<br>");
@@ -251,7 +251,7 @@ public class AdminRepositoryTests : BaseTest
         var repo = new AdminRepository(context, loggerRepo.Object, clock.Object, idezetData, null);
         var result = repo.GetNewsInfo();
 
-        result.Should().Be("<span style='color:red;'>NOT OK</span> #: 0<br>");
+        result.Should().Be("<span style='color:red;'>nincs mai hír</span><br>");
     }
 
     [Fact]
@@ -306,7 +306,7 @@ public class AdminRepositoryTests : BaseTest
         var repo = new AdminRepository(context, loggerRepo.Object, clock.Object, idezetData, null);
         var result = repo.GetBlogInfo();
 
-        result.Should().Contain("blog: OK #: 3<br>");
+        result.Should().Contain("összes mai blog: 3<br>");
         result.Should().Contain("Buzgó zarándokma (" + DateTime.Now.ToString("yyyy") + "-02-03 04:05:06)<br>");
         result.Should().Contain("777 (" + DateTime.Now.ToString("yyyy") + "-02-03 04:05:06)<br>");
         result.Should().Contain("Jezsuita blog (" + DateTime.Now.ToString("yyyy") + "-02-03 04:05:06)<br>");
@@ -335,6 +335,6 @@ public class AdminRepositoryTests : BaseTest
         var repo = new AdminRepository(context, loggerRepo.Object, clock.Object, idezetData, null);
         var result = repo.GetBlogInfo();
 
-        result.Should().Be("<span style='color:red;'>NOT OK</span> #: 0<br>");
+        result.Should().Be("<span style='color:red;'>nincs mai blog</span><br>");
     }
 }
