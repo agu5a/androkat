@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOTNET_VERSION: '9.0.x'
+  DOTNET_VERSION: '10.0.x'
   SOLUTION_FILE: './src/androkat.web/androkat.web.sln'
   ANDROKAT_ENDPOINT_SAVE_CONTENT_DETAILS_API_URL: '/test/savecontentdetails'
   ANDROKAT_ENDPOINT_SAVE_TEMP_CONTENT_API_URL: '/test/savetempontent'

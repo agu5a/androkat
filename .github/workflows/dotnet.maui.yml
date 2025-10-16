@@ -12,7 +12,7 @@ on:
   #  - 'src/androkat.maui/**'
 
 env:
-  DOTNET_VERSION: '8.0.x'
+  DOTNET_VERSION: '10.0.x'
   SOLUTION_FILE: './src/androkat.maui/androkat.maui.sln'
 
 jobs:
