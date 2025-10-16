@@ -11,7 +11,7 @@
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<WarningsNotAsErrors>CS8785,NU1603,XUA1001,AD0001,S1144,IL2026</WarningsNotAsErrors>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
-		<!-- <TrimMode>partial</TrimMode> -->
+		<TrimMode>partial</TrimMode>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -26,13 +26,13 @@
 		</PackageReference>
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.9" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.110" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.10" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.111" />
 
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.110" />
+		<PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.111" />
 	</ItemGroup>
 
 </Project>
