@@ -146,34 +146,25 @@ public class PufferModel : PageModel
         {
             ResetForm();
         }
+        else
+        {
+            // Delete temporary content when saving final content
+            DeleteTemporaryContent();
+        }
 
         Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
         ShowToast = true;
         return Page();
     }
 
-    public IActionResult OnPostDelete()
+    private void DeleteTemporaryContent()
     {
-        AllTodayContent = _adminRepository.LoadAllTodayResult();
-        LastTodayResult = new LastTodayResult();
-
         if (string.IsNullOrWhiteSpace(Nid))
         {
-            return Page();
+            return;
         }
 
-        var res = _adminRepository.DeleteTempContentByNid(Nid);
-        if (res)
-        {
-            ResetForm();
-            Error = "A törlés sikerült";
-            ShowToast = true;
-            return Page();
-        }
-
-        Error = "Valamilyen hiba történt!";
-        ShowToast = true;
-        return Page();
+        _adminRepository.DeleteTempContentByNid(Nid);
     }
 
     private void ResetForm()

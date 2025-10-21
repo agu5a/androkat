@@ -293,16 +293,6 @@
                                     tisztít
                                 </button>
                             </div>
-                            @{
-                                if (!Model.IsNewItem)
-                                {
-                                    <div class="col-md-4 mb-3" style="width: 100px;">
-                                        <button type="submit" class="btn btn-lg btn-danger delete" id="@Model.Nid" asp-page-handler="Delete">
-                                            törlés
-                                        </button>
-                                    </div>
-                                }
-                            }
                         </div>
                     </form>
                 </div>

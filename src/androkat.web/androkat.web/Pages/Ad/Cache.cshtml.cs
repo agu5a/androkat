@@ -61,20 +61,12 @@ public class CacheModel : PageModel
 
         try
         {
-            var coherentState = typeof(MemoryCache).GetField("_coherentState", BindingFlags.NonPublic | BindingFlags.Instance)!;
-            var coherentStateValue = coherentState.GetValue(_memoryCache)!;
-            var stringEntriesCollection = coherentStateValue.GetType().GetProperty("StringEntriesCollection", BindingFlags.NonPublic | BindingFlags.Instance)!;
-
-            if (stringEntriesCollection.GetValue(coherentStateValue) is not ICollection strinEntriesCollectionValue)
-            {
-                return res;
-            }
+            var memoryCache = (MemoryCache)_memoryCache;
+            IEnumerable<object> strinEntriesCollectionValue = memoryCache.Keys;
 
             foreach (var item in strinEntriesCollectionValue)
             {
-                var methodInfo = item.GetType().GetProperty("Key")!;
-
-                var val = methodInfo.GetValue(item)!.ToString();
+                var val = item?.ToString() ?? "(null)";
 
                 if (val == CacheKey.MainCacheKey.ToString())
                 {
