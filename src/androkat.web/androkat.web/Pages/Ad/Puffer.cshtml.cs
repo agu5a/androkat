@@ -97,6 +97,22 @@ public class PufferModel : PageModel
         }
     }
 
+    public IActionResult OnPostDelete()
+    {
+        if (!IsNewItem && !string.IsNullOrWhiteSpace(Nid))
+        {
+            DeleteTemporaryContent();
+        }
+        else
+        {
+            Error = "Új elem nem törölhető, vagy hiányzik a Nid!";
+            ShowToast = true;
+        }
+
+        ResetForm();
+        return Page();
+    }
+
     public IActionResult OnPostSave()
     {
         AllTodayContent = _adminRepository.LoadAllTodayResult();

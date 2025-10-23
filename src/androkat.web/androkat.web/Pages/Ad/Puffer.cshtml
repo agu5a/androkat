@@ -173,6 +173,14 @@
                             @todayContent.TipusNev
                         </span> <strong>Típus</strong>: @todayContent.Tipus
                         @Html.Raw(string.IsNullOrEmpty(todayContent.Datum) ? "" : "<strong>Dátum</strong>: " + todayContent.Datum)
+                        @if (!string.IsNullOrEmpty(todayContent.Datum))
+                        {
+                            <form method="post" style="display:inline;" asp-page-handler="Delete">
+                                <input type="hidden" name="Nid" value="@todayContent.Nid" />
+                                <input type="hidden" name="IsNewItem" value="false" />
+                                <button type="submit" style="background:none;border:none;color:red;cursor:pointer;padding:0;text-decoration:underline;" onclick="return confirm('Biztosan törölni szeretnéd?');">törlés</button>
+                            </form>
+                        }
                     </div>
                 }
             </div>
