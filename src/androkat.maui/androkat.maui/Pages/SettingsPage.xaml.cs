@@ -61,6 +61,12 @@ public partial class SettingsPage : ContentPage
         TheTheme.SetTheme();
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S2325:Methods and properties that don't access instance data should be static", Justification = "<Pending>")]
+    private void FontSizePicker_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        FontScaleHelper.ApplyFontScale();
+    }
+
     private async void Button_Clicked_2(object sender, EventArgs e)
     {
         var isDelete = await Shell.Current.DisplayAlert("Törlés", "Biztos törlöd?\n\nInternet kapcsolat kell, hogy az adatbázis újból szinkronizálódjon.", "Igen", "Nem");

@@ -1,3 +1,4 @@
+using androkat.hu.Helpers;
 using androkat.maui.library.Models;
 using androkat.maui.library.ViewModels;
 
@@ -19,10 +20,10 @@ public partial class PrayDetailPage : ContentPage
         base.OnAppearing();
         await ViewModel.InitializeAsync();
 
-        // Set the WebView content
+        // Set the WebView content with font scaling
         if (ViewModel.ContentView?.ContentEntity?.Idezet != null)
         {
-            var htmlContent = $"<html><body style='margin:0;padding:16px;font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;font-size:16px;line-height:1.5;'>{ViewModel.ContentView.ContentEntity.Idezet}</body></html>";
+            var htmlContent = HtmlHelper.WrapHtmlWithFontScale(ViewModel.ContentView.ContentEntity.Idezet);
             MyWebView.Source = new HtmlWebViewSource { Html = htmlContent };
         }
 

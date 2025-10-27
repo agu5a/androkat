@@ -1,4 +1,5 @@
 ﻿using androkat.maui.library.Abstraction;
+using androkat.maui.library.Helpers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using MvvmHelpers;
 
@@ -71,6 +72,11 @@ public partial class KeresztutViewModel : ViewModelBase
                 }
             }
 
+            // Get the scaled font size
+            var scale = Settings.GetFontScale();
+            var baseFontSize = 16;
+            var scaledFontSize = baseFontSize * scale;
+
             // Wrap content in a complete HTML structure with CSS for better styling
             return $@"
 <!DOCTYPE html>
@@ -86,6 +92,7 @@ public partial class KeresztutViewModel : ViewModelBase
             line-height: 1.6;
             color: #333;
             background-color: #fff;
+            font-size: {scaledFontSize}px;
         }}
         h3 {{
             color: #2c3e50;

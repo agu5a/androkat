@@ -1,4 +1,5 @@
 ﻿using androkat.maui.library.Abstraction;
+using androkat.maui.library.Helpers;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace androkat.maui.library.ViewModels;
@@ -22,6 +23,7 @@ public partial class GyonasPrayViewModel : ViewModelBase
 
     async Task FetchAsync()
     {
-        Ima = await _resourceData.GetResourceAsString("gyonasima.html");
+        var htmlContent = await _resourceData.GetResourceAsString("gyonasima.html");
+        Ima = HtmlHelper.WrapHtmlWithFontScale(htmlContent);
     }
 }

@@ -47,6 +47,24 @@
                         Margin="0,0,20,0"
                         FontSize="Small"
                         HorizontalOptions="Start"
+                        Text="Betűméret"
+                        VerticalOptions="Center"/>
+                    <Picker
+                        x:Name="FontSizePicker"
+                        HorizontalOptions="EndAndExpand"
+                        ItemsSource="{Binding FontSizeOptions}"
+                        SelectedIndex="{Binding SelectedFontSizeIndex}"
+                        SelectedIndexChanged="FontSizePicker_SelectedIndexChanged"
+                        WidthRequest="150"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame Margin="0,0,0,10"
+                   BackgroundColor="{AppThemeBinding Dark=black, Light=white}">
+                <HorizontalStackLayout>
+                    <Label
+                        Margin="0,0,20,0"
+                        FontSize="Small"
+                        HorizontalOptions="Start"
                         Text="Max. tárolt offline elem"
                         VerticalOptions="Center"/>
                     <Entry

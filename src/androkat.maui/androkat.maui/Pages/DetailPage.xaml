@@ -98,10 +98,6 @@
                     android:WebView.DisplayZoomControls="false"
                     android:WebView.EnableZoomControls="false"
                     android:WebView.MixedContentMode="AlwaysAllow">
-                    <WebView.Source>
-                        <HtmlWebViewSource android:WebView.MixedContentMode="AlwaysAllow"
-                                           Html="{Binding ContentView.ContentEntity.Idezet}"/>
-                    </WebView.Source>
                 </WebView>
             </VerticalStackLayout>
         </Grid>

@@ -1,4 +1,5 @@
-﻿using androkat.maui.library.ViewModels;
+﻿using androkat.hu.Helpers;
+using androkat.maui.library.ViewModels;
 
 namespace androkat.hu.Pages;
 
@@ -17,6 +18,13 @@ public partial class DetailBook
     {
         base.OnAppearing();
         await ViewModel.InitializeBookAsync();
+
+        // Apply font scaling to WebView content
+        if (ViewModel.ContentView?.ContentEntity?.Idezet != null && ViewModel.ShowWebView)
+        {
+            var htmlContent = HtmlHelper.WrapHtmlWithFontScale(ViewModel.ContentView.ContentEntity.Idezet);
+            MyWebView.Source = new HtmlWebViewSource { Html = htmlContent };
+        }
 
         // Control toolbar item visibility
         UpdateToolbarItems();

@@ -31,6 +31,24 @@ public static class Settings
         set => Preferences.Set(nameof(KeepScreenOn), value);
     }
 
+    public static int FontSize
+    {
+        get => Preferences.Get(nameof(FontSize), 0);
+        set => Preferences.Set(nameof(FontSize), value);
+    }
+
+    public static double GetFontScale()
+    {
+        return FontSize switch
+        {
+            0 => 1.0,    // Normál
+            1 => 1.3,    // Nagyobb
+            2 => 1.6,    // Még nagyobb
+            3 => 2.0,    // Legnagyobb
+            _ => 1.0
+        };
+    }
+
     public static bool IsSourceEnabled(string sourceKey)
     {
         return Preferences.Get($"source_{sourceKey}", true);

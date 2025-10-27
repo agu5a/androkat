@@ -13,6 +13,7 @@ public partial class SettingsViewModel : ViewModelBase
         _deviceDisplayService = deviceDisplayService;
         isDarkModeEnabled = Settings.Theme == AppTheme.Dark;
         isKeepScreenOnEnabled = Settings.KeepScreenOn;
+        selectedFontSizeIndex = Settings.FontSize;
     }
 
     [ObservableProperty]
@@ -24,12 +25,28 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     string maxOffline;
 
+    [ObservableProperty]
+    int selectedFontSizeIndex;
+
+    public List<string> FontSizeOptions { get; } = new List<string>
+    {
+        "Normál",
+        "Nagyobb",
+        "Még nagyobb",
+        "Legnagyobb"
+    };
+
     partial void OnIsDarkModeEnabledChanged(bool value) => SettingsViewModel.ChangeUserAppTheme(value);
 
     partial void OnIsKeepScreenOnEnabledChanged(bool value)
     {
         Settings.KeepScreenOn = value;
         _deviceDisplayService?.KeepScreenOn(value);
+    }
+
+    partial void OnSelectedFontSizeIndexChanged(int value)
+    {
+        Settings.FontSize = value;
     }
 
     public static string AppVersion => AppInfo.VersionString;

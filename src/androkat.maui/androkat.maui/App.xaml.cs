@@ -47,10 +47,16 @@ public partial class App : Application
 
     protected override Window CreateWindow(IActivationState? activationState)
     {
+        // Apply font scale BEFORE creating the Shell to avoid timing issues
+        FontScaleHelper.ApplyFontScale();
+
         window = new Window(new MobileShell());
 
         // Apply keep screen on setting when window is created
-        window.Created += (s, e) => ApplyKeepScreenOnSetting();
+        window.Created += (s, e) =>
+        {
+            ApplyKeepScreenOnSetting();
+        };
 
         return window;
     }

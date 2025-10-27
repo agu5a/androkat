@@ -1,4 +1,5 @@
 ﻿using androkat.maui.library.Abstraction;
+using androkat.maui.library.Helpers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using MvvmHelpers;
 using System.Text.Json;
@@ -80,7 +81,7 @@ public partial class IgeNaptarViewModel : ViewModelBase
 
                     if (dayContents.ContainsKey(key))
                     {
-                        s.Add(new() { Html = dayContents[key] });
+                        s.Add(new() { Html = HtmlHelper.WrapHtmlWithFontScale(dayContents[key]) });
                     }
                 }
             }

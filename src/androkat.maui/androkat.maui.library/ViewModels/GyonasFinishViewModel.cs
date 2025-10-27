@@ -1,5 +1,6 @@
 ﻿using androkat.maui.library.Abstraction;
 using androkat.maui.library.Data;
+using androkat.maui.library.Helpers;
 using androkat.maui.library.Models.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Text;
@@ -63,7 +64,10 @@ public partial class GyonasFinishViewModel : ViewModelBase
             string bunokHtml = await GenerateBunokHtml();
 
             // Replace the placeholder with the actual content
-            GyonasSzoveg = baseHtml.Replace("{{bunok}}", bunokHtml);
+            var htmlWithBunok = baseHtml.Replace("{{bunok}}", bunokHtml);
+
+            // Apply font scaling
+            GyonasSzoveg = HtmlHelper.WrapHtmlWithFontScale(htmlWithBunok);
         }
         catch (Exception ex)
         {
@@ -77,7 +81,8 @@ public partial class GyonasFinishViewModel : ViewModelBase
             {
                 GyonasSzoveg = await _resourceData.GetResourceAsString("gyonasrovid.html");
             }
-            GyonasSzoveg = GyonasSzoveg.Replace("{{bunok}}", "");
+            var htmlWithBunok = GyonasSzoveg.Replace("{{bunok}}", "");
+            GyonasSzoveg = HtmlHelper.WrapHtmlWithFontScale(htmlWithBunok);
         }
     }
 
