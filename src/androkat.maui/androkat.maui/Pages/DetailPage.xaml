@@ -72,7 +72,12 @@
                 <Label
                     Style="{StaticResource BodyMLabelStyle}"
                     Text="{Binding ContentView.forras}"
-                    TextType="Html"/>
+                    TextType="Html"
+                    TextColor="{StaticResource Primary}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenSourceLinkCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
                 <Label
                     Style="{StaticResource BodyMLabelStyle}"
                     Text="{Binding ContentView.datum}"

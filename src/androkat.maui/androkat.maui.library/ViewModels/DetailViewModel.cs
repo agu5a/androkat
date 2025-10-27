@@ -29,6 +29,9 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
     [ObservableProperty]
     bool isFavoriteCheckCompleted;
 
+    // Store the clean text content for sharing purposes
+    private string _cleanTextContent;
+
     public async Task InitializeAsync()
     {
         if (Id != null)
@@ -65,7 +68,18 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
                       "Bezárás");
             return;
         }
-        item.KulsoLink = item.Idezet; // idejön a http link
+
+        SourceData idezetSource = sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
+
+        // Store the clean text content for sharing (strip HTML but keep line breaks)
+        _cleanTextContent = ConvertHtmlToPlainText(item.Idezet);
+
+        // Add "Tovább..." link if KulsoLink is available
+        var bodyContent = item.Idezet;
+        if (!string.IsNullOrWhiteSpace(item.KulsoLink))
+        {
+            bodyContent += $"<br/><br/><a href=\"{item.KulsoLink}\">Tovább...</a>";
+        }
 
         item.Idezet = "<html><!DOCTYPE html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />"
                              + "<script type=\"text/javascript\">" +
@@ -78,9 +92,8 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
                              "if (href && href !== \"#\") {" +
                              "window.location.href = \"appscheme://\" + href;" +
                              "}});}});</script>" +
-                             "</head><body>" + item.Idezet + "</body></html>";
+                             $"</head><body>{bodyContent}</body></html>";
 
-        SourceData idezetSource = sourceData.GetSourcesFromMemory(int.Parse(item.Tipus));
         var origImg = item.Image;
         item.Image = idezetSource.Img;
         var viewModel = new ContentItemViewModel(item)
@@ -90,7 +103,8 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
             contentImg = origImg,
             isFav = false,
             forras = $"<b>Forrás</b>: {idezetSource.Forrasszoveg}",
-            type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus))
+            type = ActivitiesHelper.GetActivitiesByValue(int.Parse(item.Tipus)),
+            forrasLink = idezetSource.Forras
         };
         ContentView = viewModel;
     }
@@ -222,11 +236,61 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
     [RelayCommand]
     async Task ShareContent()
     {
+        var shareText = ContentView.ContentEntity.Cim + "\n\n" + _cleanTextContent;
+
         await Share.RequestAsync(new ShareTextRequest
         {
             Title = "AndroKat: " + ContentView.ContentEntity.Cim,
-            Text = ContentView.ContentEntity.Idezet
+            Text = shareText
         });
+    }
+
+    [RelayCommand]
+    async Task OpenSourceLink()
+    {
+        if (!string.IsNullOrWhiteSpace(ContentView?.forrasLink))
+        {
+            try
+            {
+                await Browser.Default.OpenAsync(ContentView.forrasLink, BrowserLaunchMode.SystemPreferred);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error opening link: {ex.Message}");
+                await Shell.Current.DisplayAlert("Hiba", "A link megnyitása sikertelen.", "OK");
+            }
+        }
+    }
+
+    private static string ConvertHtmlToPlainText(string html)
+    {
+        if (string.IsNullOrWhiteSpace(html))
+            return string.Empty;
+
+        // Replace <br>, <br/>, <br />, </p>, </div> with newlines
+        string text = Regex.Replace(html, @"<br\s*/?>|</p>|</div>", "\n", RegexOptions.IgnoreCase);
+
+        // Replace <p> and <div> tags with nothing (they're block elements, handled by closing tags)
+        text = Regex.Replace(text, @"<p[^>]*>|<div[^>]*>", "", RegexOptions.IgnoreCase);
+
+        // Remove all other HTML tags
+        text = Regex.Replace(text, @"<[^>]+>", "");
+
+        // Decode HTML entities
+        text = System.Net.WebUtility.HtmlDecode(text);
+
+        // Clean up multiple consecutive newlines (more than 2)
+        text = Regex.Replace(text, @"\n{3,}", "\n\n");
+
+        // Trim whitespace from each line while preserving empty lines
+        var lines = text.Split('\n');
+        for (int i = 0; i < lines.Length; i++)
+        {
+            lines[i] = lines[i].Trim();
+        }
+        text = string.Join("\n", lines);
+
+        return text.Trim();
     }
 
     [GeneratedRegex("<.*?>")]

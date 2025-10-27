@@ -8,101 +8,145 @@
     xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
     x:DataType="viewmodels:ShellViewModel">
     <Shell.FlyoutHeader>
-        <Label Text="AndroKat" Margin="0" Padding="18,8,0,8" BackgroundColor="#00796B" TextColor="#FFFFFF" FontFamily="OpenSansSemibold" />
+        <Label Text="AndroKat"
+                Margin="0"
+                Padding="18,40,0,12"
+                BackgroundColor="#00796B"
+                TextColor="#FFFFFF"
+                FontFamily="OpenSansSemibold"
+                FontSize="18"/>
     </Shell.FlyoutHeader>
-    <FlyoutItem Title="Elmélkedés" Icon="book">
+    <FlyoutItem Title="Elmélkedés"
+            Icon="book">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="0" />
+            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}"
+                    Route="0"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="AJÁNLATAINK" Icon="gift">
+    <FlyoutItem Title="AJÁNLATAINK"
+            Icon="gift">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="1" />
+            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}"
+                    Route="1"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Mai Szent" Icon="saint">
+    <FlyoutItem Title="Mai Szent"
+            Icon="saint">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="2" />
+            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}"
+                    Route="2"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Szentek idézetei" Icon="book">
+    <FlyoutItem Title="Szentek idézetei"
+            Icon="book">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="3" />
+            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}"
+                    Route="3"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Katolikus Hírek" Icon="news1">
+    <FlyoutItem Title="Katolikus Hírek"
+            Icon="news1">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="4" />
+            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}"
+                    Route="4"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Blog, magazin" Icon="blog">
+    <FlyoutItem Title="Blog, magazin"
+            Icon="blog">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="5" />
+            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}"
+                    Route="5"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Humor" Icon="ic_smile">
+    <FlyoutItem Title="Humor"
+            Icon="ic_smile">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="6" />
+            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}"
+                    Route="6"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Imádság" Icon="candle">
+    <FlyoutItem Title="Imádság"
+            Icon="candle">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ImaListPage}" Route="7" />
+            <ShellContent ContentTemplate="{DataTemplate pages:ImaListPage}"
+                    Route="7"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Hanganyagok" Icon="ic_volume_up_24dp">
+    <FlyoutItem Title="Hanganyagok"
+            Icon="ic_volume_up_24dp">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="8" />
+            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}"
+                    Route="8"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Videók" Icon="ic_video_collection_24dp">
+    <FlyoutItem Title="Videók"
+            Icon="ic_video_collection_24dp">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:VideoListPage}" Route="9" />
+            <ShellContent ContentTemplate="{DataTemplate pages:VideoListPage}"
+                    Route="9"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Webrádiók" Icon="ic_radio_24dp">
+    <FlyoutItem Title="Webrádiók"
+            Icon="ic_radio_24dp">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:WebRadioPage}" Route="10" />
+            <ShellContent ContentTemplate="{DataTemplate pages:WebRadioPage}"
+                    Route="10"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Könyvolvasó" Icon="book">
+    <FlyoutItem Title="Könyvolvasó"
+            Icon="book">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}" Route="11" />
+            <ShellContent ContentTemplate="{DataTemplate pages:ContentListPage}"
+                    Route="11"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Gyónás" Icon="confession">
+    <FlyoutItem Title="Gyónás"
+            Icon="confession">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:GyonasPage}" Route="12" />
+            <ShellContent ContentTemplate="{DataTemplate pages:GyonasPage}"
+                    Route="12"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Igenaptár" Icon="book">
+    <FlyoutItem Title="Igenaptár"
+            Icon="book">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:IgeNaptarPage}" Route="13" />
+            <ShellContent ContentTemplate="{DataTemplate pages:IgeNaptarPage}"
+                    Route="13"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Keresztút" Icon="crossroad">
+    <FlyoutItem Title="Keresztút"
+            Icon="crossroad">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:KeresztutPage}" Route="14" />
+            <ShellContent ContentTemplate="{DataTemplate pages:KeresztutPage}"
+                    Route="14"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Weboldalak" Icon="internet">
+    <FlyoutItem Title="Weboldalak"
+            Icon="internet">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:WebPage}" Route="15" />
+            <ShellContent ContentTemplate="{DataTemplate pages:WebPage}"
+                    Route="15"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Kedvencek" Icon="favorite">
+    <FlyoutItem Title="Kedvencek"
+            Icon="favorite">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:FavoriteListPage}" Route="16" />
+            <ShellContent ContentTemplate="{DataTemplate pages:FavoriteListPage}"
+                    Route="16"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Kapcsolat" Icon="ic_contacts_24dp">
+    <FlyoutItem Title="Kapcsolat"
+            Icon="ic_contacts_24dp">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:ContactPage}" Route="17" />
+            <ShellContent ContentTemplate="{DataTemplate pages:ContactPage}"
+                    Route="17"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Beállítások" Icon="ic_settings_24dp">
+    <FlyoutItem Title="Beállítások"
+            Icon="ic_settings_24dp">
         <Tab>
-            <ShellContent ContentTemplate="{DataTemplate pages:SettingsPage}" Route="18" />
+            <ShellContent ContentTemplate="{DataTemplate pages:SettingsPage}"
+                    Route="18"/>
         </Tab>
     </FlyoutItem>
 </Shell>

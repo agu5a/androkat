@@ -18,18 +18,42 @@ public partial class DetailPage
 
 #pragma warning disable S2325
     // ReSharper disable once MemberCanBeMadeStatic.Local
-    private void OnWebViewNavigating(object? sender, WebNavigatingEventArgs e)
+    private async void OnWebViewNavigating(object? sender, WebNavigatingEventArgs e)
 #pragma warning restore S2325
     {
-        e.Cancel = true;
-
-        if (!e.Url.StartsWith("appscheme://"))
+        if (!e.Url.StartsWith("appscheme://", StringComparison.OrdinalIgnoreCase))
         {
             return;
         }
 
-        var actualUrl = e.Url.Replace("appscheme://", string.Empty);
-        Browser.Default.OpenAsync(actualUrl, BrowserLaunchMode.SystemPreferred);
+        e.Cancel = true;
+
+        var actualUrl = e.Url.Replace("appscheme://", string.Empty, StringComparison.OrdinalIgnoreCase);
+
+        System.Diagnostics.Debug.WriteLine($"Original URL from WebView: {e.Url}");
+        System.Diagnostics.Debug.WriteLine($"Actual URL after stripping appscheme: {actualUrl}");
+
+        // Fix malformed URLs (e.g., "https//" instead of "https://")
+        if (actualUrl.StartsWith("http//", StringComparison.OrdinalIgnoreCase))
+        {
+            actualUrl = actualUrl.Replace("http//", "http://", StringComparison.OrdinalIgnoreCase);
+        }
+        if (actualUrl.StartsWith("https//", StringComparison.OrdinalIgnoreCase))
+        {
+            actualUrl = actualUrl.Replace("https//", "https://", StringComparison.OrdinalIgnoreCase);
+        }
+
+        System.Diagnostics.Debug.WriteLine($"Final URL to open: {actualUrl}");
+
+        // Open in browser asynchronously
+        try
+        {
+            await Launcher.OpenAsync(new Uri(actualUrl));
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error opening URL '{actualUrl}': {ex.Message}");
+        }
     }
 
     protected override async void OnAppearing()
