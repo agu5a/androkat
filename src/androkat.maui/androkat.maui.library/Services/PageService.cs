@@ -98,9 +98,9 @@ public class PageService(IDownloadService downloadService, IRepository repositor
         return await repository.InsertImadsag(customPrayer);
     }
 
-    public async Task<List<ImadsagEntity>> GetImaContents(int pageNumber, int pageSize, int? categoryId = null)
+    public async Task<List<ImadsagEntity>> GetImaContents(int offset, int pageSize, int? categoryId = null)
     {
-        return await repository.GetImaContents(pageNumber, pageSize, categoryId);
+        return await repository.GetImaContents(offset, pageSize, categoryId);
     }
 
     public async Task<int> GetFavoriteCountAsync()

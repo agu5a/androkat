@@ -22,6 +22,7 @@
     </ContentPage.Resources>
     <Grid Background="{AppThemeBinding Light={StaticResource BackgroundActivity}, Dark={StaticResource BackgroundActivityDark}}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -34,7 +35,7 @@
                            HorizontalOptions="Center"/>
 
         <!-- Collection View -->
-        <CollectionView Grid.Row="0"
+        <CollectionView Grid.Row="1"
                         ItemsSource="{Binding Contents}"
                         Margin="{OnIdiom Phone='10,10,10,0'}"
                         SelectionMode="None"
@@ -55,7 +56,7 @@
         </CollectionView>
 
         <!-- Loading more indicator -->
-        <ActivityIndicator Grid.Row="1"
+        <ActivityIndicator Grid.Row="2"
                            IsVisible="{Binding IsLoadingMore}"
                            IsRunning="{Binding IsLoadingMore}"
                            Margin="10"

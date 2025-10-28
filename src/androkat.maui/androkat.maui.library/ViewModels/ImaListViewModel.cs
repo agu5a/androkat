@@ -14,7 +14,8 @@ namespace androkat.maui.library.ViewModels;
 public partial class ImaListViewModel : ViewModelBase
 {
     private readonly IPageService _pageService;
-    private bool _isInitializing;
+    private int _offset = 0;
+    private bool _isLoadingMore = false;
 
     [ObservableProperty]
 #pragma warning disable S1104 // Fields should not have public accessibility
@@ -30,20 +31,25 @@ public partial class ImaListViewModel : ViewModelBase
     [ObservableProperty]
     PrayerCategory selectedCategory;
 
+    [ObservableProperty]
+    bool isLoading;
+
+    [ObservableProperty]
+    bool isLoadingMore;
+
     public ImaListViewModel(IPageService pageService)
     {
-        _isInitializing = true;
         _pageService = pageService;
         Contents = [];
         Categories = [];
+        PageTitle = "Imádságok";
         InitializeCategories();
-        _isInitializing = false;
     }
+
     private void InitializeCategories()
     {
         try
         {
-            // Match the Java string array exactly with correct ID mapping
             Categories.Add(new PrayerCategory { Id = -1, Name = "Összes" });        // index 0, returns -1
             Categories.Add(new PrayerCategory { Id = 11, Name = "Alapimák" });      // index 1, returns 11
             Categories.Add(new PrayerCategory { Id = 9, Name = "Napi imák" });      // index 2, returns 9
@@ -58,9 +64,7 @@ public partial class ImaListViewModel : ViewModelBase
             Categories.Add(new PrayerCategory { Id = 0, Name = "Zsoltár" });        // index 11, returns 0
             Categories.Add(new PrayerCategory { Id = 1000, Name = "Törölt imák" }); // index 12, returns 1000
 
-            System.Diagnostics.Debug.WriteLine($"Categories initialized with {Categories.Count} items");
             SelectedCategory = Categories[0]; // Default to "Összes"
-            System.Diagnostics.Debug.WriteLine($"Default category set to: {SelectedCategory.Name}");
         }
         catch (Exception ex)
         {
@@ -70,9 +74,9 @@ public partial class ImaListViewModel : ViewModelBase
 
     partial void OnSelectedCategoryChanged(PrayerCategory value)
     {
-        System.Diagnostics.Debug.WriteLine($"OnSelectedCategoryChanged called with: {value?.Name ?? "NULL"}, isInitializing: {_isInitializing}");
+        System.Diagnostics.Debug.WriteLine($"OnSelectedCategoryChanged called with: {value?.Name ?? "NULL"}");
 
-        if (value != null && !_isInitializing)
+        if (value != null)
         {
             try
             {
@@ -80,13 +84,14 @@ public partial class ImaListViewModel : ViewModelBase
 
                 // Clear contents immediately on UI thread
                 Contents.Clear();
+                _offset = 0;
 
                 // Then fetch new data
                 _ = Task.Run(async () =>
                 {
                     try
                     {
-                        await FetchAsync(1, 10);
+                        await FetchAsync();
                     }
                     catch (Exception ex)
                     {
@@ -101,33 +106,85 @@ public partial class ImaListViewModel : ViewModelBase
         }
     }
 
-    public async Task InitializeAsync(int pageNumber, int pageSize)
+    // Reset category to default and clear contents, forcing a refresh
+    public void ResetToDefaultCategory()
     {
-        //Delay on first load until window loads
-        await Task.Delay(1000);
-        await FetchAsync(pageNumber, pageSize);
+        Contents.Clear();
+        if (Categories.Count > 0)
+        {
+            var firstCategory = Categories[0];
+
+            // If already on first category, we need to force a refresh
+            // Otherwise just set it (which will trigger OnSelectedCategoryChanged)
+            if (SelectedCategory == firstCategory)
+            {
+                // Force a refresh by fetching data for the default category
+                _ = Task.Run(async () =>
+                {
+                    try
+                    {
+                        await FetchAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error in ResetToDefaultCategory fetch: {ex}");
+                    }
+                });
+            }
+            else
+            {
+                // This will trigger OnSelectedCategoryChanged which fetches data
+                SelectedCategory = firstCategory;
+            }
+        }
     }
 
-    public async Task FetchAsync(int pageNumber, int pageSize)
+    public async Task InitializeAsync()
+    {
+        if (Contents.Any())
+            return;
+
+        await FetchAsync();
+    }
+
+    [RelayCommand]
+    public async Task LoadMoreAsync()
+    {
+        if (_isLoadingMore)
+            return;
+
+        _isLoadingMore = true;
+        IsLoadingMore = true;
+
+        try
+        {
+            await FetchAsync();
+        }
+        finally
+        {
+            _isLoadingMore = false;
+            IsLoadingMore = false;
+        }
+    }
+
+    public async Task FetchAsync()
     {
         try
         {
-            System.Diagnostics.Debug.WriteLine($"FetchAsync called with pageNumber: {pageNumber}, pageSize: {pageSize}");
-
             var categoryId = SelectedCategory?.Id ?? -1;
-            System.Diagnostics.Debug.WriteLine($"Fetching prayers for category: {categoryId}, Category name: {SelectedCategory?.Name ?? "NULL"}");
+            System.Diagnostics.Debug.WriteLine($"Fetching prayers for category: {categoryId}, Category name: {SelectedCategory?.Name ?? "NULL"} offset: {_offset}");
 
-            var imaContents = await _pageService.GetImaContents(pageNumber, pageSize, categoryId);
+            var imaContents = await _pageService.GetImaContents(_offset, 10, categoryId);
 
             System.Diagnostics.Debug.WriteLine($"Retrieved {imaContents.Count} prayers");
 
             if (imaContents.Count == 0)
             {
-                System.Diagnostics.Debug.WriteLine("No prayers found - showing alert");
-                await Shell.Current.DisplayAlert(
-                   "Program hiba",
-                    "Imák lekérdezése sikertelen, kérjük próbálja újra később.",
-                    "Bezárás");
+                System.Diagnostics.Debug.WriteLine("No prayers found - should show alert?");
+                // await Shell.Current.DisplayAlert(
+                //    "Program hiba",
+                //     "Imák lekérdezése sikertelen, kérjük próbálja újra később.",
+                //     "Bezárás")
 
                 return;
             }
@@ -138,6 +195,7 @@ public partial class ImaListViewModel : ViewModelBase
 
             System.Diagnostics.Debug.WriteLine("Adding to Contents collection");
             Contents.AddRange(temp);
+            _offset += imaContents.Count;
             System.Diagnostics.Debug.WriteLine($"Contents collection now has {Contents.Count} items");
         }
         catch (Exception ex)
@@ -154,6 +212,10 @@ public partial class ImaListViewModel : ViewModelBase
             {
                 System.Diagnostics.Debug.WriteLine($"Error showing alert: {alertEx}");
             }
+        }
+        finally
+        {
+            IsLoading = false;
         }
     }
 
@@ -273,7 +335,7 @@ public partial class ImaListViewModel : ViewModelBase
             if (SelectedCategory?.Id == 5 || SelectedCategory?.Id == -1)
             {
                 Contents.Clear();
-                await FetchAsync(1, 10);
+                await FetchAsync();
             }
 
             using var cancellationTokenSource = new CancellationTokenSource();
@@ -344,7 +406,7 @@ public partial class ImaListViewModel : ViewModelBase
                     if (SelectedCategory?.Id == 5 || SelectedCategory?.Id == -1)
                     {
                         Contents.Clear();
-                        await FetchAsync(1, 10);
+                        await FetchAsync();
                     }
 
                     using var cancellationTokenSource = new CancellationTokenSource();

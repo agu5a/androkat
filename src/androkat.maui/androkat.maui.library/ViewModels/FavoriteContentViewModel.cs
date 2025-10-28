@@ -15,7 +15,7 @@ public partial class FavoriteContentViewModel(FavoriteContentEntity contentEntit
         {
             "6" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}&FromFavorites=true"),
             "15" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}&FromFavorites=true"),
-            "23" => Shell.Current.GoToAsync($"PrayDetailPage?Id={ContentEntity.Nid}&FromFavorites=true"),
+            "23" => Shell.Current.GoToAsync($"DetailPray?Id={ContentEntity.Nid}&FromFavorites=true"),
             "28" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}&FromFavorites=true"),
             "38" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}&FromFavorites=true"),
             "39" => Shell.Current.GoToAsync($"DetailAudio?Id={ContentEntity.Nid}&FromFavorites=true"),

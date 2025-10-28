@@ -27,12 +27,12 @@
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.10" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.111" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
 
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.111" />
+		<PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.120" />
 	</ItemGroup>
 
 </Project>

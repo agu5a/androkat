@@ -205,7 +205,7 @@ public class Repository : IRepository
         return [];
     }
 
-    public async Task<List<ImadsagEntity>> GetImaContents(int pageNumber, int pageSize, int? categoryId = null)
+    public async Task<List<ImadsagEntity>> GetImaContents(int offset, int pageSize, int? categoryId = null)
     {
         try
         {
@@ -219,8 +219,8 @@ public class Repository : IRepository
             }
 
             return await query.OrderBy(o => o.Cim)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
+                .Skip(offset)
+                .Take(10)
                 .ToListAsync();
         }
         catch (Exception ex)

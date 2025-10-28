@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="androkat.hu.Pages.DetailPray"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:androkat.maui.library.ViewModels;assembly=androkat.maui.library"
+    x:Name="this"
+    Title=""
+    x:DataType="viewmodels:PrayDetailViewModel"
+    Style="{StaticResource DetailPageStyle}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            IconImageSource="voice"
+            Command="{Binding StartTextToSpeechCommand}"
+            Text="Hangos felolvasás"/>
+        <ToolbarItem
+            IconImageSource="favorite2"
+            Command="{Binding AddFavoriteCommand}"
+            Text="Hozzáadás kedvencekhez"/>
+        <ToolbarItem
+            IconImageSource="ic_send_24dp2"
+            Command="{Binding ShareContentCommand}"
+            Text="Megosztás"/>
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <StackLayout Grid.Row="0"
+                         Padding="16,20,16,10">
+                <Label x:Name="TitleLabel"
+                       Text="{Binding ContentView.detailscim}"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="{DynamicResource Primary}"
+                       HorizontalOptions="Center"/>
+            </StackLayout>
+
+            <!-- Content -->
+            <StackLayout Grid.Row="1"
+                         Padding="16,0,16,20">
+                <WebView x:Name="MyWebView"
+                         HeightRequest="600"
+                         BackgroundColor="Transparent"/>
+            </StackLayout>
+        </Grid>
+    </ScrollView>
+
+</ContentPage>

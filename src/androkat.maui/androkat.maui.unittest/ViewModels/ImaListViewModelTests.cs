@@ -37,7 +37,7 @@ public class ImaListViewModelTests
         var viewModel = new ImaListViewModel(_pageServiceMock.Object);
 
         //Act
-        await viewModel.InitializeAsync(1, 10);
+        await viewModel.InitializeAsync();
 
         //Assert
         Assert.NotNull(viewModel.Contents);
