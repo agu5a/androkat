@@ -30,9 +30,6 @@ public partial class DetailPage
 
         var actualUrl = e.Url.Replace("appscheme://", string.Empty, StringComparison.OrdinalIgnoreCase);
 
-        System.Diagnostics.Debug.WriteLine($"Original URL from WebView: {e.Url}");
-        System.Diagnostics.Debug.WriteLine($"Actual URL after stripping appscheme: {actualUrl}");
-
         // Fix malformed URLs (e.g., "https//" instead of "https://")
         if (actualUrl.StartsWith("http//", StringComparison.OrdinalIgnoreCase))
         {
@@ -43,12 +40,9 @@ public partial class DetailPage
             actualUrl = actualUrl.Replace("https//", "https://", StringComparison.OrdinalIgnoreCase);
         }
 
-        System.Diagnostics.Debug.WriteLine($"Final URL to open: {actualUrl}");
-
-        // Open in browser asynchronously
         try
         {
-            await Launcher.OpenAsync(new Uri(actualUrl));
+            await Browser.Default.OpenAsync(new Uri(actualUrl), BrowserLaunchMode.SystemPreferred);
         }
         catch (Exception ex)
         {
