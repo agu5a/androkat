@@ -122,6 +122,7 @@ public class IndexTests : BaseTest
 								"<br> 15 - <a href='https://open.spotify.com/show/4f2oWtBVw0jnTmeDrHh7ey' target='_blank'>Jezsuita napi-útra-való</a>" +
 								"<br> 17 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Böjte Csaba testvér gondolatai</a>" +
 								"<br> 19 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Kempis Tamás: Krisztus követése (válogatás)</a>" +
+								"<br> 22 - <a href='https://szekelyhon.ro/szekely-hirmondo-archivum/marton-aron-breviariuma' target='_blank'>Márton Áron breviáriuma </a>" +
 								"<br> 24 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Szeretet-újság</a>" +
 								"<br> 25 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Humor</a>" +
 								"<br> 28 - <a href='https://www.katolikusradio.hu' target='_blank'>Napi evangélium</a>" +

@@ -38,6 +38,7 @@ public class ContentService : IContentService
             (int)Forras.maievangelium,
             (int)Forras.horvath,
             (int)Forras.nagybojt,
+            (int)Forras.martonaron,
             (int)Forras.bojte,
             (int)Forras.barsi,
             (int)Forras.laciatya,

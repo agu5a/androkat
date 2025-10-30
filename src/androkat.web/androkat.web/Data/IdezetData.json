@@ -189,6 +189,15 @@
     "Image": "images/katolikus_hu.jpg"
   },
   {
+    "TipusId": 22,
+    "TipusNev": "Márton Áron breviáriuma ",
+    "Forras": "Dávid Péter",
+    "Link": "https://szekelyhon.ro/szekely-hirmondo-archivum/marton-aron-breviariuma",
+    "EnumString": "martonaron",
+    "Segedlink": null,
+    "Image": "images/martonaron.png"
+  },
+  {
     "TipusId": 24,
     "TipusNev": "Szeretet-újság",
     "Forras": "Szent Gellért Kiadó",

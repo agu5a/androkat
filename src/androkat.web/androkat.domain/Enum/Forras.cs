@@ -23,6 +23,7 @@ public enum Forras
     kempis = 19,
     bonumtv = 20,
     maiszent = 21,
+    martonaron = 22,
     szeretetujsag = 24,
     humor = 25,
     audionapievangelium = 28,
@@ -45,4 +46,4 @@ public enum Forras
     audiotaize = 60,
     sienaikatalin = 61,
     medjugorje = 62
-} 
+}
