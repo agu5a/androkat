@@ -122,7 +122,6 @@ public class IndexTests : BaseTest
 								"<br> 15 - <a href='https://open.spotify.com/show/4f2oWtBVw0jnTmeDrHh7ey' target='_blank'>Jezsuita napi-útra-való</a>" +
 								"<br> 17 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Böjte Csaba testvér gondolatai</a>" +
 								"<br> 19 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Kempis Tamás: Krisztus követése (válogatás)</a>" +
-								"<br> 22 - <a href='https://szekelyhon.ro/szekely-hirmondo-archivum/marton-aron-breviariuma' target='_blank'>Márton Áron breviáriuma </a>" +
 								"<br> 24 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Szeretet-újság</a>" +
 								"<br> 25 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Humor</a>" +
 								"<br> 28 - <a href='https://www.katolikusradio.hu' target='_blank'>Napi evangélium</a>" +
@@ -139,6 +138,7 @@ public class IndexTests : BaseTest
 								"<br> 60 - <a href='https://www.taize.fr' target='_blank'>Taizé napi imák</a>" +
 								"<br> 61 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Sienai Szent Katalin breviáriuma</a>" +
 								"<br> 62 - <a href='https://www.libri.hu/konyv/beke-kiralynojenek-365-uzenete-medjugorjebol.html' target='_blank'>Medjugorje üzenetek</a>" +
+								"<br> 64 - <a href='https://szekelyhon.ro/szekely-hirmondo-archivum/marton-aron-breviariuma' target='_blank'>Márton Áron breviáriuma </a>" +
 								"<br><strong>Mai anyagok</strong><br> 7 - <a href='http://www.fokolare.hu' target='_blank'>Fokoláre: életige</a>" +
 								"<br>[2025-02-01 04:05:06] - fokolareCim<br><br> 18 - <a href='https://www.magyarkurir.hu' target='_blank'>magyarkurir.hu</a>" +
 								"<br>[2025-02-03 04:05:06] - kurircím<br><br>";
