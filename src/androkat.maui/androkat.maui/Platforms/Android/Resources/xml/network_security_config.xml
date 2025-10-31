@@ -5,5 +5,9 @@
 		<!-- Debug, android + localhost. Port? -->
 		<domain includeSubdomains="true">10.0.2.2</domain>
 		<domain includeSubdomains="true">microsoft.com</domain>
+		<domain includeSubdomains="true">online.szentistvanradio.hu</domain>
+		<domain includeSubdomains="true">szentistvanradio.hu</domain>
+		<domain includeSubdomains="true">katolikusradio.hu</domain>
+		<domain includeSubdomains="true">www.mariaradio.hu</domain>
 	</domain-config>
 </network-security-config>

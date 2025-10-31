@@ -24,6 +24,7 @@ public partial class App : Application
         Routing.RegisterRoute(nameof(GyonasPrayPage), typeof(GyonasPrayPage));
         Routing.RegisterRoute(nameof(GyonasFinishPage), typeof(GyonasFinishPage));
         Routing.RegisterRoute(nameof(GyonasMirrorPage), typeof(GyonasMirrorPage));
+        Routing.RegisterRoute(nameof(WebViewPage), typeof(WebViewPage));
 
         // Apply keep screen on setting
         ApplyKeepScreenOnSetting();

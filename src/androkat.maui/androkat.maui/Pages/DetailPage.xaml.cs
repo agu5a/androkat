@@ -42,11 +42,11 @@ public partial class DetailPage
 
         try
         {
-            await Browser.Default.OpenAsync(new Uri(actualUrl), BrowserLaunchMode.SystemPreferred);
+            await Shell.Current.GoToAsync($"WebViewPage?Url={Uri.EscapeDataString(actualUrl)}");
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error opening URL '{actualUrl}': {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"Error navigating to WebViewPage: {ex.Message}");
         }
     }
 

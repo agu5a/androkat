@@ -6,12 +6,9 @@ namespace androkat.maui.library.ViewModels;
 
 public partial class WebViewModel : ViewModelBase
 {
-    private readonly IBrowser _browser;
-
-    public WebViewModel(IBrowser browser)
+    public WebViewModel()
     {
         Items = [];
-        _browser = browser;
     }
 
     [ObservableProperty]
@@ -23,13 +20,13 @@ public partial class WebViewModel : ViewModelBase
         await Task.Delay(1000);
         var s = new List<WebUrl>
         {
-            new("Katekizmus", ConsValues.Katekizmus, _browser),
-            new("E-Biblia", ConsValues.EBiblia, _browser),
-            new("Zsolozsma", ConsValues.Zsolozsma, _browser),
-            new("MiseRend", ConsValues.MiseRend, _browser),
-            new("Megszentelt tér", ConsValues.MegszenteltTer, _browser),
-            new("Bonum TV élő", ConsValues.BonumTv, _browser),
-            new("liturgia.tv", ConsValues.LiturgiaTv, _browser)
+            new("Katekizmus", ConsValues.Katekizmus),
+            new("E-Biblia", ConsValues.EBiblia),
+            new("Zsolozsma", ConsValues.Zsolozsma),
+            new("MiseRend", ConsValues.MiseRend),
+            new("Megszentelt tér", ConsValues.MegszenteltTer),
+            new("Bonum TV élő", ConsValues.BonumTv),
+            new("liturgia.tv", ConsValues.LiturgiaTv)
         };
 
         Items.ReplaceRange(s);

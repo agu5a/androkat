@@ -10,7 +10,6 @@ namespace androkat.maui.library.ViewModels;
 
 public partial class VideoListViewModel : ViewModelBase
 {
-    private readonly IBrowser _browser;
     private readonly IAndrokatService _androkatService;
     private int _offset = 0;
     private bool _isLoadingMore = false;
@@ -29,10 +28,9 @@ public partial class VideoListViewModel : ViewModelBase
     [ObservableProperty]
     bool isLoadingMore;
 
-    public VideoListViewModel(IBrowser browser, IAndrokatService androkatService)
+    public VideoListViewModel(IAndrokatService androkatService)
     {
         Contents = [];
-        _browser = browser;
         _androkatService = androkatService;
         PageTitle = "Videók";
     }
@@ -127,7 +125,7 @@ public partial class VideoListViewModel : ViewModelBase
         var viewmodels = new List<VideoItemViewModel>();
         foreach (var item in items)
         {
-            var viewModel = new VideoItemViewModel(item, _browser)
+            var viewModel = new VideoItemViewModel(item)
             {
                 VideoEntity = item
             };

@@ -6,12 +6,9 @@ namespace androkat.maui.library.ViewModels;
 
 public partial class WebRadioViewModel : ViewModelBase
 {
-    private readonly IBrowser _browser;
-
-    public WebRadioViewModel(IBrowser browser)
+    public WebRadioViewModel()
     {
         Items = [];
-        _browser = browser;
     }
 
     [ObservableProperty]
@@ -23,15 +20,15 @@ public partial class WebRadioViewModel : ViewModelBase
         await Task.Delay(1000);
         var s = new List<WebUrl>
         {
-            new("Szent István Rádió", ConsValues.Szentistvanradio, _browser),
-            new("Katolikus Rádió", ConsValues.Katolikusradio, _browser),
-            new("Vatikáni Rádió", ConsValues.Vaticannews, _browser),
-            new("Ez az a nap Rádió", ConsValues.EzAzANap, _browser),
-            new("Mária Rádió", ConsValues.Mariaradio, _browser),
-            new("Mária Rádió Szerbia", "", _browser),
-            new("Mária Rádió Erdély", "", _browser),
-            new("Mária Rádió Szlovákia", "", _browser),
-            new("Sola Rádió", "", _browser)
+            new("Szent István Rádió", ConsValues.Szentistvanradio),
+            new("Katolikus Rádió", ConsValues.Katolikusradio),
+            new("Vatikáni Rádió", ConsValues.Vaticannews),
+            new("Ez az a nap Rádió", ConsValues.EzAzANap),
+            new("Mária Rádió", ConsValues.Mariaradio),
+            new("Mária Rádió Szerbia", ""),
+            new("Mária Rádió Erdély", ""),
+            new("Mária Rádió Szlovákia", ""),
+            new("Sola Rádió", "")
         };
 
         Items.ReplaceRange(s);

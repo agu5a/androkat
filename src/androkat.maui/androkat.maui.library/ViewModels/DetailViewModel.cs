@@ -252,7 +252,7 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
         {
             try
             {
-                await Browser.Default.OpenAsync(ContentView.forrasLink, BrowserLaunchMode.SystemPreferred);
+                await Shell.Current.GoToAsync($"WebViewPage?Url={Uri.EscapeDataString(ContentView.forrasLink)}");
             }
             catch (Exception ex)
             {

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="androkat.hu.Pages.WebViewPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Weboldal">
+    <Grid Padding="0"
+            Margin="0"
+            RowDefinitions="*,Auto">
+        <WebView x:Name="WebViewBrowser"
+                Navigated="WebView_Navigated"/>
+        <ActivityIndicator
+            x:Name="LoadingIndicator"
+            Grid.Row="0"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            IsRunning="True"
+            IsVisible="True"
+            Color="{StaticResource Primary}"/>
+        <HorizontalStackLayout
+            Grid.Row="1"
+            Padding="10"
+            HorizontalOptions="Center"
+            Spacing="12"
+            Background="{AppThemeBinding Light={StaticResource Grey1}, Dark={StaticResource Grey9}}">
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>
