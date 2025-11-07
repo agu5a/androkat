@@ -112,6 +112,12 @@
                 var day = String(currentDate.getDate()).padStart(2, '0');
                 var formattedDate = month + '-' + day;
                 $('#Datum').val(formattedDate);
+
+                var months = ["január", "február", "március", "április", "május", "június", "július", "augusztus", "szeptember", "október", "november", "december"];
+                var monthName = months[currentDate.getMonth()];
+                var dayFormatted = String(currentDate.getDate()).padStart(2, '0');
+                var title = "Márton Áron - " + monthName.charAt(0).toUpperCase() + monthName.slice(1) + " " + dayFormatted + ".";
+                $('#Cim').val(title);
             });
 
             editor.onChange = function (contents, core)
