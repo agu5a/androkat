@@ -119,7 +119,7 @@ public class IndexTests : BaseTest
 								"<br> 12 - <a href='http://szikrak.jezsuita.hu' target='_blank'>Loyolai Szent Ignác válogatott gondolatai</a>" +
 								"<br> 13 - <a href='http://barsitelekmm.blogspot.hu' target='_blank'>Barsi és Telek - Magasság és mélység</a>" +
 								"<br> 14 - <a href='https://www.evangelium365.hu' target='_blank'>Horváth István Sándor (evangélium365.hu)</a>" +
-								"<br> 15 - <a href='https://open.spotify.com/show/6jhFXI89EMv78F4sCZ2UBA' target='_blank'>Jezsuita napi-útra-való</a>" +
+								"<br> 15 - <a href='https://open.spotify.com/show/4f2oWtBVw0jnTmeDrHh7ey' target='_blank'>Jezsuita napi-útra-való</a>" +
 								"<br> 17 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Böjte Csaba testvér gondolatai</a>" +
 								"<br> 19 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Kempis Tamás: Krisztus követése (válogatás)</a>" +
 								"<br> 24 - <a href='https://www.szentgellertkiado.hu' target='_blank'>Szeretet-újság</a>" +

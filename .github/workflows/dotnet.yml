@@ -28,7 +28,7 @@ env:
   ANDROKAT_GENERAL_ADMIN: 'test-admin@domain.com'
   # DEPLOY
   APP_PATH: '/var/app'
-  EC2_HOST: ${{ secrets.EC2_HOST }}
+  HOST: ${{ secrets.HOST }}
   HEALTH_CHECK_URL: ${{ secrets.HEALTH_CHECK }}
 
 jobs:
@@ -81,7 +81,7 @@ jobs:
         path: ./publish/
 
   deploy:
-    name: Deploy to EC2
+    name: Deploy to hosting server
     needs: publish
     runs-on: ubuntu-latest
 
@@ -104,8 +104,8 @@ jobs:
     - name: Copy file to server
       uses: appleboy/scp-action@v0.1.4
       with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         source: "app-package.tar.gz"
         target: "~"
@@ -113,8 +113,8 @@ jobs:
     - name: Deploy and restart systemd service
       uses: appleboy/ssh-action@v1.0.3
       with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script_stop: true
         command_timeout: "1m"
@@ -138,7 +138,7 @@ jobs:
           # Set correct permissions and ownership
           echo "Setting permissions and ownership..."
           sudo chmod +x ${APP_PATH}/androkat.web
-          sudo chown ${{ secrets.EC2_USER }}:${{ secrets.EC2_USER }} -R ${APP_PATH}/
+          sudo chown ${{ secrets.USER }}:${{ secrets.USER }} -R ${APP_PATH}/
 
           # Clean up temporary files
           sudo rm -rf ${APP_PATH}_temp

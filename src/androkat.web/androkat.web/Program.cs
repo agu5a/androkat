@@ -19,6 +19,8 @@ try
     var builder = WebApplication.CreateBuilder(args);
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
+    string logzioToken = Environment.GetEnvironmentVariable("ANDROKAT_CREDENTIAL_LOGZIO_TOKEN") ?? string.Empty;
+
     builder.WebHost.ConfigureKestrel(options =>
     {
         options.AddServerHeader = false;
@@ -30,12 +32,19 @@ try
             typeof(ConsoleLoggerConfigurationExtensions).Assembly,
             typeof(SerilogExpression).Assembly
         );
-        
+
+#pragma warning disable S1075 // URIs should not be hardcoded
+
         loggerConfiguration
         .ReadFrom.Configuration(hostBuilderContext.Configuration, options)
         .Enrich.FromLogContext()
         .WriteTo.Console()
+        .WriteTo.LogzIoDurableHttp(
+            $"https://listener.logz.io:8071/?type=app&token={logzioToken}",
+            logzioTextFormatterOptions: null)
         .Enrich.WithProperty("MyApp", "AndroKatWeb");
+#pragma warning restore S1075 // URIs should not be hardcoded
+
     });
 
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
