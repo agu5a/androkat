@@ -28,7 +28,6 @@ public static class WebApplicationExtensions
             app.UseStatusCodePagesWithReExecute("/Error/{0}");
         }
 
-        app.UseRateLimiter();
         app.UseProxy();
         app.SetHealthCheckEndpoint();
 
@@ -47,6 +46,7 @@ public static class WebApplicationExtensions
         });
 
         app.UseRouting();
+        app.UseRateLimiter();
         app.UseSession(); //Call UseSession after UseRouting and before MapRazorPages
 
         app.UseAuthentication();

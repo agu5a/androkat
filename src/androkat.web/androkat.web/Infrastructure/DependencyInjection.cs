@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -92,15 +93,40 @@ public static class DependencyInjection
         {
             options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
             options.AddPolicy("fixed-by-ip", httpContext =>
-                RateLimitPartition.GetFixedWindowLimiter
+            {
+                // Get the real client IP from X-Forwarded-For or fallback to RemoteIpAddress
+                string clientIp;
+
+                var forwardedFor = httpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+                if (!string.IsNullOrEmpty(forwardedFor))
+                {
+                    if (forwardedFor.Contains(','))
+                    {
+                        // X-Forwarded-For can contain multiple IPs: "client, proxy1, proxy2"
+                        // The first one is usually the real client IP
+                        clientIp = forwardedFor.Split(',')[0].Trim();
+                    }
+                    else
+                    {
+                        clientIp = forwardedFor;
+                    }
+                }
+                else
+                {
+                    clientIp = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+                }
+
+                Debug.WriteLine($"[RATE LIMIT] Client IP: {clientIp}");
+
+                return RateLimitPartition.GetFixedWindowLimiter
                 (
-                    partitionKey: httpContext.Request.Headers["X-Forwarded-For"].ToString(), //Connection.RemoteIpAddress?.ToString()
+                    partitionKey: clientIp,
                     factory: _ => new FixedWindowRateLimiterOptions
                     {
                         PermitLimit = 40,
                         Window = TimeSpan.FromMinutes(1)
-                    }
-                    ));
+                    });
+            });
         });
 
         builder.Services.AddControllers(options =>
@@ -126,10 +152,10 @@ public static class DependencyInjection
             };
 
         }).AddRazorRuntimeCompilation().AddJsonOptions(options =>
-        {
-            options.JsonSerializerOptions.PropertyNamingPolicy = null;
-            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-        });
+                {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                });
 
         builder.Services.SetServices();
         builder.Services.AddRazorPages();
