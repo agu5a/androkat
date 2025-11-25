@@ -123,7 +123,7 @@ public static class DependencyInjection
                     partitionKey: clientIp,
                     factory: _ => new FixedWindowRateLimiterOptions
                     {
-                        PermitLimit = 40,
+                        PermitLimit = 52,
                         Window = TimeSpan.FromMinutes(1)
                     });
             });

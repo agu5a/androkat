@@ -3,6 +3,7 @@ using androkat.domain.Configuration;
 using androkat.domain.Model.WebResponse;
 using androkat.infrastructure.Model;
 using FastEndpoints;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -30,6 +31,8 @@ public class Contents : Endpoint<ContentRequest, IEnumerable<ContentResponse>>
     {
         Get(_route);
         AllowAnonymous();
+
+        Options(x => x.RequireRateLimiting("fixed-by-ip"));
     }
 
     public override async Task HandleAsync(ContentRequest request, CancellationToken ct)
