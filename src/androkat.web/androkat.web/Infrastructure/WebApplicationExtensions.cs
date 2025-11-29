@@ -6,6 +6,7 @@ using Serilog;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using Microsoft.AspNetCore.Http;
 
 namespace androkat.web.Infrastructure;
 
@@ -42,7 +43,11 @@ public static class WebApplicationExtensions
         };
         app.UseStaticFiles(new StaticFileOptions
         {
-            ContentTypeProvider = provider
+            ContentTypeProvider = provider,
+            OnPrepareResponse = ctx =>
+            {
+                ctx.Context.Response.Headers.Append("Cache-Control", "public, max-age=604800"); // 7 nap
+            }
         });
 
         app.UseRouting();
