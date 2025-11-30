@@ -166,6 +166,7 @@ public class PufferModel : PageModel
         {
             // Delete temporary content when saving final content
             DeleteTemporaryContent();
+            ResetForm();
         }
 
         Error = res ? "A mentés sikerült" : "Valamilyen hiba történt";
