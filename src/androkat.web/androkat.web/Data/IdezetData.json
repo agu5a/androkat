@@ -137,8 +137,8 @@
   {
     "TipusId": 16,
     "TipusNev": "Nagyböjti elmélkedések",
-    "Forras": "orszagutiferencesek.hu",
-    "Link": "http://orszagutiferencesek.hu",
+    "Forras": "Szent Gellért Kiadó",
+    "Link": "https://www.szentgellertkiado.hu",
     "EnumString": "nagybojt",
     "Segedlink": null,
     "Image": "images/nagybojt.png"
