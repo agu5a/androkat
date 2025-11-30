@@ -57,7 +57,7 @@ public partial class ContentListViewModel : ViewModelBase
                 var result = await _pageService.DownloadAll();
                 if (result == -1)
                 {
-                    await Shell.Current.DisplayAlert("Hiba!", "Nem érhető el az Androkat szervere! Próbálja meg később, vagy írjon az uzenet@androkat.hu email címre!", "OK");
+                    await Shell.Current.DisplayAlertAsync("Hiba!", "Nem érhető el az Androkat szervere! Próbálja meg később, vagy írjon az uzenet@androkat.hu email címre!", "OK");
                 }
 
                 Settings.LastUpdate = DateTime.Now;
@@ -65,7 +65,7 @@ public partial class ContentListViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Hiba", ex.Message, "Bezárás");
+            await Shell.Current.DisplayAlertAsync("Hiba", ex.Message, "Bezárás");
         }
     }
 
@@ -86,7 +86,7 @@ public partial class ContentListViewModel : ViewModelBase
                 int curVersion = _pageService.GetVersion();
                 if (curVersion < newVersion)
                 {
-                    var result = await Shell.Current.DisplayAlert("Frissítés", "Új verzió érhető el. Szeretné frissíteni?", "Igen", "Nem");
+                    var result = await Shell.Current.DisplayAlertAsync("Frissítés", "Új verzió érhető el. Szeretné frissíteni?", "Igen", "Nem");
                     if (result)
                     {
                         await Browser.OpenAsync(ConsValues.AndrokatMarket);
@@ -96,7 +96,7 @@ public partial class ContentListViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Hiba", ex.Message, "Bezárás");
+            await Shell.Current.DisplayAlertAsync("Hiba", ex.Message, "Bezárás");
         }
     }
 
@@ -114,7 +114,7 @@ public partial class ContentListViewModel : ViewModelBase
         var contentsTemp = await _pageService.GetContentsAsync(Id!, returnVisited, enabledSources);
         if (contentsTemp == null)
         {
-            await Shell.Current.DisplayAlert("Hiba", "Nincs adat", "Bezárás");
+            await Shell.Current.DisplayAlertAsync("Hiba", "Nincs adat", "Bezárás");
             return;
         }
 

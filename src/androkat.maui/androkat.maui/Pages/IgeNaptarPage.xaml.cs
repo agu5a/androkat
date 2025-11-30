@@ -23,8 +23,8 @@ public partial class IgeNaptarPage : ContentPage
 
     private async void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
     {
-        await ViewModel.InitializeAsync(e.NewDate);
-        ViewModel.SetPosition(e.NewDate);
+        await ViewModel.InitializeAsync(e.NewDate ?? DateTime.Now);
+        ViewModel.SetPosition(e.NewDate ?? DateTime.Now);
         var myCarouselView = this.FindByName<CarouselView>("MyCarouselView");
         myCarouselView.ScrollTo(ViewModel.Position);
     }

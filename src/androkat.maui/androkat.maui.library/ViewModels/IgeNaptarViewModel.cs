@@ -42,7 +42,7 @@ public partial class IgeNaptarViewModel : ViewModelBase
         //Delay on first load until window loads
         await Task.Delay(1000);
 
-        var igenaptar = await _resourceData.GetResourceAsString("igenaptar2.json");
+        var igenaptar = await _resourceData.GetResourceAsString("igenaptar3.json");
         var dayContents = JsonSerializer.Deserialize<Dictionary<string, string>>(igenaptar);
 
         var s = StartCheck(day, dayContents);

@@ -62,7 +62,7 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
 
         if (item == null)
         {
-            await Shell.Current.DisplayAlert(
+            await Shell.Current.DisplayAlertAsync(
                       "Hiba",
                       "Nincs tartalom",
                       "Bezárás");
@@ -130,7 +130,7 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
             IsAlreadyFavorited = true;
             AddFavoriteCommand.NotifyCanExecuteChanged();
 
-            await Shell.Current.DisplayAlert(
+            await Shell.Current.DisplayAlertAsync(
                 "Sikeres művelet",
                 "A tartalom sikeresen hozzáadva a kedvencekhez!",
                 "OK");
@@ -147,7 +147,7 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
     [RelayCommand]
     async Task DeleteFavorite()
     {
-        var result = await Shell.Current.DisplayAlert(
+        var result = await Shell.Current.DisplayAlertAsync(
             "Törlés megerősítése",
             "Biztosan törölni szeretnéd ezt a kedvencet?",
             "Igen", "Nem");
@@ -189,7 +189,7 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
             var mainPage = Application.Current?.Windows[0].Page;
             if (mainPage != null)
             {
-                await mainPage.DisplayAlert("Hiba!", "Nincs magyar nyelv telepítve a felolvasáshoz!", "OK");
+                await mainPage.DisplayAlertAsync("Hiba!", "Nincs magyar nyelv telepítve a felolvasáshoz!", "OK");
                 return;
             }
         }
@@ -257,7 +257,7 @@ public partial class DetailViewModel(IPageService pageService, ISourceData sourc
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error opening link: {ex.Message}");
-                await Shell.Current.DisplayAlert("Hiba", "A link megnyitása sikertelen.", "OK");
+                await Shell.Current.DisplayAlertAsync("Hiba", "A link megnyitása sikertelen.", "OK");
             }
         }
     }

@@ -30,7 +30,7 @@ public partial class GyonasTile(string name, string icon, IPageService pageServi
 
     private async Task GyonasTorles()
     {
-        var isDelete = await Shell.Current.DisplayAlert("Törlés", "Parancsok, jegyzet törlése!", "Törlés", "Vissza");
+        var isDelete = await Shell.Current.DisplayAlertAsync("Törlés", "Parancsok, jegyzet törlése!", "Törlés", "Vissza");
         if (isDelete)
         {
             await pageService.DeleteUserGyonas(true, true);

@@ -61,7 +61,7 @@ public partial class PrayDetailViewModel(IPageService pageService) : ViewModelBa
         {
             if (Shell.Current != null)
             {
-                await Shell.Current.DisplayAlert(
+                await Shell.Current.DisplayAlertAsync(
                               "Hiba",
                               "Nincs tartalom",
                               "Bezárás");
@@ -112,7 +112,7 @@ public partial class PrayDetailViewModel(IPageService pageService) : ViewModelBa
 
             if (Shell.Current != null)
             {
-                await Shell.Current.DisplayAlert(
+                await Shell.Current.DisplayAlertAsync(
                     "Sikeres művelet",
                     "A tartalom sikeresen hozzáadva a kedvencekhez!",
                     "OK");
@@ -132,7 +132,7 @@ public partial class PrayDetailViewModel(IPageService pageService) : ViewModelBa
     {
         if (Shell.Current == null) return;
 
-        var result = await Shell.Current.DisplayAlert(
+        var result = await Shell.Current.DisplayAlertAsync(
             "Törlés megerősítése",
             "Biztosan törölni szeretnéd ezt a kedvencet?",
             "Igen", "Nem");
@@ -163,7 +163,7 @@ public partial class PrayDetailViewModel(IPageService pageService) : ViewModelBa
             var mainPage = Application.Current?.Windows[0].Page;
             if (mainPage != null)
             {
-                await mainPage.DisplayAlert("Hiba!", "Nincs magyar nyelv telepítve a felolvasáshoz!", "OK");
+                await mainPage.DisplayAlertAsync("Hiba!", "Nincs magyar nyelv telepítve a felolvasáshoz!", "OK");
                 return;
             }
         }

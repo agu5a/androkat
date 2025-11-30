@@ -33,7 +33,7 @@ public partial class GyonasNotesViewModel : ViewModelBase
     {
         await _pageService.UpsertGyonasiJegyzet(Notes);
         IsSaved = true;
-        await Shell.Current.DisplayAlert("Mentés", "Mentés sikerült", "OK");
+        await Shell.Current.DisplayAlertAsync("Mentés", "Mentés sikerült", "OK");
     }
 
     [RelayCommand]
@@ -43,7 +43,7 @@ public partial class GyonasNotesViewModel : ViewModelBase
         Notes = "";
         JegyzetCharCount = "0/1000";
         IsSaved = true;
-        await Shell.Current.DisplayAlert("Törlés", "Törlés sikerült", "OK");
+        await Shell.Current.DisplayAlertAsync("Törlés", "Törlés sikerült", "OK");
     }
 
     public void JegyzetTextChanged()

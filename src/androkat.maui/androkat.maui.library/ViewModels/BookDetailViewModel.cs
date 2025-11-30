@@ -139,7 +139,7 @@ public partial class BookDetailViewModel : DetailViewModel, IDisposable
             IsDownloading = false;
             CheckFileStatus();
 
-            await GetCurrentPage().DisplayAlert(
+            await GetCurrentPage().DisplayAlertAsync(
                 "Sikeres letöltés!",
                 $"A könyv sikeresen letöltve: {Path.GetFileName(_localFilePath)}",
                 "OK");
@@ -150,7 +150,7 @@ public partial class BookDetailViewModel : DetailViewModel, IDisposable
             DownloadProgress = 0.0;
             CheckFileStatus();
 
-            await GetCurrentPage().DisplayAlert(
+            await GetCurrentPage().DisplayAlertAsync(
                 "Hiba!",
                 $"A letöltés nem sikerült: {ex.Message}",
                 "OK");
@@ -165,7 +165,7 @@ public partial class BookDetailViewModel : DetailViewModel, IDisposable
 
         try
         {
-            var result = await GetCurrentPage().DisplayAlert(
+            var result = await GetCurrentPage().DisplayAlertAsync(
                 "Törlés megerősítése",
                 "Biztosan törölni szeretnéd a letöltött könyvet?",
                 "Igen", "Nem");
@@ -178,7 +178,7 @@ public partial class BookDetailViewModel : DetailViewModel, IDisposable
                 File.Delete(_localFilePath);
                 CheckFileStatus();
 
-                await GetCurrentPage().DisplayAlert(
+                await GetCurrentPage().DisplayAlertAsync(
                     "Sikeres törlés!",
                     "A könyv sikeresen törölve.",
                     "OK");
@@ -186,7 +186,7 @@ public partial class BookDetailViewModel : DetailViewModel, IDisposable
         }
         catch (Exception ex)
         {
-            await GetCurrentPage().DisplayAlert(
+            await GetCurrentPage().DisplayAlertAsync(
                 "Hiba!",
                 $"A törlés nem sikerült: {ex.Message}",
                 "OK");
@@ -198,7 +198,7 @@ public partial class BookDetailViewModel : DetailViewModel, IDisposable
     {
         if (string.IsNullOrEmpty(_localFilePath) || !CanRead)
         {
-            await GetCurrentPage().DisplayAlert(
+            await GetCurrentPage().DisplayAlertAsync(
                 "Hiba!",
                 "Nincs letöltve még a könyv.",
                 "OK");
@@ -209,7 +209,7 @@ public partial class BookDetailViewModel : DetailViewModel, IDisposable
         {
             if (!File.Exists(_localFilePath))
             {
-                await GetCurrentPage().DisplayAlert(
+                await GetCurrentPage().DisplayAlertAsync(
                     "Hiba!",
                     "A letöltött fájl nem található.",
                     "OK");
@@ -225,7 +225,7 @@ public partial class BookDetailViewModel : DetailViewModel, IDisposable
         }
         catch (Exception ex)
         {
-            await GetCurrentPage().DisplayAlert(
+            await GetCurrentPage().DisplayAlertAsync(
                 "Hiba!",
                 $"Nem sikerült megnyitni a könyvet: {ex.Message}\n\nKérlek telepíts egy ePUB olvasó alkalmazást!",
                 "OK");

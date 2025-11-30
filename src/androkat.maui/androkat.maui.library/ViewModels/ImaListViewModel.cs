@@ -203,7 +203,7 @@ public partial class ImaListViewModel : ViewModelBase
             System.Diagnostics.Debug.WriteLine($"Error in FetchAsync: {ex}");
             try
             {
-                await Shell.Current.DisplayAlert(
+                await Shell.Current.DisplayAlertAsync(
                     "Hiba",
                     $"Hiba történt az imák betöltése során: {ex.Message}",
                     "Bezárás");
@@ -249,7 +249,7 @@ public partial class ImaListViewModel : ViewModelBase
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Error in AddCustomPrayer: {ex}");
-            await Shell.Current.DisplayAlert("Hiba", $"Hiba történt: {ex.Message}", "OK");
+            await Shell.Current.DisplayAlertAsync("Hiba", $"Hiba történt: {ex.Message}", "OK");
         }
     }
 
@@ -263,7 +263,7 @@ public partial class ImaListViewModel : ViewModelBase
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Error in ImportCustomPrayer: {ex}");
-            await Shell.Current.DisplayAlert("Hiba", $"Hiba történt: {ex.Message}", "OK");
+            await Shell.Current.DisplayAlertAsync("Hiba", $"Hiba történt: {ex.Message}", "OK");
         }
     }
 
@@ -345,7 +345,7 @@ public partial class ImaListViewModel : ViewModelBase
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Error saving custom prayer: {ex}");
-            await Shell.Current.DisplayAlert("Hiba", $"Hiba történt a mentés során: {ex.Message}", "OK");
+            await Shell.Current.DisplayAlertAsync("Hiba", $"Hiba történt a mentés során: {ex.Message}", "OK");
         }
     }
 
@@ -424,7 +424,7 @@ public partial class ImaListViewModel : ViewModelBase
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Error importing prayers: {ex}");
-            await Shell.Current.DisplayAlert("Hiba", $"Hiba történt az importálás során: {ex.Message}", "OK");
+            await Shell.Current.DisplayAlertAsync("Hiba", $"Hiba történt az importálás során: {ex.Message}", "OK");
         }
     }
 }

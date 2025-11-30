@@ -49,7 +49,7 @@ public partial class FavoriteListViewModel : ViewModelBase
 
         if (favContents == null)
         {
-            await Shell.Current.DisplayAlert(
+            await Shell.Current.DisplayAlertAsync(
                 "Hiba",
                 "Nincs adat",
                 "Bezárás");
@@ -64,7 +64,7 @@ public partial class FavoriteListViewModel : ViewModelBase
         }
         catch (Exception)
         {
-            await Shell.Current.DisplayAlert(
+            await Shell.Current.DisplayAlertAsync(
                 "Hiba",
                 "Hiba történt",
                 "Bezárás");
