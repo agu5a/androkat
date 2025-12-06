@@ -78,7 +78,11 @@ public class PufferModel : PageModel
             if (tipus.HasValue)
             {
                 SetForras(tipus.Value);
-                SetIdezet(tipus.Value);
+                if (obj?.Idezet is null)
+                {
+                    SetIdezet(tipus.Value);
+                }
+
                 SetFileUrl(tipus.Value);
                 SetCim(tipus.Value);
             }
@@ -212,7 +216,8 @@ public class PufferModel : PageModel
                 "https://www.szentgellertkiado.hu/szeretet-ujsag",
             58 => //ajándékozz könyvet
                 "https://www.szentgellertkiado.hu",
-            (int)domain.Enum.Forras.advent or (int)domain.Enum.Forras.nagybojt => "https://orszagutiferencesek.hu",
+            (int)domain.Enum.Forras.advent => "https://szentgellertkiado.hu",
+            (int)domain.Enum.Forras.nagybojt => "https://orszagutiferencesek.hu",
             _ => Forras
         };
     }
