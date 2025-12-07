@@ -9,7 +9,7 @@ using Xunit;
 
 namespace androkat.web.Tests.EndpointsTests;
 
-[Collection("Sequential")]
+[Collection("SharedWebAppCollection")]
 public class HealthCheckTests : IClassFixture<CustomWebApplicationFactory<IWebMarker>>
 {
     private readonly HttpClient _client;

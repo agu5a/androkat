@@ -11,7 +11,7 @@ using Xunit;
 
 namespace androkat.web.Tests.EndpointsTests;
 
-[Collection("Sequential")]
+[Collection("SharedWebAppCollection")]
 public class CreateContentDetailsModelTests : IClassFixture<CustomWebApplicationFactory<IWebMarker>>
 {
     private readonly HttpClient _client;

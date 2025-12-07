@@ -8,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json;
 
 namespace androkat.application.Service;
 
@@ -25,6 +28,13 @@ public class ApiServiceCacheDecorate : IApiService
         _apiService = apiService;
         _memoryCache = memoryCache;
         _cacheService = cacheService;
+    }
+
+    private static string GenerateETag<T>(T content)
+    {
+        var json = JsonSerializer.Serialize(content);
+        var hash = MD5.HashData(Encoding.UTF8.GetBytes(json));
+        return $"\"{Convert.ToHexString(hash).ToLowerInvariant()}\"";
     }
 
     public IReadOnlyCollection<ContentResponse> GetContentByTipusAndId(int tipus, Guid id, BookRadioSysCache bookRadioSysCache, MainCache mainCache)
@@ -50,6 +60,11 @@ public class ApiServiceCacheDecorate : IApiService
         mainCache = GetCache(CacheKey.MainCacheKey.ToString(), () => _cacheService.MainCacheFillUp());
         result = _apiService.GetEgyebOlvasnivaloByForrasAndNid(tipus, n, bookRadioSysCache, mainCache);
         _memoryCache.Set(key, result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
+
+        // Cache ETag alongside response
+        var etagKey = key + "_etag";
+        var etag = GenerateETag(result);
+        _memoryCache.Set(etagKey, etag, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
 
         return result;
     }
@@ -84,6 +99,11 @@ public class ApiServiceCacheDecorate : IApiService
         mainCache = GetCache(CacheKey.MainCacheKey.ToString(), () => _cacheService.MainCacheFillUp());
         result = _apiService.GetContentByTipusAndNid(tipus, n, mainCache);
         _memoryCache.Set(key, result, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
+
+        // Cache ETag alongside response
+        var etagKey = key + "_etag";
+        var etag = GenerateETag(result);
+        _memoryCache.Set(etagKey, etag, new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30)));
 
         return result;
     }
@@ -168,5 +188,22 @@ public class ApiServiceCacheDecorate : IApiService
         }
 
         return res;
+    }
+
+    public string GetETag(int tipus, Guid id)
+    {
+        // Determine which cache key to use based on tipus
+        string cacheKey;
+        if (AndrokatConfiguration.BlogNewsContentTypeIds().Contains(tipus) || tipus == (int)Forras.book)
+        {
+            cacheKey = CacheKey.EgyebOlvasnivaloResponseCacheKey + "_" + tipus + "_" + id;
+        }
+        else
+        {
+            cacheKey = CacheKey.ContentResponseCacheKey + "_" + tipus + "_" + id;
+        }
+
+        var etagKey = cacheKey + "_etag";
+        return GetCache<string>(etagKey);
     }
 }

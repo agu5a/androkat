@@ -77,6 +77,13 @@ public class ApiService : IApiService
         return response;
     }
 
+    public string GetETag(int tipus, Guid id)
+    {
+        // This method is only implemented in ApiServiceCacheDecorate
+        // The base ApiService doesn't have access to cache
+        return null;
+    }
+
     public IReadOnlyCollection<SystemDataResponse> GetSystemData(BookRadioSysCache bookRadioSysCache)
     {
         return bookRadioSysCache.SystemData.Select(s => new SystemDataResponse { Key = s.Key, Value = s.Value }).ToList();

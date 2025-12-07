@@ -9,8 +9,16 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using Xunit;
 
 namespace androkat.web.Tests;
+
+[CollectionDefinition("SharedWebAppCollection", DisableParallelization = true)]
+public class SharedWebAppCollection : ICollectionFixture<ContentsWebApplicationFactory<IWebMarker>>
+{
+    // This class has no code, it is only used to apply [CollectionDefinition]
+    // and all the ICollectionFixture interfaces.
+}
 
 public abstract class BaseWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
 {
