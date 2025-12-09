@@ -1,4 +1,6 @@
-﻿using Android.OS;
+﻿#if ANDROID
+using Android.OS;
+#endif
 using androkat.maui.library.Abstraction;
 using androkat.maui.library.Models.Entities;
 using androkat.maui.library.ViewModels;
@@ -75,6 +77,7 @@ public partial class FavoriteListPage : ContentPage
 
     private async void Button_Clicked_1(object sender, EventArgs e)
     {
+#if ANDROID
         if (Build.VERSION.SdkInt < BuildVersionCodes.R)
         {
             var storagePermission = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
@@ -86,6 +89,10 @@ public partial class FavoriteListPage : ContentPage
 
         var savePath = Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads)!.AbsolutePath,
             "AndroKat", "kedvencek.json");
+#else
+        var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        var savePath = Path.Combine(documentsPath, "AndroKat", "kedvencek.json");
+#endif
 
         if (!File.Exists(savePath))
         {
@@ -101,7 +108,13 @@ public partial class FavoriteListPage : ContentPage
             }
         }
 
+#if ANDROID
         var jsonFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>> { { DevicePlatform.Android, value } });
+#elif IOS
+        var jsonFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>> { { DevicePlatform.iOS, value } });
+#else
+        var jsonFileType = FilePickerFileType.Json;
+#endif
 
         var fileResult = await FilePicker.PickAsync(new PickOptions
         {
@@ -123,7 +136,13 @@ public partial class FavoriteListPage : ContentPage
 
     private async void Button_Clicked_2(object sender, EventArgs e)
     {
+#if ANDROID
         var jsonFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>> { { DevicePlatform.Android, valueArray } });
+#elif IOS
+        var jsonFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>> { { DevicePlatform.iOS, valueArray } });
+#else
+        var jsonFileType = FilePickerFileType.Json;
+#endif
 
         var fileResult = await FilePicker.PickAsync(new PickOptions
         {

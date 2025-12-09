@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net10.0-android;</TargetFrameworks>
+		<TargetFrameworks>net10.0-android;net10.0-ios;</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>androkat.hu</RootNamespace>
 		<TargetSdkVersion>36</TargetSdkVersion>
@@ -27,12 +27,20 @@
 		<!-- Versions -->
 		<ApplicationDisplayVersion>03.58</ApplicationDisplayVersion>
 		<ApplicationVersion>328</ApplicationVersion>
-
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
-		<EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
+	  <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net10.0-ios'">
+  		<CodesignKey>Apple Development</CodesignKey>
+  		<CodesignProvision>Automatic</CodesignProvision>
+		<!-- <CodesignEntitlements>Platforms/iOS/Entitlements.plist</CodesignEntitlements> -->
+  		<RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">iossimulator-arm64</RuntimeIdentifier>
+		<DevelopmentTeam>9TBTF2XRAM</DevelopmentTeam>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -48,7 +56,6 @@
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
-
 
 	<ItemGroup>
 		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.16.0.128591">

@@ -29,7 +29,11 @@ public static class PagesExtensions
         builder.Services.AddTransient<GyonasFinishPage>();
         builder.Services.AddTransient<GyonasMirrorPage>();
 
+#if ANDROID
         builder.Services.AddSingleton<IDeviceDisplayService, Platforms.Android.Services.AndroidDeviceDisplayService>();
+#elif IOS
+        builder.Services.AddSingleton<IDeviceDisplayService, Platforms.iOS.Services.iOSDeviceDisplayService>();
+#endif
 
         return builder;
     }
