@@ -9,9 +9,10 @@
     Title="{Binding PageTitle}"
     x:DataType="viewmodels:ContentListViewModel"
     Style="{StaticResource MainSectionStyle}">
-    
+
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="filter.png" Clicked="OnFilterClicked" />
+        <ToolbarItem IconImageSource="filter"
+                Clicked="OnFilterClicked"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Resources>
@@ -19,7 +20,8 @@
             x:Key="ListTitleStyle"
             BasedOn="{OnIdiom Phone={StaticResource H6LabelStyle}}"
             TargetType="Label">
-            <Setter Property="Padding" Value="{OnIdiom Phone='0,0,0,0'}" />
+            <Setter Property="Padding"
+                    Value="{OnIdiom Phone='0,0,0,0'}"/>
         </Style>
     </ContentPage.Resources>
     <Grid Background="{AppThemeBinding Light={StaticResource BackgroundActivity}, Dark={StaticResource BackgroundActivityDark}}">
@@ -35,14 +37,14 @@
                     Orientation="Vertical"
                     Span="{OnIdiom Phone=1,
                                    Tablet=2}"
-                    VerticalItemSpacing="5" />
+                    VerticalItemSpacing="5"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <view:ContentItemView
                         SemanticProperties.Description="Description"
                         SubscriptionCommand="{Binding SubscribeCommand, Source={RelativeSource AncestorType={x:Type viewmodels:ContentListViewModel}}}"
-                        SubscriptionCommandParameter="{Binding}" />
+                        SubscriptionCommandParameter="{Binding}"/>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
@@ -51,6 +53,6 @@
             x:Name="activityIndicator"
             IsRunning="False"
             IsVisible="False"
-            VerticalOptions="Center" />
+            VerticalOptions="Center"/>
     </Grid>
 </ContentPage>
