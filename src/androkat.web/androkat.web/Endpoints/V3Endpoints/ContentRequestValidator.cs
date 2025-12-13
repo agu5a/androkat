@@ -1,10 +1,10 @@
 ﻿#nullable enable
-using androkat.infrastructure.Model;
+using androkat.web.Endpoints.V3Endpoints.Model;
 using FastEndpoints;
 using FluentValidation;
 using System;
 
-namespace androkat.web.Endpoints.ContentDetailsModelEndpoints;
+namespace androkat.web.Endpoints.V3Endpoints;
 
 public class ContentRequestValidator : Validator<ContentRequest>
 {
@@ -20,7 +20,6 @@ public class ContentRequestValidator : Validator<ContentRequest>
            .Must(BeAValidGuid)
            .When(x => !string.IsNullOrWhiteSpace(x.Id))
            .WithMessage("Rossz azonosító");
-
     }
 
     private static bool BeAValidGuid(string? input)

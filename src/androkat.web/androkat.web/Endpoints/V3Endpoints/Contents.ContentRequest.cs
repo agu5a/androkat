@@ -1,4 +1,4 @@
-﻿namespace androkat.infrastructure.Model;
+﻿namespace androkat.web.Endpoints.V3Endpoints.Model;
 
 public class ContentRequest
 {

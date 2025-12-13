@@ -1,7 +1,7 @@
 ﻿using androkat.application.Interfaces;
 using androkat.domain.Configuration;
 using androkat.domain.Model.WebResponse;
-using androkat.infrastructure.Model;
+using androkat.web.Endpoints.V3Endpoints.Model;
 using FastEndpoints;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;

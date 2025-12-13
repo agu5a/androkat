@@ -1,5 +1,5 @@
 ﻿#nullable enable
-using androkat.infrastructure.Model;
+using androkat.web.Endpoints.V3Endpoints.Model;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using System;

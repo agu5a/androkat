@@ -527,7 +527,7 @@ public class ContentServiceWithDbTests : BaseTest
         var result = contentService.GetHumor().ToList();
 
         result[0].MetaData.Image.Should().Be("images/smile.jpg");
-        result[0].MetaData.TipusNev.Should().Be("Humor");
+        result[0].MetaData.TipusNev.Should().Be("Nevessünk!");
         result[0].MetaData.TipusId.Should().Be(Forras.humor);
         result[0].ContentDetails.Cim.Should().Be("Cím");
         result[0].ContentDetails.Tipus.Should().Be((int)Forras.humor);

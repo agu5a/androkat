@@ -1,4 +1,5 @@
-using androkat.infrastructure.Model;
+using androkat.web.Endpoints.V3Endpoints;
+using androkat.web.Endpoints.V3Endpoints.Model;
 using androkat.web.Endpoints.ContentDetailsModelEndpoints;
 using FluentAssertions;
 using FluentValidation.TestHelper;
