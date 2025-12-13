@@ -4,6 +4,7 @@ using androkat.maui.library.Data;
 using androkat.maui.library.Models;
 using androkat.maui.library.Models.Entities;
 using MonkeyCache.FileStore;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -199,6 +200,7 @@ public class PageService(IDownloadService downloadService, IRepository repositor
         client = new HttpClient { BaseAddress = new Uri(ConsValues.ApiUrl) };
         client.DefaultRequestHeaders.Accept.Clear();
         client.DefaultRequestHeaders.Add("Accept", "application/json");
+        client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("AndroKat", "03.58"));
 
         return client;
     }

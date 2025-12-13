@@ -37,21 +37,22 @@ public partial class BookDetailViewModel : DetailViewModel, IDisposable
     private string _localFilePath = "";
     private HttpClient _httpClient;
 
-    public BookDetailViewModel(IPageService pageService, ISourceData sourceData) 
+    public BookDetailViewModel(IPageService pageService, ISourceData sourceData)
         : base(pageService, sourceData)
     {
         _httpClient = new HttpClient();
+        _httpClient.DefaultRequestHeaders.UserAgent.Add(new System.Net.Http.Headers.ProductInfoHeaderValue("AndroKat", "03.58"));
     }
 
     public async Task InitializeBookAsync()
     {
         await InitializeAsync();
-        
+
         if (ContentView?.ContentEntity != null)
         {
             // For books, the URL is stored in KulsoLink or Idezet
             _bookUrl = ContentView.ContentEntity.KulsoLink ?? ContentView.ContentEntity.Idezet;
-            
+
             // Set up book-specific UI elements
             SetupBookDescription();
             CheckFileStatus();
@@ -67,7 +68,7 @@ public partial class BookDetailViewModel : DetailViewModel, IDisposable
 
         // Show WebView only if there's no valid book URL
         ShowWebView = string.IsNullOrEmpty(_bookUrl) || !Uri.IsWellFormedUriString(_bookUrl, UriKind.Absolute);
-        
+
         if (ShowWebView)
         {
             BookDescription = "Szólj nekünk, ha problémát találsz!";
@@ -92,15 +93,15 @@ public partial class BookDetailViewModel : DetailViewModel, IDisposable
             {
                 fileName = "book.epub";
             }
-            
+
             _localFilePath = FileAccessHelper.GetLocalFilePath($"Book_{fileName}");
-            
+
             bool fileExists = File.Exists(_localFilePath);
-            
+
             CanDownload = !fileExists;
             CanDelete = fileExists;
             CanRead = fileExists;
-            
+
             DownloadButtonText = fileExists ? "Már letöltve" : "Letöltés";
         }
         catch (Exception ex)

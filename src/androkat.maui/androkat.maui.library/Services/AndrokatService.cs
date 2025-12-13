@@ -2,6 +2,7 @@
 using androkat.maui.library.Helpers;
 using androkat.maui.library.Models;
 using androkat.maui.library.Models.Responses;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace androkat.maui.library.Services;
@@ -17,7 +18,7 @@ public class AndrokatService : IAndrokatService
 
         client = GetClient();
 
-        var response = await client.GetStringAsync("v2/ser");
+        var response = await client.GetStringAsync("v3/ser");
 
         var result = JsonSerializer.Deserialize<List<ServerInfoResponse>>(response, Helper.BuildSerializerOptions());
 
@@ -47,7 +48,7 @@ public class AndrokatService : IAndrokatService
 
         client = GetClient();
 
-        string response = await client.GetStringAsync($"v2/ima?date={date:yyyy-MM-dd}");
+        string response = await client.GetStringAsync($"v3/ima?date={date:yyyy-MM-dd}");
 
         return JsonSerializer.Deserialize<ImaResponse>(response, Helper.BuildSerializerOptions());
     }
@@ -71,7 +72,7 @@ public class AndrokatService : IAndrokatService
 
         client = GetClient();
 
-        var response = await client.GetStringAsync($"v2/video?offset={offset}");
+        var response = await client.GetStringAsync($"v3/video?offset={offset}");
 
         return JsonSerializer.Deserialize<List<VideoResponse>>(response); //, Helper.BuildSerializerOptions()
     }
@@ -84,6 +85,7 @@ public class AndrokatService : IAndrokatService
         client = new HttpClient { BaseAddress = new Uri(ConsValues.ApiUrl) };
         client.DefaultRequestHeaders.Accept.Clear();
         client.DefaultRequestHeaders.Add("Accept", "application/json");
+        client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("AndroKat", "03.58"));
 
         return client;
     }

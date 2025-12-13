@@ -1,4 +1,5 @@
-﻿using androkat.hu.Helpers;
+﻿using System.Net.Http.Headers;
+using androkat.hu.Helpers;
 using androkat.maui.library.Models;
 using androkat.maui.library.ViewModels;
 
@@ -106,6 +107,7 @@ public partial class DetailPage
             if (!string.IsNullOrEmpty(imageUrl))
             {
                 using var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("AndroKat", "03.58"));
                 var folder = "images/szentek";
 
                 if (ViewModel.ContentView.type is Activities.szeretetujsag or Activities.ajanlatweb)

@@ -1,6 +1,7 @@
 ﻿using androkat.maui.library.Models;
 using androkat.maui.library.ViewModels;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace androkat.hu.Pages;
 
@@ -97,7 +98,7 @@ public partial class DetailAudio
         string? audioUrl = GetAudioUrl();
         if (string.IsNullOrEmpty(audioUrl))
         {
-            await DisplayAlert("Hiba", "Nincs elérhető hangfájl URL", "OK");
+            await DisplayAlertAsync("Hiba", "Nincs elérhető hangfájl URL", "OK");
             return;
         }
 
@@ -116,6 +117,7 @@ public partial class DetailAudio
 
             // Download file
             using var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("AndroKat", "03.58"));
             var response = await httpClient.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
@@ -130,7 +132,7 @@ public partial class DetailAudio
                 _downloadedFilePath = Path.Combine(androkatFolder, fileName);
                 await File.WriteAllBytesAsync(_downloadedFilePath, bytes);
 
-                await DisplayAlert("Siker", $"Letöltés sikeres!\nHelye: {_downloadedFilePath}", "OK");
+                await DisplayAlertAsync("Siker", $"Letöltés sikeres!\nHelye: {_downloadedFilePath}", "OK");
 
                 // Update button states
                 var downloadButton = sender as Button;
@@ -145,12 +147,12 @@ public partial class DetailAudio
             }
             else
             {
-                await DisplayAlert("Hiba", "Nem sikerült letölteni a fájlt", "OK");
+                await DisplayAlertAsync("Hiba", "Nem sikerült letölteni a fájlt", "OK");
             }
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Hiba", $"Letöltési hiba: {ex.Message}", "OK");
+            await DisplayAlertAsync("Hiba", $"Letöltési hiba: {ex.Message}", "OK");
         }
         finally
         {
@@ -183,13 +185,13 @@ public partial class DetailAudio
 
             if (!string.IsNullOrEmpty(_downloadedFilePath) && File.Exists(_downloadedFilePath))
             {
-                bool confirm = await DisplayAlert("Megerősítés", "Biztosan törli a letöltött fájlt?", "Igen", "Nem");
+                bool confirm = await DisplayAlertAsync("Megerősítés", "Biztosan törli a letöltött fájlt?", "Igen", "Nem");
                 if (confirm)
                 {
                     File.Delete(_downloadedFilePath);
                     _downloadedFilePath = string.Empty;
 
-                    await DisplayAlert("Siker", "Fájl törölve", "OK");
+                    await DisplayAlertAsync("Siker", "Fájl törölve", "OK");
 
                     // Update button states
                     DownloadButton.IsEnabled = true;
@@ -204,12 +206,12 @@ public partial class DetailAudio
             }
             else
             {
-                await DisplayAlert("Hiba", "Nincs letöltött fájl", "OK");
+                await DisplayAlertAsync("Hiba", "Nincs letöltött fájl", "OK");
             }
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Hiba", $"Törlési hiba: {ex.Message}", "OK");
+            await DisplayAlertAsync("Hiba", $"Törlési hiba: {ex.Message}", "OK");
         }
     }
 
@@ -220,7 +222,7 @@ public partial class DetailAudio
             string? audioUrl = GetAudioUrl();
             if (string.IsNullOrEmpty(audioUrl))
             {
-                await DisplayAlert("Hiba", "Nincs elérhető hangfájl", "OK");
+                await DisplayAlertAsync("Hiba", "Nincs elérhető hangfájl", "OK");
                 return;
             }
 
@@ -258,7 +260,7 @@ public partial class DetailAudio
             }
             catch
             {
-                await DisplayAlert("Hiba", $"Nem sikerült megnyitni a hangfájlt: {ex.Message}", "OK");
+                await DisplayAlertAsync("Hiba", $"Nem sikerült megnyitni a hangfájlt: {ex.Message}", "OK");
             }
         }
     }
