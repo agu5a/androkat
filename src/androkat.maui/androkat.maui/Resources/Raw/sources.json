@@ -84,8 +84,8 @@
     {
       "TipusId": 10,
       "TipusNev": "Advent",
-      "Forras": "Országúti Ferences Plébánia",
-      "Link": "https://orszagutiferencesek.hu",
+      "Forras": "Vukovári Panna",
+      "Link": "https://szentgellertkiado.hu",
       "Image": "advent",
       "group": "group_napiolvaso",
       "active": false

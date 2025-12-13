@@ -45,7 +45,7 @@ public class Cron : ControllerBase
         _iClock = iClock;
         _cronService = cronService;
         _environment = environment;
-        
+
         Console.WriteLine(endPointConfig.Value.Cron);
     }
 
@@ -99,18 +99,18 @@ public class Cron : ControllerBase
             var currentDate = _iClock.Now.DateTime;
             var fileName = $"{currentDate:MM_dd}.mp3";
             var filePath = Path.Combine(_environment.WebRootPath, "download", fileName);
-            
+
             if (System.IO.File.Exists(filePath))
             {
                 var date = currentDate.ToString("yyyy-MM-dd");
                 var existingRecord = _apiRepository.GetContentDetailsModels().FirstOrDefault(w => w.Tipus == 15 && w.Fulldatum.ToString("yyyy-MM-dd").StartsWith(date));
-                
+
                 if (existingRecord == null)
                 {
                     var res = _adminRepository.GetLastTodayContentByTipus((int)Forras.maievangelium);
                     var cim = res.Cim.Replace(" (Napi Ige)", "");
                     var fileUrl = $"https://androkat.hu/download/{DateTime.Now:MM_dd}.mp3";
-                    
+
                     var contentDetails = new ContentDetailsModel(
                         nid: Guid.NewGuid(),
                         fulldatum: currentDate,
@@ -120,7 +120,7 @@ public class Cron : ControllerBase
                         inserted: currentDate,
                         fileUrl: fileUrl
                     );
-                    
+
                     var success = _apiRepository.AddContentDetailsModel(contentDetails);
                     if (success)
                     {
@@ -238,6 +238,26 @@ public class Cron : ControllerBase
         {
             _logger.LogError(ex, "Exception: Failed to run savevideo");
             return BadRequest($"failed to run {nameof(SaveVideo)}");
+        }
+    }
+
+    [Route("getidezet")]
+    [HttpGet]
+    [ProducesResponseType(typeof(object), 200)]
+    [ProducesResponseType(typeof(string), 400)]
+    public ActionResult GetIdezetData()
+    {
+        try
+        {
+            var filePath = Path.Combine(_environment.ContentRootPath, "Data", "IdezetData.json");
+            var jsonContent = System.IO.File.ReadAllText(filePath);
+            var data = JsonSerializer.Deserialize<object>(jsonContent);
+            return Ok(data);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception: Failed to run {Name}", nameof(GetIdezetData));
+            return BadRequest($"failed to run {nameof(GetIdezetData)}");
         }
     }
 }
