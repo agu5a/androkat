@@ -81,7 +81,7 @@ public class DownloadServiceTests
 
         var res = await service.DownloadAll();
 
-        Assert.Equal(45, res);
+        Assert.Equal(46, res);
     }
 
     [Fact]
