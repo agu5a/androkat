@@ -59,7 +59,8 @@ public enum Activities
     audiotaize = 60,
     sienaikatalin = 61,
     medjugorje = 62,
-    group_web = 63
+    group_web = 63,
+    martonaron = 64
 }
 
 public static class ActivitiesHelper

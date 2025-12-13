@@ -69,6 +69,7 @@ public class DownloadService(IAndrokatService androkatService, IRepository repos
             Activities.laciatya,
             Activities.medjugorje,
             Activities.mello,
+            Activities.martonaron,
 
             Activities.maiszent,
 

@@ -25,7 +25,7 @@ public static class ConsValues
         public static readonly string[] rssResourceName =
                 [
 
-                        Activities.barsi.ToString(),
+                Activities.barsi.ToString(),
                 Activities.horvath.ToString(),
                 Activities.fokolare.ToString(),
                 Activities.maievangelium.ToString(),
@@ -40,12 +40,13 @@ public static class ConsValues
                 Activities.taize.ToString(),
                 Activities.laciatya.ToString(),
                 Activities.medjugorje.ToString(),
-                    Activities.mello.ToString()
+                Activities.mello.ToString(),
+                Activities.martonaron.ToString()
                 ];
 
         public static readonly string[] szentekResourceName =
                 [
-                        Activities.pio.ToString(),
+                    Activities.pio.ToString(),
                     Activities.janospal.ToString(),
                     Activities.sztjanos.ToString(),
                     Activities.kisterez.ToString(),

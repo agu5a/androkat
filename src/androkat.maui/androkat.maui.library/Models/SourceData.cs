@@ -4,31 +4,31 @@ namespace androkat.maui.library.Models;
 
 public class SourceData
 {
-    [JsonPropertyName("id")]
+    [JsonPropertyName("TipusId")]
     public int Id
     {
         get; set;
     }
 
-    [JsonPropertyName("sourcelink")]
+    [JsonPropertyName("Link")]
     public string Forras
     {
         get; set;
     } = string.Empty;
 
-    [JsonPropertyName("source")]
+    [JsonPropertyName("Forras")]
     public string Forrasszoveg
     {
         get; set;
     } = string.Empty;
 
-    [JsonPropertyName("img")]
+    [JsonPropertyName("Image")]
     public string Img
     {
         get; set;
     } = string.Empty;
 
-    [JsonPropertyName("title")]
+    [JsonPropertyName("TipusNev")]
     public string Title
     {
         get; set;

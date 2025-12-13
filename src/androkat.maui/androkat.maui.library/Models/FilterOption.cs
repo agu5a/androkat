@@ -53,7 +53,8 @@ public static class FilterOptionsHelper
             new() { Key = ((int)Activities.taize).ToString(), DisplayName = "Taizé", Activity = Activities.taize },
             new() { Key = ((int)Activities.laciatya).ToString(), DisplayName = "Laci atya", Activity = Activities.laciatya },
             new() { Key = ((int)Activities.medjugorje).ToString(), DisplayName = "Medjugorje", Activity = Activities.medjugorje },
-            new() { Key = ((int)Activities.mello).ToString(), DisplayName = "Anthony de Mello", Activity = Activities.mello }
+            new() { Key = ((int)Activities.mello).ToString(), DisplayName = "Anthony de Mello", Activity = Activities.mello },
+            new() { Key = ((int)Activities.martonaron).ToString(), DisplayName = "Márton Áron", Activity = Activities.martonaron }
         };
     }
 
